@@ -14,7 +14,6 @@ return new class extends Migration
         Schema::create('aphso_division', function(Blueprint $table){
             $table->smallIncrements('division_id');
             $table->string('division_name');
-            $table->string('description');
             $table->boolean('has_head');
             $table->integer('no_of_employees');
         });
@@ -24,8 +23,11 @@ return new class extends Migration
             $table->unsignedSmallInteger('division_id');
             $table->string('job_title');
             $table->string('job_description');
+
+            $table->foreign('division_id')->references('division_id')->on('aphso_division');
         });
 
+        /*Employee Number Format Example: APHSO-ADMIN-0001 */
         /*Need natin kumuha ng employment form na ginagamit ni APHSO sa pag-kuha ng employees nila. */
         Schema::create('aphso_employees', function (Blueprint $table) {
             $table->increments('employee_number');
@@ -46,13 +48,12 @@ return new class extends Migration
 
         Schema::create('users', function (Blueprint $table){
             $table->id();
-            $table->unsignedInteger('employee_id');
-            $table->string('employee_number');
+            $table->unsignedInteger('employee_number');
             $table->string('password');
             $table->rememberToken();
             $table->timestamps();
 
-            $table->foreign('employee_id')->references('employee_id')->on('aphso_employees');
+            $table->foreign('employee_number')->references('employee_number')->on('aphso_employees');
         });
 
         Schema::create('password_reset_tokens', function (Blueprint $table) {
