@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('aphso_division', function(Blueprint $table){
             $table->smallIncrements('division_id');
             $table->string('division_name');
+            $table->string('abbreviation', 5);
             $table->boolean('has_head');
             $table->integer('no_of_employees');
         });
@@ -27,7 +28,7 @@ return new class extends Migration
             $table->foreign('division_id')->references('division_id')->on('aphso_division');
         });
 
-        /*Employee Number Format Example: APHSO-ADMIN-0001 */
+        /*Employee Number Format Example: ADMIN-0001 */
         /*Need natin kumuha ng employment form na ginagamit ni APHSO sa pag-kuha ng employees nila. */
         Schema::create('aphso_employees', function (Blueprint $table) {
             $table->increments('employee_number');
