@@ -11,50 +11,14 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('aphso_division', function(Blueprint $table){
-            $table->smallIncrements('division_id');
-            $table->string('division_name');
-            $table->string('abbreviation', 5);
-            $table->boolean('has_head');
-            $table->integer('no_of_employees');
-        });
-
-        Schema::create('aphso_job_titles', function(Blueprint $table){
-            $table->smallIncrements('position_id');
-            $table->unsignedSmallInteger('division_id');
-            $table->string('job_title');
-            $table->string('job_description');
-
-            $table->foreign('division_id')->references('division_id')->on('aphso_division');
-        });
-
-        /*Employee Number Format Example: ADMIN-0001 */
-        /*Need natin kumuha ng employment form na ginagamit ni APHSO sa pag-kuha ng employees nila. */
-        Schema::create('aphso_employees', function (Blueprint $table) {
-            $table->increments('employee_number');
-            $table->unsignedSmallInteger('division_id');
-            $table->string('lname');
-            $table->string('fname');
-            $table->string('mname');
-            $table->unsignedSmallInteger('position_id');
-            $table->mediumText('address');
-            $table->date('birthdate');
-            $table->string('contact_nos');
+        Schema::create('users', function (Blueprint $table) {
+            $table->id();
+            $table->string('name');
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
-
-            $table->foreign('division_id')->references('division_id')->on('aphso_division');
-            $table->foreign('position_id')->references('position_id')->on('aphso_job_titles');
-        });
-
-        Schema::create('users', function (Blueprint $table){
-            $table->id();
-            $table->unsignedInteger('employee_number');
             $table->string('password');
             $table->rememberToken();
             $table->timestamps();
-
-            $table->foreign('employee_number')->references('employee_number')->on('aphso_employees');
         });
 
         Schema::create('password_reset_tokens', function (Blueprint $table) {
@@ -78,7 +42,7 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('aphso_employees');
+        Schema::dropIfExists('users');
         Schema::dropIfExists('password_reset_tokens');
         Schema::dropIfExists('sessions');
     }
