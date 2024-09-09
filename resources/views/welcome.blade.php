@@ -17,14 +17,28 @@
     </head>
     <body class="font-sans antialiased dark:bg-black dark:text-white/50">
         <div class="bg-gray-50 text-black/50 dark:bg-black dark:text-white/50">
-            <img id="background" class="absolute -left-20 top-0 max-w-[877px]" src="https://laravel.com/assets/img/welcome/background.svg" />
+            <img id="background" class="absolute" src="{{url('public/images/308788531_430818019156189_6450719544455889731_n.jpg')}}" alt = "Albay Provincial Capitol"/>
+
+            <!--All Main Contents will be placed in this white rectangle-->
             <div class="relative min-h-screen flex flex-col items-center justify-center selection:bg-[#FF2D20] selection:text-white">
                 <div class="relative w-full max-w-2xl px-6 lg:max-w-7xl">
                     <main class="mt-6">
-                        <img src = {{URL::assets('public/images/308788531_430818019156189_6450719544455889731_n.jpg')}} alt = "PGA-Logo">
+                        <img src = {{url('public/images/308788531_430818019156189_6450719544455889731_n.jpg')}} alt = "PGA-Logo">
+
+                        <h3>Welcome to the Albay Provincial Human Settlement Office</h3>
+                        <h1 class = "h1">Document Management System</h1>
+
+                        <h3 class = >Mission</h3>
+                        <p>
+                            APHSO commits to archieve an inclusive and sustainable development of communicaties/ settlements by planning, implementing and supervising the Human Settlement (HS) program in Albay upholding ethics of governance - transparency, accountability, participation, non-dicriminition, responsiveness and poverty allevation.
+
+                            “People’s welfare is Our primary concern.”
+                        </p>
+                        <h3>Vision</h3>
+                        <p>Humanized Settlement Communication</p>
 
                         @if(Route::has('login'))
-                        <a href = "{{ route('login')}}">Let's Get Started</a>
+                        <button href = "{{ route('login')}}" class = "btn-btn-primary">Let's Get Started</button>
                         @endif
                     </main>
 
