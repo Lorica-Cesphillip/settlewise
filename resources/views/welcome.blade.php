@@ -17,13 +17,13 @@
     </head>
     <body class="font-sans antialiased dark:bg-black dark:text-white/50">
         <div class="bg-gray-50 text-black/50 dark:bg-black dark:text-white/50">
-            <img id="background" class="absolute" src="{{url('public/images/308788531_430818019156189_6450719544455889731_n.jpg')}}" alt = "Albay Provincial Capitol"/>
+            <img id="background" class="absolute" src="{{URL::asset('public/images/308788531_430818019156189_6450719544455889731_n.jpg')}}" alt = "Albay Provincial Capitol"/>
 
             <!--All Main Contents will be placed in this white rectangle-->
             <div class="relative min-h-screen flex flex-col items-center justify-center selection:bg-[#FF2D20] selection:text-white">
                 <div class="relative w-full max-w-2xl px-6 lg:max-w-7xl">
                     <main class="mt-6">
-                        <img src = {{url('public/images/308788531_430818019156189_6450719544455889731_n.jpg')}} alt = "PGA-Logo">
+                        <img src = {{URL::asset('public/images/308788531_430818019156189_6450719544455889731_n.jpg')}} alt = "PGA-Logo">
 
                         <h3>Welcome to the Albay Provincial Human Settlement Office</h3>
                         <h1 class = "h1">Document Management System</h1>
@@ -38,7 +38,7 @@
                         <p>Humanized Settlement Communication</p>
 
                         @if(Route::has('login'))
-                        <button href = "{{ route('login')}}" class = "btn-btn-primary">Let's Get Started</button>
+                        <a href = "{{ route('login')}}" class = "btn-btn-primary">Let's Get Started</a>
                         @endif
                     </main>
 
