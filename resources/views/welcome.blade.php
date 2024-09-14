@@ -17,29 +17,35 @@
     </head>
     <body class="font-sans antialiased dark:bg-black dark:text-white/50">
         <div class="bg-gray-50 text-black/50 dark:bg-black dark:text-white/50">
-            <img id="background" class="" src="{{URL::asset('images/capitol.jpg')}}" alt = "Albay Provincial Capitol"/>
+            <img id="background" class="position-relative backg" src="{{URL::asset('images/capitol.jpg')}}" alt = "Albay Provincial Capitol"/>
 
             <!--All Main Contents will be placed in this white rectangle-->
             <div class="relative min-h-screen flex flex-col items-center justify-center selection:bg-[#FF2D20] selection:text-white">
                 <div class="relative w-full max-w-2xl px-6 lg:max-w-7xl">
                     <main class="m-auto">
-                        <img src = "{{URL::asset('images/pga-logo.png')}}" alt = "PGA-Logo">
+                        <div class = "bg-white justify-items-center">
+                            <img src = "{{URL::asset('images/pga-logo.png')}}" alt = "PGA-Logo" height = "200" width = "200">
 
-                        <h3 class = "text-center fs-1 fw-bold font-family-Inter m-0 px-3 py-2 h1">Welcome to the Albay Provincial Human Settlement Office</h3>
-                        <h1 class="text-center fs-1 fw-bold font-family-Inter m-0 px-3 py-2 h1">DOCUMENT MANAGEMENT SYSTEM</h1>
+                            <div>
+                                <p class = "text-center fs-1 fw-bold font-family-Inter m-0 px-3 py-2 h3">Welcome to the Albay Provincial Human Settlement Office</p>
+                                <p class="text-center fs-1 fw-bold font-family-Inter m-0 px-3 py-2 text-5xl">DOCUMENT MANAGEMENT SYSTEM</p>
+                            </div>
 
-                        <h3 class = "text-center text-black fs-6 fw-bold font-family-Inter m-0 px-3 py-2">Mission</h3>
-                        <p class = "text-center fs-1 fw-bold font-family-Inter m-0 px-3 py-2 h1">
-                            APHSO commits to archieve an inclusive and sustainable development of communicaties/ settlements by planning, implementing and supervising the Human Settlement (HS) program in Albay upholding ethics of governance - transparency, accountability, participation, non-dicriminition, responsiveness and poverty allevation.
+                            <div>
+                                <p class = "text-center text-black fs-6 fw-bold font-family-Inter m-0 px-3 py-2">Mission</p>
+                                <p class = "text-center fs-1 fw-bold font-family-Inter m-0 px-3 py-2">
+                                    APHSO commits to archieve an inclusive and sustainable development of communicaties/ settlements by planning, implementing and supervising the Human Settlement (HS) program in Albay upholding ethics of governance - transparency, accountability, participation, non-dicriminition, responsiveness and poverty allevation.
 
-                            “People’s welfare is Our primary concern.”
-                        </p>
-                        <h3 class = "text-center text-black fs-6 fw-bold font-family-Inter m-0 px-3 py-2">Vision</h3>
-                        <p class = "text-center fs-1 fw-bold font-family-Inter m-0 px-3 py-2 h1">Humanized Settlement Communication</p>
+                                    “People’s welfare is Our primary concern.”
+                                </p>
+                            </div>
+                            <h3 class = "text-center text-black fs-6 fw-bold font-family-Inter m-0 px-3 py-2">Vision</h3>
+                            <p class = "text-center fs-1 fw-bold font-family-Inter m-0 px-3 py-2">Humanized Settlement Communication</p>
 
-                        @if(Route::has('login'))
-                        <a href = "{{ route('login')}}" class = "text-center fs-1 fw-bold font-family-Inter m-0 px-3 py-2 h1">Let's Get Started</a>
-                        @endif
+                            @if(Route::has('login'))
+                            <a href = "{{ route('login')}}" class = "text-center fs-1 fw-bold font-family-Inter m-0 px-3 py-2 h1">Let's Get Started</a>
+                            @endif
+                        </div>
                     </main>
 
                     <footer class="py-16 text-center text-sm text-black dark:text-white/70">
