@@ -22,31 +22,23 @@
             <!--All Main Contents will be placed in this white rectangle-->
             <div class="relative min-h-screen flex flex-col items-center justify-center selection:bg-[#FF2D20] selection:text-white">
                 <div class="relative w-full max-w-2xl px-6 lg:max-w-7xl">
-                    <main class="m-auto">
-                        <div class = "bg-white justify-items-center">
-                            <img src = "{{URL::asset('images/pga-logo.png')}}" alt = "PGA-Logo" height = "200" width = "200">
-
-                            <div>
-                                <p class = "text-center fs-1 fw-bold font-family-Inter m-0 px-3 py-2 h3">Welcome to the Albay Provincial Human Settlement Office</p>
-                                <p class="text-center fs-1 fw-bold font-family-Inter m-0 px-3 py-2 text-5xl">DOCUMENT MANAGEMENT SYSTEM</p>
-                            </div>
-
-                            <div>
-                                <p class = "text-center text-black fs-6 fw-bold font-family-Inter m-0 px-3 py-2">Mission</p>
-                                <p class = "text-center fs-1 fw-bold font-family-Inter m-0 px-3 py-2">
-                                    APHSO commits to archieve an inclusive and sustainable development of communicaties/ settlements by planning, implementing and supervising the Human Settlement (HS) program in Albay upholding ethics of governance - transparency, accountability, participation, non-dicriminition, responsiveness and poverty allevation.
-
-                                    “People’s welfare is Our primary concern.”
-                                </p>
-                            </div>
-                            <h3 class = "text-center text-black fs-6 fw-bold font-family-Inter m-0 px-3 py-2">Vision</h3>
-                            <p class = "text-center fs-1 fw-bold font-family-Inter m-0 px-3 py-2">Humanized Settlement Communication</p>
-
-                            @if(Route::has('login'))
-                            <a href = "{{ route('login')}}" class = "text-center fs-1 fw-bold font-family-Inter m-0 px-3 py-2 h1">Let's Get Started</a>
-                            @endif
+                    <img src = "{{URL::asset('images/pga-logo.png')}}" alt = "PGA-Logo" height = "200" width = "200">
+                    <div class = "bg-white justify-items-center">
+                        <div>
+                            <p class = "text-center fs-1 fw-bold font-family-Inter m-0 px-3 py-2 h3">Welcome to the Albay Provincial Human Settlement Office</p>
+                            <p class="text-center fs-1 fw-bold font-family-Inter m-0 px-3 py-2 text-5xl">DOCUMENT MANAGEMENT SYSTEM</p>
                         </div>
-                    </main>
+                        <div class = "position-absolute">
+                            <p class = "text-center text-black fs-6 fw-bold font-family-Inter m-0 px-3 py-2">Mission</p>
+                            <p class = "text-center fs-1 fw-bold font-family-Inter m-0 px-3 py-2">
+                                APHSO commits to archieve an inclusive and sustainable development of communicaties/ settlements by planning, implementing and supervising the Human Settlement (HS) program in Albay upholding ethics of governance - transparency, accountability, participation, non-dicriminition, responsiveness and poverty allevation.
+                                “People’s welfare is Our primary concern.”
+                            </p>
+                        </div>
+                        <h3 class = "text-center text-black fs-6 fw-bold font-family-Inter m-0 px-3 py-2">Vision</h3>
+                        <p class = "text-center fs-1 fw-bold font-family-Inter m-0 px-3 py-2">Humanized Settlement Communication</p>
+
+                    </div>
 
                     <footer class="py-16 text-center text-sm text-black dark:text-white/70">
                         SettleWise Version alpha 1.0.0
