@@ -34,7 +34,7 @@ return new class extends Migration
             $table->string('file_path'); //important since the user will always view the document attached.
 
             //Foreign Keys
-            $table->foreign('document_type_id')->references('document_type_id')->on('document_type');
+            $table->foreign('document_type_id')->references('id')->on('document_type');
             $table->foreign('from_employee_id')->references('employee_number')->on('aphso_employees');
             $table->foreign('to_employee_id')->references('employee_number')->on('aphso_employees');
             $table->foreign('request_id')->references('request_id')->on('request_logs');
@@ -45,7 +45,7 @@ return new class extends Migration
             $table->increments('announcement_id');
             $table->unsignedInteger('document_tracking_code');
             $table->string('what', 141);
-            $table->dateTime('when', 141);
+            $table->dateTime('when');
             $table->string('where', 141);
             $table->string('who', 50);
             $table->string('notes', 141);
