@@ -19,15 +19,6 @@ return new class extends Migration
             $table->integer('no_of_employees');
         });
 
-        Schema::create('aphso_job_titles', function(Blueprint $table){
-            $table->smallIncrements('position_id');
-            $table->unsignedSmallInteger('division_id');
-            $table->string('job_title');
-            $table->string('job_description');
-
-            $table->foreign('division_id')->references('division_id')->on('aphso_division');
-        });
-
         /*Employee Number Format Example: ADMIN-0001 */
         /*Need natin kumuha ng employment form na ginagamit ni APHSO sa pag-kuha ng employees nila. */
         Schema::create('aphso_employees', function (Blueprint $table) {
@@ -36,7 +27,7 @@ return new class extends Migration
             $table->string('lname');
             $table->string('fname');
             $table->string('mname');
-            $table->unsignedSmallInteger('position_id');
+            $table->string('position');
             $table->mediumText('address');
             $table->date('birthdate');
             $table->string('contact_nos');
@@ -44,7 +35,6 @@ return new class extends Migration
             $table->timestamp('email_verified_at')->nullable();
 
             $table->foreign('division_id')->references('division_id')->on('aphso_division');
-            $table->foreign('position_id')->references('position_id')->on('aphso_job_titles');
         });
 
         Schema::create('users', function (Blueprint $table){
@@ -78,7 +68,10 @@ return new class extends Migration
      */
     public function down(): void
     {
+        Schema::dropIfExists('aphso_divisions');
+        Schema::dropIfExists('aphso_job_titles');
         Schema::dropIfExists('aphso_employees');
+        Schema::dropIfExists('users');
         Schema::dropIfExists('password_reset_tokens');
         Schema::dropIfExists('sessions');
     }
