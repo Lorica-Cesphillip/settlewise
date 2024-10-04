@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rules;
 use Illuminate\View\View;
+use Illuminate\Support\Str;
 
 class RegisteredUserController extends Controller
 {
@@ -31,14 +32,26 @@ class RegisteredUserController extends Controller
     {
         $request->validate([
             'name' => ['required', 'string', 'max:255'],
+            'address' => ['required', 'string', 'max:255'],
+            'birthday' => ['required', 'date'],
+            'martial_status' => ['required', 'string', 'max:20'],
             'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:'.User::class],
-            'password' => ['required', 'confirmed', Rules\Password::defaults()],
+            'contact_nos' => ['required', 'string', 'max:12'],
+            'aphso_division' => ['required', 'string', 'max:100'],
+            'position' => ['required', 'string', 'max:255'],
+            'employee_image' => ['required', 'image']
         ]);
 
         $user = User::create([
             'name' => $request->name,
+            'address' => $request->address,
+            'birthday' => $request->birthday,
+            'martial_status' => $request->martial_status,
             'email' => $request->email,
-            'password' => Hash::make($request->password),
+            'contact_nos' => $request->contact_nos,
+            'aphso_division' => $request->aphso_divisions,
+            'position' => $request->position,
+            'employee_image' => $request->employee_image,
         ]);
 
         event(new Registered($user));
