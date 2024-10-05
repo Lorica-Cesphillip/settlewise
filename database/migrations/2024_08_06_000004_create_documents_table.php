@@ -52,6 +52,8 @@ return new class extends Migration
             $table->date('date_posted');
             $table->date('date_expired');
             $table->boolean('is_posted');
+
+            $table->foreign('document_tracking_code')->references('document_tracking_code')->on('document_tracker');
         });
     }
 
