@@ -13,7 +13,7 @@
     </head>
     <body class="font-sans antialiased dark:bg-black dark:text-white/50 ">
         <div class="bg-gray-50 text-black/50 dark:bg-black dark:text-white/50">
-            <main class = "w-3/4 h-3/4 justify-center">
+            <main class = "w-[1200px] h-[850px] justify-center">
                 <div class = "w-52 h-52 m-auto justify-items-center">
                     <img src = "{{URL::asset('images/pga-logo.png')}}" alt = "PGA-Logo">
                 </div>
