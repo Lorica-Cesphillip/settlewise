@@ -34,8 +34,23 @@
                     </x-slot>
 
                     <x-slot name="content">
-                        <x-dropdown-link :href="route('profile.edit')">
-                            {{ __('Profile') }}
+                        <x-dropdown-link :href="route('documents.dashboard')">
+                            {{_('Dashboard')}}
+                        </x-dropdown-link>
+                        <x-dropdown-link :href="route('documents.dashboard')">
+                            {{_('Incoming Documents')}}
+                        </x-dropdown-link>
+                        <x-dropdown-link :href="route('documents.dashboard')">
+                            {{_('Outgoing Documents')}}
+                        </x-dropdown-link>
+                        <x-dropdown-link :href="route('documents.dashboard')">
+                            {{_('Archived Documents')}}
+                        </x-dropdown-link>
+                        <x-dropdown-link :href="route('documents.dashboard')">
+                            {{_('Your Divisions')}}
+                        </x-dropdown-link>
+                        <x-dropdown-link :href="route('documents.employees')">
+                            {{ __('Your Employees') }}
                         </x-dropdown-link>
 
                         <!-- Authentication -->

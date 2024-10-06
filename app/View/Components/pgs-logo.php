@@ -6,7 +6,7 @@ use Closure;
 use Illuminate\Contracts\View\View;
 use Illuminate\View\Component;
 
-class home-login extends Component
+class pgs-logo extends Component
 {
     /**
      * Create a new component instance.
@@ -21,6 +21,6 @@ class home-login extends Component
      */
     public function render(): View|Closure|string
     {
-        return view('component.home-login');
+        return view('components.pgs-logo');
     }
 }

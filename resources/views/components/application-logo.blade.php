@@ -1,5 +1,5 @@
-<div class="w-[443px] h-[100px] relative">
-    <img class="w-[100px] h-[100px] left-0 top-0 absolute" src = "{{URL::asset('images/pga-logo.png')}}" alt = "PGA-Logo"/>
-    <h5 class="w-[317px] h-7 left-[126px] top-[26px] absolute text-black text-xl font-bold font-['Inter'] leading-[29px]">Provincial Government of Albay</h5>
-    <p class="w-[317px] h-[19px] left-[126px] top-[54px] absolute text-black text-sm font-normal font-['Inter'] leading-tight">Albay Provincial Human Settlement Office</p>
+<div class="w-[236px] h-[183px] relative">
+    <img class="w-[100px] h-[100px] left-[66px] top-0 absolute" src="{{URL::asset('images/pga-logo.png')}}" />
+    <div class="w-[236px] h-14 left-0 top-[106px] absolute text-center text-[#200e3a] text-xl font-bold font-['Inter']">Albay Provincial Human Settlement Office</div>
+    <div class="w-56 h-[21px] left-[6px] top-[162px] absolute text-center text-[#200e3a] text-sm font-normal font-['Inter']">Document Management System</div>
 </div>

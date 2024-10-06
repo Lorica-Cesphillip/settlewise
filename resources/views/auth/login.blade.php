@@ -1,13 +1,10 @@
-<div class = "flex flex-row m m-96">
+<x-login>
     <div>
         @include('layouts.mission-vision')
     </div>
     <div>
         <x-guest-layout>
             <div class = "text-center">
-                <p>Welcome to:</p>
-                <h3 class = "text-black text-xl font-bold leading-10">SETTLEWISE: A DOCUMENT MANAGEMENT SYSTEM</h3>
-            </div>
             <!-- Session Status -->
             <x-auth-session-status class="mb-4" :status="session('status')" />
             <form method="POST" action="{{ route('login') }}">
@@ -54,4 +51,4 @@
             </form>
         </x-guest-layout>
     </div>
-</div>
+</x-login>
