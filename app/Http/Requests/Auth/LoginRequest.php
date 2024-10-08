@@ -41,11 +41,11 @@ class LoginRequest extends FormRequest
     {
         $this->ensureIsNotRateLimited();
 
-        if (! Auth::attempt($this->only('employee_number', 'password'), $this->boolean('remember'))) {
+        if (! Auth::attempt($this->only('employee_no', 'password'), $this->boolean('remember'))) {
             RateLimiter::hit($this->throttleKey());
 
             throw ValidationException::withMessages([
-                'employee_number' => trans('auth.failed'),
+                'employee_no' => trans('auth.failed'),
             ]);
         }
 
@@ -68,7 +68,7 @@ class LoginRequest extends FormRequest
         $seconds = RateLimiter::availableIn($this->throttleKey());
 
         throw ValidationException::withMessages([
-            'employee_number' => trans('auth.throttle', [
+            'employee_id' => trans('auth.throttle', [
                 'seconds' => $seconds,
                 'minutes' => ceil($seconds / 60),
             ]),
@@ -80,6 +80,6 @@ class LoginRequest extends FormRequest
      */
     public function throttleKey(): string
     {
-        return Str::transliterate(Str::lower($this->string('employee_number')).'|'.$this->ip());
+        return Str::transliterate(Str::lower($this->string('employee_id')).'|'.$this->ip());
     }
 }

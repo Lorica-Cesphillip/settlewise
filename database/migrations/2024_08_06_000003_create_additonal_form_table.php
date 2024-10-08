@@ -14,11 +14,10 @@ return new class extends Migration
         Schema::create('request_logs', function (Blueprint $table) {
             $table->increments('request_id');
             $table->string('request_type', 50);
-            $table->string('details', 150);
-            $table->string('requested_document', 150);
-            $table->string('purpose', 150);
-            $table->boolean('granted');
-            $table->string('comments_if_granted', 150);
+            $table->string('requested_document', 150)->nullable();
+            $table->string('details_purpose', 150);
+            $table->boolean('granted')->nullable();
+            $table->string('comments_if_granted', 150)->nullable();
         });
 
         Schema::create('referral_logs', function(Blueprint $table){

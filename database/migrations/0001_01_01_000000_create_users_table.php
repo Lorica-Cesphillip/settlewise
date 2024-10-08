@@ -24,14 +24,16 @@ return new class extends Migration
         Schema::create('aphso_employees', function (Blueprint $table) {
             $table->increments('employee_number');
             $table->unsignedSmallInteger('division_id');
-            $table->string('lname');
-            $table->string('fname');
-            $table->string('mname');
-            $table->string('position');
+            $table->string('lname', 50);
+            $table->string('fname', 50);
+            $table->string('mname', 50);
+            $table->string('position', 50);
             $table->mediumText('address');
             $table->date('birthdate');
-            $table->string('contact_nos');
+            $table->string('martial_status', 20);
+            $table->string('contact_nos', 12);
             $table->string('email')->unique();
+            $table->string('image_path');
             $table->timestamp('email_verified_at')->nullable();
 
             $table->foreign('division_id')->references('division_id')->on('aphso_division');

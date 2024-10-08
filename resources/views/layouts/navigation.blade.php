@@ -37,6 +37,7 @@
                         <x-dropdown-link :href="route('documents.dashboard')">
                             {{_('Dashboard')}}
                         </x-dropdown-link>
+                        <h4 class = >Documents</h4>
                         <x-dropdown-link :href="route('documents.dashboard')">
                             {{_('Incoming Documents')}}
                         </x-dropdown-link>

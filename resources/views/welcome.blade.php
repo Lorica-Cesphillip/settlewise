@@ -25,7 +25,7 @@
                         <div class="h-14 left-[414px] top-[643px] absolute flex-col justify-start items-start inline-flex">
                         <div class="px-6 py-4 bg-[#0d5dba] rounded-lg flex-col justify-center items-center gap-2.5 flex">
                         <div class="justify-center items-center gap-2 inline-flex">
-                        <a href = "{{route('login')}}" class="text-center text-white text-base font-semibold  leading-normal">Let’s Get Started</a>
+                        <a href = "{{route('login')}}" class="text-center text-white text-base font-semibold leading-normal">Let’s Get Started</a>
                         </div>
                     </div>
                     </div>

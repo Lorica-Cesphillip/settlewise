@@ -2,10 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Documents;
 use Illuminate\Http\Request;
 
-class DocumentConroller extends Controller
+class ReferralController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -34,7 +33,7 @@ class DocumentConroller extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Documents $documents)
+    public function show(string $id)
     {
         //
     }
@@ -42,7 +41,7 @@ class DocumentConroller extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Documents $documents)
+    public function edit(string $id)
     {
         //
     }
@@ -50,7 +49,7 @@ class DocumentConroller extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Documents $documents)
+    public function update(Request $request, string $id)
     {
         //
     }
@@ -58,7 +57,7 @@ class DocumentConroller extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Documents $documents)
+    public function destroy(string $id)
     {
         //
     }

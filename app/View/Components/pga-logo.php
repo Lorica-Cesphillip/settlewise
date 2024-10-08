@@ -21,6 +21,6 @@ class pgs-logo extends Component
      */
     public function render(): View|Closure|string
     {
-        return view('components.pgs-logo');
+        return view('components.pga-logo');
     }
 }

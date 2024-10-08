@@ -5,15 +5,16 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Documents extends Model
+class DocumentRequest extends Model
 {
     use HasFactory;
 
     protected $fillable = [
-        'employee_name',
-        'aphso_division',
-        'document_type',
-        'subject',
-        'file'
+        'request_type',
+        'details',
+        'requested_document',
+        'details_purpose',
     ];
+
+    protected $primaryKey = 'request_id';
 }
