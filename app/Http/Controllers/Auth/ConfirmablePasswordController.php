@@ -56,7 +56,7 @@ class ConfirmablePasswordController extends Controller
         }
 
         $credentials = [
-            'employee_no' => $employeeId,
+            'employee_id' => $employeeId,
             'password' => $password
         ];
 

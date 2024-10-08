@@ -21,8 +21,8 @@
                     <x-pgs-logo class="w-20 h-20 fill-current text-gray-500" />
                 </a>
             </div>
-
-            <div class="w-full sm:max-w-md mt-6 px-4 py-4 bg-white shadow-md overflow-hidden sm:rounded-lg">
+            <div class="w-[523px] h-[57px] text-center"><span style="text-black text-base font-normal leading-loose">Welcome to<br/></span><span style="text-black text-xl font-bold leading-10">SETTLEWISE: A DOCUMENT MANAGEMENT SYSTEM</span></div>
+            <div class="w-full sm:max-w-md mt-6 px-4 py-4 bg-white overflow-hidden">
                 {{ $slot }}
             </div>
         </div>
