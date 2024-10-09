@@ -6,7 +6,6 @@ use App\Models\DocumentRequest;
 use Illuminate\Http\Request;
 use App\Models\DocumentTracker;
 use Illuminate\Auth\Access\Response;
-use Illuminate\Cache\RedisTagSet;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
@@ -18,7 +17,7 @@ class DocumentTrackerController extends Controller
     public function index(){
         $documents = DocumentTracker::latest()->paginate(10);
 
-        return view('documents.dashboard');
+     return view('documents.dashboard');
     }
 
     public function create(){
@@ -28,25 +27,30 @@ class DocumentTrackerController extends Controller
     /**
      * @param \Illuminate\Http\Request $document
      * @return
-     */
-    public function store(Request $document, Request $documentRequest): RedirectResponse{
+    */
+    public function store(Request $document): RedirectResponse{
         $document->validate([
             'receipient_name' => 'required|string|max:255',
             'document_type' => 'required|string|max:50',
             'others' => 'string|max:140',
             'subject' => 'required|string|max:140',
         ]);
+        DocumentTracker::create($document->only(
+            'recipient_name', 'document_type', 'others', 'subject'
+        ));
 
-        $documentRequest->validate([
+        if($document->boolean('requested'))
+        {
+            $document->validate([
             'request_type' => 'required|string|max:140',
             'others' => 'string|max:140',
-            'document_requested/details' => 'required|string|max:140',
+            'document_requested.details' => 'required|string|max:140',
             'request_purpose' => 'string|max:140'
-        ]);
-
-        DocumentTracker::create($document->all());
-        DocumentRequest::create($documentRequest->all());
-
-        return redirect(route('documents.outgoing'));
+            ]);
+            DocumentRequest::create($document->only(
+                'request_type', 'others', 'document_requested.details', 'request_purpose'
+                ));
+        }
+        return redirect(route('documents.outgoing'))->with('success', 'Document Sent to its intended receipient.');
     }
 }

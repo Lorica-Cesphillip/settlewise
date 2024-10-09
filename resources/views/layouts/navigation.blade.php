@@ -15,6 +15,21 @@
                     <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
                         {{ __('Dashboard') }}
                     </x-nav-link>
+                    <x-nav-link :href="route('incoming')" :active="request()->routeIs('incoming')">
+                        {{__('Incoming Documents')}}
+                    </x-nav-link>
+                    <x-nav-link :href="route('outgoing')" :active="request()->routeIs('outgoing')">
+                        {{__('Outgoing Documents')}}
+                    </x-nav-link>
+                    <x-nav-link :href="route('archived')" :active="request()->routeIs('archived')">
+                        {{__('Archived Documents')}}
+                    </x-nav-link>
+                    <x-nav-link :href="route('divisions')" :active="request()->routeIs('divisions')">
+                        {{__('Your Divisions')}}
+                    </x-nav-link>
+                    <x-nav-link :href="route('employees')" :active="request()->routeIs('employees')">
+                        {{__('Your Employees')}}
+                    </x-nav-link>
                 </div>
             </div>
 
@@ -32,28 +47,6 @@
                             </div>
                         </button>
                     </x-slot>
-
-                    <x-slot name="content">
-                        <x-dropdown-link :href="route('documents.dashboard')">
-                            {{_('Dashboard')}}
-                        </x-dropdown-link>
-                        <h4 class = >Documents</h4>
-                        <x-dropdown-link :href="route('documents.dashboard')">
-                            {{_('Incoming Documents')}}
-                        </x-dropdown-link>
-                        <x-dropdown-link :href="route('documents.dashboard')">
-                            {{_('Outgoing Documents')}}
-                        </x-dropdown-link>
-                        <x-dropdown-link :href="route('documents.dashboard')">
-                            {{_('Archived Documents')}}
-                        </x-dropdown-link>
-                        <x-dropdown-link :href="route('documents.dashboard')">
-                            {{_('Your Divisions')}}
-                        </x-dropdown-link>
-                        <x-dropdown-link :href="route('documents.employees')">
-                            {{ __('Your Employees') }}
-                        </x-dropdown-link>
-
                         <!-- Authentication -->
                         <form method="POST" action="{{ route('logout') }}">
                             @csrf
@@ -85,6 +78,21 @@
         <div class="pt-2 pb-3 space-y-1">
             <x-responsive-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
                 {{ __('Dashboard') }}
+            </x-responsive-nav-link>
+            <x-responsive-nav-link :href="route('incoming')" :active="request()->routeIs('incoming')">
+                {{__('Incoming Documents')}}
+            </x-responsive-nav-link>
+            <x-responsive-nav-link :href="route('outgoing')" :active="request()->routeIs('outgoing')">
+                {{__('Outgoing Documents')}}
+            </x-responsive-nav-link>
+            <x-responsive-nav-link :href="route('archived')" :active="request()->routeIs('archived')">
+                {{__('Archived Documents')}}
+            </x-responsive-nav-link>
+            <x-responsive-nav-link :href="route('divisions')" :active="request()->routeIs('divisions')">
+                {{__('Your Divisions')}}
+            </x-responsive-nav-link>
+            <x-responsive-nav-link :href="route('employees')" :active="request()->routeIs('employees')">
+                {{__('Your Employees')}}
             </x-responsive-nav-link>
         </div>
 

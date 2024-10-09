@@ -26,7 +26,7 @@ return new class extends Migration
             $table->unsignedSmallInteger('division_id');
             $table->string('lname', 50);
             $table->string('fname', 50);
-            $table->string('mname', 50);
+            $table->string('mname', 50)->nullable();
             $table->string('position', 50);
             $table->mediumText('address');
             $table->date('birthdate');
