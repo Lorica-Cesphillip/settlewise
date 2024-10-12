@@ -12,16 +12,16 @@ class DocumentTracker extends Model
 {
     use HasFactory;
 
-    public function document_type(): HasOne{
-        return $this->hasOne(DocumentType::class);
+    public function document_type(): BelongsTo{
+        return $this->belongsTo(DocumentType::class);
     }
 
-    public function from_employee(): BelongsToMany{
-        return $this->belongsToMany(User::class);
+    public function from_employee(): BelongsTo{
+        return $this->belongsTo(Employees::class);
     }
 
-    public function to_employee(): BelongsToMany{
-        return $this->belongsToMany(User::class);
+    public function to_employee(): BelongsTo{
+        return $this->belongsTo(Employees::class);
     }
 
     public function request(): BelongsToMany{

@@ -44,7 +44,6 @@ return new class extends Migration
             $table->unsignedInteger('employee_number');
             $table->string('password');
             $table->rememberToken();
-            $table->timestamps();
 
             $table->foreign('employee_number')->references('employee_number')->on('aphso_employees');
         });

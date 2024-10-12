@@ -28,6 +28,8 @@ class AuthenticatedSessionController extends Controller
 
         $request->session()->regenerate();
 
+        $division = $request->user()->employee->division->division_name;
+
         return redirect()->intended(route('documents.dashboard', absolute: false));
     }
 

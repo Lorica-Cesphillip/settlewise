@@ -5,6 +5,7 @@ namespace App\Http\Requests\Auth;
 use Illuminate\Auth\Events\Lockout;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\RateLimiter;
 use Illuminate\Support\Str;
 use Illuminate\Validation\ValidationException;
@@ -27,7 +28,7 @@ class LoginRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'employee_number' => ['required', 'string', 'employee_number'],
+            'employee_id' => ['required', 'string', 'regex:/^(HEAD|ADMIN|ESSD|SPPD)-\d{4}$/'],
             'password' => ['required', 'string'],
         ];
     }
@@ -41,13 +42,28 @@ class LoginRequest extends FormRequest
     {
         $this->ensureIsNotRateLimited();
 
-        if (! Auth::attempt($this->only('employee_no', 'password'), $this->boolean('remember'))) {
+        $emp_array = explode('-', $this->employee_id);
+
+        $division = $emp_array[0];
+        $employee_num = ltrim($emp_array[1], '0');
+
+        $user = \App\Models\User::where('employee_number', $employee_num)->first();
+
+        if (!$user || !hash('sha256', $this->password) !== $user->password) {
             RateLimiter::hit($this->throttleKey());
 
             throw ValidationException::withMessages([
-                'employee_no' => trans('auth.failed'),
+                'employee_id' => trans('auth.failed'),
             ]);
         }
+
+        if($user->aphso_employees->division->abbreviation !== $division){
+            throw ValidationException::withMessages([
+                'employee_id' => trans('auth.failed'),
+            ]);
+        }
+
+        Auth::login($user, $this->boolean('remember'));
 
         RateLimiter::clear($this->throttleKey());
     }

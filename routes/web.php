@@ -16,34 +16,30 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');*/
     Route::get('/documents', function () {
         return view('documents.dashboard');
-    });
+    })->name('dashboard');
 
     Route::get('/incoming', function () {
         return view('documents.incoming');
-    });
-    Route::get('/outgoing/view_document', function(){
-        return view('d');
-    });
-
+    })->name('incoming');
 
     Route::get('/outgoing', function () {
         return view('documents.outgoing');
-    });
+    })->name('outgoing');
     Route::get('/outgoing/transmit', function (){
         return view('documents.forms.document_tracker_request');
     });
 
     Route::get('/archived', function () {
         return view('documents.archived');
-    });
+    })->name('archived');
 
     Route::get('/aphso_divisions', function () {
         return view('documents.aphso_divisions');
-    });
+    })->name('divisions');
 
     Route::get('/aphso_employees', function () {
         return view('documents.employees');
-    });
+    })->name('employees');
 });
 
 require __DIR__.'/auth.php';
