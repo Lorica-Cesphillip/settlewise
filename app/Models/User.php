@@ -12,6 +12,10 @@ class User extends Authenticatable
 {
     use HasFactory, Notifiable;
 
+    public function employees(): BelongsTo{
+        return $this->belongsTo(Employees::class, 'employee_number', 'employee_number');
+    }
+
     /**
      * The attributes that are mass assignable.
      *
@@ -42,10 +46,5 @@ class User extends Authenticatable
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
         ];
-    }
-
-
-    public function employee(): BelongsTo{
-        return $this->belongsTo(Employees::class, 'employee_number', 'employee_number');
     }
 }

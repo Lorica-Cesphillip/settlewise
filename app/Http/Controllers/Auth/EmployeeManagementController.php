@@ -19,6 +19,7 @@ class EmployeeManagementController extends Controller
 {
     /**
      * Display a listing of the resource.
+     * Note from the Developer: Only the Head of the Albay Provincial Human Settlement Office will manage the data for their employee, the rest will only view the employee status.
      */
     public function index()
     {
@@ -55,16 +56,26 @@ class EmployeeManagementController extends Controller
             'contact_nos' => ['required', 'string', 'max:12'],
             'aphso_division' => ['required', 'string', 'max:100'],
             'position' => ['required', 'string', 'max:255'],
-            'employee_image' => [, 'image']
+            'employee_image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048'
         ]);
 
-        $user = User::create($request->all());
+        $defaultImage_path = 'images/default-profile.png';
+
+        if($request->hasFile('employee_image')){
+            $imageName = time().'.'.$request->employee_image->extension();
+            $request->employee_image->move(public_path('images'), $imageName);
+            $imagePath = 'images/'.$imageName;
+        }else{
+            $imagePath = $defaultImage_path;
+        }
+
+        $user = User::create(array_merge($request->all(), ['employee_image' => $imagePath]));
 
         event(new Registered($user));
 
         Auth::login($user);
 
-        return redirect(route('documents.employees', absolute: false));
+        return redirect(route('documents.employees', absolute: false))->with('success', 'A New Employee has been added to the system.');
     }
 
     /**

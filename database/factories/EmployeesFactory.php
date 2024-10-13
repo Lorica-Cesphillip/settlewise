@@ -2,12 +2,13 @@
 
 namespace Database\Factories;
 
+use App\Models\Divisions;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
  * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Employees>
  */
-class EmployeeRegistrationFactory extends Factory
+class EmployeesFactory extends Factory
 {
     /**
      * Define the model's default state.
@@ -16,18 +17,20 @@ class EmployeeRegistrationFactory extends Factory
      */
     public function definition(): array
     {
+        $faker = \Faker\Factory::create('en_PH');
+
         return [
-            'division_id' => fake()->randomNumber(),
+            'division_id' => Divisions::factory(),
             'lname' => fake()->lastName(),
             'fname' => fake()->firstName(),
             'mname' => fake()->lastName(),
             'position' => fake()->jobTitle(),
-            'address' => fake()->address(),
-            'birthdate' => fake()->date('mm-dd-yyyy'),
-            'martial_status' => fake()->text(),
-            'contact_nos' => fake()->mobileNumber(),
+            'address' => $faker->barangay().', '.$faker->municipality().', '.$faker->province(),
+            'birthdate' => fake()->date('Y-m-d', 'now'),
+            'martial_status' => "Married",
+            'contact_nos' => $faker->mobileNumber(),
             'email' => fake()->unique()->safeEmail(),
-            'image_path' => fake()->imageUrl(),
+            'image_path' => "/public/default-profile.jpg",
             'email_verified_at' => now()
         ];
     }

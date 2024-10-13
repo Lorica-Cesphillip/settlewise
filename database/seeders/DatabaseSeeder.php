@@ -2,12 +2,13 @@
 
 namespace Database\Seeders;
 
-use App\Models\User;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use App\Models\Employees;
-use Faker\Guesser\Name;
+use App\Models\User;
+use App\Models\Divisions;
 use Nette\Utils\Random;
+use Illuminate\Support\Facades\DB;
 
 class DatabaseSeeder extends Seeder
 {
@@ -16,14 +17,53 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        Employees::factory(5)->create();
+        $divisionData = [
+            ['division_name' => 'APHSO Department Head', 'abbreviation' => 'HEAD'],
+            ['division_name' => 'Administrative', 'abbreviation' => 'ADMIN'],
+            ['division_name' => 'Economic Support and Services', 'abbreviation' => 'ESSD'],
+            ['division_name' => 'Settlement Plans and Projects', 'abbreviation' => 'SPPD'],
+        ];
 
-        Employees::factory()->create([
-            'division_id' => uniqid("000"),
-            'lname' => Random::generate(1, 'A-Z').Random::generate(49, 'a-z'),
-            'fname' => Random::generate(1, 'A-Z').Random::generate(49, 'a-z'),
-            'mname' => Random::generate(1, 'A-Z').Random::generate(49, 'a-z'),
-            'position' => Random::generate(20, 'A-Za-z')
+        // Use firstOrCreate to ensure unique divisions
+        foreach ($divisionData as $data) {
+            Divisions::firstOrCreate([
+                'division_name' => $data['division_name']
+            ], [
+                'abbreviation' => $data['abbreviation'],
+                'has_head' => 1,
+                'no_of_employees' => 5
+            ]);
+        }
+        $divisions = Divisions::all();
+
+        $faker = \Faker\Factory::create('en_PH');
+
+        //Department Head Only
+        DB::table('aphso_employees')->insert([
+            'division_id' => 1,
+            'lname' => "Sipin",
+            'fname' => "Engr. Gina Paz",
+            'mname' => "",
+            'position' => "APHSO Department Head",
+            'address' => $faker->barangay().', '.$faker->municipality().', '.$faker->province(),
+            'birthdate' => "1970-03-22",
+            'martial_status' => "Married",
+            'contact_nos' => $faker->mobileNumber(),
+            'email' => "test@example.com",
+            'image_path' => "/images/default-profile.jpg", //Default Image
+            'email_verified_at' => now(),
+            'created_at' => now()
         ]);
+
+
+        $divisions->each(function ($division) {
+            // Create 5 employees for each division
+            Employees::factory()->count(5)->for($division)->create();
+        });
+
+
+        Employees::all()->each(function ($employee) {
+            User::factory()->for($employee)->create();
+        });
     }
 }

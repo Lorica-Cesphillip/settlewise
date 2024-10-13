@@ -10,10 +10,6 @@ Route::get('/', function () {
 
 //This will be customized according to the existing system.
 Route::middleware(['auth', 'verified'])->group(function () {
-    /*
-    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
-    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
-    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');*/
     Route::get('/documents', function () {
         return view('documents.dashboard');
     })->name('dashboard');

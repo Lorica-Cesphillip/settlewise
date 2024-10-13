@@ -7,10 +7,9 @@ use App\Http\Controllers\Auth\EmailVerificationPromptController;
 use App\Http\Controllers\Auth\NewPasswordController;
 use App\Http\Controllers\Auth\PasswordController;
 use App\Http\Controllers\Auth\PasswordResetLinkController;
-use App\Http\Controllers\Auth\RegisteredEmployeeController;
-use App\Http\Controllers\Auth\RegisteredUserController;
 use App\Http\Controllers\Auth\VerifyEmailController;
 use App\Http\Controllers\DivisionsController;
+use App\Http\Controllers\EmployeeManagementController;
 use App\Models\Divisions;
 use Illuminate\Support\Facades\Route;
 
@@ -32,11 +31,11 @@ Route::middleware('guest')->group(function () {
     Route::post('reset-password', [NewPasswordController::class, 'store'])
                 ->name('password.store');
 
-    Route::get('documents/add_employee', [RegisteredEmployeeController::class, 'create'])
+    Route::get('documents/add_employee', [EmployeeManagementController::class, 'create'])
     ->name('register');
     Route::get('documents/add_employee', [DivisionsController::class, 'showForm']);
 
-    Route::post('register', [RegisteredEmployeeController::class, 'store'])->name('register');
+    Route::post('register', [EmployeeManagementController::class, 'store'])->name('register');
 });
 
 Route::middleware('auth')->group(function () {

@@ -3,10 +3,12 @@
 namespace Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
 use phpDocumentor\Reflection\PseudoTypes\IntegerValue;
 use Ramsey\Uuid\Type\Integer;
+use App\Models\Employees;
 
 /**
  * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\User>
@@ -25,8 +27,10 @@ class UserFactory extends Factory
      */
     public function definition(): array
     {
+        $employee = Employees::factory()->create();
+
         return [
-            'employee_number' => fake()->randomNumber(4, true),
+            'employee_number' => $employee->employee_number,
             'password' => static::$password ??= Hash::make('password'),
             'remember_token' => Str::random(10),
         ];

@@ -57,8 +57,8 @@
 
             <!-- APHSO Division-->
             <div>
-                <x-form-dropdown for="division" :value="__('APHSO Division')" />
-                <select id="division" class="block mt-1 w-full" type="text" name="division" :value="old('division')">
+                <x-input-label for="division" :value="__('APHSO Division')" />
+                <select id="division" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 mt-1" type="text" name="division" :value="old('division')">
                 <option value = "" disabled selected>Select Division</option>
 
                 @foreach ($divisions as $division)
@@ -66,7 +66,8 @@
                         Division
                     </option>
                 @endforeach
-                <x-form-dropdown :messages="$errors->get('division')" class="mt-2" />
+                </select>
+                <x-input-error :messages="$errors->get('division')" class="mt-2" />
             </div>
 
             <!-- Position -->
@@ -76,9 +77,16 @@
                 <x-input-error :messages="$errors->get('position')" class="mt-2" />
             </div>
 
+            <!-- Profile Image -->
+            <div>
+                <x-input-label for="employee_image" :value="__('Position')" />
+                <x-text-input id="employee_image" class="block mt-1 w-full" type="file" name="employee_image" :value="old('employee_image')"/>
+                <x-input-error :messages="$errors->get('employee_image')" class="mt-2" />
+            </div>
+
             <div class="flex items-center justify-end mt-4">
                 <x-primary-button class="ms-4">
-                    {{ __('Register') }}
+                    {{ __('Add New Employee') }}
                 </x-primary-button>
             </div>
         </form>

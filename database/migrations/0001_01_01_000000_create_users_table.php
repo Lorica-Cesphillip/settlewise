@@ -17,6 +17,8 @@ return new class extends Migration
             $table->string('abbreviation', 5);
             $table->boolean('has_head');
             $table->integer('no_of_employees');
+            $table->timestamp('updated_at')->nullable();
+            $table->timestamp('created_at')->nullable();
         });
 
         /*Employee Number Format Example: ADMIN-0001 */
@@ -31,10 +33,12 @@ return new class extends Migration
             $table->mediumText('address');
             $table->date('birthdate');
             $table->string('martial_status', 20);
-            $table->string('contact_nos', 12);
+            $table->string('contact_nos', 20);
             $table->string('email')->unique();
             $table->string('image_path');
             $table->timestamp('email_verified_at')->nullable();
+            $table->timestamp('created_at')->nullable();
+            $table->timestamp('updated_at')->nullable();
 
             $table->foreign('division_id')->references('division_id')->on('aphso_division');
         });
@@ -44,8 +48,10 @@ return new class extends Migration
             $table->unsignedInteger('employee_number');
             $table->string('password');
             $table->rememberToken();
+            $table->timestamp('created_at')->nullable();
+            $table->timestamp('updated_at')->nullable();
 
-            $table->foreign('employee_number')->references('employee_number')->on('aphso_employees');
+            $table->foreign('employee_number')->references('employee_number')->on('aphso_employees')->onDelete('cascade');
         });
 
         Schema::create('password_reset_tokens', function (Blueprint $table) {

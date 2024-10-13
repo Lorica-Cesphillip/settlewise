@@ -10,6 +10,10 @@ class Employees extends Model
 {
     use HasFactory;
 
+    public function divisions(): BelongsTo{
+        return $this->belongsTo(Divisions::class, 'division_id');
+    }
+
     protected $table = 'aphso_employees';
 
     /**
@@ -33,8 +37,4 @@ class Employees extends Model
     ];
 
     protected $primaryKey = 'employee_number';
-
-    public function division(): BelongsTo{
-        return $this->belongsTo(Divisions::class, 'division_id', 'division_id');
-    }
 }
