@@ -10,11 +10,11 @@ class Employees extends Model
 {
     use HasFactory;
 
+    protected $table = 'aphso_employees';
+
     public function divisions(): BelongsTo{
         return $this->belongsTo(Divisions::class, 'division_id');
     }
-
-    protected $table = 'aphso_employees';
 
     /**
      * The attributes that are mass assignable.

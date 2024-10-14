@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\RateLimiter;
 use Illuminate\Support\Str;
 use Illuminate\Validation\ValidationException;
+use Illuminate\Support\Facades\Log;
 
 class LoginRequest extends FormRequest
 {
@@ -47,9 +48,10 @@ class LoginRequest extends FormRequest
         $division = $emp_array[0];
         $employee_num = ltrim($emp_array[1], '0');
 
-        $user = \App\Models\User::where('employee_number', $employee_num)->first();
+        $user = \App\Models\User::where('employee_number', '=', $employee_num)->first();
+        $divisions = \App\Models\Divisions::where('abbreviation', '=', $division)->first();
 
-        if (!$user || !hash('sha256', $this->password) !== $user->password) {
+        if (!$user || !Hash::check($this->password, $user->password)) {
             RateLimiter::hit($this->throttleKey());
 
             throw ValidationException::withMessages([
@@ -57,7 +59,7 @@ class LoginRequest extends FormRequest
             ]);
         }
 
-        if($user->aphso_employees->division->abbreviation !== $division){
+        if($divisions->abbreviation !== $division){
             throw ValidationException::withMessages([
                 'employee_id' => trans('auth.failed'),
             ]);

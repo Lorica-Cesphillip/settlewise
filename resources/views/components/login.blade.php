@@ -5,7 +5,7 @@
         <div class="w-[650px] h-[0px] left-[600px] top-0 absolute origin-top-left rotate-90 border border-[#d0d0d0]"></div>
     </div>
     <div class="h-[383px] left-[469px] top-[250px] absolute">
-        @include('layouts.mission-vision')
+        @include('layouts.mission_vision')
     </div>
     <div class="w-[523px] h-[427px] left-[995px] top-[250px] absolute">
         {{$slot}}

@@ -6,7 +6,7 @@ use Closure;
 use Illuminate\Contracts\View\View;
 use Illuminate\View\Component;
 
-class mission-vision extends Component
+class pga_logo extends Component
 {
     /**
      * Create a new component instance.
@@ -21,6 +21,6 @@ class mission-vision extends Component
      */
     public function render(): View|Closure|string
     {
-        return view('components.mission-vision');
+        return view('components.pga_logo');
     }
 }

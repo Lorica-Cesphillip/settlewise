@@ -11,13 +11,15 @@ Route::get('/', function () {
 //This will be customized according to the existing system.
 Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/documents', function () {
-        return view('documents.dashboard');
-    })->name('dashboard');
+        return view('documents.index');
+    })->name('index');
 
+    /*Incoming Documents */
     Route::get('/incoming', function () {
         return view('documents.incoming');
     })->name('incoming');
 
+    /*Outgoing Documents */
     Route::get('/outgoing', function () {
         return view('documents.outgoing');
     })->name('outgoing');

@@ -44,6 +44,7 @@ class EmployeeManagementController extends Controller
      */
     public function store(Request $request): RedirectResponse
     {
+        //Refer to the column names on the table.
         $request->validate([
             'division_id' => ['required', 'integer', 'max:1'],
             'lname' => 'required|string|max:50',

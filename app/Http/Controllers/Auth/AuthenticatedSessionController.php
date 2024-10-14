@@ -28,9 +28,12 @@ class AuthenticatedSessionController extends Controller
 
         $request->session()->regenerate();
 
-        $division = $request->user()->employee->division->division_name;
+        $division = $request->user()->aphso_employees->aphso_division->division_name;
+        $employee = $request->user()->aphso_employees;
+        $employee_name = trim($employee->fname . ' ' . ($employee->mname ? $employee->mname . ' ' : '') . $employee->lname);
+        dd($employee_name);
 
-        return redirect()->intended(route('documents.dashboard', absolute: false));
+        return redirect(route('documents', compact('division', 'employee_name')))->with('success', 'Successfully Logged In.');
     }
 
     /**
