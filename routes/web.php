@@ -11,8 +11,8 @@ Route::get('/', function () {
 //This will be customized according to the existing system.
 Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/documents', function () {
-        return view('documents.index');
-    })->name('index');
+        return view('documents.dashboard');
+    })->name('dashboard');
 
     /*Incoming Documents */
     Route::get('/incoming', function () {
@@ -32,7 +32,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
     })->name('archived');
 
     Route::get('/aphso_divisions', function () {
-        return view('documents.aphso_divisions');
+        return view('documents.aphso-divisions');
     })->name('divisions');
 
     Route::get('/aphso_employees', function () {

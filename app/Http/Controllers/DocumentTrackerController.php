@@ -14,7 +14,7 @@ use Illuminate\View\View;
 class DocumentTrackerController extends Controller
 {
     //
-    public function index(){
+    public function index($employee_id){
         $documents = DocumentTracker::latest()->paginate(10);
 
      return view('documents.dashboard');

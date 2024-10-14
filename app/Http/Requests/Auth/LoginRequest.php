@@ -66,6 +66,7 @@ class LoginRequest extends FormRequest
         }
 
         Auth::login($user, $this->boolean('remember'));
+        session(['division' => $divisions]);
 
         RateLimiter::clear($this->throttleKey());
     }

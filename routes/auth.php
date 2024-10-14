@@ -30,15 +30,15 @@ Route::middleware('guest')->group(function () {
 
     Route::post('reset-password', [NewPasswordController::class, 'store'])
                 ->name('password.store');
+});
+
+Route::middleware('auth')->group(function () {
 
     Route::get('documents/add_employee', [EmployeeManagementController::class, 'create'])
     ->name('register');
     Route::get('documents/add_employee', [DivisionsController::class, 'showForm']);
 
     Route::post('register', [EmployeeManagementController::class, 'store'])->name('register');
-});
-
-Route::middleware('auth')->group(function () {
 
     Route::get('verify-email', EmailVerificationPromptController::class)
                 ->name('verification.notice');

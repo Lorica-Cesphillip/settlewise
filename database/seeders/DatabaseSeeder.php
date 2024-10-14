@@ -24,7 +24,6 @@ class DatabaseSeeder extends Seeder
             ['division_name' => 'Settlement Plans and Projects', 'abbreviation' => 'SPPD'],
         ];
 
-        // Use firstOrCreate to ensure unique divisions
         foreach ($divisionData as $data) {
             Divisions::firstOrCreate([
                 'division_name' => $data['division_name']

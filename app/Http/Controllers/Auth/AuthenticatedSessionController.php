@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Auth\LoginRequest;
+use App\Models\Employees;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -27,13 +28,9 @@ class AuthenticatedSessionController extends Controller
         $request->authenticate();
 
         $request->session()->regenerate();
+        $employee_id = $request->user()->employee_number;
 
-        $division = $request->user()->aphso_employees->aphso_division->division_name;
-        $employee = $request->user()->aphso_employees;
-        $employee_name = trim($employee->fname . ' ' . ($employee->mname ? $employee->mname . ' ' : '') . $employee->lname);
-        dd($employee_name);
-
-        return redirect(route('documents', compact('division', 'employee_name')))->with('success', 'Successfully Logged In.');
+        return redirect(route('dashboard', compact('employee_id')));
     }
 
     /**
