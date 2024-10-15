@@ -33,7 +33,8 @@ class Employees extends Model
         'contact_nos',
         'email',
         'image_path',
-        'email_verified_at'
+        'email_verified_at',
+        'emp_status'
     ];
 
     protected $primaryKey = 'employee_number';

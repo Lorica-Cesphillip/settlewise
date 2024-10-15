@@ -24,7 +24,7 @@ class EmployeeManagementController extends Controller
     public function index()
     {
         //
-        $aphso_employees = Employees::all()->paginate(10);
+        $aphso_employees = Employees::with('divisions')->paginate(10);
 
         return view('documents.employees', compact('aphso_employees'));
     }

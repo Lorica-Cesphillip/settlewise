@@ -14,8 +14,8 @@ return new class extends Migration
         Schema::create('document_conversation', function (Blueprint $table) {
             $table->bigIncrements('conversation_id');
             $table->unsignedInteger('document_tracking_code');
-            $table->unsignedInteger('employee_id_one');
-            $table->unsignedInteger('employee_id_two');
+            $table->unsignedInteger('employee_id_one'); //Sender Id
+            $table->unsignedInteger('employee_id_two'); //Receiver Id
             $table->timestamps();
 
             $table->foreign('document_tracking_code')->references('document_tracking_code')->on('document_tracker');

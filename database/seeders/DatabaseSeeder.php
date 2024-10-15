@@ -17,23 +17,7 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        $divisionData = [
-            ['division_name' => 'APHSO Department Head', 'abbreviation' => 'HEAD'],
-            ['division_name' => 'Administrative', 'abbreviation' => 'ADMIN'],
-            ['division_name' => 'Economic Support and Services', 'abbreviation' => 'ESSD'],
-            ['division_name' => 'Settlement Plans and Projects', 'abbreviation' => 'SPPD'],
-        ];
-
-        foreach ($divisionData as $data) {
-            Divisions::firstOrCreate([
-                'division_name' => $data['division_name']
-            ], [
-                'abbreviation' => $data['abbreviation'],
-                'has_head' => 1,
-                'no_of_employees' => 5
-            ]);
-        }
-        $divisions = Divisions::all();
+        $divisions = Divisions::factory(1)->create();
 
         $faker = \Faker\Factory::create('en_PH');
 
@@ -51,7 +35,8 @@ class DatabaseSeeder extends Seeder
             'email' => "test@example.com",
             'image_path' => "/images/default-profile.jpg", //Default Image
             'email_verified_at' => now(),
-            'created_at' => now()
+            'created_at' => now(),
+            'emp_status' => 1
         ]);
 
 

@@ -39,6 +39,7 @@ return new class extends Migration
             $table->timestamp('email_verified_at')->nullable();
             $table->timestamp('created_at')->nullable();
             $table->timestamp('updated_at')->nullable();
+            $table->boolean('emp_status');
 
             $table->foreign('division_id')->references('division_id')->on('aphso_division');
         });

@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\DocumentTrackerController;
+use App\Http\Controllers\EmployeeManagementController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
@@ -15,29 +16,30 @@ Route::middleware(['auth', 'verified'])->group(function () {
     })->name('dashboard');
 
     /*Incoming Documents */
-    Route::get('/incoming', function () {
+    Route::get('documents/incoming', function () {
         return view('documents.incoming');
     })->name('incoming');
 
     /*Outgoing Documents */
-    Route::get('/outgoing', function () {
+    Route::get('documents/outgoing', function () {
         return view('documents.outgoing');
     })->name('outgoing');
     Route::get('/outgoing/transmit', function (){
         return view('documents.forms.document_tracker_request');
     });
 
-    Route::get('/archived', function () {
+    Route::get('documents/archived', function () {
         return view('documents.archived');
     })->name('archived');
 
-    Route::get('/aphso_divisions', function () {
-        return view('documents.aphso-divisions');
+    Route::get('documents/aphso_divisions', function () {
+        return view('documents.divisions');
     })->name('divisions');
 
-    Route::get('/aphso_employees', function () {
-        return view('documents.employees');
+    Route::get('documents/employees', function () {
+        Route::resource('/documents/employees', EmployeeManagementController::class);
     })->name('employees');
+
 });
 
 require __DIR__.'/auth.php';

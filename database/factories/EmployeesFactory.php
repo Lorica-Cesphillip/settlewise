@@ -4,6 +4,7 @@ namespace Database\Factories;
 
 use App\Models\Divisions;
 use Illuminate\Database\Eloquent\Factories\Factory;
+use Nette\Utils\Random;
 
 /**
  * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Employees>
@@ -31,7 +32,8 @@ class EmployeesFactory extends Factory
             'contact_nos' => $faker->mobileNumber(),
             'email' => fake()->unique()->safeEmail(),
             'image_path' => "/public/default-profile.jpg",
-            'email_verified_at' => now()
+            'email_verified_at' => now(),
+            'emp_status' => Random::generate(1, '0-1')
         ];
     }
 
