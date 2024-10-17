@@ -33,11 +33,6 @@ Route::middleware('guest')->group(function () {
 });
 
 Route::middleware('auth')->group(function () {
-
-    Route::get('documents/add_employee', [EmployeeManagementController::class, 'create'])
-    ->name('register');
-    Route::get('documents/add_employee', [DivisionsController::class, 'showForm']);
-
     Route::post('register', [EmployeeManagementController::class, 'store'])->name('register');
 
     Route::get('verify-email', EmailVerificationPromptController::class)

@@ -17,7 +17,7 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        $divisions = Divisions::factory(1)->create();
+        $divisions = Divisions::factory(2)->create();
 
         $faker = \Faker\Factory::create('en_PH');
 
@@ -35,14 +35,14 @@ class DatabaseSeeder extends Seeder
             'email' => "test@example.com",
             'image_path' => "/images/default-profile.jpg", //Default Image
             'email_verified_at' => now(),
-            'created_at' => now(),
             'emp_status' => 1
         ]);
 
 
-        $divisions->each(function ($division) {
-            // Create 5 employees for each division
-            Employees::factory()->count(5)->for($division)->create();
+        $divisions->filter(function ($division){
+            return $division->division_id !== 1;
+        })->each(function($division){
+            Employees::factory()->count(1)->for($division)->create();
         });
 
 

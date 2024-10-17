@@ -18,7 +18,7 @@ class DivisionsController extends Controller
     public function showForm(){
         $divisions = Divisions::all();
 
-        return view('documents.forms.register_employee', compact('divisions'));
+        return view('documents.forms.add_employee', compact('divisions'));
     }
     public function index()
     {

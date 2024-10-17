@@ -14,10 +14,21 @@ use Illuminate\View\View;
 class DocumentTrackerController extends Controller
 {
     //
-    public function index($employee_id){
+    public function incoming($employee_id){
         $documents = DocumentTracker::latest()->paginate(10);
 
-     return view('documents.dashboard');
+     return view('documents.incoming');
+    }
+
+    public function outgoing($employee_id){
+        $documents = DocumentTracker::latest()->paginate(10);
+
+        return view('documents.outgoing');
+    }
+
+    public function archived($employee_id){
+        $archived = DocumentTracker::latest()->paginate(10);
+        return view('documents.archived');
     }
 
     public function create(){

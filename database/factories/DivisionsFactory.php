@@ -17,7 +17,7 @@ class DivisionsFactory extends Factory
      */
     public function definition(): array
     {
-        $division = ['APHSO Department Head', 'Administrative', 'Economic Support and Services', 'Settlement Plans and Projects'];
+        $division = ['APHSO Department', 'Administrative', 'Economic Support and Services', 'Settlement Plans and Projects'];
         $abbreviation = ['HEAD', 'ADMIN', 'ESSD', 'SPPD'];
 
         $curIndex = self::$index % count($division);
