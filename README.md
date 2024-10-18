@@ -2,6 +2,8 @@
 
 ## About the Project
 
+The Document Management System for the Albay Provincial Human Settlement Office is a project that aims to properly track every document that is transmitted inside the government agency. If implemented successfully, the team would want to expand its clients within the Provincial Government of Albay. This is part of the ongoing Capstone Project that is currently being taken by BS Information Technology Students from Bicol University. 
+
 ## System Requirements
 
 1. Laravel 11.x or better with Livewire/Blade Template
