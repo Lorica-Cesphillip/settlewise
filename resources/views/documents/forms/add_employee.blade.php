@@ -1,3 +1,3 @@
-<x-modal name="ass-new-employee">
+<x-modal name="add-new-employee">
 
 </x-modal>

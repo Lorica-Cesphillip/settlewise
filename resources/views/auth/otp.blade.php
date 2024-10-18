@@ -10,7 +10,7 @@
             <!-- OTP Number -->
             <div>
                 <x-input-label for="otp_no" :value="__('Name')" />
-                <x-text-input id=otp_noe" class="block mt-1 w-full" type="text" name="otp_no" :value="old('otp_no')" required autofocus autocomplete="name" />
+                <x-text-input id="otp_no" class="block mt-1 w-full" type="text" name="otp_no" :value="old('otp_no')" required autofocus autocomplete="name" />
                 <x-input-error :messages="$errors->get('otp_no')" class="mt-2" />
             </div>
 

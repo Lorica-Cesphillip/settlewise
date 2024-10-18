@@ -1,5 +1,5 @@
 <x-app-layout>
-    <x-slot name="header">Your Employees</x-slot>
+    <h1>Your Employees</h1>
     <div class="w-full h-14 relative">
         <x-primary-button
             x-data=""
@@ -22,18 +22,17 @@
 
         <!--Search Bar-->
         <form class="w-[515px] h-14 left-0 top-0 absolute">
-            <div class="w-[375px] h-14 left-0 top-0 absolute flex-col justify-start items-start gap-2 inline-flex">
+            <x-text-input  id="search_employee" class="w-[375px] h-14 left-0 top-0 absolute flex-col justify-start items-start gap-2 inline-flex mt-1" name="search_employee" :value="old('search_employee')" autofocus>
                 <div class="self-stretch h-14 flex-col justify-start items-start gap-1 flex">
                     <div class="self-stretch h-14 p-4 bg-white rounded-md border border-[#d0d4dd] justify-start items-center gap-3 inline-flex">
                         <div class="grow shrink basis-0 h-5 justify-start items-center gap-2 flex">
                             <div class="w-5 h-5 relative"></div>
                                 <div class="justify-start items-center gap-0.5 flex">
-                                    <x-text-input></x-text-input>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </div>
+                </x-text-input>
                 <div class="h-14 left-[396px] top-0 absolute flex-col justify-start items-start inline-flex">
                 <x-primary-button>
                     <div class="justify-center items-center gap-2 inline-flex">

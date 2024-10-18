@@ -8,7 +8,7 @@
 <?php $attributes = $attributes->except(\App\View\Components\AppLayout::ignoredParameterNames()); ?>
 <?php endif; ?>
 <?php $component->withAttributes([]); ?>
-     <?php $__env->slot('header', null, []); ?> Your Employees <?php $__env->endSlot(); ?>
+    <h1>Your Employees</h1>
     <div class="w-full h-14 relative">
         <?php if (isset($component)) { $__componentOriginald411d1792bd6cc877d687758b753742c = $component; } ?>
 <?php if (isset($attributes)) { $__attributesOriginald411d1792bd6cc877d687758b753742c = $attributes; } ?>
@@ -64,22 +64,26 @@
 
         <!--Search Bar-->
         <form class="w-[515px] h-14 left-0 top-0 absolute">
-            <div class="w-[375px] h-14 left-0 top-0 absolute flex-col justify-start items-start gap-2 inline-flex">
-                <div class="self-stretch h-14 flex-col justify-start items-start gap-1 flex">
-                    <div class="self-stretch h-14 p-4 bg-white rounded-md border border-[#d0d4dd] justify-start items-center gap-3 inline-flex">
-                        <div class="grow shrink basis-0 h-5 justify-start items-center gap-2 flex">
-                            <div class="w-5 h-5 relative"></div>
-                                <div class="justify-start items-center gap-0.5 flex">
-                                    <?php if (isset($component)) { $__componentOriginal18c21970322f9e5c938bc954620c12bb = $component; } ?>
+            <?php if (isset($component)) { $__componentOriginal18c21970322f9e5c938bc954620c12bb = $component; } ?>
 <?php if (isset($attributes)) { $__attributesOriginal18c21970322f9e5c938bc954620c12bb = $attributes; } ?>
-<?php $component = Illuminate\View\AnonymousComponent::resolve(['view' => 'components.text-input','data' => []] + (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag ? $attributes->all() : [])); ?>
+<?php $component = Illuminate\View\AnonymousComponent::resolve(['view' => 'components.text-input','data' => ['id' => 'search_employee','class' => 'w-[375px] h-14 left-0 top-0 absolute flex-col justify-start items-start gap-2 inline-flex mt-1','name' => 'search_employee','value' => old('search_employee'),'autofocus' => true]] + (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag ? $attributes->all() : [])); ?>
 <?php $component->withName('text-input'); ?>
 <?php if ($component->shouldRender()): ?>
 <?php $__env->startComponent($component->resolveView(), $component->data()); ?>
 <?php if (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag): ?>
 <?php $attributes = $attributes->except(\Illuminate\View\AnonymousComponent::ignoredParameterNames()); ?>
 <?php endif; ?>
-<?php $component->withAttributes([]); ?> <?php echo $__env->renderComponent(); ?>
+<?php $component->withAttributes(['id' => 'search_employee','class' => 'w-[375px] h-14 left-0 top-0 absolute flex-col justify-start items-start gap-2 inline-flex mt-1','name' => 'search_employee','value' => \Illuminate\View\Compilers\BladeCompiler::sanitizeComponentAttribute(old('search_employee')),'autofocus' => true]); ?>
+                <div class="self-stretch h-14 flex-col justify-start items-start gap-1 flex">
+                    <div class="self-stretch h-14 p-4 bg-white rounded-md border border-[#d0d4dd] justify-start items-center gap-3 inline-flex">
+                        <div class="grow shrink basis-0 h-5 justify-start items-center gap-2 flex">
+                            <div class="w-5 h-5 relative"></div>
+                                <div class="justify-start items-center gap-0.5 flex">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                 <?php echo $__env->renderComponent(); ?>
 <?php endif; ?>
 <?php if (isset($__attributesOriginal18c21970322f9e5c938bc954620c12bb)): ?>
 <?php $attributes = $__attributesOriginal18c21970322f9e5c938bc954620c12bb; ?>
@@ -89,11 +93,6 @@
 <?php $component = $__componentOriginal18c21970322f9e5c938bc954620c12bb; ?>
 <?php unset($__componentOriginal18c21970322f9e5c938bc954620c12bb); ?>
 <?php endif; ?>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
                 <div class="h-14 left-[396px] top-0 absolute flex-col justify-start items-start inline-flex">
                 <?php if (isset($component)) { $__componentOriginald411d1792bd6cc877d687758b753742c = $component; } ?>
 <?php if (isset($attributes)) { $__attributesOriginald411d1792bd6cc877d687758b753742c = $attributes; } ?>

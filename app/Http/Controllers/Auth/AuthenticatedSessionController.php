@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\View\View;
 use Illuminate\Support\Facades\DB;
+use App\Http\Requests\OTPVerification;
 
 class AuthenticatedSessionController extends Controller
 {
@@ -18,6 +19,17 @@ class AuthenticatedSessionController extends Controller
     public function create(): View
     {
         return view('auth.login');
+    }
+
+    public function otp_page(): View{
+        return view('auth.otp');
+    }
+
+    public function verifyOtp(OTPVerification $verify): RedirectResponse{
+
+        $verify->verify();
+
+        return redirect(route('dashboard'));
     }
 
     /**
@@ -36,7 +48,7 @@ class AuthenticatedSessionController extends Controller
 
         session(['employee' => $employee]);
 
-        return redirect(route('dashboard'));
+        return redirect(route('otp'));
     }
 
     /**
