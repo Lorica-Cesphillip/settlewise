@@ -48,7 +48,7 @@ class AuthenticatedSessionController extends Controller
 
         session(['employee' => $employee]);
 
-        return redirect(route('otp'));
+        return redirect(route('dashboard'));
     }
 
     /**

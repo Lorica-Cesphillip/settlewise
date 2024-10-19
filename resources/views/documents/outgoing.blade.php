@@ -2,13 +2,13 @@
     <table class = "table-fixed">
         <thead>
             <tr>
-                <th class = "p-3 justify-start border-b-2 w-[178px] h-[73px]">Tracking Code</th>
-                <th class = "p-3 justify-start border-b-2 w-[200px] h-[73px]">Receiver</th>
-                <th class = "p-3 justify-start border-b-2 w-[200px] h-[73px]">Division</th>
-                <th class = "p-3 justify-start border-b-2 w-[200px] h-[73px]">Document Type</th>
-                <th class = "p-3 justify-start border-b-2 w-[400px] h-[73px]">Subject</th>
-                <th class = "p-3 justify-start border-b-2 w-[200px] h-[73px]">Status</th>
-                <th class = "p-3 justify-start border-b-2 w-[169px] h-[73px]">Action</th>
+                <th class = "p-3 justify-start border-b-2 w-[178px] h-[45px]">Tracking Code</th>
+                <th class = "p-3 justify-start border-b-2 w-[200px] h-[45px]">Receiver</th>
+                <th class = "p-3 justify-start border-b-2 w-[200px] h-[45px]">Division</th>
+                <th class = "p-3 justify-start border-b-2 w-[200px] h-[45px]">Document Type</th>
+                <th class = "p-3 justify-start border-b-2 w-[400px] h-[45px]">Subject</th>
+                <th class = "p-3 justify-start border-b-2 w-[200px] h-[45px]">Status</th>
+                <th class = "p-3 justify-start border-b-2 w-[169px] h-[45px]">Action</th>
             </tr>
         </thead>
         <tbody>

@@ -1,7 +1,7 @@
 <div x-data="{ open: false }" class="bg-white border-b border-gray-100">
     <!-- Primary Navigation Menu -->
-    <div class="w-[300px] flex-1 h-max absolute">
-        <div class="w-[300px] h-screen fixed bg-[#93d0f7]">
+    <div class=" w-1/6 h-max absolute">
+        <div class=" w-1/6 h-screen fixed bg-[#93d0f7]">
             <div>
                 <!-- Logo -->
                 <a href="<?php echo e(route('dashboard')); ?>">

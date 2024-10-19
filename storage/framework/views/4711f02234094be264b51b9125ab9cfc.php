@@ -16,15 +16,31 @@
         <?php echo app('Illuminate\Foundation\Vite')(['resources/sass/app.scss', 'resources/js/app.js']); ?>
     </head>
     <body class="font-sans antialiased h-max w-max">
-        <div class="flex min-h-screen bg-white ">
+        <div class="relative min-h-screen bg-white ">
             <?php echo $__env->make('layouts.sidebar', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
 
             <!-- Page Content -->
-            <main class = " flex-auto pl-[350px]">
+            <main class = "w-max h-max left-[369px] top-[53px] absolute">
                 <?php echo e($slot); ?>
 
             </main>
         </div>
     </body>
 </html>
+
+<script>
+    function appFooterComponent(){
+        return{
+            time: new Date(),
+            init(){
+                setInterval(() => {
+                    this.time = new Date();
+                }, 1000);
+            },
+            getTime(){
+                return moment(this.time).formay('DD MMMM, YYYY HH:mm:ss')
+            },
+        }
+    }
+</script>
 <?php /**PATH C:\Users\loric\OneDrive\Documents\Capstone Files\settlewise\resources\views/layouts/app.blade.php ENDPATH**/ ?>
