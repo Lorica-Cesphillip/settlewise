@@ -16,29 +16,13 @@
         @vite(['resources/sass/app.scss', 'resources/js/app.js'])
     </head>
     <body class="font-sans antialiased h-max w-max">
-        <div class="relative min-h-screen bg-white ">
+        <div class = "w-full flex h-svh max-h-svh">
             @include('layouts.sidebar')
 
             <!-- Page Content -->
-            <main class = "w-max h-max left-[369px] top-[53px] absolute">
+            <div class = "h-full flex-1 gap-2">
                 {{ $slot }}
-            </main>
+            </div>
         </div>
     </body>
 </html>
-
-<script>
-    function appFooterComponent(){
-        return{
-            time: new Date(),
-            init(){
-                setInterval(() => {
-                    this.time = new Date();
-                }, 1000);
-            },
-            getTime(){
-                return moment(this.time).formay('DD MMMM, YYYY HH:mm:ss')
-            },
-        }
-    }
-</script>
