@@ -4,7 +4,7 @@
     </div>
 
     <div class = "container px-2">
-        <div class="w-full pt-9 py-2 flex-col justify-start items-start gap-1 relative">
+        <div class="pt-9 py-2 flex-col justify-start items-start gap-1 relative">
             <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
                 <x-slot name="icons">{!!'<svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <g id="icon / home-alt">
@@ -17,7 +17,7 @@
             </x-nav-link>
         </div>
     </div>
-    <div class="w-full px-2 py-4 flex-col justify-start items-start gap-3 relative">
+    <div class="w-[300px] px-2 py-4 flex-col justify-start items-start gap-3 relative">
         <div class="self-stretch p-3 justify-start items-center gap-2.5 inline-flex">
             <div class="grow shrink basis-0 text-[#211c6a] text-base font-bold leading-normal">Documents</div>
         </div>

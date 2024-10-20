@@ -23,7 +23,7 @@
     </div>
 
     <div class = "container px-2">
-        <div class="w-full pt-9 py-2 flex-col justify-start items-start gap-1 relative">
+        <div class="pt-9 py-2 flex-col justify-start items-start gap-1 relative">
             <?php if (isset($component)) { $__componentOriginalc295f12dca9d42f28a259237a5724830 = $component; } ?>
 <?php if (isset($attributes)) { $__attributesOriginalc295f12dca9d42f28a259237a5724830 = $attributes; } ?>
 <?php $component = Illuminate\View\AnonymousComponent::resolve(['view' => 'components.nav-link','data' => ['href' => route('dashboard'),'active' => request()->routeIs('dashboard')]] + (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag ? $attributes->all() : [])); ?>
@@ -54,7 +54,7 @@
 <?php endif; ?>
         </div>
     </div>
-    <div class="w-full px-2 py-4 flex-col justify-start items-start gap-3 relative">
+    <div class="w-[300px] px-2 py-4 flex-col justify-start items-start gap-3 relative">
         <div class="self-stretch p-3 justify-start items-center gap-2.5 inline-flex">
             <div class="grow shrink basis-0 text-[#211c6a] text-base font-bold leading-normal">Documents</div>
         </div>
