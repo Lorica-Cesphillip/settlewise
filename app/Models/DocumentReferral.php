@@ -10,6 +10,8 @@ class DocumentReferral extends Model
 {
     use HasFactory;
 
+    protected $table = 'referral_logs';
+
     public function referred_employee(): HasOne{
         return $this->hasOne(User::class);
     }

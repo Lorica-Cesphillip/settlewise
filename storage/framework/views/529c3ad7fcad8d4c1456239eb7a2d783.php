@@ -29,19 +29,17 @@ foreach ($attributes->all() as $__key => $__value) {
 unset($__defined_vars); ?>
 
 <?php
-    $sidebarBg = '#a8d0f0'; // Inactive link background color (matching the sidebar)
-    $activeBg = '#fff6e9';  // Active background color when clicked
-    $hoverBg = '#dcdcdc';   // Hover background color
-
-    $classes =
-        ($active ?? false)
-            ? 'w-[300px] h-11 px-4 py-4 rounded justify-start items-center gap-1 inline-flex bg-[' . $activeBg . '] text-[#200e3a] font-semibold'
-            : 'w-[300px] h-11 px-4 py-4 rounded justify-start items-center gap-1 inline-flex bg-[' . $sidebarBg . '] hover:bg-[' . $hoverBg .']';
+    $sidebarBg = '#94D0F8';  // Default background color
+    $activeBg = '#fff6e9';   // Active background color
+    $hoverBg = '#dcdcdc';    // Hover background color
 ?>
 
-<a <?php echo e($attributes->merge(['class' => $classes])); ?>>
-    <div class="py-3 grow shrink basis-0 h-9 justify-start items-start gap-3 flex">
-        <div class="w-5 h-5 relative"><?php echo e($icons); ?></div>
+<a <?php echo e($attributes->merge([
+    'class' => 'w-[300px] h-11 px-4 py-4 rounded justify-start items-center gap-1 inline-flex font-semibold text-[#200e3a] hover:bg-[#fff6e9]',
+    'style' => $active ? "background-color: $activeBg;" : "background-color: $sidebarBg;",
+])); ?>>
+    <div class="py-3 grow shrink basis-0 justify-start items-start gap-3 flex">
+        <div class="w-5 h-5"><?php echo e($icons); ?></div>
         <div class="grow shrink basis-0 text-sm leading-tight"><?php echo e($navpage); ?></div>
         <?php if($badge): ?>
         <div class="px-2 bg-[#eaeaea] rounded-[10px] inline-flex">
