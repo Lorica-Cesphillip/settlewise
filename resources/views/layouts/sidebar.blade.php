@@ -1,5 +1,5 @@
   <!-- Sidebar -->
-<aside class="relative bg-[#94D0F8] h-screen transition-all duration-300 flex flex-col text-md font-semibold ">
+<aside class="relative bg-[#94D0F8] h-screen w-[300px] transition-all duration-300 flex flex-col text-md font-semibold ">
     <a href = "{{route('dashboard')}}" class = "container p-2">
         <x-application-logo/>
     </a>
@@ -58,9 +58,26 @@
                 <x-slot name="navpage">Archived Documents</x-slot>
                 <x-slot name="badge">10</x-slot>
             </x-nav-link>
+            @else
+            <x-nav-link :href="route('employees.index')" :active="request()->routeIs('employees.index')">
+                <x-slot name="icons">{!!'<svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <g id="icon / users">
+                <g id="icon">
+                <path fill-rule="evenodd" clip-rule="evenodd" d="M11.6668 2.5C8.90536 2.5 6.66678 4.73858 6.66678 7.5C6.66678 10.2614 8.90536 12.5 11.6668 12.5C14.4282 12.5 16.6668 10.2614 16.6668 7.5C16.6668 4.73858 14.4282 2.5 11.6668 2.5ZM8.33345 7.5C8.33345 5.65905 9.82583 4.16667 11.6668 4.16667C13.5077 4.16667 15.0001 5.65905 15.0001 7.5C15.0001 9.34095 13.5077 10.8333 11.6668 10.8333C9.82583 10.8333 8.33345 9.34095 8.33345 7.5Z" fill="#200E3A"/>
+                <path d="M6.79628 17.106C6.55364 17.4971 6.03991 17.6174 5.64883 17.3748C5.25775 17.1321 5.13741 16.6184 5.38005 16.2273C6.52122 14.388 8.85578 12.5 11.6668 12.5C14.4778 12.5 16.8124 14.388 17.9535 16.2273C18.1962 16.6184 18.0758 17.1321 17.6848 17.3748C17.2937 17.6174 16.7799 17.4971 16.5373 17.106C15.6022 15.5988 13.7371 14.1667 11.6668 14.1667C9.59651 14.1667 7.73141 15.5988 6.79628 17.106Z" fill="#200E3A"/>
+                <path d="M6.58166 5.46643C6.7843 5.87966 6.61358 6.37891 6.20035 6.58155C5.44313 6.95287 5.00011 7.62649 5.00011 8.33333C5.00011 9.04017 5.44313 9.7138 6.20035 10.0851C6.61358 10.2878 6.7843 10.787 6.58166 11.2002C6.37903 11.6135 5.87977 11.7842 5.46654 11.5815C4.23587 10.9781 3.33345 9.77794 3.33345 8.33333C3.33345 6.88872 4.23587 5.6886 5.46654 5.08512C5.87977 4.88248 6.37903 5.0532 6.58166 5.46643Z" fill="#200E3A"/>
+                <path d="M3.46295 17.106C3.22031 17.4971 2.70658 17.6174 2.3155 17.3748C1.92442 17.1321 1.80408 16.6184 2.04672 16.2273C2.5293 15.4495 3.30141 14.8003 4.16281 14.2966C4.56011 14.0643 5.07052 14.198 5.30283 14.5953C5.53515 14.9926 5.40141 15.503 5.00411 15.7354C4.28435 16.1562 3.75479 16.6356 3.46295 17.106Z" fill="#200E3A"/>
+                </g>
+                </g>
+                </svg>
+                '!!}</x-slot>
+                <x-slot name="navpage">Current Employees</x-slot>
+                <x-slot name="badge">21</x-slot>
+            </x-nav-link>
             @endif
         </div>
 
+        @if(session('employee')->division_name == "APHSO Department")
         <div class="w-full px-2 py-4 flex-col justify-start items-start gap-1 relative">
             <div class="self-stretch p-3 justify-start items-center gap-2.5 inline-flex">
                 <div class="grow shrink basis-0 text-[#211c6a] text-base font-bold leading-normal">User Management</div>
@@ -101,34 +118,55 @@
                 <x-slot name="badge">21</x-slot>
             </x-nav-link>
         </div>
+        @endif
     </div>
 
         <!--Profile Dropdown-->
-        <div class = "container">
-            <div class="w-full h-[73px] left-0 bottom-0 absolute">
-                <div class="w-full h-[73px] left-0 top-0 absolute bg-[#200e3a] flex-col justify-start items-start inline-flex">
-                    <div class="self-stretch h-[72px] px-6 py-4 bg-[#005791]/70 justify-start items-center gap-3 inline-flex">
-                        <div class="grow shrink basis-0 h-10 justify-start items-center gap-3 flex">
-                            <div class="grow shrink basis-0 h-10 justify-start items-center gap-3 flex">
-                                <div class="w-10 h-10 justify-center items-center flex">
-                                    <img class="w-10 h-10 rounded-[200px] border border-white" src="https://via.placeholder.com/40x40" />
-                                </div>
-                                <div class="grow shrink basis-0 flex-col justify-start items-start inline-flex">
-                                    <div class="self-stretch text-[#efefef] text-sm font-medium leading-tight">{{session('employee')->full_name}}</div>
-                                    <div class="self-stretch text-[#efefef] text-sm font-normal leading-tight">{{session('employee')->division_name}}</div>
+        <div class = "container bottom-0 left-0 absolute">
+            <x-dropdown align="left" width="100%">
+                <x-slot name="trigger">
+                    <button class="w-full h-[73px]">
+                        <div class="w-full h-[73px] left-0 top-0 absolute bg-[#200e3a] flex-col justify-start items-start inline-flex">
+                            <div class="self-stretch h-[72px] px-6 py-4 bg-[#005791]/70 justify-start items-center gap-3 inline-flex">
+                                <div class="grow shrink basis-0 h-10 justify-start items-center gap-3 flex">
+                                    <div class="grow shrink basis-0 h-10 justify-start items-center gap-3 flex">
+                                        <div class="w-10 h-10 justify-center items-center flex">
+                                            <img class="w-10 h-10 rounded-[200px] border border-white" src="https://via.placeholder.com/40x40" />
+                                        </div>
+                                        <div class="grow shrink basis-0 flex-col justify-start items-start inline-flex">
+                                            <div class="self-stretch text-[#efefef] text-sm font-medium leading-tight">{{session('employee')->full_name}}</div>
+                                            <div class="self-stretch text-[#efefef] text-sm font-normal leading-tight">{{session('employee')->division_name}}</div>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                </div>
-                <div class="w-6 h-6 right-4 top-[24px] absolute">
-                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <g id="icon / chevron-up">
-                        <path id="icon" d="M10.6293 7.91689C11.3994 7.19209 12.6006 7.19209 13.3707 7.91689L21.1854 15.2718C21.5875 15.6504 21.6067 16.2832 21.2282 16.6854C20.8497 17.0876 20.2168 17.1068 19.8146 16.7282L12 9.37329L4.18537 16.7282C3.78319 17.1068 3.15032 17.0876 2.7718 16.6854C2.39329 16.2832 2.41246 15.6504 2.81464 15.2718L10.6293 7.91689Z" fill="#FFF6E9"/>
-                        </g>
-                    </svg>
-                </div>
-            </div>
+                        <div class="w-6 h-6 right-4 top-[24px] absolute">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <g id="icon / chevron-up">
+                                <path id="icon" d="M10.6293 7.91689C11.3994 7.19209 12.6006 7.19209 13.3707 7.91689L21.1854 15.2718C21.5875 15.6504 21.6067 16.2832 21.2282 16.6854C20.8497 17.0876 20.2168 17.1068 19.8146 16.7282L12 9.37329L4.18537 16.7282C3.78319 17.1068 3.15032 17.0876 2.7718 16.6854C2.39329 16.2832 2.41246 15.6504 2.81464 15.2718L10.6293 7.91689Z" fill="#FFF6E9"/>
+                                </g>
+                            </svg>
+                        </div>
+                    </button>
+                </x-slot>
+
+                <x-slot name="content">
+                    <x-dropdown-link :href="route('employees.edit')">
+                        {{__('Your Profile')}}
+                    </x-dropdown-link>
+
+                    <form action="{{route('logout')}}" method = "POST">
+                        @csrf
+
+                        <x-dropdown-link :href="route('logout')"
+                        onclick="event.preventDefault();
+                                    this.closest('form').submit();">
+                            {{ __('Log Out') }}
+                        </x-dropdown-link>
+                    </form>
+                </x-slot>
+            </x-dropdown>
         </div>
 </aside>
   <!-- Sidebar -->

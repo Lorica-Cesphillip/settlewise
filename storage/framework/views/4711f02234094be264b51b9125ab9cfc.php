@@ -13,11 +13,11 @@
     <?php echo app('Illuminate\Foundation\Vite')(['resources/sass/app.scss', 'resources/js/app.js']); ?>
 </head>
 <body class="font-sans antialiased h-screen w-screen">
-    <div class="flex flex-row h-full w-[300px] columns-2">
+    <div class="flex flex-row">
         <!-- Sidebar -->
         <?php echo $__env->make('layouts.sidebar', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
         <!-- Main Content -->
-        <main class="h-full bg-white p-4 contents flex-1">
+        <main class = "p-14">
             <?php echo e($slot); ?>
 
         </main>

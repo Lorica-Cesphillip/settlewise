@@ -35,14 +35,14 @@ unset($__defined_vars); ?>
 ?>
 
 <a <?php echo e($attributes->merge([
-    'class' => 'w-[300px] h-11 px-4 py-4 rounded justify-start items-center gap-1 inline-flex font-semibold text-[#200e3a] hover:bg-[#fff6e9]',
+    'class' => 'w-full h-11 px-4 py-4 rounded justify-start items-center gap-1 inline-flex font-semibold text-[#200e3a] hover:bg-[#fff6e9]',
     'style' => $active ? "background-color: $activeBg;" : "background-color: $sidebarBg;",
 ])); ?>>
     <div class="py-3 grow shrink basis-0 justify-start items-start gap-3 flex">
         <div class="w-5 h-5"><?php echo e($icons); ?></div>
         <div class="grow shrink basis-0 text-sm leading-tight"><?php echo e($navpage); ?></div>
         <?php if($badge): ?>
-        <div class="px-2 bg-[#eaeaea] rounded-[10px] inline-flex">
+        <div class="px-2 bg-[#eaeaea] rounded-[10px] right-0 inline-flex">
             <div class="text-xs font-medium"><?php echo e($badge); ?></div>
         </div>
         <?php endif; ?>

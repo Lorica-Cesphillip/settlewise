@@ -9,9 +9,4 @@
                 </svg>'!!}
         </x-slot>
     </x-title_header>
-
-    <div class = "inline-flex">
-        <div class = " inline-flex">Today is: </div>
-        <div class = " inline-flex">October 21, 2024 12:00:00 am</div>
-    </div>
 </x-app-layout>

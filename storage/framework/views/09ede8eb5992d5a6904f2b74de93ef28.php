@@ -37,11 +37,6 @@
 <?php $component = $__componentOriginal901ceb9e61b95c05773aa75972fcbec9; ?>
 <?php unset($__componentOriginal901ceb9e61b95c05773aa75972fcbec9); ?>
 <?php endif; ?>
-
-    <div class = "inline-flex">
-        <div class = " inline-flex">Today is: </div>
-        <div class = " inline-flex">October 21, 2024 12:00:00 am</div>
-    </div>
  <?php echo $__env->renderComponent(); ?>
 <?php endif; ?>
 <?php if (isset($__attributesOriginal9ac128a9029c0e4701924bd2d73d7f54)): ?>
