@@ -13,11 +13,11 @@
     @vite(['resources/sass/app.scss', 'resources/js/app.js'])
 </head>
 <body class="font-sans antialiased h-screen w-screen">
-    <div class="flex flex-row">
+    <div class="flex flex-row w-full">
         <!-- Sidebar -->
         @include('layouts.sidebar')
         <!-- Main Content -->
-        <main class = "p-14">
+        <main class = "pt-11 px-11">
             {{ $slot }}
         </main>
     </div>
