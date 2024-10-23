@@ -15,4 +15,40 @@
             '!!}
         </x-slot>
     </x-title_header>
+
+    <!--Necessary Buttons-->
+
+    <!--Table-->
+    <div class = "w-full h-full p-2">
+        <table class = "table-fixed border-b-2">
+            <thead>
+                <tr class = "border-b-2">
+                    <th class = "w-[150px] h-[30px] p-3 justify-start">Employee Id</th>
+                    <th class = "w-[200px] h-[30px] p-3 justify-start">Employee Name</th>
+                    <th class = "w-[250px] h-[30px] p-3 justify-start">Division</th>
+                    <th class = "w-[250px] h-[30px] p-3 justify-start">Position</th>
+                    <th class = "w-[200px] h-[30px] p-3 justify-start">Contact Number</th>
+                    <th class = "w-[200px] h-[30px] p-3 justify-start">Email</th>
+                    <th class = "w-[200px] h-[30px] p-3 justify-start">Status</th>
+                    <th class = "w-[200px] h-[30px] p-3 justify-start">Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach($aphso_employees as $employee)
+                <tr class = "border-b-2">
+
+                    <td class = "w-[150px] h-[45px] p-3 justify-start">{{$employee->divisions->abbreviation}}-{{$employee->employee_number}}</td>
+                    <td class = "w-[200px] h-[45px] p-3 justify-start">{{$employee->fname}} {{$employee->mname}} {{$employee->lname}} </td>
+                    <td class = "w-[250px] h-[45px] p-3 justify-start">{{$employee->divisions->division_name}}</td>
+                    <td class = "w-[250px] h-[45px] p-3 justify-start">{{$employee->position}}</td>
+                    <td class = "w-[200px] h-[45px] p-3 justify-start">{{$employee->contact_nos}}</td>
+                    <td class = "w-[200px] h-[45px] p-3 justify-start">{{$employee->email}}</td>
+                    <td class = "w-[200px] h-[45px] p-3 justify-start">{{$employee->emp_status}}</td>
+                    <td class = "w-[200px] h-[45px] p-3 justify-start"></td>
+
+                </tr>
+                @endforeach
+            </tbody>
+        </table>
+    </div>
 </x-app-layout>

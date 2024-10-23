@@ -43,6 +43,42 @@
 <?php $component = $__componentOriginal901ceb9e61b95c05773aa75972fcbec9; ?>
 <?php unset($__componentOriginal901ceb9e61b95c05773aa75972fcbec9); ?>
 <?php endif; ?>
+
+    <!--Necessary Buttons-->
+
+    <!--Table-->
+    <div class = "w-full h-full p-2">
+        <table class = "table-fixed border-b-2">
+            <thead>
+                <tr class = "border-b-2">
+                    <th class = "w-[150px] h-[30px] p-3 justify-start">Employee Id</th>
+                    <th class = "w-[200px] h-[30px] p-3 justify-start">Employee Name</th>
+                    <th class = "w-[250px] h-[30px] p-3 justify-start">Division</th>
+                    <th class = "w-[250px] h-[30px] p-3 justify-start">Position</th>
+                    <th class = "w-[200px] h-[30px] p-3 justify-start">Contact Number</th>
+                    <th class = "w-[200px] h-[30px] p-3 justify-start">Email</th>
+                    <th class = "w-[200px] h-[30px] p-3 justify-start">Status</th>
+                    <th class = "w-[200px] h-[30px] p-3 justify-start">Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php $__currentLoopData = $aphso_employees; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $employee): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                <tr class = "border-b-2">
+
+                    <td class = "w-[150px] h-[45px] p-3 justify-start"><?php echo e($employee->divisions->abbreviation); ?>-<?php echo e($employee->employee_number); ?></td>
+                    <td class = "w-[200px] h-[45px] p-3 justify-start"><?php echo e($employee->fname); ?> <?php echo e($employee->mname); ?> <?php echo e($employee->lname); ?> </td>
+                    <td class = "w-[250px] h-[45px] p-3 justify-start"><?php echo e($employee->divisions->division_name); ?></td>
+                    <td class = "w-[250px] h-[45px] p-3 justify-start"><?php echo e($employee->position); ?></td>
+                    <td class = "w-[200px] h-[45px] p-3 justify-start"><?php echo e($employee->contact_nos); ?></td>
+                    <td class = "w-[200px] h-[45px] p-3 justify-start"><?php echo e($employee->email); ?></td>
+                    <td class = "w-[200px] h-[45px] p-3 justify-start"><?php echo e($employee->emp_status); ?></td>
+                    <td class = "w-[200px] h-[45px] p-3 justify-start"></td>
+
+                </tr>
+                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+            </tbody>
+        </table>
+    </div>
  <?php echo $__env->renderComponent(); ?>
 <?php endif; ?>
 <?php if (isset($__attributesOriginal9ac128a9029c0e4701924bd2d73d7f54)): ?>
