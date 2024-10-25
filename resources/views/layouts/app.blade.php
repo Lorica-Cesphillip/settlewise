@@ -17,7 +17,7 @@
         <!-- Sidebar -->
         @include('layouts.sidebar')
         <!-- Main Content -->
-        <main class = "pt-11 px-11">
+        <main class = "px-11 py-8 h-fit self-stretch">
             {{ $slot }}
         </main>
     </div>

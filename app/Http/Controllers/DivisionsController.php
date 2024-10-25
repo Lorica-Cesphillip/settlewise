@@ -22,7 +22,7 @@ class DivisionsController extends Controller
     }
     public function index()
     {
-        $divisions = Divisions::all()->paginate(10);
+        $divisions = Divisions::all();
 
         return view('documents.aphso-divisions', compact('divisions'));
     }

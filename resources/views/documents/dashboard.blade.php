@@ -9,4 +9,50 @@
                 </svg>'!!}
         </x-slot>
     </x-title_header>
+
+    <article class="w-full h-full relative columns-2">
+        <!--Announcements-->
+        <div class="w-1/3 h-full p-2 gap-3 flex flex-col">
+            <!-- Full Heading occupying the entire width -->
+            <div class="w-fit h-fit p-2 flex justify-center items-center rounded-xl shadow border text-wrap border-black">
+                <h3 class="text-2xl w-full font-bold text-center">ANNOUNCEMENTS</h3>
+            <!-- Content divided into left and right columns -->
+            <div class="w-full h-fit p-2 flex">
+                <!-- Left side with the first five <p> elements -->
+                <div class="w-1/2 p-2">
+                    <p class="p-2">WHAT: </p>
+                    <p class="p-2">WHEN: </p>
+                    <p class="p-2">WHERE: </p>
+                    <p class="p-2">WHO: </p>
+                    <p class="p-2">NOTES: </p>
+                </div>
+
+                <!-- Right side with the remaining <p> elements -->
+                <div class="w-1/2 p-2">
+                    <p class="p-2">PGA Annual Meeting</p>
+                    <p class="p-2">Office of the Sangguniang Bayan</p>
+                    <p class="p-2">Albay Provincial Capitol, Legazpi City</p>
+                    <p class="p-2">All APHSO Employees</p>
+                    <p class="p-2"></p>
+                </div>
+            </div>
+
+            </div>
+        </div>
+
+
+        <!--Incoming Documents-->
+        <div class = "h-full p-2">
+            <div class = "w-fit h-fit p-2 right-0 top-0 flex rounded-xl shadow border border-black">
+                <h3 class = "px-20 py-2 text-2xl font-bold text-center flex">INCOMING DOCUMENTS</h3>
+                <table class = "table-auto">
+                    <thead>
+                        <tr>
+                            <th>Tracking code</th>
+                        </tr>
+                    </thead>
+                </table>
+            </div>
+
+        </div>
 </x-app-layout>

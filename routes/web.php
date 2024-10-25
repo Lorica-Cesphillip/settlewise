@@ -34,9 +34,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
     })->name('archived');
 
     /*Employee Information Module*/
-    Route::get('documents/aphso_divisions', function () {
-        return view('documents.aphso-divisions');
-    })->name('divisions');
+    Route::get('documents/aphso_divisions', [DivisionsController::class, 'index'])->name('divisions');
 
     Route::get('/documents/employees', [EmployeeManagementController::class, 'index'])->name('employees.index');
     Route::get('/documents/employees/add', [DivisionsController::class, 'showForm'])->name('employees.add');

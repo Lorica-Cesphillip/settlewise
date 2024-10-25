@@ -1,5 +1,5 @@
 <x-app-layout>
-    <div>
+    <div class = "w-full">
         <x-title_header>
             <x-slot name="heading">Your Employees</x-slot>
             <x-slot name="icon">
@@ -19,7 +19,7 @@
 
         <!--Necessary Buttons-->
         <div class = "w-full flex row-span-3 h-20 columns-2">
-            <div class = "left-0 w-full h-14 inline-flex gap-3">
+            <div class = "left-0 h-14 inline-flex gap-3 w-1/2">
                 <x-text-input id="employee_id" class="mt-1 w-3/5 gap-3" type="text" name="employee_id" :value="old('employee_id')" autofocus placeholder="Search Employee"/>
                 <x-primary-button class="gap-3">
                     <x-slot name="icon">
@@ -33,7 +33,7 @@
                 </x-primary-button>
             </div>
 
-            <div class = "right-0 inline-flex h-14 gap-3">
+            <div class = "w-10/12 inline-flex h-14 gap-3">
                 <!--Reports Generation-->
                 <form class = "inline-flex gap-3" action = "#" method = "POST">
                     <x-input-label>From: </x-input-label>
@@ -81,15 +81,15 @@
         <div class = "w-full h-full p-2">
             <table class = "table-auto border-b-2">
                 <thead>
-                    <tr class = "border-b-2">
-                        <th class = "w-max h-[30px] p-3 justify-start">Employee Id</th>
-                        <th class = "w-max h-[30px] p-3 justify-start">Employee Name</th>
-                        <th class = "w-max h-[30px] p-3 justify-start">Division</th>
-                        <th class = "w-max h-[30px] p-3 justify-start">Position</th>
-                        <th class = "w-max h-[30px] p-3 justify-start">Contact Number</th>
-                        <th class = "w-max h-[30px] p-3 justify-start">Email</th>
-                        <th class = "w-max h-[30px] p-3 justify-start">Status</th>
-                        <th class = "w-max h-[30px] p-3 justify-start">Action</th>
+                    <tr class = "bg-slate-200 h-[30px]">
+                        <th class = "w-max p-3 justify-start">Employee Id</th>
+                        <th class = "w-max p-3 justify-start">Employee Name</th>
+                        <th class = "w-max p-3 justify-start">Division</th>
+                        <th class = "w-max p-3 justify-start">Position</th>
+                        <th class = "w-max p-3 justify-start">Contact Number</th>
+                        <th class = "w-max p-3 justify-start">Email</th>
+                        <th class = "w-max p-3 justify-start">Status</th>
+                        <th class = "w-max p-3 justify-start">Action</th>
                     </tr>
                 </thead>
                 <tbody>

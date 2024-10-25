@@ -8,7 +8,7 @@
 <?php $attributes = $attributes->except(\App\View\Components\AppLayout::ignoredParameterNames()); ?>
 <?php endif; ?>
 <?php $component->withAttributes([]); ?>
-    <div>
+    <div class = "w-full">
         <?php if (isset($component)) { $__componentOriginal901ceb9e61b95c05773aa75972fcbec9 = $component; } ?>
 <?php if (isset($attributes)) { $__attributesOriginal901ceb9e61b95c05773aa75972fcbec9 = $attributes; } ?>
 <?php $component = Illuminate\View\AnonymousComponent::resolve(['view' => 'components.title_header','data' => []] + (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag ? $attributes->all() : [])); ?>
@@ -47,7 +47,7 @@
 
         <!--Necessary Buttons-->
         <div class = "w-full flex row-span-3 h-20 columns-2">
-            <div class = "left-0 w-full h-14 inline-flex gap-3">
+            <div class = "left-0 h-14 inline-flex gap-3 w-1/2">
                 <?php if (isset($component)) { $__componentOriginal18c21970322f9e5c938bc954620c12bb = $component; } ?>
 <?php if (isset($attributes)) { $__attributesOriginal18c21970322f9e5c938bc954620c12bb = $attributes; } ?>
 <?php $component = Illuminate\View\AnonymousComponent::resolve(['view' => 'components.text-input','data' => ['id' => 'employee_id','class' => 'mt-1 w-3/5 gap-3','type' => 'text','name' => 'employee_id','value' => old('employee_id'),'autofocus' => true,'placeholder' => 'Search Employee']] + (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag ? $attributes->all() : [])); ?>
@@ -98,7 +98,7 @@
 <?php endif; ?>
             </div>
 
-            <div class = "right-0 inline-flex h-14 gap-3">
+            <div class = "w-10/12 inline-flex h-14 gap-3">
                 <!--Reports Generation-->
                 <form class = "inline-flex gap-3" action = "#" method = "POST">
                     <?php if (isset($component)) { $__componentOriginale3da9d84bb64e4bc2eeebaafabfb2581 = $component; } ?>
@@ -237,15 +237,15 @@
         <div class = "w-full h-full p-2">
             <table class = "table-auto border-b-2">
                 <thead>
-                    <tr class = "border-b-2">
-                        <th class = "w-max h-[30px] p-3 justify-start">Employee Id</th>
-                        <th class = "w-max h-[30px] p-3 justify-start">Employee Name</th>
-                        <th class = "w-max h-[30px] p-3 justify-start">Division</th>
-                        <th class = "w-max h-[30px] p-3 justify-start">Position</th>
-                        <th class = "w-max h-[30px] p-3 justify-start">Contact Number</th>
-                        <th class = "w-max h-[30px] p-3 justify-start">Email</th>
-                        <th class = "w-max h-[30px] p-3 justify-start">Status</th>
-                        <th class = "w-max h-[30px] p-3 justify-start">Action</th>
+                    <tr class = "bg-slate-200 h-[30px]">
+                        <th class = "w-max p-3 justify-start">Employee Id</th>
+                        <th class = "w-max p-3 justify-start">Employee Name</th>
+                        <th class = "w-max p-3 justify-start">Division</th>
+                        <th class = "w-max p-3 justify-start">Position</th>
+                        <th class = "w-max p-3 justify-start">Contact Number</th>
+                        <th class = "w-max p-3 justify-start">Email</th>
+                        <th class = "w-max p-3 justify-start">Status</th>
+                        <th class = "w-max p-3 justify-start">Action</th>
                     </tr>
                 </thead>
                 <tbody>

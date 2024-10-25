@@ -11,8 +11,9 @@
         @vite('resources/css/app.css')
     </head>
     <body>
+        <!--Image Background-->
         <img src = {{URL::asset('images/capitol.jpg')}} alt = "Albay Provincial Capitol" class = "w-full h-full absolute">
-        <div class="px-[360px] py-[50px] justify-center items-center inline-flex">
+        <div class=" px-80 py-12 justify-center items-center inline-flex">
             <div class="w-[1200px] h-[800px] relative">
                 <div class="w-[1200px] h-[800px] left-0 top-0 absolute bg-white">
                     <div class="w-[1005px] h-[699px] left-[97px] top-[51px] absolute">
@@ -35,7 +36,7 @@
                         <form class="h-14 left-[414px] top-[643px] absolute flex-col justify-start items-start inline-flex" method = "GET" action = "{{route('login')}}">
                             <x-primary-button>
                                 <div class="justify-center items-center gap-2 inline-flex">
-                                    <div class="text-center text-white text-base font-semibold leading-normal">Let’s Get Started</div>
+                                    <x-slot name="name" class="text-center text-white text-base font-semibold leading-normal">Let’s Get Started</x-slot>
                                 </div>
                             </x-primary-button>
                         </form>

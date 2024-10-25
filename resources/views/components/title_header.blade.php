@@ -1,7 +1,7 @@
 @props(['heading' => '', 'icon' => ''])
 
 <div class="w-full h-[73px] relative">
-    <div class="w-3/4 h-[69px] left-0 top-[4px] absolute">
+    <div class="w-1/2 h-[69px] left-0 top-[4px] absolute">
         <div class="w-[452px] h-[69px] left-[75px] p-2 absolute text-black text-[32px] font-bold">
             {{$heading}}
         </div>
@@ -9,7 +9,7 @@
             {{$icon}}
         </div>
     </div>
-    <div class="w-[527px] h-[69px] left-[900px] absolute">
+    <div class="w-full h-[69px] left-[900px] absolute">
         <div x-data="clock()" x-init="init()" class="w-[452px] h-[69px] left-[75px] px-2 py-3 absolute text-right text-black text-2xl font-normal leading-[34.80px]">
             Today is: <u><span x-text="date"></span> <span x-text="time"></span></u>
         </div>
