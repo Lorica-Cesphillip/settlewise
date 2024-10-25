@@ -33,7 +33,7 @@ Route::middleware('guest')->group(function () {
 
     /*OTP Verification */
     Route::get('otp', [AuthenticatedSessionController::class, 'otp_page'])->name('otp');
-    Route::post('otp', [AuthenticatedSessionController::class, 'verifyOtp']);
+    Route::post('otp', [AuthenticatedSessionController::class, 'verifyOtp'])->name('otp_verification');
 });
 
 Route::middleware('auth')->group(function () {
