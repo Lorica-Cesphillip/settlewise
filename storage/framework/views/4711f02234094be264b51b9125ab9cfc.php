@@ -17,7 +17,7 @@
         <!-- Sidebar -->
         <?php echo $__env->make('layouts.sidebar', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
         <!-- Main Content -->
-        <main class = "px-11 py-8 h-fit w-fit self-stretch">
+        <main class = "px-11 py-8 h-fit w-full self-stretch">
             <?php echo e($slot); ?>
 
         </main>

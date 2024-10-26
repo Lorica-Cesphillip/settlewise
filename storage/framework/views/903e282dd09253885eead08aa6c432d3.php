@@ -51,7 +51,7 @@
         <!--Necessary Buttons-->
     <div class = "w-full flex row-span-3 h-20 columns-2">
         <!--Add New Employee and Refresh Buttons-->
-        <div class = "inline-flex gap-3 h-14 justify-end">
+        <div class = "inline-flex gap-3 h-14 justify-end right-0">
             <?php if (isset($component)) { $__componentOriginald411d1792bd6cc877d687758b753742c = $component; } ?>
 <?php if (isset($attributes)) { $__attributesOriginald411d1792bd6cc877d687758b753742c = $attributes; } ?>
 <?php $component = Illuminate\View\AnonymousComponent::resolve(['view' => 'components.primary-button','data' => []] + (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag ? $attributes->all() : [])); ?>

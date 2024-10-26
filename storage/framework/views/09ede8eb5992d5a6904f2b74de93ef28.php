@@ -42,8 +42,8 @@
         <div class="pt-2">
             <!--Announcements-->
             <div
-                class="w-fit h-fit p-2 block justify-center items-center rounded-xl shadow border text-wrap border-black">
-                <h3 class="text-2xl w-full font-bold text-center px-32 pt-4">ANNOUNCEMENTS</h3>
+                class="w-[480px] h-fit p-2 block justify-center items-center rounded-xl shadow border text-wrap border-black">
+                <h3 class="text-2xl w-full font-bold text-center px-24 pt-4">ANNOUNCEMENTS</h3>
                 <!-- Content divided into left and right columns -->
                 <div class="w-full h-fit px-6 flex columns-2">
                     <div class = "pr-5 font-light">
@@ -61,7 +61,6 @@
                         <div>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt
                             ut labore et dolore magna aliqua.</div>
                     </div>
-
                 </div>
 
                 <div class="w-full h-fit p-2 flex justify-center items-center py-6">
@@ -76,10 +75,10 @@
             </div>
 
             <!--Other Links-->
-            <div class = "w-fit h-fit p-2 block justify-start items-start py-4 gap-3">
+            <div class = "w-fit h-fit block justify-start items-start py-4 gap-3">
                 <h3 class="text-2xl w-full font-bold inline-flex">OTHER LINKS:</h3>
                 <div class = "py-2">
-                    <div class = "w-fit h-fit p-5 space-between items-center rounded-xl shadow border text-wrap flex border-black">
+                    <div class = "w-[480px] h-fit p-5 justify-between items-center rounded-xl shadow border text-wrap flex border-black">
                         <div class = "block">
                             <p class="text-base w-full font-bold text-left">Provincial Government of Albay</p>
                             <a href = "https://albay.gov.ph" class = "text-blue-800">albay.gov.ph</a>
@@ -88,7 +87,7 @@
                     </div>
                 </div>
                 <div class = "py-2">
-                    <div class = "w-fit h-fit p-5 space-between items-center rounded-xl shadow border text-wrap flex border-black">
+                    <div class = "w-[480px] h-fit p-5 justify-between items-center rounded-xl shadow border text-wrap flex border-black">
                         <div class = "block">
                             <p class="text-base w-full font-bold text-left">Provincial Human Resource Management Office</p>
                             <a href = "https://albay.gov.ph/provincial-human-resource-management-office/"
@@ -98,7 +97,7 @@
                     </div>
                 </div>
                 <div class = "py-2">
-                    <div class = "w-fit h-fit p-5 justify-center items-center rounded-xl shadow border text-wrap flex border-black">
+                    <div class = "w-[480px] h-fit p-5 justify-between items-center rounded-xl shadow border text-wrap flex border-black">
                         <div class = "block">
                             <p class="text-base w-full font-bold text-left">Albay Local Government Unit</p>
                             <a href = "https://lgu201.dilg.gov.ph/view.php?r=05&p=005&m="
@@ -138,8 +137,8 @@
                 </table>
 
                 <div class="w-full h-fit p-2 flex justify-center items-center pt-8">
-                    <a href = "#"
-                        class="w-7/12 px-1 py-2 bg-[#211c6a] rounded-lg flex-col justify-center items-center gap-2.5 inline-flex">
+                    <a href = "<?php echo e(route('incoming')); ?>"
+                        class="w-7/12 px-1 py-2 bg-blue-950 rounded-lg flex-col justify-center items-center gap-2.5 inline-flex hover:bg-blue-800">
                         <div class="justify-center items-center gap-2 inline-flex">
                             <div class="text-center text-white text-sm font-semibold leading-tight">VIEW INCOMING
                                 DOCUMENTS</div>

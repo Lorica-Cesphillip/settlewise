@@ -35,7 +35,7 @@
 
             <div class = "w-10/12 inline-flex h-14 gap-3">
                 <!--Reports Generation-->
-                <form class = "inline-flex gap-3" action = "#" method = "POST">
+                <form class = "inline-flex gap-3" action = "#" method = "GET">
                     <x-input-label>From: </x-input-label>
                     <input type = "date" name = "from" id = "from" class = "p-3 rounded-md">
                     <x-input-label>To: </x-input-label>
@@ -56,9 +56,11 @@
                 </form>
                 <!--Add New Employee and Refresh Buttons-->
                 <div class = "inline-flex gap-3">
-                    <x-primary-button>
+                    <x-primary-button x-on:open-modal.window="$event.detail == 'add-new-employee' ? show = true : null">
                         <x-slot name="name">Add New Employee</x-slot>
                     </x-primary-button>
+                    @include('documents.forms.add_employee')
+
                     <x-secondary-button>
                         <x-slot name="icon">
                             {!!'<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -76,6 +78,9 @@
                 </div>
             </div>
         </div>
+
+        <!--Modals-->
+
 
         <!--Table-->
         <div class = "w-full h-full p-2">

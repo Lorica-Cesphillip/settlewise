@@ -1,6 +1,6 @@
 @props(['heading' => '', 'icon' => ''])
 
-<div class="w-full self-stretch h-[73px] flex justify-between">
+<div class="self-stretch h-[73px] flex justify-between">
     <div class="h-[69px] inline-flex">
         <div class="w-[50px] h-[50px] left-0 top-[9px]  flex-col justify-start items-start inline-flex">
             {{ $icon }}
@@ -9,7 +9,7 @@
             {{ $heading }}
         </div>
     </div>
-    <div class="w-full h-[69px] inline-flex">
+    <div class="h-[69px] inline-flex">
         <div class="w-[50px] h-[50px] left-0 top-[9px] justify-start items-start inline-flex">
             <svg width="50" height="50" viewBox="0 0 50 50" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <g id="icon / clock">
@@ -25,7 +25,7 @@
             </svg>
         </div>
         <div x-data="clock()" x-init="init()"
-            class="w-[452px] h-[69px] pl-3 pt-2 text-right text-black text-2xl font-normal">
+            class="h-[69px] pl-3 pt-2 text-right text-black text-2xl font-normal">
             Today is: <u><span x-text="date"></span> <span x-text="time"></span></u>
         </div>
     </div>

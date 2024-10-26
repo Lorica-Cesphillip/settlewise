@@ -3,7 +3,6 @@
 @php
     $sidebarBg = '#94D0F8';  // Default background color
     $activeBg = '#fff6e9';   // Active background color
-    $hoverBg = '#dcdcdc';    // Hover background color
 @endphp
 
 <a {{ $attributes->merge([

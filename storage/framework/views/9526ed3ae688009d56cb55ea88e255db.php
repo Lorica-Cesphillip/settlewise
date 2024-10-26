@@ -1,5 +1,5 @@
   <!-- Sidebar -->
-<aside class="relative bg-[#94D0F8] h-screen w-[300px] transition-all duration-300 flex flex-col text-md font-semibold ">
+<aside class="sticky left-0 top-0 bg-[#94D0F8] h-screen w-[300px] transition-all duration-300 flex flex-col text-md font-semibold ">
     <a href = "<?php echo e(route('dashboard')); ?>" class = "container p-2">
         <?php if (isset($component)) { $__componentOriginal8892e718f3d0d7a916180885c6f012e7 = $component; } ?>
 <?php if (isset($attributes)) { $__attributesOriginal8892e718f3d0d7a916180885c6f012e7 = $attributes; } ?>

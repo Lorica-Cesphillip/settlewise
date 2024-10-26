@@ -23,7 +23,7 @@
         <!--Necessary Buttons-->
     <div class = "w-full flex row-span-3 h-20 columns-2">
         <!--Add New Employee and Refresh Buttons-->
-        <div class = "inline-flex gap-3 h-14 justify-end">
+        <div class = "inline-flex gap-3 h-14 justify-end right-0">
             <x-primary-button>
                 <x-slot name="name">Create New Division</x-slot>
             </x-primary-button>
