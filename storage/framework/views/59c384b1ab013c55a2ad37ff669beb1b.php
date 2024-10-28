@@ -50,14 +50,14 @@
             <div class = "left-0 h-14 inline-flex gap-3 w-1/2">
                 <?php if (isset($component)) { $__componentOriginal18c21970322f9e5c938bc954620c12bb = $component; } ?>
 <?php if (isset($attributes)) { $__attributesOriginal18c21970322f9e5c938bc954620c12bb = $attributes; } ?>
-<?php $component = Illuminate\View\AnonymousComponent::resolve(['view' => 'components.text-input','data' => ['id' => 'employee_id','class' => 'mt-1 w-3/5 gap-3','type' => 'text','name' => 'employee_id','value' => old('employee_id'),'autofocus' => true,'placeholder' => 'Search Employee']] + (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag ? $attributes->all() : [])); ?>
+<?php $component = Illuminate\View\AnonymousComponent::resolve(['view' => 'components.text-input','data' => ['id' => 'employee_id','class' => 'mt-1 w-3/5','type' => 'text','name' => 'employee_id','value' => old('employee_id'),'autofocus' => true,'placeholder' => 'Search Employee']] + (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag ? $attributes->all() : [])); ?>
 <?php $component->withName('text-input'); ?>
 <?php if ($component->shouldRender()): ?>
 <?php $__env->startComponent($component->resolveView(), $component->data()); ?>
 <?php if (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag): ?>
 <?php $attributes = $attributes->except(\Illuminate\View\AnonymousComponent::ignoredParameterNames()); ?>
 <?php endif; ?>
-<?php $component->withAttributes(['id' => 'employee_id','class' => 'mt-1 w-3/5 gap-3','type' => 'text','name' => 'employee_id','value' => \Illuminate\View\Compilers\BladeCompiler::sanitizeComponentAttribute(old('employee_id')),'autofocus' => true,'placeholder' => 'Search Employee']); ?>
+<?php $component->withAttributes(['id' => 'employee_id','class' => 'mt-1 w-3/5','type' => 'text','name' => 'employee_id','value' => \Illuminate\View\Compilers\BladeCompiler::sanitizeComponentAttribute(old('employee_id')),'autofocus' => true,'placeholder' => 'Search Employee']); ?>
 <?php echo $__env->renderComponent(); ?>
 <?php endif; ?>
 <?php if (isset($__attributesOriginal18c21970322f9e5c938bc954620c12bb)): ?>
@@ -70,14 +70,14 @@
 <?php endif; ?>
                 <?php if (isset($component)) { $__componentOriginald411d1792bd6cc877d687758b753742c = $component; } ?>
 <?php if (isset($attributes)) { $__attributesOriginald411d1792bd6cc877d687758b753742c = $attributes; } ?>
-<?php $component = Illuminate\View\AnonymousComponent::resolve(['view' => 'components.primary-button','data' => ['class' => 'gap-3']] + (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag ? $attributes->all() : [])); ?>
+<?php $component = Illuminate\View\AnonymousComponent::resolve(['view' => 'components.primary-button','data' => []] + (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag ? $attributes->all() : [])); ?>
 <?php $component->withName('primary-button'); ?>
 <?php if ($component->shouldRender()): ?>
 <?php $__env->startComponent($component->resolveView(), $component->data()); ?>
 <?php if (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag): ?>
 <?php $attributes = $attributes->except(\Illuminate\View\AnonymousComponent::ignoredParameterNames()); ?>
 <?php endif; ?>
-<?php $component->withAttributes(['class' => 'gap-3']); ?>
+<?php $component->withAttributes([]); ?>
                      <?php $__env->slot('icon', null, []); ?> 
                         <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <g id="button-icon">

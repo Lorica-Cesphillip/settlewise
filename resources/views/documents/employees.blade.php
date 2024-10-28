@@ -20,8 +20,8 @@
         <!--Necessary Buttons-->
         <div class = "w-full flex row-span-3 h-20 columns-2">
             <div class = "left-0 h-14 inline-flex gap-3 w-1/2">
-                <x-text-input id="employee_id" class="mt-1 w-3/5 gap-3" type="text" name="employee_id" :value="old('employee_id')" autofocus placeholder="Search Employee"/>
-                <x-primary-button class="gap-3">
+                <x-text-input id="employee_id" class="mt-1 w-3/5" type="text" name="employee_id" :value="old('employee_id')" autofocus placeholder="Search Employee"/>
+                <x-primary-button>
                     <x-slot name="icon">
                         <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <g id="button-icon">
