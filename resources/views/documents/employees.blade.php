@@ -56,44 +56,13 @@
                 </form>
                 <!--Add New Employee and Refresh Buttons-->
                 <div class = "inline-flex gap-3">
-                    <button class = "p-4 bg-[#0d5dba] rounded-lg flex-col justify-center items-center gap-2.5 flex text-white tracking-widest hover:bg-blue-700 focus:bg-blue-700 active:bg-blue-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 transition ease-in-out duration-150" x-on:open-modal.window="$event.detail == 'add-new-employee' ? show = true : null">
-                        Add New Employee
-                    </button>
+                    <button x-data = "" type="button" class="p-4 bg-[#0d5dba] rounded-lg flex-col justify-center items-center gap-2.5 flex text-white font-semibold tracking-widest hover:bg-blue-700 focus:bg-blue-700 active:bg-blue-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 transition ease-in-out duration-150"
+                    x-on:click.prevent="$dispatch('open-modal', 'add-new-employee')"
+                >
+                    Add New Employee
+                </button>
 
-                    <x-modal name="add-new-employee" focusable>
-                        <form action="POST" action = "{{route('employees.add')}}" class = "p-6">
-                            @csrf
-                            <!--First Page-->
-                            <div class = "p-3">
-                                <!--Employee Name-->
-                                <div class = "inline-flex gap-2">
-                                    <div>
-                                        <x-input-label for = "lname" :value="__('Employee Name')"/>
-                                        <x-text-input id="lname" class="block mt-1 w-full" type="text" name="lname" :value="old('lname')" placeholder = "Last Name" autofocus autocomplete="off" />
-                                        <x-input-error :messages="$errors->get('lname')" class="mt-2" />
-                                    </div>
-                                    <div>
-                                        <x-text-input id="fname" class="block mt-1 w-full" type="text" name="fname" :value="old('fname')" placeholder = "First Name" autofocus autocomplete="off" />
-                                        <x-input-error :messages="$errors->get('fname')" class="mt-2" />
-                                    </div>
-                                    <div>
-                                        <x-text-input id="mname" class="block mt-1 w-full" type="text" name="mname" :value="old('mname')" placeholder = "Middle Name" autofocus autocomplete="off" />
-                                        <x-input-error :messages="$errors->get('mname')" class="mt-2" />
-                                    </div>
-                                </div>
-
-                                <div class = "w-full block">
-                                    <x-input-label for = "address" :value="__('Employee Name')"/>
-                                    <x-text-input id="lname" class="block mt-1 w-full" type="text" name="lname" :value="old('lname')" placeholder = "Last Name" autofocus autocomplete="off" />
-                                    <x-input-error :messages="$errors->get('lname')" class="mt-2" />
-                                </div>
-                            </div>
-
-                            <x-primary-button>
-                                <x-slot name="name">Add New Employee</x-slot>
-                            </x-primary-button>
-                        </form>
-                    </x-modal>
+                @include('forms.add-employee')
 
 
                     <x-secondary-button>

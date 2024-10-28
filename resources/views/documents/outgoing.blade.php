@@ -11,6 +11,82 @@
         </x-slot>
     </x-title_header>
 
+        <!--Necessary Buttons-->
+        <div class = "w-full flex h-20 justify-between">
+            <div class = "left-0 h-14 inline-flex gap-3 w-1/2">
+                <!--Send a Document-->
+                <form action="#" method = "GET">
+                    <x-primary-button>
+                        <x-slot name="name">Send a Document</x-slot>
+                        <x-slot name="icon">
+                            <svg width="24" height="24" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <g id="icon / send">
+                                <path id="icon" fill-rule="evenodd" clip-rule="evenodd" d="M16.9747 11.8999C18.6126 11.1628 18.6126 8.83724 16.9747 8.1002L5.19204 2.798C3.60512 2.08388 1.89392 3.51487 2.31598 5.20311L3.13604 8.48334C3.32524 9.24014 3.91689 9.81693 4.65478 10C3.91689 10.1831 3.32524 10.7599 3.13604 11.5167L2.31598 14.797C1.89392 16.4852 3.60511 17.9162 5.19204 17.2021L16.9747 11.8999ZM4.5081 4.31786L14.9777 9.02917L5.13034 8.39386C4.94948 8.38219 4.7969 8.25495 4.75294 8.07912L3.93289 4.79889C3.84848 4.46124 4.19071 4.17504 4.5081 4.31786ZM5.13034 11.6062L14.9777 10.9709L4.5081 15.6822C4.19071 15.825 3.84847 15.5388 3.93289 15.2012L4.75294 11.921C4.7969 11.7451 4.94948 11.6179 5.13034 11.6062Z" fill="#200E3A"/>
+                                </g>
+                            </svg>
+                        </x-slot>
+                    </x-primary-button>
+                </form>
+
+                <!--Filter Confidential Documents-->
+                <form action="#" method = "POST" class = "inline-flex gap-3">
+                    <div class="block mt-4 gap-3">
+                        <label for="filter_confidential" class="inline-flex items-center">
+                            <input id="filter_confidential" type="checkbox"
+                                class="rounded border-gray-300 text-indigo-600 shadow-sm focus:ring-indigo-500"
+                                name="remember">
+                            <span class="ms-2 text-sm text-gray-600">{{ __('Confidential') }}</span>
+                        </label>
+                    </div>
+                </form>
+            </div>
+
+            <div class = "w-10/12 inline-flex h-14 right-0 gap-3">
+                <!--Reports Generation-->
+                <form class = "inline-flex gap-3" action = "#" method = "POST">
+                    <x-input-label>From: </x-input-label>
+                    <input type = "date" name = "from" id = "from" class = "p-3 rounded-md">
+                    <x-input-label>To: </x-input-label>
+                    <input type = "date" name = "to" id = "to" class = "p-3 rounded-md">
+                    <x-primary-button>
+                        <x-slot name="icon">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
+                                xmlns="http://www.w3.org/2000/svg">
+                                <g id="button-icon">
+                                    <g id="icon">
+                                        <path
+                                            d="M16.7071 13.7071L12.7071 17.7071C12.3166 18.0976 11.6834 18.0976 11.2929 17.7071L7.29289 13.7071C6.90237 13.3166 6.90237 12.6834 7.29289 12.2929C7.68342 11.9024 8.31658 11.9024 8.70711 12.2929L11 14.5858V3C11 2.44771 11.4477 2 12 2C12.5523 2 13 2.44771 13 3V14.5858L15.2929 12.2929C15.6834 11.9024 16.3166 11.9024 16.7071 12.2929C17.0976 12.6834 17.0976 13.3166 16.7071 13.7071Z"
+                                            fill="white" />
+                                        <path
+                                            d="M4 17.5C4 16.9477 3.55228 16.5 3 16.5C2.44772 16.5 2 16.9477 2 17.5V19C2 21.2091 3.79086 23 6 23H18C20.2091 23 22 21.2091 22 19V17.5C22 16.9477 21.5523 16.5 21 16.5C20.4477 16.5 20 16.9477 20 17.5V19C20 20.1046 19.1046 21 18 21H6C4.89543 21 4 20.1046 4 19V17.5Z"
+                                            fill="white" />
+                                    </g>
+                                </g>
+                            </svg>
+                        </x-slot>
+                        <x-slot name="name">Export</x-slot>
+                    </x-primary-button>
+                </form>
+                <!--Refresh Buttons-->
+                <div class = "inline-flex gap-3">
+                    <x-secondary-button>
+                        <x-slot name="icon">
+                            {!! '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <g id="button-icon">
+                            <g id="icon">
+                            <path d="M17 4C17 3.44772 17.4477 3 18 3C18.5523 3 19 3.44772 19 4V7.2C19 7.75229 18.5523 8.2 18 8.2H14.8884C14.3362 8.2 13.8884 7.75229 13.8884 7.2C13.8884 6.64772 14.3362 6.2 14.8884 6.2H15.5735C14.4881 5.44066 13.181 5 11.7775 5C8.06078 5 5 8.10723 5 12C5 12.5523 4.55229 13 4 13C3.44772 13 3 12.5523 3 12C3 7.05622 6.9034 3 11.7775 3C13.7372 3 15.5433 3.65852 17 4.76587V4Z" fill="white"/>
+                            <path d="M7 20C7 20.5523 6.55228 21 6 21C5.44772 21 5 20.5523 5 20V16.8C5 16.2477 5.44772 15.8 6 15.8H9.11155C9.66384 15.8 10.1116 16.2477 10.1116 16.8C10.1116 17.3523 9.66384 17.8 9.11155 17.8H8.42654C9.5119 18.5593 10.819 19 12.2225 19C15.9392 19 19 15.8928 19 12C19 11.4477 19.4477 11 20 11C20.5523 11 21 11.4477 21 12C21 16.9438 17.0966 21 12.2225 21C10.2628 21 8.45674 20.3415 7 19.2341V20Z" fill="white"/>
+                            </g>
+                            </g>
+                            </svg>
+                            ' !!}
+                        </x-slot>
+                        <x-slot name="name">Refresh</x-slot>
+                    </x-secondary-button>
+                </div>
+            </div>
+        </div>
+
     <!--Outgoing Document Tables-->
     <table class = "table-fixed border-gray-800">
         <thead>

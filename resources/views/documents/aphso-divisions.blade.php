@@ -49,7 +49,7 @@
             <thead>
                 <tr class = "border-b-2">
                     <th class = "w-[150px] h-[30px] p-3 justify-start">Division Id</th>
-                    <th class = "w-[250px] h-[30px] p-3 justify-start">Division Name</th>
+                    <th class = "w-[400px] h-[30px] p-3 justify-start">Division Name</th>
                     <th class = "w-[150px] h-[30px] p-3 justify-start">Abbreviation</th>
                     <th class = "w-[230px] h-[30px] p-3 justify-start">Division Head</th>
                     <th class = "w-[230px] h-[30px] p-3 justify-start">Position</th>
@@ -61,7 +61,7 @@
                 @foreach($divisions as $division)
                 <tr class = "border-b-2">
                     <td class = "w-[150px] h-[45px] p-3 justify-start">{{$division->division_id}}</td>
-                    <td class = "w-[250px] h-[45px] p-3 justify-start">
+                    <td class = "w-[400px] h-[45px] p-3 justify-start">
                         @if($division->division_name == "APHSO Department")
                         {{$division->division_name}}
                         @else

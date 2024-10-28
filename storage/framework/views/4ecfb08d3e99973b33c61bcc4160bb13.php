@@ -2,6 +2,7 @@
 
 $__newAttributes = [];
 $__propNames = \Illuminate\View\ComponentAttributeBag::extractPropNames(([
+    'name',
     'show' => false,
     'maxWidth' => '2xl'
 ]));
@@ -20,6 +21,7 @@ unset($__propNames);
 unset($__newAttributes);
 
 foreach (array_filter(([
+    'name',
     'show' => false,
     'maxWidth' => '2xl'
 ]), 'is_string', ARRAY_FILTER_USE_KEY) as $__key => $__value) {
@@ -70,8 +72,8 @@ $maxWidth = [
             document.body.classList.remove('overflow-y-hidden');
         }
     })"
-    x-on:open-modal.window="$event.detail == '<?php echo e(session('employee')->full_name); ?>' ? show = true : null"
-    x-on:close-modal.window="$event.detail == '<?php echo e(session('employee')->full_name); ?>' ? show = false : null"
+    x-on:open-modal.window="$event.detail == '<?php echo e($name); ?>' ? show = true : null"
+    x-on:close-modal.window="$event.detail == '<?php echo e($name); ?>' ? show = false : null"
     x-on:close.stop="show = false"
     x-on:keydown.escape.window="show = false"
     x-on:keydown.tab.prevent="$event.shiftKey || nextFocusable().focus()"

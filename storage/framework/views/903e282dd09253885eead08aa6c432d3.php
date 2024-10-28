@@ -114,7 +114,7 @@
             <thead>
                 <tr class = "border-b-2">
                     <th class = "w-[150px] h-[30px] p-3 justify-start">Division Id</th>
-                    <th class = "w-[250px] h-[30px] p-3 justify-start">Division Name</th>
+                    <th class = "w-[400px] h-[30px] p-3 justify-start">Division Name</th>
                     <th class = "w-[150px] h-[30px] p-3 justify-start">Abbreviation</th>
                     <th class = "w-[230px] h-[30px] p-3 justify-start">Division Head</th>
                     <th class = "w-[230px] h-[30px] p-3 justify-start">Position</th>
@@ -126,7 +126,7 @@
                 <?php $__currentLoopData = $divisions; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $division): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                 <tr class = "border-b-2">
                     <td class = "w-[150px] h-[45px] p-3 justify-start"><?php echo e($division->division_id); ?></td>
-                    <td class = "w-[250px] h-[45px] p-3 justify-start">
+                    <td class = "w-[400px] h-[45px] p-3 justify-start">
                         <?php if($division->division_name == "APHSO Department"): ?>
                         <?php echo e($division->division_name); ?>
 
