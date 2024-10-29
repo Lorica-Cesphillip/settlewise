@@ -1,0 +1,774 @@
+.btn {
+    padding: 0.5rem 1.5rem;
+    border-radius: 5px;
+    font-weight: bold;
+    transition: background-color 0.3s ease;
+}
+
+/* Modal layout */
+.modal-header {
+    border-bottom: none;
+    justify-content: center;
+}
+
+.btn-outline {
+    border-color: #04326B;
+    color: #04326B;
+    background-color: transparent;
+    
+}
+
+.btn-outline:hover {
+    border-color: #04326B;
+    color: #04326B;
+    background-color: #D0D5DD;
+}
+
+.modal-title-container {
+    text-align: center;
+    margin-top: 1rem;
+}
+
+.modal-title {
+    font-weight: bold;
+    text-transform: uppercase;
+    margin: 0;
+}
+
+.modal-body {
+    padding: 1.5rem;
+}
+
+.modal-xl {
+    max-width: 990px;
+}
+
+.modal-footer {
+    border-top: none;
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 1rem;
+    align-items: center;
+    padding: 1rem;
+}
+
+.request-acceptance {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+}
+
+.request-acceptance label {
+    font-weight: bold;
+    margin-bottom: 0.5rem;
+}
+
+.request-acceptance .btn-group {
+    display: flex;
+    gap: 0.5rem;
+}
+
+.calendar-input {
+    width: 100%;
+    padding: 0.75rem;
+    font-size: 1rem;
+}
+
+#documentPreviewModal .modal-dialog {
+    max-width: 600px;
+    max-height: 800px;
+}
+
+#document-preview {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 500px;
+    background-color: #f0f0f0;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+#downloadFileBtn {
+    background-color: #04326B;
+    color: white;
+    padding: 0.75rem 1.5rem;
+    border: none;
+    border-radius: 5px;
+    font-weight: bold;
+    transition: background-color 0.3s ease;
+}
+
+#downloadFileBtn:hover {
+    background-color: #03214a;
+}
+
+.message {
+    margin-bottom: 15px;
+}
+
+.message-left {
+    text-align: left;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.message-right {
+    text-align: right;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+}
+
+.message-bubble {
+    background-color: #f1f1f1;
+    padding: 10px 15px;
+    border-radius: 20px;
+    max-width: 60%;
+}
+
+.message-own {
+    background-color: #007bff;
+    color: white;
+}
+
+.message-timestamp {
+    font-size: 12px;
+    color: #888;
+}
+
+/* Reject Request Modal */
+#rejectRequestModal .modal-dialog {
+    max-width: 717px;
+    height: 400px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#rejectRequestModal .modal-header {
+    border-bottom: none;
+    text-align: center;
+    justify-content: center;
+}
+
+#rejectRequestModal .modal-header h5 {
+    font-weight: bold;
+    margin-top: 1rem;
+    text-align: center;
+}
+
+#rejectRequestModal .modal-body {
+    padding: 1rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+#rejectRequestModal .form-group {
+    width: 75%;
+    text-align: center;
+}
+
+#rejectRequestModal .form-label {
+    width: 100%;
+}
+
+#rejectRequestModal .modal-footer {
+    border-top: none;
+    display: flex;
+    justify-content: space-between;
+    padding: 1rem 2rem;
+}
+
+/* BUTTONS */
+
+.btn-custom {
+    width: 149px;
+    height: 56px;
+    font-size: 16px;
+    padding: 0;
+    border-radius: 5px;
+    font-weight: bold;
+}
+
+.btn-active {
+    background-color: #04326B;
+    border-color: #04326B;
+    color: white;
+}
+
+.btn-active:hover {
+    background-color: #03214a;
+    color: white; 
+}
+
+
+.btn-active-2 {
+    background-color: #0D5EBA;
+    border: none;
+    color: white;
+}
+
+.btn-active-2:hover {
+    background-color: #034592;
+    border: none;
+    color: white;
+}
+
+.btn-active-dark {
+    background-color: #001633;
+    border: none;
+    color: white;
+}
+
+.btn-active-dark:hover {
+    background-color: #001128;
+    border: none;
+    color: white;
+}
+
+.btn-disabled {
+    background-color: #D0D5DD;
+    border-color: #D0D5DD;
+    color: white;
+}
+
+.btn-disabled:hover {
+    background-color: #98A2B3;
+    color: white;
+}
+
+/* Modal for "Send a Document" */
+#sendDocumentModal1 .modal-dialog, 
+#sendDocumentModal2 .modal-dialog,
+#sendDocumentModal3 .modal-dialog {
+    max-width: 1200px; /* Set modal width */
+    max-height: 800px; /* Set modal height */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#sendDocumentModal1 .modal-header,
+#sendDocumentModal2 .modal-header,
+#sendDocumentModal3 .modal-header {
+    border-bottom: none;
+    text-align: center;
+    justify-content: center;
+}
+
+#sendDocumentModal1 .modal-title,
+#sendDocumentModal2 .modal-title,
+#sendDocumentModal3 .modal-title {
+    font-weight: bold;
+    text-transform: uppercase;
+}
+
+#sendDocumentModal1 .modal-body,
+#sendDocumentModal2 .modal-body,
+#sendDocumentModal3 .modal-body {
+    padding: 2rem; /* Add padding to the modal body */
+    display: block;
+}
+
+#sendDocumentModal1 .modal-footer,
+#sendDocumentModal2 .modal-footer,
+#sendDocumentModal3 .modal-footer {
+    border-top: none;
+    display: flex;
+    justify-content: space-between;
+    padding: 1.5rem;
+}
+
+/* Custom Progress Bar Container */
+.progress-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+/* Custom Progress Bar */
+.custom-progress-bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center; 
+    width: 560px;
+    z-index: 1;
+}
+
+/* Progress Steps */
+.progress-step {
+    width: 60px; 
+    height: 60px; 
+    border-radius: 50%; 
+    background-color: #F0F2F5; 
+    display: flex; 
+    justify-content: center; 
+    align-items: center; 
+    font-weight: bold; 
+    font-size: 18px; 
+    transition: background-color 0.3s ease;
+}
+
+/* Active Progress Step */
+.progress-step.progress-active {
+    background-color: #80bbff;
+    color: white;
+}
+
+/* Progress Meter Container */
+.progress-meter {
+    width: 560px;
+    height: 12px; 
+    background-color: #F0F2F5; 
+    border-radius: 5px; 
+    position: relative;
+    margin-top: -35px;
+}
+
+/* Filled Portion */
+.progress-meter-fill {
+    height: 100%;
+    width: 0%;
+    background-color: #80bbff; 
+    border-radius: 5px; 
+    transition: width 0.4s ease; 
+}
+
+/* Active Progress Meter Fill */
+.progress-meter-fill.progress-active {
+    background-color: #80bbff;
+}
+
+
+/* Required Information Text */
+.required-info {
+    width: 100%;
+    text-align: center;
+    margin-top: 35px;
+    font-size: 14px;
+}
+
+/* Centered Request Form Title */
+.modal-request-title {
+    width: 100%;
+    text-align: center;
+    font-weight: bold;
+    font-size: 24px;
+    margin-top: 10px;
+    margin-bottom: 25px;
+}
+
+/* Custom Checkbox Styling */
+.checkbox-large {
+    width: 40px;
+    height: 40px;
+    margin: 0;
+    display: inline-block;
+    vertical-align: middle;
+}
+
+/* Container for the form group */
+.form-group-row {
+    width: 853px; /* Total length of the form group */
+    display: flex;
+    justify-content: space-between;
+    margin-left: auto;
+    margin-right: auto;
+    gap: 15px;
+    margin-bottom: 15px;
+}
+
+/* Align checkboxes with inputs */
+.form-check {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 40px; 
+}
+
+/* Center and style the form labels */
+.form-check-label, .form-label {
+    font-size: 16px;
+    text-align: center;
+    margin-bottom: 5px;
+}
+
+.modal-body {
+    padding: 2rem;
+}
+
+
+/* Styling for selectors and inputs */
+.form-select, .form-control {
+    height: 40px;
+    width: 375px;
+}
+
+.new-group {
+    margin-top: 20px;
+    width: 832px;
+}
+
+.form-label {
+    display: block;
+    margin-bottom: 5px;
+    text-align: left;
+    font-weight: bold;
+}
+
+.form-control {
+    box-sizing: border-box;
+}
+
+.form-content {
+    max-width: 853px;
+    margin: auto;
+}
+
+.row-group {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+}
+
+.new-group {
+    width: 100%;
+}
+
+.form-label {
+    display: block;
+    margin-bottom: 5px;
+}
+
+input[type="checkbox"] {
+    width: 40px;
+    height: 40px;
+    margin-top: 15px;
+}
+
+/* Progress Steps */
+.progress-step {
+    width: 60px; 
+    height: 60px; 
+    border-radius: 50%; 
+    background-color: #F0F2F5; 
+    display: flex; 
+    justify-content: center; 
+    align-items: center; 
+    font-weight: bold; 
+    font-size: 18px; 
+    transition: background-color 0.4s ease;
+}
+
+/* Active Step Color */
+.progress-step.active {
+    background-color: #80bbff;
+}
+
+/* Styles for radio button group */
+.radio-group {
+    display: flex;
+    justify-content: space-between;
+    max-width: 853px;
+    margin: auto;
+    margin-top: 20px;
+}
+
+/* Radio button items */
+.radio-item {
+    display: flex;
+    align-items: center;
+    flex: 1;
+}
+
+/* Ensure label is on one line */
+.radio-item label {
+    white-space: nowrap;
+    margin-left: 10px;
+}
+
+/* Adjust spacing between the radio elements */
+.radio-item:first-child {
+    margin-right: 40px;
+}
+
+.radio-item:last-child {
+    margin-left: 40px;
+}
+
+/* Combined Container for Document and Request Details */
+.details-container {
+    margin-top: 30px;
+    margin-bottom: 30px;
+    padding: 20px;
+    border: 1px solid #7AB5D1;
+    border-radius: 10px;
+    background-color: #ffffff;
+}
+
+/* Section Headers (Document Details and Request Details) */
+.section-header {
+    font-weight: bold;
+    font-size: 18px;
+    margin-bottom: 15px;
+    text-align: left;
+}
+
+/* Detail Row for Each Label and Value */
+.detail-row {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+}
+
+/* Single Column Row (Others, Details) */
+.detail-row.single-column {
+    justify-content: flex-start;
+}
+
+/* Detail Label (left column) */
+.detail-label {
+    font-weight: bold;
+    width: 40%;
+    text-align: left;
+}
+
+/* Detail Value (right column) */
+.detail-value {
+    width: 60%;
+    text-align: left;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+/* Full-width styling for select and textarea (remarks) */
+.full-width-group {
+    width: 100%;
+}
+
+.full-width-select,
+.full-width-remarks {
+    width: 100%;
+    margin-left: 0;
+    margin-right: 0;
+    padding: 10px;
+    font-size: 16px;
+}
+
+/* Modal is hidden by default */
+#referSomeoneModal {
+    display: none;
+    z-index: 1050;
+}
+
+/* Ensure modal is properly shown when triggered */
+.modal-open #referSomeoneModal {
+    display: flex;
+}
+
+/* Ensure modal dimensions don’t cover the whole page */
+#referSomeoneModal .modal-dialog {
+    max-width: 1200px;
+    width: 100%;
+    transition: none;
+}
+
+/* Fix potential backdrop issues */
+.modal-backdrop {
+    position: fixed;
+    z-index: 1040;
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
+/* Remove unnecessary overflow settings */
+.dynamic-remarks {
+    resize: vertical;
+    overflow: auto;
+}
+
+/* Centering the select element inside the modal */
+.centered-select-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+}
+
+.centered-select {
+    width: 100%;
+    text-align: center;
+}
+
+.centered-select option {
+    text-align: left;
+}
+
+/* Centering the textarea inside the modal */
+.centered-textarea-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+}
+
+.centered-textarea {
+    width: 100%;
+    height: 400px;
+    text-align: left;
+}
+
+.post-announcement-title-container {
+    margin-bottom: 1rem;
+}
+
+#announcementTitleInput, #announcementLocationInput, #attendeesSelect, #eventDateTimeInput {
+    width: 100%;
+    padding: 0.75rem;
+    font-size: 1rem;
+}
+
+.calendar-input {
+    width: 100%;
+    padding: 0.75rem;
+    font-size: 1rem;
+}
+
+.modal-footer {
+    border-top: none;
+    padding: 1rem;
+}
+
+#closeAnnouncementBtn, #announceBtn {
+    width: 150px;
+}
+
+/* Fixed modal dialog size */
+#fixedSizeModalDialog {
+    width: 720px;
+    max-width: 720px;
+    height: 560px;
+    max-height: 560px;
+}
+
+
+
+/* Ensure checkbox and label are aligned horizontally */
+#confirmCheckboxContainer {
+    display: flex;
+    align-items: center;
+    margin: 0 20px;
+}
+
+#confirmCheckbox {
+    width: 18px;
+    height: 18px;
+    margin-right: 10px;
+    cursor: pointer;
+}
+
+#confirmCheckboxLabel {
+    font-size: 14px;
+    color: #333;
+    margin: 0;
+    cursor: pointer;
+}
+
+#confirmReferralCheckbox {
+    width: 18px; /* Larger checkbox size */
+    height: 18px;
+    margin-right: 10px;
+    cursor: pointer;
+}
+
+#confirmReferralCheckboxLabel {
+    font-size: 14px;
+    color: #333;
+    margin: 0;
+    cursor: pointer;
+}
+
+
+/* Chat header styles */
+.chat-header {
+    display: flex;
+    align-items: center;
+}
+
+.chat-user-info {
+    margin-left: 10px;
+}
+
+.chat-user-name {
+    font-weight: bold;
+    font-size: 16px;
+}
+
+.chat-user-division {
+    font-size: 12px;
+    color: gray;
+}
+
+/* Chat message bubbles */
+.chat-message-left, .chat-message-right {
+    display: flex;
+    align-items: flex-start;
+    margin-bottom: 15px;
+}
+
+.chat-message-left .chat-bubble-img, .chat-message-right .chat-bubble-img {
+    margin-right: 10px;
+}
+
+.chat-message-left .chat-message-bubble {
+    background-color: #f1f1f1;
+    border-radius: 15px;
+    padding: 10px;
+    max-width: 100%;
+    position: relative;
+}
+
+.chat-message-right {
+    justify-content: flex-end; /* Aligns the entire message to the right */
+}
+
+.chat-message-right .chat-message-bubble {
+    background-color: #007bff;
+    color: white;
+    border-radius: 15px;
+    padding: 10px;
+    max-width: 100%;
+}
+
+.chat-message-right .chat-name-timestamp {
+    text-align: right;
+}
+
+/* Timestamp and name display */
+.chat-name-timestamp {
+    display: block;
+    font-size: 12px;
+    color: #999;
+    margin-top: 5px;
+}
+
+.chat-message-left .chat-name-timestamp {
+    text-align: left;
+}
+
+.chat-message-right .chat-name-timestamp {
+    text-align: right;
+}
+
+/* Chat Separator */
+.chat-separator {
+    margin: 0;
+    border-top: 1px solid #ddd;
+}
