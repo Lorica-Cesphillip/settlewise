@@ -74,3 +74,44 @@
             </div>
         </div>
     </div>
+
+    <!-- Announcement Posted -->
+    <div class="modal fade" id="announcementPosted" tabindex="-1" aria-labelledby="announcementPostedLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" style="max-width: 500px;">
+            <div class="modal-content" style="height: 500px;">
+                <div class="modal-body text-center d-flex flex-column justify-content-center align-items-center">
+                    <!-- Image in Center -->
+                    <img src="../images/Approval.png" alt="Accepted Image" style="width: 200px; height: 200px;" />
+
+                    <!-- Document Successfully Sent Text -->
+                    <h3 class="mt-4"><strong>Announcement Posted</strong></h3>
+                    <p>Your employees will be notified.</p>
+                </div>
+
+                <div class="modal-footer justify-content-center">
+                    <!-- Okay Button -->
+                    <button type="button" class="btn btn-active" data-bs-dismiss="modal">Okay</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Announcement ERROR -->
+    <div class="modal fade" id="announcementError" tabindex="-1" aria-labelledby="announcementErrorLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" style="max-width: 500px;">
+            <div class="modal-content" style="height: 500px;">
+                <div class="modal-body text-center d-flex flex-column justify-content-center align-items-center">
+                    <!-- Image in Center -->
+                    <img src="../images/Cancel.png" alt="Accepted Image" style="width: 200px; height: 200px;" />
+
+                    <h3 class="mt-4"><strong>Error While Posting Announcement</strong></h3>
+                    <p>Please try again.</p>
+                </div>
+
+                <div class="modal-footer justify-content-center">
+                    <button type="button" class="btn btn-active" data-bs-dismiss="modal">Okay</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
