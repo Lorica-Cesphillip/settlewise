@@ -62,7 +62,7 @@
                     Add New Employee
                 </button>
 
-                @include('forms.add-employee')
+                @include('modals.add-employee')
 
 
                     <x-secondary-button>
@@ -127,7 +127,7 @@
                             </div>
                         </td>
                         <td class = " w-max h-[45px] p-3 justify-start inline-flex gap-3">
-                            <a href="{{ route('employees.edit', $employee->employee_number) }}">
+                            <a href="{{ route('employees.show', $employee->employee_number) }}">
                                 <svg class="h-[20px] w-[20px] gap-2" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
                                     <g id="icon / eye">
                                         <g id="icon">
@@ -143,7 +143,6 @@
                             </a>
                             <form action="{{ route('employees.destroy', $employee->employee_number) }}" method="POST" style="display:inline">
                                 @csrf
-                                @method('DELETE')
                                 <button type="submit" class="textpx-4">
                                     <svg class="h-[20px] w-[20px]" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
                                         <g id="icon / box-1">

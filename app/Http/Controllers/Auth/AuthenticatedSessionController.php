@@ -41,7 +41,7 @@ class AuthenticatedSessionController extends Controller
 
         $request->session()->regenerate();
         $employee = DB::table('aphso_employees')
-            ->select(DB::raw("CONCAT(fname, ' ', IFNULL(mname, ''), ' ', lname) AS full_name"), 'aphso_division.division_name')
+            ->select(DB::raw("employee_number, CONCAT(fname, ' ', IFNULL(mname, ''), ' ', lname) AS full_name"), 'aphso_division.division_name')
             ->join('aphso_division', 'aphso_employees.division_id', '=', 'aphso_division.division_id')
             ->where('aphso_employees.employee_number', '=', Auth::user()->employee_number)
             ->first();

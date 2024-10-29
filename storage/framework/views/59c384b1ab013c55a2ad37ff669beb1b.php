@@ -181,7 +181,7 @@
                     Add New Employee
                 </button>
 
-                <?php echo $__env->make('forms.add-employee', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
+                <?php echo $__env->make('modals.add-employee', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
 
 
                     <?php if (isset($component)) { $__componentOriginal3b0e04e43cf890250cc4d85cff4d94af = $component; } ?>
@@ -266,7 +266,7 @@
                             </div>
                         </td>
                         <td class = " w-max h-[45px] p-3 justify-start inline-flex gap-3">
-                            <a href="<?php echo e(route('employees.edit', $employee->employee_number)); ?>">
+                            <a href="<?php echo e(route('employees.show', $employee->employee_number)); ?>">
                                 <svg class="h-[20px] w-[20px] gap-2" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
                                     <g id="icon / eye">
                                         <g id="icon">
@@ -282,7 +282,6 @@
                             </a>
                             <form action="<?php echo e(route('employees.destroy', $employee->employee_number)); ?>" method="POST" style="display:inline">
                                 <?php echo csrf_field(); ?>
-                                <?php echo method_field('DELETE'); ?>
                                 <button type="submit" class="textpx-4">
                                     <svg class="h-[20px] w-[20px]" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
                                         <g id="icon / box-1">

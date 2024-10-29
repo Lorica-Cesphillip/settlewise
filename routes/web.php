@@ -35,12 +35,8 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
     /*Employee Information Module*/
     Route::get('documents/aphso_divisions', [DivisionsController::class, 'index'])->name('divisions');
-
+    Route::get('/documents/employees', [DivisionsController::class, 'showForm']);
     Route::resource('/documents/employees', EmployeeManagementController::class);
-    Route::post('/documents/employees/add', [EmployeeManagementController::class, 'store'])->name('employees.add');
-    Route::get('/documents/edit_employee_info', [EmployeeManagementController::class, 'edit'])->name('employees.edit');
-    Route::patch('/documents/edit_employee_info', [EmployeeManagementController::class, 'update'])->name('employees.update');
-    Route::delete('/documents/edit_employee_info', [EmployeeManagementController::class, 'destroy'])->name('employees.destroy');
 });
 
 require __DIR__.'/auth.php';

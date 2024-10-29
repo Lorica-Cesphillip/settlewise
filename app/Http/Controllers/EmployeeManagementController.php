@@ -82,15 +82,15 @@ class EmployeeManagementController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(EmployeeManagementController $employeeManagementController)
+    public function show(Employees $employees)
     {
-        //
+        return view('documents.employees', compact('employees'));
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(EmployeeManagementController $employeeManagementController)
+    public function edit(Employees $employees)
     {
         //
     }
@@ -106,7 +106,7 @@ class EmployeeManagementController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(EmployeeManagementController $employeeManagementController)
+    public function archive(EmployeeManagementController $employeeManagementController)
     {
         //
     }
