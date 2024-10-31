@@ -6,6 +6,12 @@ use Illuminate\Foundation\Http\FormRequest;
 
 class OTPVerification extends FormRequest
 {
+    protected $otpService;
+
+    /*
+    public function __construct(OTPService $otp){
+        $this->otpService = $otp;
+    }
     /**
      * Determine if the user is authorized to make this request.
      */
@@ -22,7 +28,7 @@ class OTPVerification extends FormRequest
     public function rules(): array
     {
         return [
-            "otp_no" => ['required', 'integer', 'max:6']
+            "otp_no" => ['required', 'max:6']
         ];
     }
     /**
@@ -30,8 +36,11 @@ class OTPVerification extends FormRequest
      *
      * @throws \Illuminate\Validation\ValidationException
      */
-    public function verify(): void
+    public function verify(): bool
     {
+        $phone = $this->input('phone_number');
+        $otp = $this->input('otp_no');
 
+        return $this->otpService->verifyOTP($phone, $otp);
     }
 }

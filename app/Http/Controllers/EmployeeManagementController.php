@@ -32,9 +32,23 @@ class EmployeeManagementController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function create(): View
+    public function display(Request $verify): View
     {
-        return view('documents.forms.register_employee');
+        $new_employee_data = $verify->validate([
+            'division_id' => ['required', 'integer', 'max:1'],
+            'lname' => 'required|string|min:1|max:50',
+            'fname' => 'required|string|min:1|max:50',
+            'mname' => 'required|string|min:1|max:50',
+            'address' => 'required|string|min:1|max:140',
+            'birthday' => 'required|date',
+            'martial_status' => 'required|string|min:1|max:20',
+            'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:'.Employees::class],
+            'contact_nos' => ['required', 'string', 'max:12'],
+            'aphso_division' => ['required', 'string', 'max:100'],
+            'position' => ['required', 'string', 'max:255'],
+            'employee_image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048'
+        ]);
+        return view('documents.employees', compact('new_employee_data'));
     }
 
     /**
@@ -72,19 +86,16 @@ class EmployeeManagementController extends Controller
 
         $user = User::create(array_merge($request->all(), ['employee_image' => $imagePath]));
 
-        event(new Registered($user));
-
-        Auth::login($user);
-
         return redirect(route('documents.employees', absolute: false))->with('success', 'A New Employee has been added to the system.');
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(Employees $employees)
+    public function show(Employees $aphso_employees)
     {
-        return view('documents.employees', compact('employees'));
+        $aphso_divisions = Divisions::all();
+        return view('documents.employees', compact('aphso_employees'));
     }
 
     /**
@@ -98,7 +109,7 @@ class EmployeeManagementController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, EmployeeManagementController $employeeManagementController)
+    public function update(Request $request, Employees $employees)
     {
         //
     }

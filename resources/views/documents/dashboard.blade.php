@@ -102,7 +102,14 @@
                                     elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</td>
                                 <td class = "p-2 w-2/12 h-[30px]">Office Memorandum</td>
                                 <td class = "p-2 w-2/12 h-[30px]">Juan Dela Cruz</td>
-                                <td class = "p-2 w-2/12 h-[30px]">Pending</td>
+                                <td class = "p-2 w-2/12 h-[30px]">
+                                    <div class="grow shrink basis-0 h-6 justify-start items-center gap-3 flex">
+                                        <div class="px-3 py-0.5 bg-[#ffece5] rounded-xl flex-col justify-center items-center gap-2 inline-flex">
+                                            <div class="justify-center items-center gap-0.5 inline-flex">
+                                                <div class="text-center text-[#ad3306] text-sm font-medium leading-tight">Pending</div>
+                                            </div>
+                                        </div>
+                                    </div></td>
                             </tr>
                         @endfor
                     </tbody>

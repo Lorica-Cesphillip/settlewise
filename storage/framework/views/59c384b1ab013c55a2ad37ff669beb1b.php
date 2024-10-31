@@ -226,26 +226,26 @@
 
         <!--Table-->
         <div class = "w-full h-full p-2">
-            <table class = "table-auto border-b-2">
+            <table class = "table-fixed border-b-2">
                 <thead>
                     <tr class = "bg-slate-200 h-[30px]">
-                        <th class = "w-max p-3 justify-start">Employee Id</th>
-                        <th class = "w-max p-3 justify-start">Employee Name</th>
-                        <th class = "w-max p-3 justify-start">Division</th>
-                        <th class = "w-max p-3 justify-start">Position</th>
-                        <th class = "w-max p-3 justify-start">Contact Number</th>
-                        <th class = "w-max p-3 justify-start">Email</th>
-                        <th class = "w-max p-3 justify-start">Status</th>
-                        <th class = "w-max p-3 justify-start">Action</th>
+                        <th class = "w-[150px] p-3 justify-start">Employee Id</th>
+                        <th class = "w-[300px] p-3 justify-start">Employee Name</th>
+                        <th class = "w-[250px] p-3 justify-start">Division</th>
+                        <th class = "w-[250px] p-3 justify-start">Position</th>
+                        <th class = "w-[200px] p-3 justify-start">Contact Number</th>
+                        <th class = "w-[250px] p-3 justify-start">Email</th>
+                        <th class = "w-[150px] p-3 justify-start">Status</th>
+                        <th class = "w-[150px] p-3 justify-start">Action</th>
                     </tr>
                 </thead>
                 <tbody>
                     <?php $__currentLoopData = $aphso_employees; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $employee): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                     <tr class = "border-b-2">
 
-                        <td class = " w-max h-[45px] p-3 justify-start"><?php echo e($employee->divisions->abbreviation); ?>-<?php echo e(str_pad($employee->employee_number, 4, '0', STR_PAD_LEFT)); ?></td>
-                        <td class = " w-max h-[45px] p-3 justify-start"><?php echo e($employee->fname); ?> <?php echo e($employee->mname); ?> <?php echo e($employee->lname); ?> </td>
-                        <td class = " w-max h-[45px] p-3 justify-start">
+                        <td class = " w-[150px] h-[45px] p-3 justify-start"><?php echo e($employee->divisions->abbreviation); ?>-<?php echo e(str_pad($employee->employee_number, 4, '0', STR_PAD_LEFT)); ?></td>
+                        <td class = " w-[300px] h-[45px] p-3 justify-start"><?php echo e($employee->fname); ?> <?php echo e($employee->mname); ?> <?php echo e($employee->lname); ?> </td>
+                        <td class = " w-[250px] h-[45px] p-3 justify-start">
                             <?php if($employee->divisions->division_name != "APHSO Department"): ?>
                             <?php echo e($employee->divisions->division_name); ?> Division
                             <?php else: ?>
@@ -253,10 +253,10 @@
 
                             <?php endif; ?>
                         </td>
-                        <td class = " w-max h-[45px] p-3 justify-start"><?php echo e($employee->position); ?></td>
-                        <td class = " w-max h-[45px] p-3 justify-start"><?php echo e($employee->contact_nos); ?></td>
-                        <td class = " w-max h-[45px] p-3 justify-start"><?php echo e($employee->email); ?></td>
-                        <td class = " w-max h-[45px] p-3 justify-start">
+                        <td class = " w-[250px] h-[45px] p-3 justify-start"><?php echo e($employee->position); ?></td>
+                        <td class = " w-[200px] h-[45px] p-3 justify-start"><?php echo e($employee->contact_nos); ?></td>
+                        <td class = " w-[250px] h-[45px] p-3 justify-start"><?php echo e($employee->email); ?></td>
+                        <td class = " w-[150px] h-[45px] p-3 justify-start">
                             <div class="grow shrink basis-0 h-6 justify-start items-center gap-3 flex">
                                 <div class="px-3 py-0.5 bg-[#ffece5] rounded-xl flex-col justify-center items-center gap-2 inline-flex">
                                     <div class="justify-center items-center gap-0.5 inline-flex">
@@ -265,7 +265,7 @@
                                 </div>
                             </div>
                         </td>
-                        <td class = " w-max h-[45px] p-3 justify-start inline-flex gap-3">
+                        <td class = " w-[150px] h-[45px] p-3 justify-start inline-flex gap-3">
                             <a href="<?php echo e(route('employees.show', $employee->employee_number)); ?>">
                                 <svg class="h-[20px] w-[20px] gap-2" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
                                     <g id="icon / eye">

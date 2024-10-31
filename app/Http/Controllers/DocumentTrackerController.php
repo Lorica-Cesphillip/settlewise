@@ -136,9 +136,12 @@ class DocumentTrackerController extends Controller
         /**
      * Summary of show (for Incoming and Outgoing Document Depending )
      * @param string $document_tracking_code
-     * @return void
      */
-    public function showDocument(string $document_tracking_code){
+    public function showDocument(DocumentTracker $document_tracking_code){
+        return view('modals.view-document', compact('document_tracking_code'));
+    }
 
+    public function createReferral(DocumentTracker $documentTracker){
+        return view('modals.document-referral', compact('document_tracking_code'));
     }
 }

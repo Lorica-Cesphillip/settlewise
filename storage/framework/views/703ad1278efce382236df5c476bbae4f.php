@@ -240,7 +240,7 @@
                 <th class = "w-[200px] p-2 border-b-2">Receiver</th>
                 <th class = "w-[200px] p-2 border-b-2">Division</th>
                 <th class = "w-[180px] p-2 border-b-2">Document Type</th>
-                <th class = "w-[300px] p-2 border-b-2">Subject</th>
+                <th class = "w-[450px] p-2 border-b-2">Subject</th>
                 <th class = "w-[180px] p-2 border-b-2">Status</th>
                 <th class = "w-[180px] p-2 border-b-2">Action</th>
             </tr>
@@ -251,7 +251,7 @@
                 <td class = "w-[200px] p-2 border-b-2">Juan Dela Cruz</td>
                 <td class = "w-[200px] p-2 border-b-2">Administrative Division</td>
                 <td class = "w-[180px] p-2 border-b-2">Office Memorandum</td>
-                <td class = "w-[300px] p-2 border-b-2">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</td>
+                <td class = "w-[450px] p-2 border-b-2">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</td>
                 <th class = "w-[180px] p-2 border-b-2">
                     <div class="grow shrink basis-0 h-6 justify-start items-center gap-3 flex">
                         <div class="px-3 py-0.5 bg-[#ffece5] rounded-xl flex-col justify-center items-center gap-2 inline-flex">
