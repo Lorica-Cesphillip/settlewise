@@ -4,7 +4,7 @@ $__newAttributes = [];
 $__propNames = \Illuminate\View\ComponentAttributeBag::extractPropNames(([
     'name',
     'show' => false,
-    'maxWidth' => '2xl'
+    'maxWidth' => '4xl'
 ]));
 
 foreach ($attributes->all() as $__key => $__value) {
@@ -23,7 +23,7 @@ unset($__newAttributes);
 foreach (array_filter(([
     'name',
     'show' => false,
-    'maxWidth' => '2xl'
+    'maxWidth' => '4xl'
 ]), 'is_string', ARRAY_FILTER_USE_KEY) as $__key => $__value) {
     $$__key = $$__key ?? $__value;
 }
@@ -43,6 +43,7 @@ $maxWidth = [
     'lg' => 'sm:max-w-lg',
     'xl' => 'sm:max-w-xl',
     '2xl' => 'sm:max-w-2xl',
+    '4xl' => 'sm:max-w-4xl'
 ][$maxWidth];
 ?>
 

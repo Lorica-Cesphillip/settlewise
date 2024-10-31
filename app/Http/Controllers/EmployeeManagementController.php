@@ -30,28 +30,6 @@ class EmployeeManagementController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
-     */
-    public function display(Request $verify): View
-    {
-        $new_employee_data = $verify->validate([
-            'division_id' => ['required', 'integer', 'max:1'],
-            'lname' => 'required|string|min:1|max:50',
-            'fname' => 'required|string|min:1|max:50',
-            'mname' => 'required|string|min:1|max:50',
-            'address' => 'required|string|min:1|max:140',
-            'birthday' => 'required|date',
-            'martial_status' => 'required|string|min:1|max:20',
-            'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:'.Employees::class],
-            'contact_nos' => ['required', 'string', 'max:12'],
-            'aphso_division' => ['required', 'string', 'max:100'],
-            'position' => ['required', 'string', 'max:255'],
-            'employee_image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048'
-        ]);
-        return view('documents.employees', compact('new_employee_data'));
-    }
-
-    /**
      * Handle an incoming employee registration request.
      *
      * @throws \Illuminate\Validation\ValidationException
