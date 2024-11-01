@@ -8,24 +8,24 @@
             <!-- Email Address -->
             <div>
                 <x-input-label for="employee_id" :value="__('Employee ID:')" />
-                <x-text-input id="employee_id" class="block mt-1 w-full"
+                <x-text-input id="employee_id" class="block w-full"
                     type="text"
                     name="employee_id"
                     :value="old('employee_id')"
                     autofocus autocomplete="off" />
-                <x-input-error :messages="$errors->get('employee_id')" class="mt-2" />
+                <x-input-error :messages="$errors->get('employee_id')" class="mt-1" />
             </div>
 
             <!-- Password -->
             <div>
             <x-input-label for="password" :value="__('Password')" />
 
-            <x-text-input id="password" class="block mt-1 w-full"
+            <x-text-input id="password" class="block w-full"
                 type="password"
                 name="password"
                     autocomplete="current-password" />
 
-                <x-input-error :messages="$errors->get('password')" class="mt-2" />
+                <x-input-error :messages="$errors->get('password')" class="mt-1" />
             </div>
 
             <!-- Remember Me -->

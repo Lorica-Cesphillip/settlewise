@@ -25,9 +25,11 @@ class EmployeeManagementController extends Controller
     {
         //
         $aphso_employees = Employees::with('divisions')->paginate(10);
+        $divisions = Divisions::all();
 
-        return view('documents.employees', compact('aphso_employees'));
+        return view('documents.employees', compact('aphso_employees', 'divisions'));
     }
+
 
     /**
      * Handle an incoming employee registration request.
@@ -39,9 +41,9 @@ class EmployeeManagementController extends Controller
         //Refer to the column names on the table.
         $request->validate([
             'division_id' => ['required', 'integer', 'max:1'],
-            'lname' => 'required|string|max:50',
-            'fname' => 'required|string|max:50',
-            'mname' => 'required|string|max:50',
+            'last_name' => 'required|string|max:50',
+            'first_name' => 'required|string|max:50',
+            'middle_name' => 'required|string|max:50',
             'address' => 'required|string|max:140',
             'birthday' => 'required|date',
             'martial_status' => 'required|string|max:20',
@@ -64,7 +66,7 @@ class EmployeeManagementController extends Controller
 
         $user = User::create(array_merge($request->all(), ['employee_image' => $imagePath]));
 
-        return redirect(route('documents.employees', absolute: false))->with('success', 'A New Employee has been added to the system.');
+        return redirect(route('documents.employees', absolute: false))->with('success');
     }
 
     /**
