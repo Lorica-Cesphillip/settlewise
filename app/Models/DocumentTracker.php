@@ -12,6 +12,8 @@ class DocumentTracker extends Model
 {
     use HasFactory;
 
+    protected $table = 'document_tracker';
+
     public function document_type(): BelongsTo{
         return $this->belongsTo(DocumentType::class);
     }

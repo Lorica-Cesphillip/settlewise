@@ -1,50 +1,73 @@
 <x-modal name="add-new-employee" :show="false" focusable>
         <!--Close Modal-->
-        <div class = "pt-10 pb-4 py-4">
-            <button class = "text-right right-5 text-5xl" x-on:click.prevent="$dispatch('close-modal', 'add-new-employee')">&times;</button>
+
             <div class = "relative p-7">
+                <button class = "text-right right-5 text-5xl" x-on:click.prevent="$dispatch('close-modal', 'add-new-employee')">&times;</button>
                 <h3 class = "text-center font-bold text-2xl">Add New Employee</h3>
 
                 <form x-data="{ formStep: 1, last_name: '', first_name: '', middle_name: '', address: '', birthdate: '', marital_status: '', email: '', contact_nos: '', division: '', position: '' }" class="space-y-2" action = "{{route('employees.store')}}" method = "POST">
+                    @csrf
 
-                <!-- Progress Bar -->
-                <div class="flex items-center justify-center py-4">
-                    <div class = "rounded-full justify-center items-center text-center py-4 h-[60px] w-[60px] bg-gray-400">
-                        <span :class="formStep === 1 || formStep === 2 || formStep === 3 ? 'text-blue-600' : 'text-gray-400'">1</span>
+                    <!-- Progress Bar Component -->
+                    <div class="flex items-center justify-center py-4">
+                        <!-- Step 1 -->
+                        <div :class="formStep >= 1 ? 'bg-[#7fbaff]' : 'bg-gray-400'"
+                            class="rounded-full flex items-center justify-center text-center py-4 h-[60px] w-[60px]">
+                            <span :class="formStep >= 1 ? 'text-white' : 'text-gray-400'">
+                                <template x-if="formStep > 1">✓</template>
+                                <template x-if="formStep <= 1">1</template>
+                            </span>
+                        </div>
+
+                        <!-- Connector -->
+                        <div class="w-32 h-1 bg-gray-200 mx-2">
+                            <div :class="formStep >= 2 ? 'bg-[#7fbaff]' : 'bg-gray-200'" class="h-1"></div>
+                        </div>
+
+                        <!-- Step 2 -->
+                        <div :class="formStep >= 2 ? 'bg-[#7fbaff]' : 'bg-gray-400'"
+                            class="rounded-full flex items-center justify-center text-center py-4 h-[60px] w-[60px]">
+                            <span :class="formStep >= 2 ? 'text-white' : 'text-gray-400'">
+                                <template x-if="formStep > 2">✓</template>
+                                <template x-if="formStep <= 2">2</template>
+                            </span>
+                        </div>
+
+                        <!-- Connector -->
+                        <div class="w-32 h-1 bg-gray-200 mx-2">
+                            <div :class="formStep >= 3 ? 'bg-[#7fbaff]' : 'bg-gray-200'" class="h-1"></div>
+                        </div>
+
+                        <!-- Step 3 -->
+                        <div :class="formStep === 3 ? 'bg-[#7fbaff]' : 'bg-gray-400'"
+                            class="rounded-full flex items-center justify-center text-center py-4 h-[60px] w-[60px]">
+                            <span :class="formStep === 3 ? 'text-white' : 'text-gray-400'">
+                                <template x-if="formStep === 3">✓</template>
+                                <template x-if="formStep < 3">3</template>
+                            </span>
+                        </div>
                     </div>
-                    <div class="w-32 h-1 bg-gray-200 mx-2">
-                        <div :class="formStep === 2 || formStep === 3 ? 'bg-blue-600' : 'bg-gray-200'" class="h-1"></div>
-                    </div>
-                    <div class = "rounded-full justify-center items-center text-center py-4 h-[60px] w-[60px] bg-gray-400">
-                        <span :class="formStep === 2 || formStep === 3 ? 'text-blue-600' : 'text-gray-400'">2</span>
-                    </div>
-                    <div class="w-32 h-1 bg-gray-200 mx-2">
-                        <div :class="formStep === 3 ? 'bg-blue-600' : 'bg-gray-200'" class="h-1"></div>
-                    </div>
-                    <div class = "rounded-full justify-center items-center text-center py-4 h-[60px] w-[60px] bg-gray-400">
-                        <span :class="formStep === 3 ? 'text-blue-600' : 'text-gray-400'">3</span>
-                    </div>
-                </div>
+
                     <div x-cloak x-show="formStep === 1">
-                        @csrf
+
                         <h5 class = "font-bold text-xl">Part I: Personal Information</h5>
                         <div class = "block">
 
                             <!--Employee Name-->
                             <x-input-label for="name" :value="__('Employee Name')"/>
-                            <div class = "gap-2 w-full inline-block">
+                            <div class = "gap-2 w-full inline-flex">
                                 <div>
-                                    <x-text-input x-model="last_name" id="name" class="block mt-1 w-full" type="text" name="last_name" :value="old('last_name')" autofocus autocomplete="off" placeholder="Last Name"/>
+                                    <x-text-input x-model="last_name" id="name" class="block mt-1 w-[275px]" type="text" name="last_name" :value="old('last_name')" autofocus autocomplete="off" placeholder="Last Name"/>
                                     <x-input-error :messages="$errors->get('last_name')" class="mt-2" />
                                 </div>
 
                                 <div>
-                                    <x-text-input x-model="first_name" id="name" class="block mt-1 w-full" type="text" name="first_name" :value="old('first_name')" autofocus autocomplete="off" placeholder="First Name"/>
+                                    <x-text-input x-model="first_name" id="name" class="block mt-1 w-[275px]" type="text" name="first_name" :value="old('first_name')" autofocus autocomplete="off" placeholder="First Name"/>
                                     <x-input-error :messages="$errors->get('first_name')" class="mt-2" />
                                 </div>
 
                                 <div>
-                                    <x-text-input x-model="middle_name" id="name" class="block mt-1 w-full" type="text" name="middle_name" :value="old('middle_name')" autofocus autocomplete="off" placeholder="Middle Name"/>
+                                    <x-text-input x-model="middle_name" id="name" class="block mt-1 w-[275px]" type="text" name="middle_name" :value="old('middle_name')" autofocus autocomplete="off" placeholder="Middle Name"/>
                                     <x-input-error :messages="$errors->get('middle_name')" class="mt-2" />
                                 </div>
                             </div>
@@ -194,7 +217,6 @@
                         </div>
                     </form>
             </div>
-        </div>
 </x-modal>
 
 <x-modal name="view-employee" :show="false" focusable>

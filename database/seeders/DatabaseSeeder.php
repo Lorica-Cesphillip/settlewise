@@ -7,6 +7,7 @@ use Illuminate\Database\Seeder;
 use App\Models\Employees;
 use App\Models\User;
 use App\Models\Divisions;
+use App\Models\DocumentType;
 use Nette\Utils\Random;
 use Illuminate\Support\Facades\DB;
 
@@ -49,5 +50,17 @@ class DatabaseSeeder extends Seeder
         Employees::all()->each(function ($employee) {
             User::factory()->for($employee)->create();
         });
+
+        $documentTypes = [
+            ['document_type' => 'Memorandum'],
+            ['document_type' => 'Office Order'],
+            ['document_type' => 'Letter'],
+            ['document_type' => 'Request'],
+            ['document_type' => 'Invitation'],
+            ['document_type' => 'Solicitation'],
+            ['document_type' => 'Others']
+        ];
+
+        DocumentType::insert($documentTypes);
     }
 }

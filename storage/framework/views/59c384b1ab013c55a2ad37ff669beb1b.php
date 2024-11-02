@@ -46,7 +46,7 @@
 <?php endif; ?>
 
         <!--Necessary Buttons-->
-        <div class = "w-full flex row-span-3 h-20 columns-2">
+        <div class = "w-full flex row-span-3 h-20 justify-between">
             <div class = "left-0 h-14 inline-flex gap-3 w-1/2">
                 <?php if (isset($component)) { $__componentOriginal18c21970322f9e5c938bc954620c12bb = $component; } ?>
 <?php if (isset($attributes)) { $__attributesOriginal18c21970322f9e5c938bc954620c12bb = $attributes; } ?>
@@ -181,7 +181,7 @@
                     Add New Employee
                 </button>
 
-                <?php echo $__env->make('modals.add-employee', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
+                <?php echo $__env->make('modals.manage-employee', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
 
 
                     <?php if (isset($component)) { $__componentOriginal3b0e04e43cf890250cc4d85cff4d94af = $component; } ?>
@@ -220,9 +220,6 @@
                 </div>
             </div>
         </div>
-
-        <!--Modals-->
-
 
         <!--Table-->
         <div class = "w-full h-full p-2">
@@ -280,6 +277,7 @@
                                     </g>
                                 </svg>
                             </a>
+                            <?php if(session('employee')->division_name == "APHSO Department"): ?>
                             <form action="<?php echo e(route('employees.destroy', $employee->employee_number)); ?>" method="POST" style="display:inline">
                                 <?php echo csrf_field(); ?>
                                 <button type="submit" class="textpx-4">
@@ -292,6 +290,7 @@
                                     </svg>
                                 </button>
                             </form>
+                            <?php endif; ?>
                         </td>
                     </tr>
                     <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>

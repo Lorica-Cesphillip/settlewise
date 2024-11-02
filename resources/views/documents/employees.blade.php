@@ -18,7 +18,7 @@
         </x-title_header>
 
         <!--Necessary Buttons-->
-        <div class = "w-full flex row-span-3 h-20 columns-2">
+        <div class = "w-full flex row-span-3 h-20 justify-between">
             <div class = "left-0 h-14 inline-flex gap-3 w-1/2">
                 <x-text-input id="employee_id" class="mt-1 w-3/5" type="text" name="employee_id" :value="old('employee_id')" autofocus placeholder="Search Employee"/>
                 <x-primary-button>
@@ -62,7 +62,7 @@
                     Add New Employee
                 </button>
 
-                @include('modals.add-employee')
+                @include('modals.manage-employee')
 
 
                     <x-secondary-button>
@@ -82,9 +82,6 @@
                 </div>
             </div>
         </div>
-
-        <!--Modals-->
-
 
         <!--Table-->
         <div class = "w-full h-full p-2">
@@ -141,6 +138,7 @@
                                     </g>
                                 </svg>
                             </a>
+                            @if(session('employee')->division_name == "APHSO Department")
                             <form action="{{ route('employees.destroy', $employee->employee_number) }}" method="POST" style="display:inline">
                                 @csrf
                                 <button type="submit" class="textpx-4">
@@ -153,6 +151,7 @@
                                     </svg>
                                 </button>
                             </form>
+                            @endif
                         </td>
                     </tr>
                     @endforeach

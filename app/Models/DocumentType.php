@@ -9,7 +9,8 @@ class DocumentType extends Model
 {
     use HasFactory;
 
-    protected $fillable = 'document_type';
+    protected $table = 'document_type';
+    protected $fillable = ['document_type'];
 
     protected $primaryKey = 'id';
 }
