@@ -1,0 +1,188 @@
+.content {
+    margin-left: 320px;
+    padding: 0; /* Remove content padding */
+}
+
+.document-container {
+    padding: 20px; /* Add slight indentation around both title and table */
+}
+
+.pagename {
+    display: flex;
+    align-items: center; /* Align icon and text vertically */
+    margin-bottom: 20px;
+    text-align: left;
+    font-size: 24px; /* Adjust the font size as needed */
+}
+
+.title-icon {
+    margin-right: 10px; /* Space between icon and title text */
+    width: 30px; /* Adjust the size of the icon */
+    height: 30px;
+}
+
+.document-table {
+    width: 100%; /* Ensure the table takes the full width within the container */
+    border-collapse: collapse;
+    text-align: left;
+}
+
+.document-table th, .document-table td {
+    padding: 12px;
+    border-bottom: 1px solid #ddd;
+    text-align: left;
+}
+
+.document-table th {
+    background-color: #ffffff; /* White background for labels */
+    font-weight: bold;
+    color: #000000; /* Black text color for contrast */
+}
+
+.document-table tr:nth-child(even) {
+    background-color: #ffffff; /* White background for rows */
+}
+
+.document-table tr:hover {
+    background-color: transparent; /* No hover effect */
+}
+
+.document-table a img {
+    width: 20px;
+    height: 20px;
+    margin-right: 10px; /* Space between icons */
+}
+
+.document-table td a {
+    text-decoration: none; /* Remove underline for icons */
+}
+
+/* Align search filter section */
+
+.search-filter-container {
+    display: flex;
+    justify-content: space-between; /* Aligns the left and right columns */
+    align-items: center;
+    margin-bottom: 20px; /* Add space below the search section */
+    width: 100%; /* Ensure the container spans the width of the table */
+}
+
+.send-document-container {
+    display: flex;
+    justify-content: space-between; /* Aligns the left and right columns */
+    align-items: center;
+    margin-bottom: 20px; /* Add space below the search section */
+    width: 100%; /* Ensure the container spans the width of the table */
+}
+
+.search-group {
+    position: relative; /* To position the icon inside the input */
+    display: flex;
+    align-items: center;
+    margin-right: 20px; /* Space between search group and month group */
+}
+
+.send-document-group {
+    position: relative; /* To position the icon inside the input */
+    display: flex;
+    align-items: center;
+    margin-right: 20px; /* Space between search group and month group */
+}
+
+.search-input {
+    width: 375px;
+    height: 56px;
+    padding-left: 40px; /* Space for the icon inside input */
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-sizing: border-box; /* Ensure padding doesn't overflow */
+}
+
+.search-icon {
+    position: absolute;
+    left: 10px; /* Position the icon inside the input */
+    width: 20px;
+    height: 20px;
+    pointer-events: none; /* Make sure the icon doesn’t block input actions */
+}
+
+
+.search-button img {
+    width: 24px;
+    height: 24px;
+    margin-right: 5px; /* Space between icon and button text */
+}
+
+.confidential-label {
+    margin-left: 10px; /* Space between button and checkbox */
+    display: flex;
+    align-items: center;
+}
+
+.confidential-checkbox {
+    transform: scale(1.2); /* Adjust size of checkbox */
+    margin-right: 5px; /* Space between checkbox and label text */
+}
+
+/* Right-aligned month, export, and refresh buttons */
+/* 
+.month-group {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    width: auto;
+}
+
+.month-label {
+    margin-right: 10px;
+}
+
+.month-select {
+    width: 175px;
+    height: 43px;
+    margin-right: 10px;
+} */
+
+.date-group {
+    display: flex;
+    align-items: center;
+    gap: 15px; /* Add space between date fields */
+}
+
+.date-select-container {
+    display: flex;
+    align-items: center;
+}
+
+.date-label {
+    margin-right: 10px;
+}
+
+.date-select {
+    position: relative;
+    width: 175px;
+}
+
+.date-select img.date-icon {
+    position: absolute;
+    left: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 14px;
+    height: 14px;
+}
+
+.date-input {
+    width: 100%;
+    height: 43px;
+    padding-left: 35px; /* Add padding for the icon inside */
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-sizing: border-box;
+}
+
+.export-button img, .refresh-button img {
+    width: 24px;
+    height: 24px;
+    margin-right: 5px;
+}

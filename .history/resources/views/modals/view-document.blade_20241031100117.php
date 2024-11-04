@@ -1,9 +1,5 @@
 <head>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="{{ asset('css/view_document_modal.css') }}">
-    <link rel="stylesheet" href="{{ asset('css/documents_table.css') }}">
-    <link rel="stylesheet" href="{{ asset('css/sidebar.css') }}">
-    
 </head>
 
 <body>
@@ -74,8 +70,8 @@
         </div>
     </x-modal>
 
-    <!-- Document Preview Modal -->
-    <x-modal name="document-preview" id="documentPreviewModal">
+    <!-- Document Preview Modal using x-modal -->
+    <x-modal name="document-preview">
         <div class="modal-dialog modal-lg modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-header">
@@ -91,10 +87,4 @@
             </div>
         </div>
     </x-modal>
-
-
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="{{ asset('js/progress.js') }}"></script>
-
 </body>

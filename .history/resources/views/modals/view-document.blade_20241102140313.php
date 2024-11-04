@@ -1,12 +1,3 @@
-<head>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css">
-    <link rel="stylesheet" href="{{ asset('css/view_document_modal.css') }}">
-    <link rel="stylesheet" href="{{ asset('css/documents_table.css') }}">
-    <link rel="stylesheet" href="{{ asset('css/sidebar.css') }}">
-    
-</head>
-
-<body>
     <!-- View Document Modal -->
     <x-modal name="view-document">
         <div class="modal-dialog modal-xl modal-dialog-centered">
@@ -55,7 +46,7 @@
                             data-bs-target="#documentPreviewModal">View Document</button>
                         <button type="button" class="btn btn-active" id="referSomeoneBtn" data-bs-toggle="modal"
                             data-bs-target="#referSomeoneModal">Refer Someone</button>
-                        <button type="button" class="btn btn-active" id="openChatBtn" data-bs-toggle="modal"
+                        <button type="button" class="btn btn-active" id="openChatBtn"
                             data-bs-target="#chatModal">Open Chat</button>
                         <button type="button" class="btn btn-active" id="postAnnouncementBtn" data-bs-toggle="modal"
                             data-bs-target="#postAnnouncementModal">Post Announcement</button>
@@ -73,28 +64,3 @@
             </div>
         </div>
     </x-modal>
-
-    <!-- Document Preview Modal -->
-    <x-modal name="document-preview" id="documentPreviewModal">
-        <div class="modal-dialog modal-lg modal-dialog-centered">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="documentPreviewLabel">Document Preview</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <div id="document-preview">Document preview will appear here.</div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn" id="downloadFileBtn">Download File</button>
-                </div>
-            </div>
-        </div>
-    </x-modal>
-
-
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="{{ asset('js/progress.js') }}"></script>
-
-</body>

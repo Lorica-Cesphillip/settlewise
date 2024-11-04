@@ -55,7 +55,7 @@
                             data-bs-target="#documentPreviewModal">View Document</button>
                         <button type="button" class="btn btn-active" id="referSomeoneBtn" data-bs-toggle="modal"
                             data-bs-target="#referSomeoneModal">Refer Someone</button>
-                        <button type="button" class="btn btn-active" id="openChatBtn" data-bs-toggle="modal"
+                        <button type="button" class="btn btn-active" id="openChatBtn"
                             data-bs-target="#chatModal">Open Chat</button>
                         <button type="button" class="btn btn-active" id="postAnnouncementBtn" data-bs-toggle="modal"
                             data-bs-target="#postAnnouncementModal">Post Announcement</button>

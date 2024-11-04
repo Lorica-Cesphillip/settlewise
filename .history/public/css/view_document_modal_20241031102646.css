@@ -39,6 +39,10 @@
     padding: 1.5rem;
 }
 
+.modal-xl {
+    max-width: 990px;
+}
+
 .modal-footer {
     border-top: none;
     display: grid;
@@ -388,10 +392,10 @@
     text-align: center;
     margin-bottom: 5px;
 }
-/* 
+
 .modal-body {
     padding: 2rem;
-} */
+}
 
 .new-group {
     margin-top: 20px;
@@ -538,6 +542,11 @@
 #referSomeoneModal {
     display: none;
     z-index: 1050;
+}
+
+/* Ensure modal is properly shown when triggered */
+.modal-open #referSomeoneModal {
+    display: flex;
 }
 
 /* Ensure modal dimensions don’t cover the whole page */
