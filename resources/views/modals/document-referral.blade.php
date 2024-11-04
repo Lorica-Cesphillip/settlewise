@@ -1,50 +1,38 @@
-    <!-- Refer Someone Modal -->
-    <div class="modal fade" id="referSomeoneModal" tabindex="-1" aria-labelledby="referSomeoneLabel" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered modal-dynamic-size"> <!-- Dynamic Size Modal -->
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
+<!-- Refer Someone Modal -->
+<x-modal name="refer-someone" focusable>
+    <h3 class="font-bold text-2xl text-center">DOCUMENT REFERRAL FORM</h3>
 
-                <div class="modal-title-container">
-                    <hr class="header-divider">
-                    <h3 class="modal-title text-center" id="referSomeoneLabel">DOCUMENT REFERRAL FORM</h3>
-                </div>
+    <div class="modal-body">
+        <div class = "columns-2">
+            <div>
+                <p class = "font-light">Tracking Code: </p>
+                <p class = "font-light">Document Type: </p>
+                <p class = "font-light">Subject: </p>
+                <p class = "font-light">Additional Remarks: </p>
+                <p class = "font-light">Did the Sender Want to Request Something?</p>
+            </div>
+            <div>
+                <p class = "font-bold underline">01-07-2025-001</p>
+                <p class = "font-bold underline">Office Order</p>
+                <p class = "font-bold underline">orem ipsum dolor sit amet, consectetur
+                    adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+                <p class = "font-bold underline">orem ipsum dolor sit amet, consectetur
+                    adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+                <p class = "font-bold underline">01-07-2025-001</p>
+            </div>
+        </div>
 
-                <div class="modal-body">
-                    <div class="row">
-                        <div class="col-md-6">
-                            <p><strong>Tracking Code:</strong></p>
-                            <p><strong>Category:</strong></p>
-                            <p><strong>Subject:</strong></p>
-                            <p><strong>Additional Remarks:</strong></p>
-                            <p><strong>Did the Sender Want to Request Something?</strong></p>
-                            <p><strong>Sender:</strong></p>
-                            <p><strong>Date/Time Sent:</strong></p>
-                            <p><strong>APHSO Division:</strong></p>
-                            <p><strong>Type of Request, if Applicable:</strong></p>
-                        </div>
-                        <div class="col-md-6">
-                            <p><span id="modal-tracking-code">DOC-2025-01-05-25</span></p>
-                            <p><span id="modal-category">Office Order</span></p>
-                            <p><span id="modal-subject">Lorem ipsum dolor sit amet...</span></p>
-                            <p><span id="modal-additional-remarks">N/A</span></p>
-                            <p><span id="modal-request">No</span></p>
-                            <p><span id="modal-sender">Juan Dela Cruz</span></p>
-                            <p><span id="modal-datetime-sent">2025-01-05 13:00:00</span></p>
-                            <p><span id="modal-division">Administrative Division</span></p>
-                            <p><span id="modal-type-of-request">N/A</span></p>
-                        </div>
-                    </div>
-
-                    <!-- Full-width Select Employee to be Referred -->
-                    <div class="full-width-group mt-3">
-                        <label for="employee-select"><strong>Select Employee to be Referred</strong></label>
-                        <select id="employee-select" class="form-control full-width-select">
-                            <!-- PLACEHOLDER OPTIONS -->
-                            <option value="">-- APHSO Employee --</option>
-                        </select>
-                    </div>
+        <!-- Full-width Select Employee to be Referred -->
+        <div class="full-width-group mt-3">
+            <label for="employee-select"><strong>Select Employee to be Referred</strong></label>
+            <select id="employee-select" class="form-control full-width-select">
+                <!-- PLACEHOLDER OPTIONS -->
+                <option value="">-- APHSO Employee --</option>
+                @foreach($employees as $employee)
+                <option value="{{$employee->employee_number}}">{{$employee->full_name}}</option>
+                @endforeach
+            </select>
+        </div>
 
                     <!-- For and Others (please specify) Fields -->
                     <div class="row mt-3">
@@ -103,4 +91,4 @@
                 </div>
             </div>
         </div>
-    </div>
+    </x-modal>

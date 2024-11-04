@@ -1,8 +1,7 @@
-<x-modal name="add-new-employee" :show="false" focusable>
+<x-modal name="add-new-employee" :maxWidth="'4xl'" :show="false" focusable>
         <!--Close Modal-->
 
             <div class = "relative p-7">
-                <button class = "text-right right-5 text-5xl" x-on:click.prevent="$dispatch('close-modal', 'add-new-employee')">&times;</button>
                 <h3 class = "text-center font-bold text-2xl">Add New Employee</h3>
 
                 <form x-data="{ formStep: 1, last_name: '', first_name: '', middle_name: '', address: '', birthdate: '', marital_status: '', email: '', contact_nos: '', division: '', position: '' }" class="space-y-2" action = "{{route('employees.store')}}" method = "POST">

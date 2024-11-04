@@ -1,5 +1,5 @@
     <!-- Post Announcement Modal -->
-    <div class="modal fade" id="postAnnouncementModal" tabindex="-1" aria-labelledby="postAnnouncementLabel" aria-hidden="true">
+    <x-modal name="announcement" :maxWidth="'2xl'" focusable>
         <div class="modal-dialog modal-lg modal-dialog-centered" style="max-width: 700px; height: 1000px;">
             <div class="modal-content">
                 <div class="modal-header">
@@ -47,4 +47,4 @@
                 </div>
             </div>
         </div>
-    </div>
+    </x-modal>

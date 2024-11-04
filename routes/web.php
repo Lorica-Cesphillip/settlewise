@@ -3,6 +3,7 @@
 use App\Http\Controllers\DivisionsController;
 use App\Http\Controllers\OutgoingDocumentsController;
 use App\Http\Controllers\EmployeeManagementController;
+use App\Http\Controllers\IncomingDocumentsController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -17,18 +18,15 @@ Route::middleware(['auth', 'verified'])->group(function () {
         return view('documents.dashboard');
     })->name('dashboard');
 
-    Route::get('documents/incoming', function () {
-        return view('documents.incoming');
-    })->name('incoming');
-
-    Route::resource('documents/outgoing',OutgoingDocumentsController::class);
+    Route::resource('/documents/incoming', IncomingDocumentsController::class);
+    Route::resource('/documents/outgoing',OutgoingDocumentsController::class);
 
     Route::get('documents/archived', function () {
         return view('documents.archived');
     })->name('archived');
 
     /*Employee Information Module*/
-    Route::get('documents/aphso_divisions', [DivisionsController::class, 'index'])->name('divisions');
+    Route::resource('/documents/divisions', DivisionsController::class);
     Route::resource('/documents/employees', EmployeeManagementController::class);
 });
 

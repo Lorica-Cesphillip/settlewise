@@ -3,15 +3,21 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\DocumentTracker;
+use App\Models\Employees;
+use Illuminate\Support\Facades\DB;
 
 class IncomingDocumentsController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Employees $employee_id)
     {
-        //
+        $documents = DocumentTracker::latest()->where('from_employee_id', '=', $employee_id)->paginate(10);
+        $employees = Employees::select(DB::raw("CONCAT(fname, ' ', mname, ' ', lname) AS full_name"))->get();
+
+        return view('documents.outgoing', compact('documents', 'employees'));
     }
 
     /**

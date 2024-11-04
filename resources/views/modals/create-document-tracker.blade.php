@@ -1,6 +1,5 @@
-<x-modal name="create-document-tracker-request" :show="false" focusable>
+<x-modal name="create-document-tracker-request" :maxWidth="'4xl'" :show="false" focusable>
     <div class = "px-6 py-8">
-        <button class = "text-right text-5xl justify-self-end" x-on:click.prevent="$dispatch('close-modal', 'create-document-tracker-request')">&times;</button>
         <form x-cloak x-data="{ formStep: 1, receiver: '', document_type: '', urgent: false, division: '', others: '', confidential: '', subject: '', document: '', requested: 'false', request_type: '', others: '', request_type: '', requested_document: '', request_details: '', purpose: '' }" class = "space-y-2" action="{{route('outgoing.store')}}" method = "POST">
             @csrf
 
@@ -53,8 +52,8 @@
                         <x-input-label for="receiver" :value="__('Send the Document to: *')"/>
                         <select x-model="receiver" id="receiver" class="block mt-1 w-[370px] border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm" type="text" name="receiver" :value="old('marital_status')" autofocus autocomplete="off">
                             <option value="null">--Please Select Recipient--</option>
-                            @foreach($recipients as $receipient)
-                            <option value="{{$receipient->full_name}}">{{$receipient->full_name}}</option>
+                            @foreach($employees as $recipient)
+                            <option value="{{$recipient->full_name}}">{{$recipient->full_name}}</option>
                             @endforeach
                         </select>
                         <x-input-error :messages="$errors->get('receiver')" class="mt-2" />

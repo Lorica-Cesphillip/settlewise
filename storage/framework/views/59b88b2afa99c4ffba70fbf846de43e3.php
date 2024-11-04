@@ -57,6 +57,8 @@
                 </button>
 
                 <?php echo $__env->make('modals.create-document-tracker', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
+                <?php echo $__env->make('modals.view-document', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
+                <?php echo $__env->make('modals.view-conversation', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
 
 
 
@@ -222,7 +224,7 @@
                     </div>
                 </th>
                 <td class = "w-[180px] p-11 inline-flex gap-3">
-                    <a href="#">
+                    <button x-data = "" type="button" x-on:click.prevent="$dispatch('open-modal', 'view-outgoing-document')">
                         <svg class="h-[30px] w-[30px] gap-2" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <g id="icon / eye">
                                 <g id="icon">
@@ -235,7 +237,7 @@
                                 </g>
                             </g>
                         </svg>
-                    </a>
+                    </button>
                     <form action="#" method="POST" style="display:inline">
                         <?php echo csrf_field(); ?>
                         <?php echo method_field('DELETE'); ?>

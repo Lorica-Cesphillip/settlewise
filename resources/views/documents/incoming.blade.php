@@ -127,7 +127,7 @@
                     </div>
                 </th>
                 <td class = "w-[180px] p-11 inline-flex gap-3">
-                    <button x-data = "" type="button" x-on:click.prevent="$dispatch('open-modal', 'view-document')">
+                    <button x-data = "" type="button" x-on:click.prevent="$dispatch('open-modal', 'view-incoming-document')">
                         <svg class="h-[30px] w-[30px] gap-2" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <g id="icon / eye">
                                 <g id="icon">
@@ -160,5 +160,9 @@
     </table>
 
     @include('modals.view-document')
-    
+    @include('modals.accept-reject-request-referral')
+    @include('modals.preview')
+    @include('modals.document-referral')
+    @include('modals.view-conversation')
+
 </x-app-layout>

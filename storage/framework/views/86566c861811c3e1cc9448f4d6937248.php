@@ -264,7 +264,7 @@
                     </div>
                 </th>
                 <td class = "w-[180px] p-11 inline-flex gap-3">
-                    <button x-data = "" type="button" x-on:click.prevent="$dispatch('open-modal', 'view-document')">
+                    <button x-data = "" type="button" x-on:click.prevent="$dispatch('open-modal', 'view-incoming-document')">
                         <svg class="h-[30px] w-[30px] gap-2" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <g id="icon / eye">
                                 <g id="icon">
@@ -295,6 +295,13 @@
             </tr>
         </tbody>
     </table>
+
+    <?php echo $__env->make('modals.view-document', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
+    <?php echo $__env->make('modals.accept-reject-request-referral', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
+    <?php echo $__env->make('modals.preview', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
+    <?php echo $__env->make('modals.document-referral', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
+    <?php echo $__env->make('modals.view-conversation', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
+
  <?php echo $__env->renderComponent(); ?>
 <?php endif; ?>
 <?php if (isset($__attributesOriginal9ac128a9029c0e4701924bd2d73d7f54)): ?>

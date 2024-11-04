@@ -1,100 +1,148 @@
-<head>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css">
-    <link rel="stylesheet" href="{{ asset('css/view_document_modal.css') }}">
-    <link rel="stylesheet" href="{{ asset('css/documents_table.css') }}">
-    <link rel="stylesheet" href="{{ asset('css/sidebar.css') }}">
-    
-</head>
+<x-modal name="view-incoming-document" :show="false" focused>
+    <div class="px-5 py-8">
+        <div class="font-bold text-2xl">
+            <h3 class="modal-title text-center pb-4">VIEW DOCUMENT</h3>
+        </div>
 
-<body>
-    <!-- View Document Modal -->
-    <x-modal name="view-document">
-        <div class="modal-dialog modal-xl modal-dialog-centered">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
+        <!--Main Body-->
+        <div class="grid grid-cols-4 grid-rows-6 py-4">
+            <div class = "font-light">Tracking Code: </div>
+            <div class="font-bold underline col-span-3 col-start-2 row-start-1">01-07-2025-001</div>
+            <div class="font-light col-start-1 row-start-2">Document Type: </div>
+            <div class="font-bold underline col-span-3 row-start-2">Office Order</div>
+            <div class="font-light row-start-3">Subject: </div>
+            <div class="font-bold underline col-span-3 col-start-2 row-start-3">Lorem ipsum dolor sit amet, consectetur
+                adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</div>
+            <div class="font-light col-start-1 row-start-4">Remarks: </div>
+            <div class="font-bold underline col-span-3 row-start-4">Lorem ipsum dolor sit amet, consectetur adipiscing
+                elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</div>
+            <div class="font-light row-start-5">Transmitted by: </div>
+            <div class="font-bold underline col-start-2 row-start-5">Juan Dela Cruz</div>
+            <div class="font-light col-start-1 row-start-6">Date Transmitted: </div>
+            <div class="font-bold underline col-start-2 row-start-6">01-07-2025</div>
+            <div class="font-light col-start-3 row-start-5">Division: </div>
+            <div class="font-bold underline col-start-4 row-start-5">Administrative Division</div>
+            <div class="font-light col-start-3 row-start-6">Status: </div>
+            <div class="font-bold underline row-start-6">Pending</div>
+        </div>
 
-                <div class="modal-title-container">
-                    <hr class="header-divider">
-                    <h3 class="modal-title text-center" id="viewDocumentLabel">VIEW DOCUMENT</h3>
-                </div>
+        <p class = "text-center text-2xl font-bold py-4">THE SENDER WOULD LIKE TO REQUEST SOMETHING</p>
 
-                <div class="modal-body">
-                    <div class="row">
-                        <div class="col-md-6">
-                            <p><strong>Tracking Code:</strong> <span id="modal-tracking-code"></span></p>
-                            <p><strong>Document Type:</strong> <span id="modal-document-type"></span></p>
-                            <p><strong>Subject:</strong> <span id="modal-subject"></span></p>
-                            <p><strong>Remarks:</strong> <span id="modal-remarks"></span></p>
-                            <p><strong>Transmitted by:</strong> <span id="modal-transmitter"></span></p>
-                            <p><strong>Date Transmitted:</strong> <span id="modal-date-transmitted"></span></p>
-                        </div>
-                        <div class="col-md-6">
-                            <p><strong>Division:</strong> <span id="modal-division"></span></p>
-                            <p><strong>Status:</strong> <span id="modal-status"></span></p>
-                        </div>
-                    </div>
+        <div class="grid grid-cols-4 grid-rows-4">
+            <div class="col-start-1 row-start-1">Request Type, if Applicable: </div>
+            <div class="col-start-1 row-start-2">Document Requested: </div>
+            <div class="col-start-1 row-start-3">Request Purpose: </div>
+            <div class="col-start-1 row-start-4">Request Details: </div>
+            <div class="font-bold underline col-span-3 col-start-2 row-start-1">N/A</div>
+            <div class="font-bold underline col-span-3 col-start-2 row-start-2">N/A</div>
+            <div class="font-bold underline col-span-3 col-start-2 row-start-3">N/A</div>
+            <div class="font-bold underline col-span-3 col-start-2 row-start-4">N/A</div>
+        </div>
 
-                    <h5 class="mt-4">The Sender Did Not Request Something</h5>
-                    <div class="row">
-                        <div class="col-md-6">
-                            <p><strong>Type of Request, if Applicable:</strong> N/A</p>
-                            <p><strong>Request Details:</strong> N/A</p>
-                        </div>
-                        <div class="col-md-6">
-                            <p><strong>Document Requested:</strong> N/A</p>
-                            <p><strong>Request Purpose:</strong> N/A</p>
-                        </div>
-                    </div>
-                </div>
+        <!--Buttons-->
+        <div class = "justify-between w-full inline-flex">
+            <div class = "pt-10 gap-3 inline-flex">
+                <button x-on:click.prevent="$dispatch('open-modal', 'document-preview')"
+                    class = "p-4 bg-[#0d5dba] rounded-lg flex-col justify-center items-center gap-2.5 flex text-white tracking-widest hover:bg-blue-900 focus:bg-blue-900 active:bg-blue-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 transition ease-in-out duration-150">View
+                    Document</button>
 
-                <div class="modal-footer">
-                    <div>
-                        <button type="button" class="btn btn-active" id="viewDocumentBtn" data-bs-toggle="modal"
-                            data-bs-target="#documentPreviewModal">View Document</button>
-                        <button type="button" class="btn btn-active" id="referSomeoneBtn" data-bs-toggle="modal"
-                            data-bs-target="#referSomeoneModal">Refer Someone</button>
-                        <button type="button" class="btn btn-active" id="openChatBtn" data-bs-toggle="modal"
-                            data-bs-target="#chatModal">Open Chat</button>
-                        <button type="button" class="btn btn-active" id="postAnnouncementBtn" data-bs-toggle="modal"
-                            data-bs-target="#postAnnouncementModal">Post Announcement</button>
-                    </div>
-                    <div class="request-acceptance">
-                        <label>Accept Request?</label>
-                        <div class="btn-group">
-                            <button type="button" class="btn btn-disabled" id="rejectRequestBtn" data-bs-toggle="modal"
-                                data-bs-target="#rejectRequestModal">Reject</button>
-                            <button type="button" class="btn btn-disabled" id="acceptRequestBtn" data-bs-toggle="modal"
-                                data-bs-target="#acceptRequestModal">Accept</button>
-                        </div>
-                    </div>
+                <button x-on:click.prevent="$dispatch('open-modal', 'refer-someone')"
+                    class = "p-4 bg-[#0d5dba] rounded-lg flex-col justify-center items-center gap-2.5 flex text-white tracking-widest hover:bg-blue-900 focus:bg-blue-900 active:bg-blue-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 transition ease-in-out duration-150">Refer
+                    Someone</button>
+
+                <button x-on:click.prevent="$dispatch('open-modal', 'document-conversation')"
+                    class = "p-4 bg-[#0d5dba] rounded-lg flex-col justify-center items-center gap-2.5 flex text-white tracking-widest hover:bg-blue-900 focus:bg-blue-900 active:bg-blue-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 transition ease-in-out duration-150">Open
+                    Chat</button>
+
+                <button
+                    class = "p-4 bg-[#0d5dba] rounded-lg flex-col justify-center items-center gap-2.5 flex text-white tracking-widest hover:bg-blue-900 focus:bg-blue-900 active:bg-blue-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 transition ease-in-out duration-150">Post
+                    Announcement</button>
+            </div>
+            <div>
+                <p class = "pb-4">Accept Request?</p>
+                <div class = "gap-3 inline-flex">
+                    <button x-on:click.prevent="$dispatch('open-modal', 'reject-request')"
+                        class = "inline-flex items-center p-4 bg-red-600 border border-transparent rounded-md text-white  tracking-widest hover:bg-red-800 active:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 transition ease-in-out duration-150">Reject</button>
+                    <button x-on:click.prevent="$dispatch('open-modal', 'accept-request')"
+                        class = "p-4 bg-green-600 rounded-lg flex-col justify-center items-center gap-2.5 flex text-white tracking-widest hover:bg-green-900 focus:bg-green-700 active:bg-green-900 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2 transition ease-in-out duration-150">Accept</button>
                 </div>
             </div>
         </div>
-    </x-modal>
+    </div>
+</x-modal>
 
-    <!-- Document Preview Modal -->
-    <x-modal name="document-preview" id="documentPreviewModal">
-        <div class="modal-dialog modal-lg modal-dialog-centered">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="documentPreviewLabel">Document Preview</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+<x-modal name="view-outgoing-document" :show="false" focused>
+    <div class="px-5 py-8">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div class="font-bold text-2xl">
+                    <h3 class="modal-title text-center pb-4">VIEW DOCUMENT</h3>
                 </div>
-                <div class="modal-body">
-                    <div id="document-preview">Document preview will appear here.</div>
+
+                <!--Main Body-->
+                <div class="grid grid-cols-4 grid-rows-6 py-4">
+                    <div class = "font-light">Tracking Code: </div>
+                    <div class="font-bold underline col-span-3 col-start-2 row-start-1">01-07-2025-001</div>
+                    <div class="font-light col-start-1 row-start-2">Document Type: </div>
+                    <div class="font-bold underline col-span-3 row-start-2">Office Order</div>
+                    <div class="font-light row-start-3">Subject: </div>
+                    <div class="font-bold underline col-span-3 col-start-2 row-start-3">Lorem ipsum dolor sit amet,
+                        consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+                    </div>
+                    <div class="font-light col-start-1 row-start-4">Remarks: </div>
+                    <div class="font-bold underline col-span-3 row-start-4">Lorem ipsum dolor sit amet, consectetur
+                        adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</div>
+                    <div class="font-light row-start-5">Transmitted by: </div>
+                    <div class="font-bold underline col-start-2 row-start-5">Juan Dela Cruz</div>
+                    <div class="font-light col-start-1 row-start-6">Date Transmitted: </div>
+                    <div class="font-bold underline col-start-2 row-start-6">01-07-2025</div>
+                    <div class="font-light col-start-3 row-start-5">Division: </div>
+                    <div class="font-bold underline col-start-4 row-start-5">Administrative Division</div>
+                    <div class="font-light col-start-3 row-start-6">Status: </div>
+                    <div class="font-bold underline row-start-6">Pending</div>
                 </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn" id="downloadFileBtn">Download File</button>
+
+                <p class = "text-center text-2xl font-bold py-4">THE SENDER WOULD LIKE TO REQUEST SOMETHING</p>
+
+                <div class="grid grid-cols-4 grid-rows-4">
+                    <div class="col-start-1 row-start-1">Request Type, if Applicable: </div>
+                    <div class="col-start-1 row-start-2">Document Requested: </div>
+                    <div class="col-start-1 row-start-3">Request Purpose: </div>
+                    <div class="col-start-1 row-start-4">Request Details: </div>
+                    <div class="font-bold underline col-span-3 col-start-2 row-start-1">N/A</div>
+                    <div class="font-bold underline col-span-3 col-start-2 row-start-2">N/A</div>
+                    <div class="font-bold underline col-span-3 col-start-2 row-start-3">N/A</div>
+                    <div class="font-bold underline col-span-3 col-start-2 row-start-4">N/A</div>
+                </div>
+
+                <!--Buttons-->
+                <div class = "pt-5 justify-between w-full inline-flex">
+                    <button x-on:click.prevent="$dispatch('open-modal', 'document-preview')"
+                        class = "p-4 bg-[#0d5dba] rounded-lg flex-col justify-center items-center gap-2.5 flex text-white tracking-widest hover:bg-blue-900 focus:bg-blue-900 active:bg-blue-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 transition ease-in-out duration-150">View
+                        Document</button>
+                    <button x-on:click.prevent="$dispatch('open-modal', 'document-conversation')"
+                        class = "p-4 bg-[#0d5dba] rounded-lg flex-col justify-center items-center gap-2.5 flex text-white tracking-widest hover:bg-blue-900 focus:bg-blue-900 active:bg-blue-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 transition ease-in-out duration-150">Open
+                        Chat</button>
                 </div>
             </div>
         </div>
-    </x-modal>
+    </div>
+</x-modal>
 
-
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="{{ asset('js/progress.js') }}"></script>
-
-</body>
+<!-- Document Preview Modal -->
+<x-modal name="document-preview" :maxWidth="'3xl'" :show="false" focusable>
+    <div class="modal-dialog modal-lg modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="documentPreviewLabel">Document Preview</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div id="document-preview">Document preview will appear here.</div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn" id="downloadFileBtn">Download File</button>
+            </div>
+        </div>
+    </div>
+</x-modal>

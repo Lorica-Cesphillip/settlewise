@@ -144,7 +144,7 @@
                 </table>
 
                 <div class="w-full h-fit p-2 flex justify-center items-center pt-8">
-                    <a href = "<?php echo e(route('incoming')); ?>"
+                    <a href = "<?php echo e(route('incoming.index')); ?>"
                         class="w-7/12 px-1 py-2 bg-blue-950 rounded-lg flex-col justify-center items-center gap-2.5 inline-flex hover:bg-blue-800">
                         <div class="justify-center items-center gap-2 inline-flex">
                             <div class="text-center text-white text-sm font-semibold leading-tight">VIEW INCOMING

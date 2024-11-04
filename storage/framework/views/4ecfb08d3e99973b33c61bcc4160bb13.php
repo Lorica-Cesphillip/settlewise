@@ -4,7 +4,7 @@ $__newAttributes = [];
 $__propNames = \Illuminate\View\ComponentAttributeBag::extractPropNames(([
     'name',
     'show' => false,
-    'maxWidth' => '4xl'
+    'maxWidth' => '6xl'
 ]));
 
 foreach ($attributes->all() as $__key => $__value) {
@@ -23,7 +23,7 @@ unset($__newAttributes);
 foreach (array_filter(([
     'name',
     'show' => false,
-    'maxWidth' => '4xl'
+    'maxWidth' => '6xl'
 ]), 'is_string', ARRAY_FILTER_USE_KEY) as $__key => $__value) {
     $$__key = $$__key ?? $__value;
 }
@@ -43,7 +43,10 @@ $maxWidth = [
     'lg' => 'sm:max-w-lg',
     'xl' => 'sm:max-w-xl',
     '2xl' => 'sm:max-w-2xl',
-    '4xl' => 'sm:max-w-4xl'
+    '3xl' => 'sm:max-w-3xl',
+    '4xl' => 'sm:max-w-4xl',
+    '5xl' => 'sm:max-w-5xl',
+    '6xl' => 'sm:max-w-6xl'
 ][$maxWidth];
 ?>
 
@@ -51,11 +54,8 @@ $maxWidth = [
     x-data="{
         show: <?php echo \Illuminate\Support\Js::from($show)->toHtml() ?>,
         focusables() {
-            // All focusable element types...
-            let selector = 'a, button, input:not([type=\'hidden\']), textarea, select, details, [tabindex]:not([tabindex=\'-1\'])'
-            return [...$el.querySelectorAll(selector)]
-                // All non-disabled elements...
-                .filter(el => ! el.hasAttribute('disabled'))
+            let selector = 'a, button, input:not([type=\'hidden\']), textarea, select, details, [tabindex]:not([tabindex=\'-1\'])';
+            return [...$el.querySelectorAll(selector)].filter(el => ! el.hasAttribute('disabled'));
         },
         firstFocusable() { return this.focusables()[0] },
         lastFocusable() { return this.focusables().slice(-1)[0] },
@@ -80,9 +80,8 @@ $maxWidth = [
     x-on:keydown.tab.prevent="$event.shiftKey || nextFocusable().focus()"
     x-on:keydown.shift.tab.prevent="prevFocusable().focus()"
     x-show="show"
-    class="fixed inset-0 overflow-y-auto px-4 py-6 sm:px-0 z-50"
-    style="display: <?php echo e($show ? 'block' : 'none'); ?>;"
->
+    class="fixed inset-0 flex items-center justify-center px-4 py-6 sm:px-0 z-50" style="display: <?php echo e($show ? 'flex' : 'none'); ?>;">
+
     <div
         x-show="show"
         class="fixed inset-0 transform transition-all"
@@ -99,7 +98,7 @@ $maxWidth = [
 
     <div
         x-show="show"
-        class="mb-6 bg-white rounded-lg overflow-hidden shadow-xl transform transition-all sm:w-full <?php echo e($maxWidth); ?> sm:mx-auto"
+        class="mb-6 bg-white rounded-lg overflow-hidden shadow-xl transform transition-all sm:w-full <?php echo e($maxWidth); ?> sm:mx-auto p-10"
         x-transition:enter="ease-out duration-300"
         x-transition:enter-start="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
         x-transition:enter-end="opacity-100 translate-y-0 sm:scale-100"
@@ -107,8 +106,11 @@ $maxWidth = [
         x-transition:leave-start="opacity-100 translate-y-0 sm:scale-100"
         x-transition:leave-end="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
     >
+
+    <button class = "text-right right-5 text-5xl" x-on:click.prevent="$dispatch('close-modal', '<?php echo e($name); ?>')">&times;</button>
         <?php echo e($slot); ?>
 
     </div>
 </div>
+
 <?php /**PATH C:\Users\loric\OneDrive\Documents\Capstone Files\settlewise\resources\views/components/modal.blade.php ENDPATH**/ ?>
