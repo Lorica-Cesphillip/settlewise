@@ -1,7 +1,7 @@
 <x-modal name="create-document-tracker-request" :show="false" focusable>
     <div class = "px-6 py-8">
         <button class = "text-right text-5xl justify-self-end" x-on:click.prevent="$dispatch('close-modal', 'create-document-tracker-request')">&times;</button>
-        <form x-data="{ formStep: 1, receiver: '', document_type: '', urgent: false, division: '', others: '', confidential: '', subject: '', document: '', requested: 'false', request_type: '', others: '', request_type: '', requested_document: '', request_details: '', purpose: '' }" class = "space-y-2" action="{{route('outgoing.store')}}" method = "POST">
+        <form x-cloak x-data="{ formStep: 1, receiver: '', document_type: '', urgent: false, division: '', others: '', confidential: '', subject: '', document: '', requested: 'false', request_type: '', others: '', request_type: '', requested_document: '', request_details: '', purpose: '' }" class = "space-y-2" action="{{route('outgoing.store')}}" method = "POST">
             @csrf
 
             <!-- Progress Bar Component -->
@@ -11,7 +11,7 @@
                     class="rounded-full flex items-center justify-center text-center py-4 h-[60px] w-[60px]">
                     <span :class="formStep >= 1 ? 'text-white' : 'text-gray-400'">
                         <template x-if="formStep > 1">✓</template>
-                        <template x-if="formStep <= 1">1</template>
+                        <template x-if="formStep == 1">1</template>
                     </span>
                 </div>
 
@@ -25,7 +25,7 @@
                     class="rounded-full flex items-center justify-center text-center py-4 h-[60px] w-[60px]">
                     <span :class="formStep >= 2 ? 'text-white' : 'text-gray-400'">
                         <template x-if="formStep > 2">✓</template>
-                        <template x-if="formStep <= 2">2</template>
+                        <template x-if="formStep == 2">2</template>
                     </span>
                 </div>
 
@@ -38,8 +38,7 @@
                 <div :class="formStep === 3 ? 'bg-[#7fbaff]' : 'bg-gray-400'"
                     class="rounded-full flex items-center justify-center text-center py-4 h-[60px] w-[60px]">
                     <span :class="formStep === 3 ? 'text-white' : 'text-gray-400'">
-                        <template x-if="formStep === 3">✓</template>
-                        <template x-if="formStep < 3">3</template>
+                        <template x-if="formStep == 3">3</template>
                     </span>
                 </div>
             </div>
