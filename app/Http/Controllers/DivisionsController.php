@@ -37,7 +37,7 @@ class DivisionsController extends Controller
             'head' => $validatedData['division_head'],
         ]);
 
-        // Redirect back with a success message
+        // Redirect back with a success message!
         return redirect()->route('divisions.index')->with('success', 'Division created successfully.');
     }
 

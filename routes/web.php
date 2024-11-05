@@ -37,4 +37,4 @@ Route::post('documents/aphso_divisions', [DivisionsController::class, 'store'])-
 Route::post('/divisions', [DivisionsController::class, 'store'])->name('divisions.store');
 Route::get('/divisions', [DivisionsController::class, 'index'])->name('divisions.index');
 Route::post('/division/update', [DivisionsController::class, 'update'])->name('division.update');
-Route::post('/divisions/store', [DivisionsController::class, 'store'])->name('division.store');
+Route::post('/divisions/store', [DivisionsController::class, 'store'])->name('division.store'); /* Added new route */

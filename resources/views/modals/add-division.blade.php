@@ -44,7 +44,7 @@
                             <option value="">John Doe</option>
                             <option value="">Juan Dela Cruz</option>
                             <option value="">Andres Aguinaldo</option>
-                            <!-- Populate dynamically from backend if necessary -->
+                            <!-- Populate dynamically from backend if necessary. . . -->
                         </select>
                     </div>
 
@@ -95,7 +95,7 @@
                             <option value="">John Doe</option>
                             <option value="">Juan Dela Cruz</option>
                             <option value="">Andres Aguinaldo</option>
-                            <!-- Populate dynamically from backend if necessary -->
+                            <!-- Populate dynamically from backend if necessary. . . -->
                         </select>
                     </div>
 
