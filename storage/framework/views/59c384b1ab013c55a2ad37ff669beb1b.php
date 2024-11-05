@@ -46,7 +46,7 @@
 <?php endif; ?>
 
         <!--Necessary Buttons-->
-        <div class = "w-full flex row-span-3 h-20 columns-2">
+        <div class = "w-full flex row-span-3 h-20 justify-between">
             <div class = "left-0 h-14 inline-flex gap-3 w-1/2">
                 <?php if (isset($component)) { $__componentOriginal18c21970322f9e5c938bc954620c12bb = $component; } ?>
 <?php if (isset($attributes)) { $__attributesOriginal18c21970322f9e5c938bc954620c12bb = $attributes; } ?>
@@ -181,7 +181,7 @@
                     Add New Employee
                 </button>
 
-                <?php echo $__env->make('modals.add-employee', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
+                <?php echo $__env->make('modals.manage-employee', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
 
 
                     <?php if (isset($component)) { $__componentOriginal3b0e04e43cf890250cc4d85cff4d94af = $component; } ?>
@@ -221,31 +221,28 @@
             </div>
         </div>
 
-        <!--Modals-->
-
-
         <!--Table-->
         <div class = "w-full h-full p-2">
-            <table class = "table-auto border-b-2">
+            <table class = "table-fixed border-b-2">
                 <thead>
                     <tr class = "bg-slate-200 h-[30px]">
-                        <th class = "w-max p-3 justify-start">Employee Id</th>
-                        <th class = "w-max p-3 justify-start">Employee Name</th>
-                        <th class = "w-max p-3 justify-start">Division</th>
-                        <th class = "w-max p-3 justify-start">Position</th>
-                        <th class = "w-max p-3 justify-start">Contact Number</th>
-                        <th class = "w-max p-3 justify-start">Email</th>
-                        <th class = "w-max p-3 justify-start">Status</th>
-                        <th class = "w-max p-3 justify-start">Action</th>
+                        <th class = "w-[150px] p-3 justify-start">Employee Id</th>
+                        <th class = "w-[300px] p-3 justify-start">Employee Name</th>
+                        <th class = "w-[250px] p-3 justify-start">Division</th>
+                        <th class = "w-[250px] p-3 justify-start">Position</th>
+                        <th class = "w-[200px] p-3 justify-start">Contact Number</th>
+                        <th class = "w-[250px] p-3 justify-start">Email</th>
+                        <th class = "w-[150px] p-3 justify-start">Status</th>
+                        <th class = "w-[150px] p-3 justify-start">Action</th>
                     </tr>
                 </thead>
                 <tbody>
                     <?php $__currentLoopData = $aphso_employees; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $employee): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                     <tr class = "border-b-2">
 
-                        <td class = " w-max h-[45px] p-3 justify-start"><?php echo e($employee->divisions->abbreviation); ?>-<?php echo e(str_pad($employee->employee_number, 4, '0', STR_PAD_LEFT)); ?></td>
-                        <td class = " w-max h-[45px] p-3 justify-start"><?php echo e($employee->fname); ?> <?php echo e($employee->mname); ?> <?php echo e($employee->lname); ?> </td>
-                        <td class = " w-max h-[45px] p-3 justify-start">
+                        <td class = " w-[150px] h-[45px] p-3 justify-start"><?php echo e($employee->divisions->abbreviation); ?>-<?php echo e(str_pad($employee->employee_number, 4, '0', STR_PAD_LEFT)); ?></td>
+                        <td class = " w-[300px] h-[45px] p-3 justify-start"><?php echo e($employee->fname); ?> <?php echo e($employee->mname); ?> <?php echo e($employee->lname); ?> </td>
+                        <td class = " w-[250px] h-[45px] p-3 justify-start">
                             <?php if($employee->divisions->division_name != "APHSO Department"): ?>
                             <?php echo e($employee->divisions->division_name); ?> Division
                             <?php else: ?>
@@ -253,10 +250,10 @@
 
                             <?php endif; ?>
                         </td>
-                        <td class = " w-max h-[45px] p-3 justify-start"><?php echo e($employee->position); ?></td>
-                        <td class = " w-max h-[45px] p-3 justify-start"><?php echo e($employee->contact_nos); ?></td>
-                        <td class = " w-max h-[45px] p-3 justify-start"><?php echo e($employee->email); ?></td>
-                        <td class = " w-max h-[45px] p-3 justify-start">
+                        <td class = " w-[250px] h-[45px] p-3 justify-start"><?php echo e($employee->position); ?></td>
+                        <td class = " w-[200px] h-[45px] p-3 justify-start"><?php echo e($employee->contact_nos); ?></td>
+                        <td class = " w-[250px] h-[45px] p-3 justify-start"><?php echo e($employee->email); ?></td>
+                        <td class = " w-[150px] h-[45px] p-3 justify-start">
                             <div class="grow shrink basis-0 h-6 justify-start items-center gap-3 flex">
                                 <div class="px-3 py-0.5 bg-[#ffece5] rounded-xl flex-col justify-center items-center gap-2 inline-flex">
                                     <div class="justify-center items-center gap-0.5 inline-flex">
@@ -265,7 +262,7 @@
                                 </div>
                             </div>
                         </td>
-                        <td class = " w-max h-[45px] p-3 justify-start inline-flex gap-3">
+                        <td class = " w-[150px] h-[45px] p-3 justify-start inline-flex gap-3">
                             <a href="<?php echo e(route('employees.show', $employee->employee_number)); ?>">
                                 <svg class="h-[20px] w-[20px] gap-2" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
                                     <g id="icon / eye">
@@ -280,6 +277,7 @@
                                     </g>
                                 </svg>
                             </a>
+                            <?php if(session('employee')->division_name == "APHSO Department"): ?>
                             <form action="<?php echo e(route('employees.destroy', $employee->employee_number)); ?>" method="POST" style="display:inline">
                                 <?php echo csrf_field(); ?>
                                 <button type="submit" class="textpx-4">
@@ -292,6 +290,7 @@
                                     </svg>
                                 </button>
                             </form>
+                            <?php endif; ?>
                         </td>
                     </tr>
                     <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>

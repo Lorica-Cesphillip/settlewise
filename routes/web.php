@@ -1,7 +1,7 @@
 <?php
 
 use App\Http\Controllers\DivisionsController;
-use App\Http\Controllers\DocumentTrackerController;
+use App\Http\Controllers\OutgoingDocumentsController;
 use App\Http\Controllers\EmployeeManagementController;
 use Illuminate\Support\Facades\Route;
 
@@ -21,13 +21,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
         return view('documents.incoming');
     })->name('incoming');
 
-
-    Route::get('documents/outgoing', function () {
-        return view('documents.outgoing');
-    })->name('outgoing');
-    Route::get('/outgoing/transmit', function (){
-        return view('documents.forms.document_tracker_request');
-    });
+    Route::resource('documents/outgoing',OutgoingDocumentsController::class);
 
     Route::get('documents/archived', function () {
         return view('documents.archived');
@@ -35,7 +29,6 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
     /*Employee Information Module*/
     Route::get('documents/aphso_divisions', [DivisionsController::class, 'index'])->name('divisions');
-    Route::get('/documents/employees', [DivisionsController::class, 'showForm']);
     Route::resource('/documents/employees', EmployeeManagementController::class);
 });
 

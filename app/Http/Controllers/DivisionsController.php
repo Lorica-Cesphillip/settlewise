@@ -11,16 +11,6 @@ class DivisionsController extends Controller
     /**
      * Display a listing of the resource.
      */
-
-    /**
-     * Summary of showForm
-     * @return \Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
-     */
-    public function showForm(){
-        $divisions = Divisions::all();
-
-        return view('forms.add-employee', compact('divisions'));
-    }
     public function index()
     {
         $divisions = Divisions::all();
