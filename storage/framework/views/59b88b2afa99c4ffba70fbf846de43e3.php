@@ -224,7 +224,7 @@
                     </div>
                 </th>
                 <td class = "w-[180px] p-11 inline-flex gap-3">
-                    <button x-data = "" type="button" x-on:click.prevent="$dispatch('open-modal', 'view-outgoing-document')">
+                    <a href="#">
                         <svg class="h-[30px] w-[30px] gap-2" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <g id="icon / eye">
                                 <g id="icon">
@@ -237,7 +237,7 @@
                                 </g>
                             </g>
                         </svg>
-                    </button>
+                    </a>
                     <form action="#" method="POST" style="display:inline">
                         <?php echo csrf_field(); ?>
                         <?php echo method_field('DELETE'); ?>
@@ -255,6 +255,9 @@
             </tr>
         </tbody>
     </table>
+
+    <?php echo $__env->make('modals.view-document', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
+
  <?php echo $__env->renderComponent(); ?>
 <?php endif; ?>
 <?php if (isset($__attributesOriginal9ac128a9029c0e4701924bd2d73d7f54)): ?>
