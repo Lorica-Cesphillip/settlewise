@@ -31,3 +31,6 @@ Route::middleware(['auth', 'verified'])->group(function () {
 });
 
 require __DIR__.'/auth.php';
+Route::post('documents/aphso_divisions', [DivisionsController::class, 'store'])->name('divisions.store');
+Route::post('/divisions', [DivisionsController::class, 'store'])->name('divisions.store');
+Route::get('/divisions', [DivisionsController::class, 'index'])->name('divisions.index');

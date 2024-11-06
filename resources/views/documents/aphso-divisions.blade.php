@@ -23,8 +23,8 @@
         <!--Necessary Buttons-->
     <div class = "w-full flex row-span-3 h-20 columns-2">
         <!--Add New Employee and Refresh Buttons-->
-        <div class = "inline-flex gap-3 h-14 justify-end right-0">
-            <x-primary-button>
+        <div class="inline-flex gap-3 h-14 justify-end ml-auto">
+        <x-primary-button onclick="openModal('createDivisionModal')">
                 <x-slot name="name">Create New Division</x-slot>
             </x-primary-button>
             <x-secondary-button>
@@ -99,4 +99,95 @@
             </tbody>
         </table>
     </div>
+    <!-- Modal for Create Division -->
+    <div id="createDivisionModal" class="modal hidden">
+    <div class="modal-overlay" onclick="closeModal('createDivisionModal')"></div>
+    <div class="modal-content">
+        <div class="flex justify-between items-center mb-4">
+            <h2 class="text-3xl font-semibold text-center flex-grow">Create New Division</h2>
+            <button class="text-gray-500 hover:text-gray-700 text-3xl" onclick="closeModal('createDivisionModal')">&times;</button>
+        </div>
+        <form method="POST" action="{{ route('divisions.store') }}">
+            @csrf
+            <div class="mb-6">
+                <label for="divisionName" class="block text-lg font-medium text-black-700">Name of APHSO Division</label>
+                <input type="text" name="name" id="divisionName" placeholder="Enter Division Name" required class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 text-lg" />
+            </div>
+            <div class="mb-6">
+                <label for="divisionAbbreviation" class="block text-lg font-medium text-black-700">Division Abbreviation</label>
+                <input type="text" name="abbreviation" id="divisionAbbreviation" placeholder="Abbreviation" required class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 text-lg" />
+            </div>
+            <div class="mb-6">
+                <label for="divisionCategory" class="block text-lg font-medium text-black-700">Division Head Name</label>
+                <select name="category" id="divisionCategory" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 text-lg" required>
+                    <option value="" disabled selected hidden>-- Select Employee Name --</option>
+                    <option value="Finance">John Doe</option>
+                    <option value="HR">Juan Dela Cruz</option>
+                    <option value="IT">Antonio Dimagiba</option>
+                    <option value="Marketing">Andres Aguinaldo</option>
+                </select>
+            </div>
+            <div class="flex justify-center">
+                <x-primary-button type="submit" class="text-lg">Create Division</x-primary-button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<style>
+    .modal {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: rgba(0, 0, 0, 0.5);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        z-index: 1000;
+    }
+
+    .modal-overlay {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+    }
+
+    .modal-content {
+        background: white;
+        padding: 30px; 
+        border-radius: 8px;
+        width: 600px; 
+        height: 470px; 
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        position: relative;
+        z-index: 1001;
+    }
+    .hidden {
+        display: none;
+    }
+</style>
+
+
+    <script>
+        function openModal(modalId) {
+            document.getElementById(modalId).classList.remove('hidden');
+        }
+
+        function closeModal(modalId) {
+            document.getElementById(modalId).classList.add('hidden');
+        }
+
+    document.getElementById('createDivisionForm').addEventListener('submit', function(event) {
+        event.preventDefault();
+        // Add form submission logic here
+        alert('New division created successfully!'); // Shows the confirmation
+        closeModal('createDivisionModal'); // Closes the modal after submission
+    });
+</script>
+
+
 </x-app-layout>
