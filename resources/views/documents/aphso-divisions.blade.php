@@ -106,6 +106,6 @@
     }
 </script>
 
-    <!-- New Directory of the modal -->
+    <!-- New Directory of the modals -->
     @include('modals.add-division')
 </x-app-layout>
