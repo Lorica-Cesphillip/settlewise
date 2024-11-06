@@ -45,7 +45,7 @@
 <?php unset($__componentOriginal901ceb9e61b95c05773aa75972fcbec9); ?>
 <?php endif; ?>
     <!--Necessary Buttons-->
-    <div class = "w-full flex row-span-3 h-20 columns-2">
+    <div class = "w-full flex row-span-3 h-20 justify-between">
         <div class = "left-0 h-14 inline-flex gap-3 w-1/2">
             <!--Search Document-->
             <form action="#" method = "POST" class = "inline-flex gap-3">
@@ -278,6 +278,7 @@
                             </g>
                         </svg>
                     </button>
+                    <?php if(session('employee')->division_name == "APHSO Department"): ?>
                     <form action="#" method="POST" style="display:inline">
                         <?php echo csrf_field(); ?>
                         <?php echo method_field('DELETE'); ?>
@@ -291,6 +292,7 @@
                             </svg>
                         </button>
                     </form>
+                    <?php endif; ?>
                 </td>
             </tr>
         </tbody>

@@ -51,17 +51,17 @@
         <!--Necessary Buttons-->
     <div class = "w-full flex row-span-3 h-20 columns-2">
         <!--Add New Employee and Refresh Buttons-->
-        <div class = "inline-flex gap-3 h-14 justify-end right-0">
-            <?php if (isset($component)) { $__componentOriginald411d1792bd6cc877d687758b753742c = $component; } ?>
+        <div class="inline-flex gap-3 h-14 justify-end ml-auto">
+        <?php if (isset($component)) { $__componentOriginald411d1792bd6cc877d687758b753742c = $component; } ?>
 <?php if (isset($attributes)) { $__attributesOriginald411d1792bd6cc877d687758b753742c = $attributes; } ?>
-<?php $component = Illuminate\View\AnonymousComponent::resolve(['view' => 'components.primary-button','data' => []] + (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag ? $attributes->all() : [])); ?>
+<?php $component = Illuminate\View\AnonymousComponent::resolve(['view' => 'components.primary-button','data' => ['onclick' => 'openModal(\'createDivisionModal\')']] + (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag ? $attributes->all() : [])); ?>
 <?php $component->withName('primary-button'); ?>
 <?php if ($component->shouldRender()): ?>
 <?php $__env->startComponent($component->resolveView(), $component->data()); ?>
 <?php if (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag): ?>
 <?php $attributes = $attributes->except(\Illuminate\View\AnonymousComponent::ignoredParameterNames()); ?>
 <?php endif; ?>
-<?php $component->withAttributes([]); ?>
+<?php $component->withAttributes(['onclick' => 'openModal(\'createDivisionModal\')']); ?>
                  <?php $__env->slot('name', null, []); ?> Create New Division <?php $__env->endSlot(); ?>
              <?php echo $__env->renderComponent(); ?>
 <?php endif; ?>
@@ -165,6 +165,115 @@
             </tbody>
         </table>
     </div>
+    <!-- Modal for Create Division -->
+    <div id="createDivisionModal" class="modal hidden">
+    <div class="modal-overlay" onclick="closeModal('createDivisionModal')"></div>
+    <div class="modal-content">
+        <div class="flex justify-between items-center mb-4">
+            <h2 class="text-3xl font-semibold text-center flex-grow">Create New Division</h2>
+            <button class="text-gray-500 hover:text-gray-700 text-3xl" onclick="closeModal('createDivisionModal')">&times;</button>
+        </div>
+        <form method="POST" action="<?php echo e(route('divisions.store')); ?>">
+            <?php echo csrf_field(); ?>
+            <div class="mb-6">
+                <label for="divisionName" class="block text-lg font-medium text-black-700">Name of APHSO Division</label>
+                <input type="text" name="name" id="divisionName" placeholder="Enter Division Name" required class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 text-lg" />
+            </div>
+            <div class="mb-6">
+                <label for="divisionAbbreviation" class="block text-lg font-medium text-black-700">Division Abbreviation</label>
+                <input type="text" name="abbreviation" id="divisionAbbreviation" placeholder="Abbreviation" required class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 text-lg" />
+            </div>
+            <div class="mb-6">
+                <label for="divisionCategory" class="block text-lg font-medium text-black-700">Division Head Name</label>
+                <select name="category" id="divisionCategory" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 text-lg" required>
+                    <option value="" disabled selected hidden>-- Select Employee Name --</option>
+                    <option value="Finance">John Doe</option>
+                    <option value="HR">Juan Dela Cruz</option>
+                    <option value="IT">Antonio Dimagiba</option>
+                    <option value="Marketing">Andres Aguinaldo</option>
+                </select>
+            </div>
+            <div class="flex justify-center">
+                <?php if (isset($component)) { $__componentOriginald411d1792bd6cc877d687758b753742c = $component; } ?>
+<?php if (isset($attributes)) { $__attributesOriginald411d1792bd6cc877d687758b753742c = $attributes; } ?>
+<?php $component = Illuminate\View\AnonymousComponent::resolve(['view' => 'components.primary-button','data' => ['type' => 'submit','class' => 'text-lg']] + (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag ? $attributes->all() : [])); ?>
+<?php $component->withName('primary-button'); ?>
+<?php if ($component->shouldRender()): ?>
+<?php $__env->startComponent($component->resolveView(), $component->data()); ?>
+<?php if (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag): ?>
+<?php $attributes = $attributes->except(\Illuminate\View\AnonymousComponent::ignoredParameterNames()); ?>
+<?php endif; ?>
+<?php $component->withAttributes(['type' => 'submit','class' => 'text-lg']); ?>Create Division <?php echo $__env->renderComponent(); ?>
+<?php endif; ?>
+<?php if (isset($__attributesOriginald411d1792bd6cc877d687758b753742c)): ?>
+<?php $attributes = $__attributesOriginald411d1792bd6cc877d687758b753742c; ?>
+<?php unset($__attributesOriginald411d1792bd6cc877d687758b753742c); ?>
+<?php endif; ?>
+<?php if (isset($__componentOriginald411d1792bd6cc877d687758b753742c)): ?>
+<?php $component = $__componentOriginald411d1792bd6cc877d687758b753742c; ?>
+<?php unset($__componentOriginald411d1792bd6cc877d687758b753742c); ?>
+<?php endif; ?>
+            </div>
+        </form>
+    </div>
+</div>
+
+<style>
+    .modal {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: rgba(0, 0, 0, 0.5);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        z-index: 1000;
+    }
+
+    .modal-overlay {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+    }
+
+    .modal-content {
+        background: white;
+        padding: 30px; 
+        border-radius: 8px;
+        width: 600px; 
+        height: 470px; 
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        position: relative;
+        z-index: 1001;
+    }
+    .hidden {
+        display: none;
+    }
+</style>
+
+
+    <script>
+        function openModal(modalId) {
+            document.getElementById(modalId).classList.remove('hidden');
+        }
+
+        function closeModal(modalId) {
+            document.getElementById(modalId).classList.add('hidden');
+        }
+
+    document.getElementById('createDivisionForm').addEventListener('submit', function(event) {
+        event.preventDefault();
+        // Add form submission logic here
+        alert('New division created successfully!'); // Shows the confirmation
+        closeModal('createDivisionModal'); // Closes the modal after submission
+    });
+</script>
+
+
  <?php echo $__env->renderComponent(); ?>
 <?php endif; ?>
 <?php if (isset($__attributesOriginal9ac128a9029c0e4701924bd2d73d7f54)): ?>

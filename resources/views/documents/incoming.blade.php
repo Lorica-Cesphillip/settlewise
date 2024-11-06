@@ -17,7 +17,7 @@
         </x-slot>
     </x-title_header>
     <!--Necessary Buttons-->
-    <div class = "w-full flex row-span-3 h-20 columns-2">
+    <div class = "w-full flex row-span-3 h-20 justify-between">
         <div class = "left-0 h-14 inline-flex gap-3 w-1/2">
             <!--Search Document-->
             <form action="#" method = "POST" class = "inline-flex gap-3">
@@ -141,6 +141,7 @@
                             </g>
                         </svg>
                     </button>
+                    @if(session('employee')->division_name == "APHSO Department")
                     <form action="#" method="POST" style="display:inline">
                         @csrf
                         @method('DELETE')
@@ -154,6 +155,7 @@
                             </svg>
                         </button>
                     </form>
+                    @endif
                 </td>
             </tr>
         </tbody>

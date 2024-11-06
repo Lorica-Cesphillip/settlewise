@@ -123,7 +123,7 @@
                     </div>
                 </th>
                 <td class = "w-[180px] p-11 inline-flex gap-3">
-                    <a href="#">
+                    <button x-data="" x-on:click.prevent="$dispatch('open-modal', 'view-outgoing-document')">
                         <svg class="h-[30px] w-[30px] gap-2" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <g id="icon / eye">
                                 <g id="icon">
@@ -136,10 +136,10 @@
                                 </g>
                             </g>
                         </svg>
-                    </a>
+                    </button>
+                    @if(session('employee')->division_name == "APHSO Department")
                     <form action="#" method="POST" style="display:inline">
                         @csrf
-                        @method('DELETE')
                         <button type="submit" class="textpx-4">
                             <svg class="h-[30px] w-[30px]" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
                                 <g id="icon / box-1">
@@ -150,11 +150,13 @@
                             </svg>
                         </button>
                     </form>
+                    @endif
                 </td>
             </tr>
         </tbody>
     </table>
 
     @include('modals.view-document')
+    @include('modals.view-conversation')
 
 </x-app-layout>

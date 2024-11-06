@@ -1,50 +1,58 @@
     <!-- Reject Request Modal -->
     <x-modal name="reject-request" :maxWidth="'2xl'" :show="false" focusable>
-        <div class="modal-dialog modal-dialog-centered" style="max-width: 717px; height: 400px;">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-
-            <div class="modal-body text-center">
-                <h5 class="modal-title">Reject the request?</h5>
-                <div class="form-group mt-4 centered-select-container">
-                    <label for="causeOfRejection" class="form-label">Cause of Rejection</label>
-                    <select id="causeOfRejection" class="form-control centered-select">
-                        <option value="">Select reason...</option>
-                        <!-- PLACEHOLDER OPTIONS -->
-                        <option value="Reason 1">Reason 1</option>
-                        <option value="Reason 2">Reason 2</option>
-                    </select>
-                </div>
+        <form action="#" method="POST">
+            <h3 class = "text-2xl font-bold text-center">Are you sure you are rejecting the request?</h3>
+            <input type="hidden" name="granted" value="false">
+            <div>
+                <x-input-label for="rejection-reason" :value="__('Why do you reject the request?')"/>
+                <select id="rejection-reason" name="rejection-reason" class="border-gray-300 w-full rounded-md">
+                    <option value="">--Select reason of rejection--</option>
+                    <!-- PLACEHOLDER OPTIONS -->
+                    <option value="Request is Vague">Request is Vague</option>
+                    <option value="Unrelated to the Nature of Work">Unrelated to the Nature of Work</option>
+                    <option value="It is unecessary">It is unecessary</option>
+                    <option value="Others">Others: (please specify)</option>
+                </select>
             </div>
-
-            <div class="modal-footer justify-content-center">
-                <button type="button" class="btn btn-outline btn-custom" data-bs-dismiss="modal">No, Cancel</button>
-                <button type="button" class="btn btn-active btn-custom" data-bs-toggle="modal" data-bs-target="#requestRejectedModal">Yes, Proceed</button>
+            <div>
+                <x-input-label for="other-rejection" :value="__('Others (please specify)')"/>
+                <x-text-input type="text" class="w-full block mt-1" id="other-rejection" name="rejection-reason" :value="old('rejection-reason')"/>
             </div>
-        </div>
-    </div>
+            <div class="inline-flex pt-4 justify-between w-full">
+                <button x-on:click.prevent="$dispatch('close-modal', 'reject-request')"
+                    class = "inline-flex items-center p-4 bg-yellow-600 border border-transparent rounded-md text-white  tracking-widest hover:bg-yellow-800 active:bg-yellow-700 focus:outline-none focus:ring-2 focus:ring-yellow-500 focus:ring-offset-2 transition ease-in-out duration-150">&times; Close</button>
+                <button type="submit"
+                    class = "p-4 bg-red-600 rounded-lg flex-col justify-center items-center gap-2.5 flex text-white tracking-widest hover:bg-red-900 focus:bg-red-700 active:bg-red-900 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 transition ease-in-out duration-150"> Reject the Request &check;
+                </button>
+            </div>
+        </form>
 </x-modal>
 
         <!-- Accept Request Modal -->
 <x-modal name="accept-request" :maxWidth="'2xl'" :show="false" focusable>
-    <div class="modal-dialog modal-dialog-centered" style="max-width: 717px;">
-        <div class="modal-content" style="height: 645px;">
-            <div class="modal-header">
-                <h5 class="modal-title" id="acceptRequestModalLabel">Accept Request</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-
-            <div class="modal-body text-center">
-                <div class="form-group centered-textarea-container">
-                    <textarea class="form-control centered-textarea" id="acceptRequestTextarea" rows="15" style="resize: none;" placeholder="Add any additional notes or comments here..."></textarea>
+    <div class="w-[600px] h-[500px]">
+        <h5 class="text-2xl font-bold text-center pb-4">Request Comments</h5>
+            <form action="#" method="POST" class="gap-4">
+                <input type="hidden" name="granted" value="true"/>
+                <textarea name="request_comments" class="w-full h-[400px] rounded-lg border-gray-300" id="acceptRequestTextarea" placeholder="Add any additional notes or comments here..."></textarea>
+                <div class="items-center justify-items-center">
+                    <x-primary-button>
+                        <x-slot name="name">Forward Document</x-slot>
+                        <x-slot name="icon">
+                            <div class = "relative">
+                                <svg width="24" height="24" viewBox="0 0 20 20" fill="none"
+                                    xmlns="http://www.w3.org/2000/svg">
+                                    <g id="icon / send">
+                                        <path id="icon" fill-rule="evenodd" clip-rule="evenodd"
+                                            d="M16.9747 11.8999C18.6126 11.1628 18.6126 8.83724 16.9747 8.1002L5.19204 2.798C3.60512 2.08388 1.89392 3.51487 2.31598 5.20311L3.13604 8.48334C3.32524 9.24014 3.91689 9.81693 4.65478 10C3.91689 10.1831 3.32524 10.7599 3.13604 11.5167L2.31598 14.797C1.89392 16.4852 3.60511 17.9162 5.19204 17.2021L16.9747 11.8999ZM4.5081 4.31786L14.9777 9.02917L5.13034 8.39386C4.94948 8.38219 4.7969 8.25495 4.75294 8.07912L3.93289 4.79889C3.84848 4.46124 4.19071 4.17504 4.5081 4.31786ZM5.13034 11.6062L14.9777 10.9709L4.5081 15.6822C4.19071 15.825 3.84847 15.5388 3.93289 15.2012L4.75294 11.921C4.7969 11.7451 4.94948 11.6179 5.13034 11.6062Z"
+                                            fill="white" />
+                                    </g>
+                                </svg>
+                            </div>
+                        </x-slot>
+                    </x-primary-button>
                 </div>
-            </div>
-
-            <div class="modal-footer d-flex justify-content-center">
-                <button type="button" class="btn btn-active" id="forwardRequestBtn" data-bs-toggle="modal" data-bs-target="#requestAcceptedModal">Forward Request</button>
-            </div>
+            </form>
         </div>
     </div>
 </x-modal>

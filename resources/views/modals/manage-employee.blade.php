@@ -260,7 +260,7 @@
                         </div>
                     </div>
                 </button>
-                <x-primary-button x-cloak x-show="formStep === 3">
+                <x-primary-button x-bind:disabled="confirm" x-cloak x-show="formStep === 3">
                     <x-slot name="name">Create New Employee</x-slot>
                 </x-primary-button>
             </div>
