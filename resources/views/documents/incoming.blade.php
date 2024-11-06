@@ -164,5 +164,6 @@
     @include('modals.preview')
     @include('modals.document-referral')
     @include('modals.view-conversation')
+    @include('modals.announcement-form')
 
 </x-app-layout>

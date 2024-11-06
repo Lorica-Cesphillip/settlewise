@@ -50,7 +50,7 @@
                 <div class = "w-full inline-flex gap-4">
                     <div>
                         <x-input-label for="receiver" :value="__('Send the Document to: *')"/>
-                        <select x-model="receiver" id="receiver" class="block mt-1 w-[370px] border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm" type="text" name="receiver" :value="old('marital_status')" autofocus autocomplete="off">
+                        <select x-model="receiver" id="receiver" class="block mt-1 w-[330px] border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm" type="text" name="receiver" :value="old('marital_status')" autofocus autocomplete="off">
                             <option value="null">--Please Select Recipient--</option>
                             @foreach($employees as $recipient)
                             <option value="{{$recipient->full_name}}">{{$recipient->full_name}}</option>
@@ -60,7 +60,7 @@
                     </div>
                     <div>
                         <x-input-label for="document_type" :value="__('Document Type *')"/>
-                        <select x-model="document_type" id="document_type" class="block mt-1 w-[370px] border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm" type="text" name="document_type" :value="old('marital_status')" autofocus autocomplete="off">
+                        <select x-model="document_type" id="document_type" class="block mt-1 w-[330px] border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm" type="text" name="document_type" :value="old('marital_status')" autofocus autocomplete="off">
                             <option value="null">--Please Select a Document Type--</option>
                             @foreach($document_type as $type)
                             <option value="{{$type->document_type}}">{{$type->document_type}}</option>
@@ -77,12 +77,12 @@
                 <div class = "inline-flex gap-4">
                     <div>
                         <x-input-label for="division" :value="__('APHSO Division')"/>
-                        <x-text-input x-model="division" id="division" class="block mt-1 w-[370px] bg-gray-100" type="text" name="division" :value="old('division')" autofocus autocomplete="off" disabled/>
+                        <x-text-input x-model="division" id="division" class="block mt-1 w-[330px] bg-gray-100" type="text" name="division" :value="old('division')" autofocus autocomplete="off" disabled/>
                         <x-input-error :messages="$errors->get('division')" class="mt-2" />
                     </div>
                     <div>
                         <x-input-label for="others" :value="__('Others: (please specify)')"/>
-                        <x-text-input x-model="others" id="others" class="block mt-1 w-[370px] bg-gray-100" type="text" name="others" :value="old('others')" autofocus autocomplete="off" disabled/>
+                        <x-text-input x-model="others" id="others" class="block mt-1 w-[330px] bg-gray-100" type="text" name="others" :value="old('others')" autofocus autocomplete="off" disabled/>
                         <x-input-error :messages="$errors->get('others')" class="mt-2" />
                     </div>
                     <div>
@@ -141,7 +141,7 @@
                 <div class = "inline-flex gap-3 w-full justify-between">
                     <div>
                         <x-input-label for="request_type" :value="__('Request Type *')"/>
-                        <select x-model="request_type" name="request_type"  id="request_type" class="block mt-1 w-[420px] border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm">
+                        <select x-model="request_type" name="request_type"  id="request_type" class="block mt-1 w- border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm">
                             <option value="null">--Please Select a Request Type--</option>
                             <option value="Document">Document</option>
                             <option value="Assistance">Assistance</option>
@@ -160,7 +160,7 @@
                 <div class = "w-full inline-flex gap-3 justify-between">
                     <div>
                         <x-input-label for="requested_document" :value="__('Document Requested *')"/>
-                        <x-text-input x-model="requested_document" id="requested_document" class="block mt-1 w-[420px] bg-gray-100" type="text" name="requested_document" :value="old('requested_document')" autofocus autocomplete="off" disabled/>
+                        <x-text-input x-model="requested_document" id="requested_document" class="block mt-1 w- bg-gray-100" type="text" name="requested_document" :value="old('requested_document')" autofocus autocomplete="off" disabled/>
                         <x-input-error :messages="$errors->get"('requested_document')" class="mt-2" />
                     </div>
 
@@ -196,7 +196,7 @@
                 </div>
             </div>
 
-            <div class = "w-full justify-between inline-flex pt-5">
+            <div class = "w-full justify-between inline-flex pt-5 gap-4">
                 <x-tertiary-button x-cloak x-show="formStep === 1" x-on:click.prevent="$dispatch('close-modal', 'create-document-tracker-request')">
                     <x-slot name="name">Close</x-slot>
                     <x-slot name="icon">

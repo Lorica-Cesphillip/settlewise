@@ -61,10 +61,6 @@
                 >
                     Add New Employee
                 </button>
-
-                @include('modals.manage-employee')
-
-
                     <x-secondary-button>
                         <x-slot name="icon">
                             {!!'<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -123,8 +119,9 @@
                                 </div>
                             </div>
                         </td>
-                        <td class = " w-[150px] h-[45px] p-3 justify-start inline-flex gap-3">
-                            <a href="{{ route('employees.show', $employee->employee_number) }}">
+                        <td class = "w-[150px] h-[45px] p-3 justify-start inline-flex gap-3">
+                            <button x-data="{ employee_number: {{ $employee->employee_number }} }"
+                                x-on:click.prevent="$dispatch('open-modal', { name: 'view-employee', employee_number })">
                                 <svg class="h-[20px] w-[20px] gap-2" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
                                     <g id="icon / eye">
                                         <g id="icon">
@@ -137,7 +134,7 @@
                                         </g>
                                     </g>
                                 </svg>
-                            </a>
+                            </button>
                             @if(session('employee')->division_name == "APHSO Department")
                             <form action="{{ route('employees.destroy', $employee->employee_number) }}" method="POST" style="display:inline">
                                 @csrf
@@ -157,6 +154,8 @@
                     @endforeach
                 </tbody>
             </table>
+
+            @include('modals.manage-employee')
         </div>
     </div>
 </x-app-layout>

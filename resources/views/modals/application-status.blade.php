@@ -1,117 +1,97 @@
     <!-- Document Successfully Sent Modal -->
-    <div class="modal fade" id="documentSentModal" tabindex="-1" aria-labelledby="documentSentModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered" style="max-width: 500px;">
-            <div class="modal-content" style="height: 500px;">
-                <div class="modal-body text-center d-flex flex-column justify-content-center align-items-center">
-                    <!-- Image in Center -->
-                    <img src="../images/Approval.png" alt="Accepted Image" style="width: 200px; height: 200px;" />
+<x-modal name="sent-successfully" :maxWidth="'xl'" :show="false" focusable>
+    <div class="modal-dialog modal-dialog-centered" style="max-width: 500px;">
+        <div class="modal-content" style="height: 500px;">
+            <div class="modal-body text-center d-flex flex-column justify-content-center align-items-center">
+                <!-- Image in Center -->
+                <img src="../images/Approval.png" alt="Accepted Image" style="width: 200px; height: 200px;" />
 
-                    <!-- Document Successfully Sent Text -->
-                    <h3 class="mt-4"><strong>Document Successfully Sent</strong></h3>
-                    <p>Please wait for some updates on your document.</p>
-                </div>
+                <!-- Document Successfully Sent Text -->
+                <h3 class="mt-4"><strong>Document Successfully Sent</strong></h3>
+                <p>Please wait for some updates on your document.</p>
+            </div>
 
-                <div class="modal-footer justify-content-center">
-                    <!-- Okay Button -->
-                    <button type="button" class="btn btn-active" data-bs-dismiss="modal">Okay</button>
-                </div>
+            <div class="modal-footer justify-content-center">
+                <!-- Okay Button -->
+                <button type="button" class="btn btn-active" data-bs-dismiss="modal">Okay</button>
             </div>
         </div>
     </div>
+</x-modal>
 
-    <!-- Announcement Alert Confirmation Modal -->
-    <div class="modal fade" id="announcementConfirmation" tabindex="-1" aria-labelledby="announcementConfirmationLabel" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered" style="max-width: 500px;">
-            <div class="modal-content" style="height: 500px;">
-                <div class="modal-body text-center d-flex flex-column justify-content-center align-items-center">
-                    <!-- Image in Center -->
-                    <img src="../images/Warning.png" alt="Accepted Image" style="width: 200px; height: 200px;" />
+<!-- Request Accepted/Rejected Modals-->
+<!-- Request Rejected Modal -->
+<x-modal name="request-rejected" :maxWidth="'xl'" :show="false" focusable>
+    <div class="modal-dialog modal-dialog-centered" style="max-width: 500px;">
+        <div class="modal-content" style="height: 500px;">
+            <div class="modal-body text-center d-flex flex-column justify-content-center align-items-center">
+                <img src="../images/Approval.png" alt="Rejected Image" style="width: 200px; height: 200px;" />
+                <h3 class="mt-4"><strong>Request Rejected</strong></h3>
+                <p>The receiver will be informed.</p>
+            </div>
 
-                    <!-- Document Successfully Sent Text -->
-                    <h3 class="mt-4"><strong>Alert</strong></h3>
-                    <p>Are you sure that the announcement is correct?</p>
-                </div>
-
-                <div class="modal-footer d-flex justify-content-between">
-                    <button type="button" class="btn btn-outline" data-bs-toggle="modal" data-bs-target="#postAnnouncementModal">Go Back</button>
-                    <button type="button" class="btn btn-active" data-bs-toggle="modal" data-bs-target="#announcementPosted">Yes</button>
-                </div>
+            <div class="modal-footer justify-content-center">
+                <button type="button" class="btn btn-active" data-bs-dismiss="modal">Okay</button>
             </div>
         </div>
     </div>
+</x-modal>
 
-        <!-- Request Rejected Modal -->
-        <div class="modal fade" id="requestRejectedModal" tabindex="-1" aria-labelledby="requestRejectedModalLabel" aria-hidden="true">
-            <div class="modal-dialog modal-dialog-centered" style="max-width: 500px;">
-                <div class="modal-content" style="height: 500px;">
-                    <div class="modal-body text-center d-flex flex-column justify-content-center align-items-center">
-                        <img src="../images/Approval.png" alt="Rejected Image" style="width: 200px; height: 200px;" />
-                        <h3 class="mt-4"><strong>Request Rejected</strong></h3>
-                        <p>The receiver will be informed.</p>
-                    </div>
+<!-- Request Accepted Modal -->
+<x-modal name="requested-granted" :maxWidth="'xl'" :show="false" focusable>
+    <div class="modal-dialog modal-dialog-centered" style="max-width: 500px;">
+        <div class="modal-content" style="height: 500px;">
+            <div class="modal-body text-center d-flex flex-column justify-content-center align-items-center">
+                <img src="../images/Approval.png" alt="Accepted Image" style="width: 200px; height: 200px;" />
 
-                    <div class="modal-footer justify-content-center">
-                        <button type="button" class="btn btn-active" data-bs-dismiss="modal">Okay</button>
-                    </div>
-                </div>
+                <h3 class="mt-4"><strong>Request Accepted</strong></h3>
+                <p>The receiver will be informed.</p>
             </div>
-        </div>
 
-            <!-- Request Accepted Modal -->
-    <div class="modal fade" id="requestAcceptedModal" tabindex="-1" aria-labelledby="requestAcceptedModalLabel" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered" style="max-width: 500px;">
-            <div class="modal-content" style="height: 500px;">
-                <div class="modal-body text-center d-flex flex-column justify-content-center align-items-center">
-                    <img src="../images/Approval.png" alt="Accepted Image" style="width: 200px; height: 200px;" />
-
-                    <h3 class="mt-4"><strong>Request Accepted</strong></h3>
-                    <p>The receiver will be informed.</p>
-                </div>
-
-                <div class="modal-footer justify-content-center">
-                    <button type="button" class="btn btn-active" data-bs-dismiss="modal">Okay</button>
-                </div>
+            <div class="modal-footer justify-content-center">
+                <button type="button" class="btn btn-active" data-bs-dismiss="modal">Okay</button>
             </div>
         </div>
     </div>
+</x-modal>
 
-    <!-- Announcement Posted -->
-    <div class="modal fade" id="announcementPosted" tabindex="-1" aria-labelledby="announcementPostedLabel" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered" style="max-width: 500px;">
-            <div class="modal-content" style="height: 500px;">
-                <div class="modal-body text-center d-flex flex-column justify-content-center align-items-center">
-                    <!-- Image in Center -->
-                    <img src="../images/Approval.png" alt="Accepted Image" style="width: 200px; height: 200px;" />
+<!-- Announcement Posted -->
+<x-modal name="announcement-posted" :maxWidth="'xl'" :show="false" focusable>
+    <div class="modal-dialog modal-dialog-centered" style="max-width: 500px;">
+        <div class="modal-content" style="height: 500px;">
+            <div class="modal-body text-center d-flex flex-column justify-content-center align-items-center">
+                <!-- Image in Center -->
+                <img src="../images/Approval.png" alt="Accepted Image" style="width: 200px; height: 200px;" />
 
-                    <!-- Document Successfully Sent Text -->
-                    <h3 class="mt-4"><strong>Announcement Posted</strong></h3>
-                    <p>Your employees will be notified.</p>
-                </div>
+                <!-- Document Successfully Sent Text -->
+                <h3 class="mt-4"><strong>Announcement Posted</strong></h3>
+                <p>Your employees will be notified.</p>
+            </div>
 
-                <div class="modal-footer justify-content-center">
-                    <!-- Okay Button -->
-                    <button type="button" class="btn btn-active" data-bs-dismiss="modal">Okay</button>
-                </div>
+            <div class="modal-footer justify-content-center">
+                <!-- Okay Button -->
+                <button type="button" class="btn btn-active" data-bs-dismiss="modal">Okay</button>
             </div>
         </div>
     </div>
+</x-modal>
 
-    <!-- Announcement ERROR -->
-    <div class="modal fade" id="announcementError" tabindex="-1" aria-labelledby="announcementErrorLabel" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered" style="max-width: 500px;">
-            <div class="modal-content" style="height: 500px;">
-                <div class="modal-body text-center d-flex flex-column justify-content-center align-items-center">
-                    <!-- Image in Center -->
-                    <img src="../images/Cancel.png" alt="Accepted Image" style="width: 200px; height: 200px;" />
+<!-- Announcement ERROR -->
+<x-modal name="requested-granted" :maxWidth="'xl'" :show="false" focusable>
+    <div class="modal-dialog modal-dialog-centered" style="max-width: 500px;">
+        <div class="modal-content" style="height: 500px;">
+            <div class="modal-body text-center d-flex flex-column justify-content-center align-items-center">
+                <!-- Image in Center -->
+                <img src="../images/Cancel.png" alt="Accepted Image" style="width: 200px; height: 200px;" />
 
-                    <h3 class="mt-4"><strong>Error While Posting Announcement</strong></h3>
-                    <p>Please try again.</p>
-                </div>
+                <h3 class="mt-4"><strong>Error While Posting Announcement</strong></h3>
+                <p>Please try again.</p>
+            </div>
 
-                <div class="modal-footer justify-content-center">
-                    <button type="button" class="btn btn-active" data-bs-dismiss="modal">Okay</button>
-                </div>
+            <div class="modal-footer justify-content-center">
+                <button type="button" class="btn btn-active" data-bs-dismiss="modal">Okay</button>
             </div>
         </div>
     </div>
+</x-modal>
 

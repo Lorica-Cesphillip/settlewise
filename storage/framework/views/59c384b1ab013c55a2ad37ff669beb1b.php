@@ -180,10 +180,6 @@
                 >
                     Add New Employee
                 </button>
-
-                <?php echo $__env->make('modals.manage-employee', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
-
-
                     <?php if (isset($component)) { $__componentOriginal3b0e04e43cf890250cc4d85cff4d94af = $component; } ?>
 <?php if (isset($attributes)) { $__attributesOriginal3b0e04e43cf890250cc4d85cff4d94af = $attributes; } ?>
 <?php $component = Illuminate\View\AnonymousComponent::resolve(['view' => 'components.secondary-button','data' => []] + (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag ? $attributes->all() : [])); ?>
@@ -262,8 +258,9 @@
                                 </div>
                             </div>
                         </td>
-                        <td class = " w-[150px] h-[45px] p-3 justify-start inline-flex gap-3">
-                            <a href="<?php echo e(route('employees.show', $employee->employee_number)); ?>">
+                        <td class = "w-[150px] h-[45px] p-3 justify-start inline-flex gap-3">
+                            <button x-data="{ employee_number: <?php echo e($employee->employee_number); ?> }"
+                                x-on:click.prevent="$dispatch('open-modal', { name: 'view-employee', employee_number })">
                                 <svg class="h-[20px] w-[20px] gap-2" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
                                     <g id="icon / eye">
                                         <g id="icon">
@@ -276,7 +273,7 @@
                                         </g>
                                     </g>
                                 </svg>
-                            </a>
+                            </button>
                             <?php if(session('employee')->division_name == "APHSO Department"): ?>
                             <form action="<?php echo e(route('employees.destroy', $employee->employee_number)); ?>" method="POST" style="display:inline">
                                 <?php echo csrf_field(); ?>
@@ -296,6 +293,8 @@
                     <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                 </tbody>
             </table>
+
+            <?php echo $__env->make('modals.manage-employee', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
         </div>
     </div>
  <?php echo $__env->renderComponent(); ?>

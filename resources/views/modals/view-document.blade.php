@@ -54,7 +54,7 @@
                     class = "p-4 bg-[#0d5dba] rounded-lg flex-col justify-center items-center gap-2.5 flex text-white tracking-widest hover:bg-blue-900 focus:bg-blue-900 active:bg-blue-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 transition ease-in-out duration-150">Open
                     Chat</button>
 
-                <button
+                <button x-on:click.prevent="$dispatch('open-modal', 'announcement')"
                     class = "p-4 bg-[#0d5dba] rounded-lg flex-col justify-center items-center gap-2.5 flex text-white tracking-widest hover:bg-blue-900 focus:bg-blue-900 active:bg-blue-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 transition ease-in-out duration-150">Post
                     Announcement</button>
             </div>
@@ -129,27 +129,11 @@
     </div>
 </x-modal>
 
-<!-- Document Preview Modal -->
-<x-modal name="document-preview" :maxWidth="'3xl'" :show="false" focusable>
-    <div class="modal-dialog modal-lg modal-dialog-centered">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="documentPreviewLabel">Document Preview</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                <div id="document-preview">Document preview will appear here.</div>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn" id="downloadFileBtn">Download File</button>
-            </div>
-        </div>
+<!-- Document Preview -->
+<x-modal name="document-preview" :maxWidth="'2xl'">
+    <div class = "items-center justify-items-center">
+        <p class = "text-2xl font-bold text-center">PREVIEW DOCUMENT</p>
+        <div class = "w-[400px] h-[500px] border items-center justify-items-center py-4 border-black"></div>
+        <a href="" class = "w-[300px] p-4 bg-[#0d5dba] rounded-lg flex-col justify-center items-center gap-2.5 flex text-white tracking-widest hover:bg-blue-900 focus:bg-blue-900 active:bg-blue-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 transition ease-in-out duration-150" download>Download Document</a>
     </div>
 </x-modal>
-
-
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="{{ asset('js/progress.js') }}"></script>
-
-</body>
