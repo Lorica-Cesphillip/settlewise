@@ -75,7 +75,8 @@ class EmployeeManagementController extends Controller
     public function show($employee_id)
     {
         $employee = Employees::with('divisions')->findOrFail($employee_id);
-        return response()->json($employee);
+        $divisions = Divisions::all();
+        return view('modals.manage-employee', compact('employee'));
     }
 
     /**

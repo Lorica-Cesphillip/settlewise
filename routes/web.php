@@ -14,20 +14,23 @@ Route::get('/', function () {
 Route::middleware(['auth', 'verified'])->group(function () {
 
     /*Document Information Module */
-    Route::get('/documents', function () {
+    Route::get('/dashboard', function () {
         return view('documents.dashboard');
     })->name('dashboard');
 
-    Route::resource('/documents/incoming', IncomingDocumentsController::class);
-    Route::resource('/documents/outgoing',OutgoingDocumentsController::class);
+    Route::resource('/incoming', IncomingDocumentsController::class);
+    Route::resource('/outgoing',OutgoingDocumentsController::class);
 
     Route::get('documents/archived', function () {
         return view('documents.archived');
     })->name('archived');
 
     /*Employee Information Module*/
-    Route::resource('/documents/divisions', DivisionsController::class);
-    Route::resource('/documents/employees', EmployeeManagementController::class);
+    Route::resource('/divisions', DivisionsController::class);
+    Route::resource('/employees', EmployeeManagementController::class);
+    Route::get('profile', function(){
+        return view('documents.employee-information');
+    })->name('profile');
 });
 
 require __DIR__.'/auth.php';

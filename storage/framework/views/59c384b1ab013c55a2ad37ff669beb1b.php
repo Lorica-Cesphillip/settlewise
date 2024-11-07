@@ -249,18 +249,17 @@
                         <td class = " w-[250px] h-[45px] p-3 justify-start"><?php echo e($employee->position); ?></td>
                         <td class = " w-[200px] h-[45px] p-3 justify-start"><?php echo e($employee->contact_nos); ?></td>
                         <td class = " w-[250px] h-[45px] p-3 justify-start"><?php echo e($employee->email); ?></td>
-                        <td class = " w-[150px] h-[45px] p-3 justify-start">
+                        <td class = " w-[150px] h-[45px] p-3 items-center justify-items-center">
                             <div class="grow shrink basis-0 h-6 justify-start items-center gap-3 flex">
-                                <div class="px-3 py-0.5 bg-[#ffece5] rounded-xl flex-col justify-center items-center gap-2 inline-flex">
+                                <div class="px-3 py-0.5 bg-<?php echo e($employee->emp_status ? 'green-500' : 'red-500'); ?> rounded-xl flex-col justify-center items-center gap-2 inline-flex">
                                     <div class="justify-center items-center gap-0.5 inline-flex">
-                                        <div class="text-center text-[#ad3306] text-sm font-medium leading-tight"><?php echo e($employee->emp_status ? 'Active' : 'Inactive'); ?></div>
+                                        <div class="text-center text-white text-sm font-medium leading-tight"><?php echo e($employee->emp_status ? 'Active' : 'Inactive'); ?></div>
                                     </div>
                                 </div>
                             </div>
                         </td>
                         <td class = "w-[150px] h-[45px] p-3 justify-start inline-flex gap-3">
-                            <button x-data="{ employee_number: <?php echo e($employee->employee_number); ?> }"
-                                x-on:click.prevent="$dispatch('open-modal', { name: 'view-employee', employee_number })">
+                            <a href="<?php echo e(route('employees.show', $employee->employee_number)); ?>">
                                 <svg class="h-[20px] w-[20px] gap-2" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
                                     <g id="icon / eye">
                                         <g id="icon">
@@ -273,7 +272,7 @@
                                         </g>
                                     </g>
                                 </svg>
-                            </button>
+                            </a>
                             <?php if(session('employee')->division_name == "APHSO Department"): ?>
                             <form action="<?php echo e(route('employees.destroy', $employee->employee_number)); ?>" method="POST" style="display:inline">
                                 <?php echo csrf_field(); ?>
@@ -293,8 +292,6 @@
                     <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                 </tbody>
             </table>
-
-            <?php echo $__env->make('modals.manage-employee', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
         </div>
     </div>
  <?php echo $__env->renderComponent(); ?>

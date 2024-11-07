@@ -45,20 +45,20 @@
 <?php unset($__componentOriginal901ceb9e61b95c05773aa75972fcbec9); ?>
 <?php endif; ?>
     <!--Necessary Buttons-->
-    <div class = "w-full flex row-span-3 h-20 justify-between">
-        <div class = "left-0 h-14 inline-flex gap-3 w-1/2">
+    <div class = "w-full flex h-20 justify-between">
+        <div class = "left-0 h-14 inline-flex gap-3">
             <!--Search Document-->
             <form action="#" method = "POST" class = "inline-flex gap-3">
                 <?php if (isset($component)) { $__componentOriginal18c21970322f9e5c938bc954620c12bb = $component; } ?>
 <?php if (isset($attributes)) { $__attributesOriginal18c21970322f9e5c938bc954620c12bb = $attributes; } ?>
-<?php $component = Illuminate\View\AnonymousComponent::resolve(['view' => 'components.text-input','data' => ['id' => 'tracking_code','class' => 'mt-1 w-3/5 gap-3','type' => 'text','name' => 'employee_id','value' => old('tracking_code'),'autofocus' => true,'placeholder' => 'Search Document']] + (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag ? $attributes->all() : [])); ?>
+<?php $component = Illuminate\View\AnonymousComponent::resolve(['view' => 'components.text-input','data' => ['id' => 'tracking_code','class' => 'mt-1 w-full block','type' => 'text','name' => 'employee_id','value' => old('tracking_code'),'autofocus' => true,'placeholder' => 'Search Document']] + (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag ? $attributes->all() : [])); ?>
 <?php $component->withName('text-input'); ?>
 <?php if ($component->shouldRender()): ?>
 <?php $__env->startComponent($component->resolveView(), $component->data()); ?>
 <?php if (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag): ?>
 <?php $attributes = $attributes->except(\Illuminate\View\AnonymousComponent::ignoredParameterNames()); ?>
 <?php endif; ?>
-<?php $component->withAttributes(['id' => 'tracking_code','class' => 'mt-1 w-3/5 gap-3','type' => 'text','name' => 'employee_id','value' => \Illuminate\View\Compilers\BladeCompiler::sanitizeComponentAttribute(old('tracking_code')),'autofocus' => true,'placeholder' => 'Search Document']); ?>
+<?php $component->withAttributes(['id' => 'tracking_code','class' => 'mt-1 w-full block','type' => 'text','name' => 'employee_id','value' => \Illuminate\View\Compilers\BladeCompiler::sanitizeComponentAttribute(old('tracking_code')),'autofocus' => true,'placeholder' => 'Search Document']); ?>
 <?php echo $__env->renderComponent(); ?>
 <?php endif; ?>
 <?php if (isset($__attributesOriginal18c21970322f9e5c938bc954620c12bb)): ?>
@@ -108,56 +108,22 @@
                     <label for="filter_confidential" class="inline-flex items-center">
                         <input id="filter_confidential" type="checkbox"
                             class="rounded border-gray-300 text-indigo-600 shadow-sm focus:ring-indigo-500"
-                            name="remember">
+                            name="confidential">
                         <span class="ms-2 text-sm text-gray-600"><?php echo e(__('Confidential')); ?></span>
                     </label>
                 </div>
             </form>
         </div>
 
-        <div class = "w-10/12 inline-flex h-14 gap-3">
+        <div class = "right-0 inline-flex h-14 gap-3">
             <!--Reports Generation-->
             <form class = "inline-flex gap-3" action = "#" method = "POST">
-                <?php if (isset($component)) { $__componentOriginale3da9d84bb64e4bc2eeebaafabfb2581 = $component; } ?>
-<?php if (isset($attributes)) { $__attributesOriginale3da9d84bb64e4bc2eeebaafabfb2581 = $attributes; } ?>
-<?php $component = Illuminate\View\AnonymousComponent::resolve(['view' => 'components.input-label','data' => []] + (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag ? $attributes->all() : [])); ?>
-<?php $component->withName('input-label'); ?>
-<?php if ($component->shouldRender()): ?>
-<?php $__env->startComponent($component->resolveView(), $component->data()); ?>
-<?php if (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag): ?>
-<?php $attributes = $attributes->except(\Illuminate\View\AnonymousComponent::ignoredParameterNames()); ?>
-<?php endif; ?>
-<?php $component->withAttributes([]); ?>From:  <?php echo $__env->renderComponent(); ?>
-<?php endif; ?>
-<?php if (isset($__attributesOriginale3da9d84bb64e4bc2eeebaafabfb2581)): ?>
-<?php $attributes = $__attributesOriginale3da9d84bb64e4bc2eeebaafabfb2581; ?>
-<?php unset($__attributesOriginale3da9d84bb64e4bc2eeebaafabfb2581); ?>
-<?php endif; ?>
-<?php if (isset($__componentOriginale3da9d84bb64e4bc2eeebaafabfb2581)): ?>
-<?php $component = $__componentOriginale3da9d84bb64e4bc2eeebaafabfb2581; ?>
-<?php unset($__componentOriginale3da9d84bb64e4bc2eeebaafabfb2581); ?>
-<?php endif; ?>
-                <input type = "date" name = "from" id = "from" class = "p-3 rounded-md">
-                <?php if (isset($component)) { $__componentOriginale3da9d84bb64e4bc2eeebaafabfb2581 = $component; } ?>
-<?php if (isset($attributes)) { $__attributesOriginale3da9d84bb64e4bc2eeebaafabfb2581 = $attributes; } ?>
-<?php $component = Illuminate\View\AnonymousComponent::resolve(['view' => 'components.input-label','data' => []] + (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag ? $attributes->all() : [])); ?>
-<?php $component->withName('input-label'); ?>
-<?php if ($component->shouldRender()): ?>
-<?php $__env->startComponent($component->resolveView(), $component->data()); ?>
-<?php if (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag): ?>
-<?php $attributes = $attributes->except(\Illuminate\View\AnonymousComponent::ignoredParameterNames()); ?>
-<?php endif; ?>
-<?php $component->withAttributes([]); ?>To:  <?php echo $__env->renderComponent(); ?>
-<?php endif; ?>
-<?php if (isset($__attributesOriginale3da9d84bb64e4bc2eeebaafabfb2581)): ?>
-<?php $attributes = $__attributesOriginale3da9d84bb64e4bc2eeebaafabfb2581; ?>
-<?php unset($__attributesOriginale3da9d84bb64e4bc2eeebaafabfb2581); ?>
-<?php endif; ?>
-<?php if (isset($__componentOriginale3da9d84bb64e4bc2eeebaafabfb2581)): ?>
-<?php $component = $__componentOriginale3da9d84bb64e4bc2eeebaafabfb2581; ?>
-<?php unset($__componentOriginale3da9d84bb64e4bc2eeebaafabfb2581); ?>
-<?php endif; ?>
-                <input type = "date" name = "to" id = "to" class = "p-3 rounded-md">
+                <div class="pt-2">
+                    <label for="from" class="py-4">From: </label>
+                    <input type = "date" name = "from" id = "from" class = "px-3 h-9 justify-items-center items-center py-5 text-sm border-gray-300 rounded-md">
+                    <label for="to" class="py-4">To: </label>
+                    <input type = "date" name = "to" id = "to" class = "px-3 h-9 justify-items-center items-center py-5 text-sm border-gray-300 rounded-md">
+                </div>
                 <?php if (isset($component)) { $__componentOriginald411d1792bd6cc877d687758b753742c = $component; } ?>
 <?php if (isset($attributes)) { $__attributesOriginald411d1792bd6cc877d687758b753742c = $attributes; } ?>
 <?php $component = Illuminate\View\AnonymousComponent::resolve(['view' => 'components.primary-button','data' => []] + (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag ? $attributes->all() : [])); ?>
@@ -195,7 +161,7 @@
 <?php unset($__componentOriginald411d1792bd6cc877d687758b753742c); ?>
 <?php endif; ?>
             </form>
-            <!--Add New Employee and Refresh Buttons-->
+            <!--Export Document Status Report and Refresh Buttons-->
             <div class = "inline-flex gap-3">
                 <?php if (isset($component)) { $__componentOriginal3b0e04e43cf890250cc4d85cff4d94af = $component; } ?>
 <?php if (isset($attributes)) { $__attributesOriginal3b0e04e43cf890250cc4d85cff4d94af = $attributes; } ?>
@@ -249,21 +215,21 @@
         </thead>
         <tbody>
             <tr class = "border-b-2 h-[40px]">
-                <td class = "w-[180px] p-2 border-b-2">01-04-25-001</td>
-                <td class = "w-[200px] p-2 border-b-2">Juan Dela Cruz</td>
-                <td class = "w-[200px] p-2 border-b-2">Administrative Division</td>
-                <td class = "w-[180px] p-2 border-b-2">Office Memorandum</td>
-                <td class = "w-[450px] p-2 border-b-2">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</td>
-                <th class = "w-[180px] p-2 border-b-2">
+                <td class = "w-[180px] py-1 border-b-2">01-04-25-001</td>
+                <td class = "w-[200px] py-1 border-b-2">Juan Dela Cruz</td>
+                <td class = "w-[200px] py-1 border-b-2">Administrative Division</td>
+                <td class = "w-[180px] py-1 border-b-2">Office Memorandum</td>
+                <td class = "w-[500px] py-1 border-b-2">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</td>
+                <th class = "w-[100px] py-1 border-b-2 items-center justify-items-center">
                     <div class="grow shrink basis-0 h-6 justify-start items-center gap-3 flex">
-                        <div class="px-3 py-0.5 bg-[#ffece5] rounded-xl flex-col justify-center items-center gap-2 inline-flex">
+                        <div class="px-3 py-0.5 bg-blue-500 rounded-xl flex-col justify-center items-center gap-2 inline-flex">
                             <div class="justify-center items-center gap-0.5 inline-flex">
-                                <div class="text-center text-[#ad3306] text-sm font-medium leading-tight">Status</div>
+                                <div class="text-center text-white text-sm font-medium leading-tight">To be Referred</div>
                             </div>
                         </div>
                     </div>
                 </th>
-                <td class = "w-[180px] p-11 inline-flex gap-3">
+                <td class = "w-[180px] px-11 py-3 inline-flex justify-between">
                     <button x-data = "" type="button" x-on:click.prevent="$dispatch('open-modal', 'view-incoming-document')">
                         <svg class="h-[30px] w-[30px] gap-2" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <g id="icon / eye">
@@ -279,10 +245,9 @@
                         </svg>
                     </button>
                     <?php if(session('employee')->division_name == "APHSO Department"): ?>
-                    <form action="#" method="POST" style="display:inline">
+                    <form action="#" method="POST">
                         <?php echo csrf_field(); ?>
-                        <?php echo method_field('DELETE'); ?>
-                        <button type="submit" class="textpx-4">
+                        <button type="submit">
                             <svg class="h-[30px] w-[30px]" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
                                 <g id="icon / box-1">
                                     <path id="icon" fill-rule="evenodd" clip-rule="evenodd"

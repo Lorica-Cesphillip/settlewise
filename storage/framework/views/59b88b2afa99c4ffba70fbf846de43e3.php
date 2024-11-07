@@ -41,7 +41,7 @@
 
         <!--Necessary Buttons-->
         <div class = "w-full flex h-20 justify-between">
-            <div class = "left-0 h-14 inline-flex gap-3 w-1/2">
+            <div class = "left-0 h-14 inline-flex gap-3 w-full">
                 <!--Send a Document-->
                 <button x-data = ""  x-on:click.prevent="$dispatch('open-modal', 'create-document-tracker-request')" type = "button" class = "p-4 bg-[#0d5dba] rounded-lg flex-col justify-center items-center gap-2.5 flex text-white tracking-widest hover:bg-blue-700 focus:bg-blue-700 active:bg-blue-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 transition ease-in-out duration-150">
                     <div class = "justify-center items-center gap-2 inline-flex">
@@ -75,50 +75,16 @@
                 </form>
             </div>
 
-            <div class = "w-10/12 inline-flex h-14 right-0 gap-3">
-                <!--Reports Generation-->
-                <form class = "inline-flex gap-3" action = "#" method = "POST">
-                    <?php if (isset($component)) { $__componentOriginale3da9d84bb64e4bc2eeebaafabfb2581 = $component; } ?>
-<?php if (isset($attributes)) { $__attributesOriginale3da9d84bb64e4bc2eeebaafabfb2581 = $attributes; } ?>
-<?php $component = Illuminate\View\AnonymousComponent::resolve(['view' => 'components.input-label','data' => []] + (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag ? $attributes->all() : [])); ?>
-<?php $component->withName('input-label'); ?>
-<?php if ($component->shouldRender()): ?>
-<?php $__env->startComponent($component->resolveView(), $component->data()); ?>
-<?php if (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag): ?>
-<?php $attributes = $attributes->except(\Illuminate\View\AnonymousComponent::ignoredParameterNames()); ?>
-<?php endif; ?>
-<?php $component->withAttributes([]); ?>From:  <?php echo $__env->renderComponent(); ?>
-<?php endif; ?>
-<?php if (isset($__attributesOriginale3da9d84bb64e4bc2eeebaafabfb2581)): ?>
-<?php $attributes = $__attributesOriginale3da9d84bb64e4bc2eeebaafabfb2581; ?>
-<?php unset($__attributesOriginale3da9d84bb64e4bc2eeebaafabfb2581); ?>
-<?php endif; ?>
-<?php if (isset($__componentOriginale3da9d84bb64e4bc2eeebaafabfb2581)): ?>
-<?php $component = $__componentOriginale3da9d84bb64e4bc2eeebaafabfb2581; ?>
-<?php unset($__componentOriginale3da9d84bb64e4bc2eeebaafabfb2581); ?>
-<?php endif; ?>
-                    <input type = "date" name = "from" id = "from" class = "p-3 rounded-md">
-                    <?php if (isset($component)) { $__componentOriginale3da9d84bb64e4bc2eeebaafabfb2581 = $component; } ?>
-<?php if (isset($attributes)) { $__attributesOriginale3da9d84bb64e4bc2eeebaafabfb2581 = $attributes; } ?>
-<?php $component = Illuminate\View\AnonymousComponent::resolve(['view' => 'components.input-label','data' => []] + (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag ? $attributes->all() : [])); ?>
-<?php $component->withName('input-label'); ?>
-<?php if ($component->shouldRender()): ?>
-<?php $__env->startComponent($component->resolveView(), $component->data()); ?>
-<?php if (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag): ?>
-<?php $attributes = $attributes->except(\Illuminate\View\AnonymousComponent::ignoredParameterNames()); ?>
-<?php endif; ?>
-<?php $component->withAttributes([]); ?>To:  <?php echo $__env->renderComponent(); ?>
-<?php endif; ?>
-<?php if (isset($__attributesOriginale3da9d84bb64e4bc2eeebaafabfb2581)): ?>
-<?php $attributes = $__attributesOriginale3da9d84bb64e4bc2eeebaafabfb2581; ?>
-<?php unset($__attributesOriginale3da9d84bb64e4bc2eeebaafabfb2581); ?>
-<?php endif; ?>
-<?php if (isset($__componentOriginale3da9d84bb64e4bc2eeebaafabfb2581)): ?>
-<?php $component = $__componentOriginale3da9d84bb64e4bc2eeebaafabfb2581; ?>
-<?php unset($__componentOriginale3da9d84bb64e4bc2eeebaafabfb2581); ?>
-<?php endif; ?>
-                    <input type = "date" name = "to" id = "to" class = "p-3 rounded-md">
-                    <?php if (isset($component)) { $__componentOriginald411d1792bd6cc877d687758b753742c = $component; } ?>
+            <div class = "w-9/12 inline-flex h-14 right-0 gap-3">
+            <!--Reports Generation-->
+            <form class = "inline-flex gap-3" action = "#" method = "POST">
+                <div class="pt-2">
+                    <label for="from" class="py-4">From: </label>
+                    <input type = "date" name = "from" id = "from" class = "px-3 h-9 justify-items-center items-center py-5 text-sm border-gray-300 rounded-md">
+                    <label for="to" class="py-4">To: </label>
+                    <input type = "date" name = "to" id = "to" class = "px-3 h-9 justify-items-center items-center py-5 text-sm border-gray-300 rounded-md">
+                </div>
+                <?php if (isset($component)) { $__componentOriginald411d1792bd6cc877d687758b753742c = $component; } ?>
 <?php if (isset($attributes)) { $__attributesOriginald411d1792bd6cc877d687758b753742c = $attributes; } ?>
 <?php $component = Illuminate\View\AnonymousComponent::resolve(['view' => 'components.primary-button','data' => []] + (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag ? $attributes->all() : [])); ?>
 <?php $component->withName('primary-button'); ?>
@@ -128,23 +94,23 @@
 <?php $attributes = $attributes->except(\Illuminate\View\AnonymousComponent::ignoredParameterNames()); ?>
 <?php endif; ?>
 <?php $component->withAttributes([]); ?>
-                         <?php $__env->slot('icon', null, []); ?> 
-                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
-                                xmlns="http://www.w3.org/2000/svg">
-                                <g id="button-icon">
-                                    <g id="icon">
-                                        <path
-                                            d="M16.7071 13.7071L12.7071 17.7071C12.3166 18.0976 11.6834 18.0976 11.2929 17.7071L7.29289 13.7071C6.90237 13.3166 6.90237 12.6834 7.29289 12.2929C7.68342 11.9024 8.31658 11.9024 8.70711 12.2929L11 14.5858V3C11 2.44771 11.4477 2 12 2C12.5523 2 13 2.44771 13 3V14.5858L15.2929 12.2929C15.6834 11.9024 16.3166 11.9024 16.7071 12.2929C17.0976 12.6834 17.0976 13.3166 16.7071 13.7071Z"
-                                            fill="white" />
-                                        <path
-                                            d="M4 17.5C4 16.9477 3.55228 16.5 3 16.5C2.44772 16.5 2 16.9477 2 17.5V19C2 21.2091 3.79086 23 6 23H18C20.2091 23 22 21.2091 22 19V17.5C22 16.9477 21.5523 16.5 21 16.5C20.4477 16.5 20 16.9477 20 17.5V19C20 20.1046 19.1046 21 18 21H6C4.89543 21 4 20.1046 4 19V17.5Z"
-                                            fill="white" />
-                                    </g>
+                     <?php $__env->slot('icon', null, []); ?> 
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
+                            xmlns="http://www.w3.org/2000/svg">
+                            <g id="button-icon">
+                                <g id="icon">
+                                    <path
+                                        d="M16.7071 13.7071L12.7071 17.7071C12.3166 18.0976 11.6834 18.0976 11.2929 17.7071L7.29289 13.7071C6.90237 13.3166 6.90237 12.6834 7.29289 12.2929C7.68342 11.9024 8.31658 11.9024 8.70711 12.2929L11 14.5858V3C11 2.44771 11.4477 2 12 2C12.5523 2 13 2.44771 13 3V14.5858L15.2929 12.2929C15.6834 11.9024 16.3166 11.9024 16.7071 12.2929C17.0976 12.6834 17.0976 13.3166 16.7071 13.7071Z"
+                                        fill="white" />
+                                    <path
+                                        d="M4 17.5C4 16.9477 3.55228 16.5 3 16.5C2.44772 16.5 2 16.9477 2 17.5V19C2 21.2091 3.79086 23 6 23H18C20.2091 23 22 21.2091 22 19V17.5C22 16.9477 21.5523 16.5 21 16.5C20.4477 16.5 20 16.9477 20 17.5V19C20 20.1046 19.1046 21 18 21H6C4.89543 21 4 20.1046 4 19V17.5Z"
+                                        fill="white" />
                                 </g>
-                            </svg>
-                         <?php $__env->endSlot(); ?>
-                         <?php $__env->slot('name', null, []); ?> Export <?php $__env->endSlot(); ?>
-                     <?php echo $__env->renderComponent(); ?>
+                            </g>
+                        </svg>
+                     <?php $__env->endSlot(); ?>
+                     <?php $__env->slot('name', null, []); ?> Export <?php $__env->endSlot(); ?>
+                 <?php echo $__env->renderComponent(); ?>
 <?php endif; ?>
 <?php if (isset($__attributesOriginald411d1792bd6cc877d687758b753742c)): ?>
 <?php $attributes = $__attributesOriginald411d1792bd6cc877d687758b753742c; ?>
@@ -154,7 +120,7 @@
 <?php $component = $__componentOriginald411d1792bd6cc877d687758b753742c; ?>
 <?php unset($__componentOriginald411d1792bd6cc877d687758b753742c); ?>
 <?php endif; ?>
-                </form>
+            </form>
                 <!--Refresh Buttons-->
                 <div class = "inline-flex gap-3">
                     <?php if (isset($component)) { $__componentOriginal3b0e04e43cf890250cc4d85cff4d94af = $component; } ?>
@@ -209,21 +175,21 @@
         </thead>
         <tbody>
             <tr class = "border-b-2 h-[40px]">
-                <td class = "w-[180px] p-2 border-b-2">01-04-25-001</td>
-                <td class = "w-[200px] p-2 border-b-2">Juan Dela Cruz</td>
-                <td class = "w-[200px] p-2 border-b-2">Administrative Division</td>
-                <td class = "w-[180px] p-2 border-b-2">Office Memorandum</td>
-                <td class = "w-[450px] p-2 border-b-2">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</td>
-                <th class = "w-[180px] p-2 border-b-2">
+                <td class = "w-[180px] py-1 border-b-2">01-04-25-001</td>
+                <td class = "w-[200px] py-1 border-b-2">Juan Dela Cruz</td>
+                <td class = "w-[200px] py-1 border-b-2">Administrative Division</td>
+                <td class = "w-[180px] py-1 border-b-2">Office Memorandum</td>
+                <td class = "w-[500px] py-1 border-b-2">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</td>
+                <td class = "w-[100px] py-1 border-b-2 items-center justify-items-center">
                     <div class="grow shrink basis-0 h-6 justify-start items-center gap-3 flex">
-                        <div class="px-3 py-0.5 bg-[#ffece5] rounded-xl flex-col justify-center items-center gap-2 inline-flex">
+                        <div class="px-3 py-0.5 bg-green-500 rounded-xl flex-col justify-center items-center gap-2 inline-flex">
                             <div class="justify-center items-center gap-0.5 inline-flex">
-                                <div class="text-center text-[#ad3306] text-sm font-medium leading-tight">Status</div>
+                                <div class="text-center text-white text-sm font-medium leading-tight">Request Granted</div>
                             </div>
                         </div>
                     </div>
-                </th>
-                <td class = "w-[180px] p-11 inline-flex gap-3">
+                </td>
+                <td class = "w-[180px] px-11 py-3 inline-flex justify-between">
                     <button x-data="" x-on:click.prevent="$dispatch('open-modal', 'view-outgoing-document')">
                         <svg class="h-[30px] w-[30px] gap-2" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <g id="icon / eye">
