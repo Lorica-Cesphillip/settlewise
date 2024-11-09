@@ -126,7 +126,7 @@
             <x-dropdown align="left" width="100%">
                 <x-slot name="trigger">
                     <button class="w-full h-[73px] justify-start">
-                        <div class="w-full h-[73px] left-0 top-0 absolute bg-[#200e3a] flex-col justify-start items-start inline-flex">
+                        <div class="w-full h-[73px] left-0 top-0 bg-[#200e3a] flex-col justify-start items-start inline-flex">
                             <div class="self-stretch h-[72px] px-6 py-4 bg-[#005791]/70 justify-start items-start gap-3 inline-flex">
                                 <div class="grow shrink basis-0 h-10 justify-start items-start gap-3 flex">
                                     <div class="grow shrink basis-0 h-10 justify-start items-start gap-3 flex">

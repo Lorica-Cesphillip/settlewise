@@ -251,7 +251,7 @@
                         <td class = " w-[250px] h-[45px] p-3 justify-start"><?php echo e($employee->email); ?></td>
                         <td class = " w-[150px] h-[45px] p-3 items-center justify-items-center">
                             <div class="grow shrink basis-0 h-6 justify-start items-center gap-3 flex">
-                                <div class="px-3 py-0.5 bg-<?php echo e($employee->emp_status ? 'green-500' : 'red-500'); ?> rounded-xl flex-col justify-center items-center gap-2 inline-flex">
+                                <div class="px-3 py-0.5 bg-<?php echo e($employee->emp_status ? 'green-500' : 'yellow-500'); ?> rounded-xl flex-col justify-center items-center gap-2 inline-flex">
                                     <div class="justify-center items-center gap-0.5 inline-flex">
                                         <div class="text-center text-white text-sm font-medium leading-tight"><?php echo e($employee->emp_status ? 'Active' : 'Inactive'); ?></div>
                                     </div>

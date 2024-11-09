@@ -200,13 +200,18 @@
         </div>
     </div>
 
-<!--Incoming Document Tables-->
+<!--Incoming Document Tables.
+NOTE: All Documents from Divisions will go through the head first before sending it to its destination.-->
 <table class = "table-fixed border-gray-800">
         <thead>
             <tr class = "bg-slate-200 h-[30px]">
                 <th class = "w-[180px] p-2 border-b-2">Document Tracking Code</th>
                 <th class = "w-[200px] p-2 border-b-2">Sender</th>
+                <?php if(session('employee')->division_name == "APHSO Department"): ?>
+                <th class = "w-[200px] p-2 border-b-2">Receiver</th>
+                <?php else: ?>
                 <th class = "w-[200px] p-2 border-b-2">Division</th>
+                <?php endif; ?>
                 <th class = "w-[180px] p-2 border-b-2">Document Type</th>
                 <th class = "w-[450px] p-2 border-b-2">Subject</th>
                 <th class = "w-[180px] p-2 border-b-2">Status</th>
@@ -217,7 +222,11 @@
             <tr class = "border-b-2 h-[40px]">
                 <td class = "w-[180px] py-1 border-b-2">01-04-25-001</td>
                 <td class = "w-[200px] py-1 border-b-2">Juan Dela Cruz</td>
-                <td class = "w-[200px] py-1 border-b-2">Administrative Division</td>
+                <?php if(session('employee')->division_name == "APHSO Department"): ?>
+                <td class = "w-[200px] p-2 border-b-2">Joselito Santos</td>
+                <?php else: ?>
+                <td class = "w-[200px] p-2 border-b-2">Administrative</td>
+                <?php endif; ?>
                 <td class = "w-[180px] py-1 border-b-2">Office Memorandum</td>
                 <td class = "w-[500px] py-1 border-b-2">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</td>
                 <th class = "w-[100px] py-1 border-b-2 items-center justify-items-center">
