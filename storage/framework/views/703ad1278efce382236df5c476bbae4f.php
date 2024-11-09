@@ -198,7 +198,7 @@
         </div>
     </div>
 
-    <!--Outgoing Document Tables-->
+    <!--Archived Document Tables-->
     <table class = "table-fixed border-gray-800">
         <thead>
             <tr class = "bg-slate-200 h-[30px]">

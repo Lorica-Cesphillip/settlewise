@@ -128,7 +128,9 @@
                 </select>
             </div>
             <div class="flex justify-center">
-                <x-primary-button type="submit" class="text-lg">Create Division</x-primary-button>
+                <x-primary-button>
+                    <x-slot name="name">Create Division</x-slot>
+                </x-primary-button>
             </div>
         </form>
     </div>
@@ -158,10 +160,10 @@
 
     .modal-content {
         background: white;
-        padding: 30px; 
+        padding: 30px;
         border-radius: 8px;
-        width: 600px; 
-        height: 470px; 
+        width: 600px;
+        height: 470px;
         box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
         position: relative;
         z-index: 1001;
