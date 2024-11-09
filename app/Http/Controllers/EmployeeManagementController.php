@@ -72,10 +72,11 @@ class EmployeeManagementController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Employees $aphso_employees)
+    public function show($employee_id)
     {
-        $aphso_divisions = Divisions::all();
-        return view('documents.employees', compact('aphso_employees'));
+        $employee = Employees::with('divisions')->findOrFail($employee_id);
+        $divisions = Divisions::all();
+        return view('modals.manage-employee', compact('employee'));
     }
 
     /**

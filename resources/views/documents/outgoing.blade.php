@@ -13,7 +13,7 @@
 
         <!--Necessary Buttons-->
         <div class = "w-full flex h-20 justify-between">
-            <div class = "left-0 h-14 inline-flex gap-3 w-1/2">
+            <div class = "left-0 h-14 inline-flex gap-3 w-full">
                 <!--Send a Document-->
                 <button x-data = ""  x-on:click.prevent="$dispatch('open-modal', 'create-document-tracker-request')" type = "button" class = "p-4 bg-[#0d5dba] rounded-lg flex-col justify-center items-center gap-2.5 flex text-white tracking-widest hover:bg-blue-700 focus:bg-blue-700 active:bg-blue-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 transition ease-in-out duration-150">
                     <div class = "justify-center items-center gap-2 inline-flex">
@@ -29,6 +29,8 @@
                 </button>
 
                 @include('modals.create-document-tracker')
+                @include('modals.view-document')
+                @include('modals.view-conversation')
 
 
 
@@ -45,32 +47,34 @@
                 </form>
             </div>
 
-            <div class = "w-10/12 inline-flex h-14 right-0 gap-3">
-                <!--Reports Generation-->
-                <form class = "inline-flex gap-3" action = "#" method = "POST">
-                    <x-input-label>From: </x-input-label>
-                    <input type = "date" name = "from" id = "from" class = "p-3 rounded-md">
-                    <x-input-label>To: </x-input-label>
-                    <input type = "date" name = "to" id = "to" class = "p-3 rounded-md">
-                    <x-primary-button>
-                        <x-slot name="icon">
-                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
-                                xmlns="http://www.w3.org/2000/svg">
-                                <g id="button-icon">
-                                    <g id="icon">
-                                        <path
-                                            d="M16.7071 13.7071L12.7071 17.7071C12.3166 18.0976 11.6834 18.0976 11.2929 17.7071L7.29289 13.7071C6.90237 13.3166 6.90237 12.6834 7.29289 12.2929C7.68342 11.9024 8.31658 11.9024 8.70711 12.2929L11 14.5858V3C11 2.44771 11.4477 2 12 2C12.5523 2 13 2.44771 13 3V14.5858L15.2929 12.2929C15.6834 11.9024 16.3166 11.9024 16.7071 12.2929C17.0976 12.6834 17.0976 13.3166 16.7071 13.7071Z"
-                                            fill="white" />
-                                        <path
-                                            d="M4 17.5C4 16.9477 3.55228 16.5 3 16.5C2.44772 16.5 2 16.9477 2 17.5V19C2 21.2091 3.79086 23 6 23H18C20.2091 23 22 21.2091 22 19V17.5C22 16.9477 21.5523 16.5 21 16.5C20.4477 16.5 20 16.9477 20 17.5V19C20 20.1046 19.1046 21 18 21H6C4.89543 21 4 20.1046 4 19V17.5Z"
-                                            fill="white" />
-                                    </g>
+            <div class = "w-9/12 inline-flex h-14 right-0 gap-3">
+            <!--Reports Generation-->
+            <form class = "inline-flex gap-3" action = "#" method = "POST">
+                <div class="pt-2">
+                    <label for="from" class="py-4">From: </label>
+                    <input type = "date" name = "from" id = "from" class = "px-3 h-9 justify-items-center items-center py-5 text-sm border-gray-300 rounded-md">
+                    <label for="to" class="py-4">To: </label>
+                    <input type = "date" name = "to" id = "to" class = "px-3 h-9 justify-items-center items-center py-5 text-sm border-gray-300 rounded-md">
+                </div>
+                <x-primary-button>
+                    <x-slot name="icon">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
+                            xmlns="http://www.w3.org/2000/svg">
+                            <g id="button-icon">
+                                <g id="icon">
+                                    <path
+                                        d="M16.7071 13.7071L12.7071 17.7071C12.3166 18.0976 11.6834 18.0976 11.2929 17.7071L7.29289 13.7071C6.90237 13.3166 6.90237 12.6834 7.29289 12.2929C7.68342 11.9024 8.31658 11.9024 8.70711 12.2929L11 14.5858V3C11 2.44771 11.4477 2 12 2C12.5523 2 13 2.44771 13 3V14.5858L15.2929 12.2929C15.6834 11.9024 16.3166 11.9024 16.7071 12.2929C17.0976 12.6834 17.0976 13.3166 16.7071 13.7071Z"
+                                        fill="white" />
+                                    <path
+                                        d="M4 17.5C4 16.9477 3.55228 16.5 3 16.5C2.44772 16.5 2 16.9477 2 17.5V19C2 21.2091 3.79086 23 6 23H18C20.2091 23 22 21.2091 22 19V17.5C22 16.9477 21.5523 16.5 21 16.5C20.4477 16.5 20 16.9477 20 17.5V19C20 20.1046 19.1046 21 18 21H6C4.89543 21 4 20.1046 4 19V17.5Z"
+                                        fill="white" />
                                 </g>
-                            </svg>
-                        </x-slot>
-                        <x-slot name="name">Export</x-slot>
-                    </x-primary-button>
-                </form>
+                            </g>
+                        </svg>
+                    </x-slot>
+                    <x-slot name="name">Export</x-slot>
+                </x-primary-button>
+            </form>
                 <!--Refresh Buttons-->
                 <div class = "inline-flex gap-3">
                     <x-secondary-button>
@@ -106,40 +110,38 @@
         </thead>
         <tbody>
             <tr class = "border-b-2 h-[40px]">
-                <td class = "w-[180px] p-2 border-b-2">01-04-25-001</td>
-                <td class = "w-[200px] p-2 border-b-2">Juan Dela Cruz</td>
-                <td class = "w-[200px] p-2 border-b-2">Administrative Division</td>
-                <td class = "w-[180px] p-2 border-b-2">Office Memorandum</td>
-                <td class = "w-[450px] p-2 border-b-2">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</td>
-                <th class = "w-[180px] p-2 border-b-2">
+                <td class = "w-[180px] py-1 border-b-2">01-04-25-001</td>
+                <td class = "w-[200px] py-1 border-b-2">Juan Dela Cruz</td>
+                <td class = "w-[200px] py-1 border-b-2">Administrative Division</td>
+                <td class = "w-[180px] py-1 border-b-2">Office Memorandum</td>
+                <td class = "w-[500px] py-1 border-b-2">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</td>
+                <td class = "w-[100px] py-1 border-b-2 items-center justify-items-center">
                     <div class="grow shrink basis-0 h-6 justify-start items-center gap-3 flex">
-                        <div class="px-3 py-0.5 bg-[#ffece5] rounded-xl flex-col justify-center items-center gap-2 inline-flex">
+                        <div class="px-3 py-0.5 bg-green-500 rounded-xl flex-col justify-center items-center gap-2 inline-flex">
                             <div class="justify-center items-center gap-0.5 inline-flex">
-                                <div class="text-center text-[#ad3306] text-sm font-medium leading-tight">Status</div>
+                                <div class="text-center text-white text-sm font-medium leading-tight">Request Granted</div>
                             </div>
                         </div>
                     </div>
-                </th>
-                <td class = "w-[180px] p-11 inline-flex gap-3">
-                    <a href="#">
-                        <button x-data = "" type="button" x-on:click.prevent="$dispatch('open-modal', 'view-document')">
-                            <svg class="h-[30px] w-[30px] gap-2" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                <g id="icon / eye">
-                                    <g id="icon">
-                                        <path
-                                            d="M3.57891 11.6523C3.81695 12.0462 3.69061 12.5585 3.29671 12.7965C2.90282 13.0346 2.39053 12.9082 2.15249 12.5143C1.81407 11.9544 1.58447 11.4718 1.44946 11.1603C1.25613 10.7143 1.28418 10.2121 1.5197 9.7915C1.87909 9.14973 2.78698 7.66611 4.18616 6.33307C5.58214 5.00308 7.54641 3.75 9.99982 3.75C12.4532 3.75 14.4175 5.00308 15.8135 6.33307C17.2127 7.66611 18.1206 9.14973 18.4799 9.7915C18.7155 10.2121 18.7435 10.7143 18.5502 11.1603C18.4152 11.4718 18.1856 11.9544 17.8472 12.5143C17.6091 12.9082 17.0968 13.0346 16.7029 12.7965C16.309 12.5585 16.1827 12.0462 16.4207 11.6523C16.6929 11.2019 16.8818 10.8124 16.9964 10.5537C16.6582 9.95778 15.8574 8.67693 14.6638 7.53975C13.4309 6.36513 11.8581 5.41667 9.99982 5.41667C8.14153 5.41667 6.56871 6.36513 5.33581 7.53975C4.14221 8.67693 3.34141 9.95778 3.00328 10.5537C3.11784 10.8124 3.30672 11.2019 3.57891 11.6523Z"
-                                            fill="#667185" />
-                                        <path fill-rule="evenodd" clip-rule="evenodd"
-                                            d="M9.99982 6.66667C7.69864 6.66667 5.83316 8.53215 5.83316 10.8333C5.83316 13.1345 7.69864 15 9.99982 15C12.301 15 14.1665 13.1345 14.1665 10.8333C14.1665 8.53215 12.301 6.66667 9.99982 6.66667ZM7.49982 10.8333C7.49982 9.45262 8.61911 8.33333 9.99982 8.33333C11.3805 8.33333 12.4998 9.45262 12.4998 10.8333C12.4998 12.214 11.3805 13.3333 9.99982 13.3333C8.61911 13.3333 7.49982 12.214 7.49982 10.8333Z"
-                                            fill="#667185" />
-                                    </g>
+                </td>
+                <td class = "w-[180px] px-11 py-3 inline-flex justify-between">
+                    <button x-data="" x-on:click.prevent="$dispatch('open-modal', 'view-outgoing-document')">
+                        <svg class="h-[30px] w-[30px] gap-2" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <g id="icon / eye">
+                                <g id="icon">
+                                    <path
+                                        d="M3.57891 11.6523C3.81695 12.0462 3.69061 12.5585 3.29671 12.7965C2.90282 13.0346 2.39053 12.9082 2.15249 12.5143C1.81407 11.9544 1.58447 11.4718 1.44946 11.1603C1.25613 10.7143 1.28418 10.2121 1.5197 9.7915C1.87909 9.14973 2.78698 7.66611 4.18616 6.33307C5.58214 5.00308 7.54641 3.75 9.99982 3.75C12.4532 3.75 14.4175 5.00308 15.8135 6.33307C17.2127 7.66611 18.1206 9.14973 18.4799 9.7915C18.7155 10.2121 18.7435 10.7143 18.5502 11.1603C18.4152 11.4718 18.1856 11.9544 17.8472 12.5143C17.6091 12.9082 17.0968 13.0346 16.7029 12.7965C16.309 12.5585 16.1827 12.0462 16.4207 11.6523C16.6929 11.2019 16.8818 10.8124 16.9964 10.5537C16.6582 9.95778 15.8574 8.67693 14.6638 7.53975C13.4309 6.36513 11.8581 5.41667 9.99982 5.41667C8.14153 5.41667 6.56871 6.36513 5.33581 7.53975C4.14221 8.67693 3.34141 9.95778 3.00328 10.5537C3.11784 10.8124 3.30672 11.2019 3.57891 11.6523Z"
+                                        fill="#667185" />
+                                    <path fill-rule="evenodd" clip-rule="evenodd"
+                                        d="M9.99982 6.66667C7.69864 6.66667 5.83316 8.53215 5.83316 10.8333C5.83316 13.1345 7.69864 15 9.99982 15C12.301 15 14.1665 13.1345 14.1665 10.8333C14.1665 8.53215 12.301 6.66667 9.99982 6.66667ZM7.49982 10.8333C7.49982 9.45262 8.61911 8.33333 9.99982 8.33333C11.3805 8.33333 12.4998 9.45262 12.4998 10.8333C12.4998 12.214 11.3805 13.3333 9.99982 13.3333C8.61911 13.3333 7.49982 12.214 7.49982 10.8333Z"
+                                        fill="#667185" />
                                 </g>
-                            </svg>
-                        </button>
-                    </a>
+                            </g>
+                        </svg>
+                    </button>
+                    @if(session('employee')->division_name == "APHSO Department")
                     <form action="#" method="POST" style="display:inline">
                         @csrf
-                        @method('DELETE')
                         <button type="submit" class="textpx-4">
                             <svg class="h-[30px] w-[30px]" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
                                 <g id="icon / box-1">
@@ -150,11 +152,13 @@
                             </svg>
                         </button>
                     </form>
+                    @endif
                 </td>
             </tr>
         </tbody>
     </table>
 
     @include('modals.view-document')
+    @include('modals.view-conversation')
 
 </x-app-layout>

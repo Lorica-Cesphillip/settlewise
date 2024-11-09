@@ -20,6 +20,7 @@
         <main class = "px-11 py-8 h-fit w-full self-stretch">
             {{ $slot }}
         </main>
+        @include('modals.application-status')
     </div>
 </body>
 </html>

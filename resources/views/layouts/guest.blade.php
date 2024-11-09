@@ -17,7 +17,7 @@
                     <x-pga-logo class="w-20 h-20 fill-current text-gray-500" />
                 </a>
             </div>
-            <div class="w-full text-center"><span style="text-black text-base font-normal leading-loose">Welcome to<br/></span><span style="text-black text-xl font-bold leading-10">SETTLEWISE: A DOCUMENT MANAGEMENT SYSTEM</span></div>
+            <div class="w-full text-center pt-2">Welcome to<br/><span class="font-bold text-xl">SETTLEWISE: A DOCUMENT MANAGEMENT SYSTEM</span></div>
             <div class="w-full sm:max-w-md mt-6 px-3 bg-white overflow-hidden">
                 {{ $slot }}
             </div>

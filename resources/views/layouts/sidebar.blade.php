@@ -22,7 +22,7 @@
             <div class="self-stretch p-3 justify-start items-center gap-2.5 inline-flex">
                 <div class="grow shrink basis-0 text-[#211c6a] text-base font-bold leading-normal">Documents</div>
             </div>
-            <x-nav-link :href="route('incoming')" :active="request()->routeIs('incoming')">
+            <x-nav-link :href="route('incoming.index')" :active="request()->routeIs('incoming.index')">
                 <x-slot name="icons">{!!'<svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <g id="icon / receipt">
                 <g id="icon">
@@ -82,7 +82,7 @@
             <div class="self-stretch p-3 justify-start items-center gap-2.5 inline-flex">
                 <div class="grow shrink basis-0 text-[#211c6a] text-base font-bold leading-normal">User Management</div>
             </div>
-            <x-nav-link :href="route('divisions')" :active="request()->routeIs('divisions')">
+            <x-nav-link :href="route('divisions.index')" :active="request()->routeIs('divisions.index')">
                 <x-slot name="icons">{!!'<svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <g id="icon / building-5">
                 <g id="icon">
@@ -152,6 +152,10 @@
                 </x-slot>
 
                 <x-slot name="content">
+                    <x-dropdown-link :href="route('profile')">
+                        {{ __('Your Profile') }}
+                    </x-dropdown-link>
+
                     <form action="{{route('logout')}}" method = "POST">
                         @csrf
 

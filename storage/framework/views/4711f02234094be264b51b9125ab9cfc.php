@@ -21,6 +21,7 @@
             <?php echo e($slot); ?>
 
         </main>
+        <?php echo $__env->make('modals.application-status', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
     </div>
 </body>
 </html>
