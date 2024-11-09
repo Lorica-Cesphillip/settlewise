@@ -25,8 +25,8 @@
         <!--Add New Employee and Refresh Buttons-->
         <div class="inline-flex gap-3 h-14 justify-end ml-auto">
         <x-primary-button onclick="openModal('createDivisionModal')">
-                <x-slot name="name">Create New Division</x-slot>
-            </x-primary-button>
+    <x-slot name="name">Create New Division</x-slot>
+</x-primary-button>
             <x-secondary-button>
                 <x-slot name="icon">
                     {!!'<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -73,7 +73,7 @@
                     <td class = "w-[230px] h-[45px] p-3 justify-start"></td>
                     <td class = "w-[200px] h-[45px] p-3 justify-start">5</td>
                     <td class = "w-[200px] h-[45px] p-2 justify-center inline-flex gap-3">
-                        <a href="#">
+                    <a href="#" onclick="openModal('editDivisionModal')">
                             <svg width="30" height="30" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
                                 <g id="icon / pencil">
                                 <path id="icon" fill-rule="evenodd" clip-rule="evenodd" d="M17.4846 2.93333C16.1178 1.56649 13.9017 1.56649 12.5349 2.93333L12.0084 3.45977L3.81387 11.6543C3.20188 12.2663 2.80489 13.0603 2.6825 13.9171L2.42322 15.732C2.23466 17.0519 3.36603 18.1833 4.68597 17.9947L6.50087 17.7354C7.35765 17.613 8.15163 17.216 8.76361 16.6041L16.9582 8.40952L17.4846 7.88308C18.8514 6.51624 18.8514 4.30016 17.4846 2.93333ZM16.2357 6.27287L14.1451 4.1822C14.7305 3.76823 15.5462 3.82335 16.0704 4.34754C16.5946 4.87174 16.6497 5.68739 16.2357 6.27287ZM12.7155 5.58109L14.8368 7.70241L7.3494 15.1898C7.04341 15.4958 6.64642 15.6943 6.21803 15.7555L4.40312 16.0148L4.66239 14.1999C4.72359 13.7715 4.92209 13.3745 5.22808 13.0685L12.7155 5.58109Z" fill="#667185"/>
@@ -174,22 +174,13 @@
 </style>
 
 
+
     <script>
-        function openModal(modalId) {
-            document.getElementById(modalId).classList.remove('hidden');
-        }
-
-        function closeModal(modalId) {
-            document.getElementById(modalId).classList.add('hidden');
-        }
-
-    document.getElementById('createDivisionForm').addEventListener('submit', function(event) {
-        event.preventDefault();
-        // Add form submission logic here
-        alert('New division created successfully!'); // Shows the confirmation
-        closeModal('createDivisionModal'); // Closes the modal after submission
-    });
+    function openModal(modalId) {
+        $('#' + modalId).modal('show');
+    }
 </script>
 
-
+    <!-- New Directory of the modals -->
+    @include('modals.add-division')
 </x-app-layout>

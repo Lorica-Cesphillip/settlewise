@@ -22,24 +22,24 @@ class DivisionsController extends Controller
      * Store a newly created resource in storage.
      */
     public function store(Request $request)
-{
-    // Validate the incoming data
-    $validatedData = $request->validate([
-        'division_name' => 'required|string|max:255',
-        'division_abbreviation' => 'required|string|max:255',
-        'division_head' => 'required|string|max:255',
-    ]);
+    {
+        // Validate the incoming data
+        $validatedData = $request->validate([
+            'division_name' => 'required|string|max:255',
+            'division_abbreviation' => 'required|string|max:255',
+            'division_head' => 'nullable|string|max:255', // Adjust validation based on your needs
+        ]);
 
-    // Create a new division record in the database
-    Divisions::create([
-        'name' => $validatedData['division_name'],
-        'abbreviation' => $validatedData['division_abbreviation'],
-        'head' => $validatedData['division_head'],
-    ]);
+        // Create a new division record in the database
+        Divisions::create([
+            'name' => $validatedData['division_name'],
+            'abbreviation' => $validatedData['division_abbreviation'],
+            'head' => $validatedData['division_head'],
+        ]);
 
-    // Redirect back with a success message
-    return redirect()->route('divisions.index')->with('success', 'Division created successfully.');
-}
+        // Redirect back with a success message!!
+        return redirect()->route('divisions.index')->with('success', 'Division created successfully.');
+    }
 
     /**
      * Display the specified resource.

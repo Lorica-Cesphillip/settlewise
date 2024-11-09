@@ -37,3 +37,5 @@ require __DIR__.'/auth.php';
 Route::post('documents/aphso_divisions', [DivisionsController::class, 'store'])->name('divisions.store');
 Route::post('/divisions', [DivisionsController::class, 'store'])->name('divisions.store');
 Route::get('/divisions', [DivisionsController::class, 'index'])->name('divisions.index');
+Route::post('/division/update', [DivisionsController::class, 'update'])->name('division.update'); /* Added new route */
+Route::post('/divisions/store', [DivisionsController::class, 'store'])->name('division.store'); /* Added new route */
