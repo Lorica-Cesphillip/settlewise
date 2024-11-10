@@ -53,8 +53,8 @@
                     <th class = "w-[150px] h-[30px] p-3 justify-start">Abbreviation</th>
                     <th class = "w-[230px] h-[30px] p-3 justify-start">Division Head</th>
                     <th class = "w-[230px] h-[30px] p-3 justify-start">Position</th>
-                    <th class = "w-[200px] h-[30px] p-3 justify-start">Number of Employees</th>
-                    <th class = "w-[200px] h-[30px] p-3 justify-start">Action</th>
+                    <th class = "w-[150px] h-[30px] p-3 justify-start">Number of Employees</th>
+                    <th class = "w-[100px] h-[30px] p-3 justify-start">Action</th>
                 </tr>
             </thead>
             <tbody>
@@ -71,8 +71,8 @@
                     <td class = "w-[150px] h-[45px] p-3 justify-start">{{$division->abbreviation}}</td>
                     <td class = "w-[230px] h-[45px] p-3 justify-start"></td>
                     <td class = "w-[230px] h-[45px] p-3 justify-start"></td>
-                    <td class = "w-[200px] h-[45px] p-3 justify-start">5</td>
-                    <td class = "w-[200px] h-[45px] p-2 justify-center inline-flex gap-3">
+                    <td class = "w-[150px] h-[45px] p-3 justify-start">5</td>
+                    <td class = "w-[100px] h-[45px] p-2 justify-center inline-flex gap-3">
                     <a href="#" onclick="openModal('editDivisionModal')">
                             <svg width="30" height="30" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
                                 <g id="icon / pencil">

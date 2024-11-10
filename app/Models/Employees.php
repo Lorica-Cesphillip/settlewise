@@ -12,7 +12,7 @@ class Employees extends Model
 
     protected $table = 'aphso_employees';
 
-    public function divisions(): BelongsTo{
+    public function division(): BelongsTo{
         return $this->belongsTo(Divisions::class, 'division_id');
     }
 

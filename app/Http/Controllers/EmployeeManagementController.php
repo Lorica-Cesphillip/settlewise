@@ -14,6 +14,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rules;
 use Illuminate\View\View;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Log;
 
 class EmployeeManagementController extends Controller
 {
@@ -24,7 +25,7 @@ class EmployeeManagementController extends Controller
     public function index()
     {
         //
-        $aphso_employees = Employees::with('divisions')->paginate(10);
+        $aphso_employees = Employees::with('division')->paginate(10);
         $divisions = Divisions::all();
 
         return view('documents.employees', compact('aphso_employees', 'divisions'));
@@ -72,12 +73,24 @@ class EmployeeManagementController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show($employee_id)
+    public function show($employeeNumber)
     {
-        $employee = Employees::with('divisions')->findOrFail($employee_id);
-        $divisions = Divisions::all();
-        return view('modals.manage-employee', compact('employee'));
+        Log::info("Fetching employee with employee number: {$employeeNumber}");
+
+        $employee = Employees::where('employee_number', '=', $employeeNumber)
+            ->with('division')
+            ->first();
+
+        if ($employee) {
+            Log::info("Employee found: ", $employee->toArray());
+            return response()->json($employee);
+        } else {
+            Log::info("Employee not found");
+            return response()->json(['error' => 'Employee not found'], 404);
+        }
     }
+
+
 
     /**
      * Show the form for editing the specified resource.

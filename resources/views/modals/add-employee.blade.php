@@ -1,9 +1,5 @@
-@extends('documents.employees')
-
 <x-modal name="add-new-employee" :maxWidth="'4xl'" :show="false" focusable>
     <!--Close Modal-->
-
-    <div class = "relative p-7">
         <h3 class = "text-center font-bold text-2xl">Add New Employee</h3>
 
         <form x-data="{ formStep: 1, last_name: '', first_name: '', middle_name: '', address: '', birthdate: '', marital_status: '', email: '', contact_nos: '', division: '', position: '' }" class="space-y-2" action = "{{ route('employees.store') }}" method = "POST">
@@ -58,21 +54,21 @@
                     <x-input-label for="name" :value="__('Employee Name')" />
                     <div class = "gap-2 w-full inline-flex">
                         <div>
-                            <x-text-input x-model="last_name" id="name" class="block mt-1 w-[275px]" type="text"
+                            <x-text-input x-model="last_name" id="name" class="block mt-1 w-[266px]" type="text"
                                 name="last_name" :value="old('last_name')" autofocus autocomplete="off"
                                 placeholder="Last Name" />
                             <x-input-error :messages="$errors->get('last_name')" class="mt-2" />
                         </div>
 
                         <div>
-                            <x-text-input x-model="first_name" id="name" class="block mt-1 w-[275px]"
+                            <x-text-input x-model="first_name" id="name" class="block mt-1 w-[266px]"
                                 type="text" name="first_name" :value="old('first_name')" autofocus autocomplete="off"
                                 placeholder="First Name" />
                             <x-input-error :messages="$errors->get('first_name')" class="mt-2" />
                         </div>
 
                         <div>
-                            <x-text-input x-model="middle_name" id="name" class="block mt-1 w-[275px]"
+                            <x-text-input x-model="middle_name" id="name" class="block mt-1 w-[266px]"
                                 type="text" name="middle_name" :value="old('middle_name')" autofocus autocomplete="off"
                                 placeholder="Middle Name" />
                             <x-input-error :messages="$errors->get('middle_name')" class="mt-2" />
@@ -204,10 +200,10 @@
                         </div>
                         <div>
                             <div
-                                class="w-[200px] h-[200px] items-center justify-items-center relative border-gray-300">
+                                class="w-[200px] h-[200px] justify-items-center items-center relative border-gray-300">
                                 <template x-if="imageUrl">
                                     <img :src="imageUrl"
-                                        class="w-full h-full object-cover bg-gray-500 rounded-lg"
+                                        class="w-full h-full bg-gray-500 rounded-lg justify-items-center items-center"
                                         alt="Uploaded Image Preview">
                                 </template>
                                 <template x-if="!imageUrl">
@@ -269,46 +265,6 @@
         </form>
     </div>
 </x-modal>
-
-<x-modal name="view-employee" :maxWidth="'3xl'" :show="false" focusable>
-    <div x-data="{
-        employee: {},
-        loading: true,
-        async fetchEmployeeData(employee_number) {
-            this.loading = true;
-            const response = await fetch(`/documents/employees/${employee_number}`);
-
-            if (response.ok) {
-                this.employee = await response.json();
-            } else {
-                console.error('Failed to fetch employee data');
-            }
-            this.loading = false;
-        }
-    }"
-    @open-modal.window="if($event.detail.name === 'view-employee') fetchEmployeeData($event.detail.employee_number)">
-
-        <h3 class="font-bold text-center text-2xl">View Employee Information</h3>
-        <template x-if="!loading">
-            <div>
-                <p class="font-light">Full Name: <span class="font-bold underline" x-text="`${employee.last_name ?? ''} ${employee.first_name ?? ''} ${employee.middle_name ?? ''}`"></span></p>
-                <p class="font-light">Home Address: <span class="font-bold underline" x-text="employee.address ?? 'N/A'"></span></p>
-                <p class="font-light">Birthdate: <span class="font-bold underline" x-text="employee.birthdate ?? 'N/A'"></span></p>
-                <p class="font-light">Marital Status: <span class="font-bold underline" x-text="employee.marital_status ?? 'N/A'"></span></p>
-                <p class="font-light">Email: <span class="font-bold underline" x-text="employee.email ?? 'N/A'"></span></p>
-                <p class="font-light">Contact Number: <span class="font-bold underline" x-text="employee.contact_nos ?? 'N/A'"></span></p>
-                <p class="font-light">APHSO Division: <span class="font-bold underline" x-text="employee.division?.name ?? 'N/A'"></span></p>
-                <p class="font-light">Position: <span class="font-bold underline" x-text="employee.position ?? 'N/A'"></span></p>
-            </div>
-        </template>
-        <template x-if="loading">
-            <p>Please Wait...</p>
-        </template>
-    </div>
-</x-modal>
-
-
-
 
 <script>
     document.addEventListener('alpine:init', () => {
