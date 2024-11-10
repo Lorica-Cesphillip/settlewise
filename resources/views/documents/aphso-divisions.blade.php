@@ -25,8 +25,8 @@
         <!--Add New Employee and Refresh Buttons-->
         <div class="inline-flex gap-3 h-14 justify-end ml-auto">
         <x-primary-button onclick="openModal('createDivisionModal')">
-    <x-slot name="name">Create New Division</x-slot>
-</x-primary-button>
+                <x-slot name="name">Create New Division</x-slot>
+            </x-primary-button>
             <x-secondary-button>
                 <x-slot name="icon">
                     {!!'<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -99,6 +99,8 @@
             </tbody>
         </table>
     </div>
+    
+    <!-- Modals for Create and Edit Division -->
     <!-- Modal for Create Division -->
     <div id="createDivisionModal" class="modal hidden">
     <div class="modal-overlay" onclick="closeModal('createDivisionModal')"></div>
@@ -183,4 +185,5 @@
 
     <!-- New Directory of the modals -->
     @include('modals.add-division')
+
 </x-app-layout>
