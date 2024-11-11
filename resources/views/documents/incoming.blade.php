@@ -21,7 +21,7 @@
         <div class = "left-0 h-14 inline-flex gap-3">
             <!--Search Document-->
             <form action="#" method = "POST" class = "inline-flex gap-3">
-                <x-text-input id="tracking_code" class="mt-1 w-full block" type="text" name="employee_id"
+                <x-text-input id="tracking_code" class="mt-1 w-[350px] block" type="text" name="employee_id"
                     :value="old('tracking_code')" autofocus placeholder="Search Document" />
                 <x-primary-button class="gap-3">
                     <x-slot name="icon">

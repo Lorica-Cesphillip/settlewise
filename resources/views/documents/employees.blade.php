@@ -56,7 +56,7 @@
                 </form>
                 <!--Add New Employee and Refresh Buttons-->
                 <div class = "inline-flex gap-3">
-                    <button x-data = "" type="button" class="p-4 bg-[#0d5dba] rounded-lg flex-col justify-center items-center gap-2.5 flex text-white font-semibold tracking-widest hover:bg-blue-700 focus:bg-blue-700 active:bg-blue-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 transition ease-in-out duration-150"
+                    <button x-data = "" type="button" class="p-4 bg-blue-500 rounded-lg flex-col justify-center items-center gap-2.5 flex text-white font-semibold tracking-widest hover:bg-blue-900 focus:bg-blue-900 active:bg-blue-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 transition ease-in-out duration-150"
                     x-on:click.prevent="$dispatch('open-modal', 'add-new-employee')"
                 >
                     Add New Employee
@@ -98,13 +98,13 @@
                     @foreach($aphso_employees as $employee)
                     <tr class = "border-b-2">
 
-                        <td class = " w-[150px] h-[45px] p-3 justify-start">{{$employee->divisions->abbreviation}}-{{str_pad($employee->employee_number, 4, '0', STR_PAD_LEFT)}}</td>
+                        <td class = " w-[150px] h-[45px] p-3 justify-start">{{$employee->division->abbreviation}}-{{str_pad($employee->employee_number, 4, '0', STR_PAD_LEFT)}}</td>
                         <td class = " w-[300px] h-[45px] p-3 justify-start">{{$employee->fname}} {{$employee->mname}} {{$employee->lname}} </td>
                         <td class = " w-[250px] h-[45px] p-3 justify-start">
-                            @if($employee->divisions->division_name != "APHSO Department")
-                            {{$employee->divisions->division_name}} Division
+                            @if($employee->division->division_name != "APHSO Department")
+                            {{$employee->division->division_name}} Division
                             @else
-                            {{$employee->divisions->division_name}}
+                            {{$employee->division->division_name}}
                             @endif
                         </td>
                         <td class = " w-[250px] h-[45px] p-3 justify-start">{{$employee->position}}</td>
@@ -119,8 +119,8 @@
                                 </div>
                             </div>
                         </td>
-                        <td class = "w-[150px] h-[45px] p-3 justify-start inline-flex gap-3">
-                            <a href="{{route('employees.show', $employee->employee_number)}}">
+                        <td class = "w-[150px] h-[45px] py-3 items-center justify-items-center justify-evenly inline-flex">
+                            <button x-data="" type="button" x-on:click.prevent="$dispatch('open-modal', { name: 'view-employee', employeeNumber: '{{ $employee->employee_number }}' })">
                                 <svg class="h-[20px] w-[20px] gap-2" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
                                     <g id="icon / eye">
                                         <g id="icon">
@@ -133,7 +133,7 @@
                                         </g>
                                     </g>
                                 </svg>
-                            </a>
+                            </button>
                             @if(session('employee')->division_name == "APHSO Department")
                             <form action="{{ route('employees.destroy', $employee->employee_number) }}" method="POST" style="display:inline">
                                 @csrf
@@ -153,6 +153,9 @@
                     @endforeach
                 </tbody>
             </table>
+
+            @include('modals.manage-employee')
+            @include('modals.add-employee')
         </div>
     </div>
 </x-app-layout>

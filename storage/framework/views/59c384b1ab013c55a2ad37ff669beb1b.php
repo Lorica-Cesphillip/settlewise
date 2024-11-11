@@ -175,7 +175,7 @@
                 </form>
                 <!--Add New Employee and Refresh Buttons-->
                 <div class = "inline-flex gap-3">
-                    <button x-data = "" type="button" class="p-4 bg-[#0d5dba] rounded-lg flex-col justify-center items-center gap-2.5 flex text-white font-semibold tracking-widest hover:bg-blue-700 focus:bg-blue-700 active:bg-blue-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 transition ease-in-out duration-150"
+                    <button x-data = "" type="button" class="p-4 bg-blue-500 rounded-lg flex-col justify-center items-center gap-2.5 flex text-white font-semibold tracking-widest hover:bg-blue-900 focus:bg-blue-900 active:bg-blue-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 transition ease-in-out duration-150"
                     x-on:click.prevent="$dispatch('open-modal', 'add-new-employee')"
                 >
                     Add New Employee
@@ -236,13 +236,13 @@
                     <?php $__currentLoopData = $aphso_employees; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $employee): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                     <tr class = "border-b-2">
 
-                        <td class = " w-[150px] h-[45px] p-3 justify-start"><?php echo e($employee->divisions->abbreviation); ?>-<?php echo e(str_pad($employee->employee_number, 4, '0', STR_PAD_LEFT)); ?></td>
+                        <td class = " w-[150px] h-[45px] p-3 justify-start"><?php echo e($employee->division->abbreviation); ?>-<?php echo e(str_pad($employee->employee_number, 4, '0', STR_PAD_LEFT)); ?></td>
                         <td class = " w-[300px] h-[45px] p-3 justify-start"><?php echo e($employee->fname); ?> <?php echo e($employee->mname); ?> <?php echo e($employee->lname); ?> </td>
                         <td class = " w-[250px] h-[45px] p-3 justify-start">
-                            <?php if($employee->divisions->division_name != "APHSO Department"): ?>
-                            <?php echo e($employee->divisions->division_name); ?> Division
+                            <?php if($employee->division->division_name != "APHSO Department"): ?>
+                            <?php echo e($employee->division->division_name); ?> Division
                             <?php else: ?>
-                            <?php echo e($employee->divisions->division_name); ?>
+                            <?php echo e($employee->division->division_name); ?>
 
                             <?php endif; ?>
                         </td>
@@ -258,8 +258,8 @@
                                 </div>
                             </div>
                         </td>
-                        <td class = "w-[150px] h-[45px] p-3 justify-start inline-flex gap-3">
-                            <a href="<?php echo e(route('employees.show', $employee->employee_number)); ?>">
+                        <td class = "w-[150px] h-[45px] py-3 items-center justify-items-center justify-evenly inline-flex">
+                            <button x-data="" type="button" x-on:click.prevent="$dispatch('open-modal', { name: 'view-employee', employeeNumber: '<?php echo e($employee->employee_number); ?>' })">
                                 <svg class="h-[20px] w-[20px] gap-2" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
                                     <g id="icon / eye">
                                         <g id="icon">
@@ -272,7 +272,7 @@
                                         </g>
                                     </g>
                                 </svg>
-                            </a>
+                            </button>
                             <?php if(session('employee')->division_name == "APHSO Department"): ?>
                             <form action="<?php echo e(route('employees.destroy', $employee->employee_number)); ?>" method="POST" style="display:inline">
                                 <?php echo csrf_field(); ?>
@@ -292,6 +292,9 @@
                     <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                 </tbody>
             </table>
+
+            <?php echo $__env->make('modals.manage-employee', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
+            <?php echo $__env->make('modals.add-employee', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
         </div>
     </div>
  <?php echo $__env->renderComponent(); ?>
