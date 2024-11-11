@@ -46,7 +46,7 @@ class EmployeeManagementController extends Controller
             'first_name' => 'required|string|max:50',
             'middle_name' => 'required|string|max:50',
             'address' => 'required|string|max:140',
-            'birthday' => 'required|date',
+            'birthdate' => 'required|date',
             'martial_status' => 'required|string|max:20',
             'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:'.Employees::class],
             'contact_nos' => ['required', 'string', 'max:12'],
@@ -64,8 +64,8 @@ class EmployeeManagementController extends Controller
         }else{
             $imagePath = $defaultImage_path;
         }
-
-        $user = User::create(array_merge($request->all(), ['employee_image' => $imagePath]));
+        $initial_password = 'last_name'.'aphso'.'birthdate';
+        Employees::create(array_merge($request->all(), ['employee_image' => $imagePath], ['emp_status' => 1]));
 
         return redirect(route('documents.employees', absolute: false))->with('success');
     }
