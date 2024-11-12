@@ -41,18 +41,17 @@ class EmployeeManagementController extends Controller
     {
         //Refer to the column names on the table.
         $request->validate([
-            'division_id' => ['required', 'integer', 'max:1'],
+            'division_name' => 'required|string|max:140',
             'last_name' => 'required|string|max:50',
             'first_name' => 'required|string|max:50',
             'middle_name' => 'required|string|max:50',
             'address' => 'required|string|max:140',
             'birthdate' => 'required|date',
             'martial_status' => 'required|string|max:20',
-            'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:'.Employees::class],
-            'contact_nos' => ['required', 'string', 'max:12'],
-            'aphso_division' => ['required', 'string', 'max:100'],
-            'position' => ['required', 'string', 'max:255'],
-            'employee_image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048'
+            'email' => 'required|string|lowercase|email|max:255|unique:'.Employees::class,
+            'contact_nos' => 'required|string|max:12',
+            'position' => 'required|string|max:255',
+            'employee_image' => 'required|image|mimes:jpeg,png,jpg|max:2048'
         ]);
 
         $defaultImage_path = 'images/default-profile.png';
