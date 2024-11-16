@@ -365,7 +365,7 @@
                     this.marital_status = data.martial_status;
                     this.email = data.email;
                     this.contact_nos = data.contact_nos;
-                    this.division = data.division.division_name;
+                    this.division = data.divisions.division_name;
                     this.position = data.position;
                     this.employee_image = data.image_path;
                 } catch (error) {

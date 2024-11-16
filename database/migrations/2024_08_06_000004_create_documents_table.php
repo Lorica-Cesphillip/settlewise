@@ -30,6 +30,8 @@ return new class extends Migration
             $table->string('subject');
             $table->string('remarks')->nullable();
             $table->timestamps();
+            $table->string('document_status'); //Pending, Request Rejected, Request Approved, To be Referred to Employee in a Department, Referral Granted, Referral Rejected, Document Forwarded.
+            $table->boolean('forwarded');
             $table->boolean('is_archived');
             $table->string('file_path'); //important since the user will always view the document attached.
 

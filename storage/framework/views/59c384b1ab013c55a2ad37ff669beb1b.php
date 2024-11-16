@@ -236,13 +236,13 @@
                     <?php $__currentLoopData = $aphso_employees; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $employee): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                     <tr class = "border-b-2">
 
-                        <td class = " w-[150px] h-[45px] p-3 justify-start"><?php echo e($employee->division->abbreviation); ?>-<?php echo e(str_pad($employee->employee_number, 4, '0', STR_PAD_LEFT)); ?></td>
+                        <td class = " w-[150px] h-[45px] p-3 justify-start"><?php echo e($employee->divisions->abbreviation); ?>-<?php echo e(str_pad($employee->employee_number, 4, '0', STR_PAD_LEFT)); ?></td>
                         <td class = " w-[300px] h-[45px] p-3 justify-start"><?php echo e($employee->fname); ?> <?php echo e($employee->mname); ?> <?php echo e($employee->lname); ?> </td>
                         <td class = " w-[250px] h-[45px] p-3 justify-start">
-                            <?php if($employee->division->division_name != "APHSO Department"): ?>
-                            <?php echo e($employee->division->division_name); ?> Division
+                            <?php if($employee->divisions->division_name != "APHSO Department"): ?>
+                            <?php echo e($employee->divisions->division_name); ?> Division
                             <?php else: ?>
-                            <?php echo e($employee->division->division_name); ?>
+                            <?php echo e($employee->divisions->division_name); ?>
 
                             <?php endif; ?>
                         </td>

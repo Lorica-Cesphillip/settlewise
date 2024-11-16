@@ -98,13 +98,13 @@
                     @foreach($aphso_employees as $employee)
                     <tr class = "border-b-2">
 
-                        <td class = " w-[150px] h-[45px] p-3 justify-start">{{$employee->division->abbreviation}}-{{str_pad($employee->employee_number, 4, '0', STR_PAD_LEFT)}}</td>
+                        <td class = " w-[150px] h-[45px] p-3 justify-start">{{$employee->divisions->abbreviation}}-{{str_pad($employee->employee_number, 4, '0', STR_PAD_LEFT)}}</td>
                         <td class = " w-[300px] h-[45px] p-3 justify-start">{{$employee->fname}} {{$employee->mname}} {{$employee->lname}} </td>
                         <td class = " w-[250px] h-[45px] p-3 justify-start">
-                            @if($employee->division->division_name != "APHSO Department")
-                            {{$employee->division->division_name}} Division
+                            @if($employee->divisions->division_name != "APHSO Department")
+                            {{$employee->divisions->division_name}} Division
                             @else
-                            {{$employee->division->division_name}}
+                            {{$employee->divisions->division_name}}
                             @endif
                         </td>
                         <td class = " w-[250px] h-[45px] p-3 justify-start">{{$employee->position}}</td>

@@ -25,7 +25,7 @@ class EmployeeManagementController extends Controller
     public function index()
     {
         //
-        $aphso_employees = Employees::with('division')->paginate(10);
+        $aphso_employees = Employees::with('divisions')->paginate(10);
         $divisions = Divisions::all();
 
         return view('documents.employees', compact('aphso_employees', 'divisions'));
@@ -77,7 +77,7 @@ class EmployeeManagementController extends Controller
         Log::info("Fetching employee with employee number: {$employeeNumber}");
 
         $employee = Employees::where('employee_number', '=', $employeeNumber)
-            ->with('division')
+            ->with('divisions')
             ->first();
 
         if ($employee) {
