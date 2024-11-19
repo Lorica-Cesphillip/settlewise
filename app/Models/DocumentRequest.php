@@ -9,6 +9,10 @@ class DocumentRequest extends Model
 {
     use HasFactory;
 
+    public function document_tracker(){
+        return $this->belongsTo(DocumentTracker::class, 'document_tracking_code');
+    }
+
     protected $table = 'request_logs';
 
     protected $fillable = [

@@ -13,7 +13,7 @@
 
         <!--Necessary Buttons-->
         <div class = "w-full flex h-20 justify-between">
-            <div class = "left-0 h-14 inline-flex gap-3 w-full">
+            <div class = "h-14 inline-flex gap-3 w-full">
                 <!--Send a Document-->
                 <button x-data = ""  x-on:click.prevent="$dispatch('open-modal', 'create-document-tracker-request')" type = "button" class = "p-4 bg-blue-500 rounded-lg flex-col justify-center items-center gap-2.5 flex text-white tracking-widest hover:bg-blue-900 focus:bg-blue-900 active:bg-blue-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 transition ease-in-out duration-150">
                     <div class = "justify-center items-center gap-2 inline-flex">
@@ -47,7 +47,7 @@
                 </form>
             </div>
 
-            <div class = "w-9/12 inline-flex h-14 right-0 gap-3">
+            <div class = "w-full inline-flex h-14 gap-3">
             <!--Reports Generation-->
             <form class = "inline-flex gap-3" action = "#" method = "POST">
                 <div class="pt-2">

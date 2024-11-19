@@ -18,11 +18,6 @@ return new class extends Migration
         $table->string('head');
         $table->timestamps();
     });
-    Schema::table('aphso_division', function (Blueprint $table) {
-        $table->string('division_name')->nullable()->change();
-        // or set a default value
-        // $table->string('division_name')->default('Default Name')->change();
-    });
 }
 
     /**

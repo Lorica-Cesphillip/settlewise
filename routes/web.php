@@ -4,6 +4,7 @@ use App\Http\Controllers\DivisionsController;
 use App\Http\Controllers\OutgoingDocumentsController;
 use App\Http\Controllers\EmployeeManagementController;
 use App\Http\Controllers\IncomingDocumentsController;
+use App\Models\DocumentTracker;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -15,11 +16,14 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
     /*Document Information Module */
     Route::get('/dashboard', function () {
-        return view('documents.dashboard');
+        $incoming_documents = DocumentTracker::latest()->paginate(4);
+        return view('documents.dashboard', compact('incoming_documents'));
     })->name('dashboard');
 
     Route::resource('/incoming', IncomingDocumentsController::class);
     Route::resource('/outgoing',OutgoingDocumentsController::class);
+    //Fix the API
+    Route::get('/api/employees/receiver', [OutgoingDocumentsController::class, 'getDivision']);
 
     Route::get('documents/archived', function () {
         return view('documents.archived');

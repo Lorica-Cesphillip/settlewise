@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class DocumentTracker extends Model
@@ -26,12 +27,12 @@ class DocumentTracker extends Model
         return $this->belongsTo(Employees::class);
     }
 
-    public function request(): BelongsToMany{
-        return $this->belongsToMany(DocumentRequest::class);
+    public function request(): HasMany{
+        return $this->hasMany(DocumentRequest::class, 'request_id', 'request_id');
     }
 
-    public function referral(): BelongsToMany{
-        return $this->belongsToMany(DocumentReferral::class);
+    public function referral(): HasMany{
+        return $this->hasMany(DocumentReferral::class, 'referral_id', 'referral_id');
     }
 
 
@@ -51,6 +52,7 @@ class DocumentTracker extends Model
         'confidential',
         'subject',
         'remarks',
+        'document_status',
         'is_archived',
         'file_path'
     ];

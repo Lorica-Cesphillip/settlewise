@@ -1,5 +1,5 @@
-<x-modal name="create-document-tracker-request" :maxWidth="'5xl'" :show="true" focusable>
-    <form x-cloak x-data="{ formStep: 3, receiver: '', document_type: '', urgent: false, division: '', others: '', confidential: '', subject: '', document: '', requested: 'false', request_type: '', others: '', request_type: '', requested_document: '', request_details: '', purpose: '' }" class = "space-y-2" action="{{ route('outgoing.store') }}" method = "POST">
+<x-modal name="create-document-tracker-request" :maxWidth="'5xl'" :show="false" focusable>
+    <form x-cloak x-data="{ formStep: 1, recipient_name: '', document_type: '', urgent: false, division: '', others: '', confidential: '', subject: '', document: '', requested: 'false', request_type: '', others: '', request_type: '', requested_document: '', request_details: '', purpose: '' }" class = "space-y-2" action="{{ route('outgoing.store') }}" method = "POST">
         @csrf
 
         <!-- Progress Bar Component -->
@@ -42,29 +42,29 @@
         </div>
 
 
-        <div x-cloak x-show="formStep === 1">
+        <div x-data="documentTracker()" x-cloak x-show="formStep === 1">
             <div class = "text-center text-sm px-2"><span class = "text-red-800">*</span> Required Information</div>
             <div class = "text-center text-3xl font-bold">Document Tracker Form</div>
 
             <div class = "w-full inline-flex gap-4">
                 <div>
-                    <x-input-label for="receiver" :value="__('Send the Document to: *')" />
-                    <select x-model="receiver" id="receiver"
-                        class="block mt-1 w-[420px] border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm"
-                        type="text" name="receiver" :value="old('marital_status')" autofocus autocomplete="off">
+                    <x-input-label for="recipient_name" :value="__('Send the Document to: *')" />
+                    <select x-model="recipient_name" @change="fetchDivision()" id="recipient_name"
+                        class="block mt-1 w-[420px] border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm" name="recipient_name"
+                        type="text" name="recipient_name" autofocus autocomplete="off">
                         <option value="null">--Please Select Recipient--</option>
                         @foreach ($employees as $recipient)
                             <option value="{{ $recipient->full_name }}">{{ $recipient->full_name }}</option>
                         @endforeach
                     </select>
 
-                    <x-input-error :messages="$errors->get('receiver')" class="mt-2" />
+                    <x-input-error :messages="$errors->get('recipient_name')" class="mt-2" />
                 </div>
                 <div>
                     <x-input-label for="document_type" :value="__('Document Type *')" />
                     <select x-model="document_type" id="document_type"
                         class="block mt-1 w-[420px] border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm"
-                        type="text" name="document_type" :value="old('marital_status')" autofocus autocomplete="off">
+                        type="text" name="document_type" autofocus autocomplete="off">
                         <option value="null">--Please Select a Document Type--</option>
                         @foreach ($document_type as $type)
                             <option value="{{ $type->document_type }}">{{ $type->document_type }}</option>
@@ -84,13 +84,13 @@
                 <div>
                     <x-input-label for="division" :value="__('APHSO Division')" />
                     <x-text-input x-model="division" id="division" class="block mt-1 w-[420px] bg-gray-100"
-                        type="text" name="division" :value="old('division')" autofocus autocomplete="off" disabled />
+                        type="text" name="division" autofocus autocomplete="off" disabled />
                     <x-input-error :messages="$errors->get('division')" class="mt-2" />
                 </div>
                 <div>
                     <x-input-label for="others" :value="__('Others: (please specify)')" />
                     <x-text-input x-model="others" id="others" class="block mt-1 w-[420px] bg-gray-100"
-                        type="text" name="others" :value="old('others')" autofocus autocomplete="off" disabled />
+                        type="text" name="others" autofocus autocomplete="off" disabled />
                     <x-input-error :messages="$errors->get('others')" class="mt-2" />
                 </div>
                 <div class = "items-center justify-items-center">
@@ -102,16 +102,14 @@
 
             <div>
                 <x-input-label for="subject" :value="__('Subject *')" />
-                <x-text-input x-model="subject" id="subject" class="block mt-1 w-full" type="text" name="subject"
-                    :value="old('subject')" autofocus autocomplete="off" />
+                <x-text-input x-model="subject" id="subject" class="block mt-1 w-full" type="text" name="subject" autofocus autocomplete="off" />
                 <x-input-error :messages="$errors->get('subject')" class="mt-2" />
             </div>
 
             <div class = "py-4 w-full justify-between inline-flex">
                 <div class = "inline-flex">
-                    <div class = "w-12 h-12 bg-gray-200 rounded-full items-center justify-items-center py-2.5">
-                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
-                            xmlns="http://www.w3.org/2000/svg">
+                    <div id="iconContainer" class = "w-12 h-12 bg-gray-200 rounded-full items-center justify-items-center py-2.5">
+                        <svg id="cloud" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <g id="icon / cloud-upload">
                                 <g id="icon">
                                     <path
@@ -123,16 +121,23 @@
                                 </g>
                             </g>
                         </svg>
+
+                        <!-- Checkmark Icon (Hidden by Default) -->
+                        <svg id="check" width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" class="hidden">
+                            <path
+                                d="M9 16.2L4.8 12L3.4 13.4L9 19L21 7L19.6 5.6L9 16.2Z"
+                                fill="#22c55e" />
+                        </svg>
                     </div>
                     <div class = "px-3">
-                        <p class = "font-bold">Upload your Document <span class = "text-red-700">*</span></p>
+                        <p id="fileName" class = "font-bold">Upload your Document <span class = "text-red-700">*</span></p>
                         <p class = "text-gray-500">PDF Format | Max. 10MB</p>
                     </div>
                 </div>
                 <div class = "justify-end items-end">
                     <label for="document"
                         class = "flex bg-blue-900 hover:bg-blue-950 text-white text-base px-5 py-2 outline-none rounded w-max cursor-pointer mx-auto">Upload
-                        <input type="file" id="document" class = "hidden">
+                        <input type="file" id="document" class = "hidden" onchange="updateFileName(this)">
                     </label>
                 </div>
             </div>
@@ -204,7 +209,7 @@
             <div class = "text-center text-3xl font-bold p-4">Please Confirm the Details before Sending</div>
             <div class = "border border-black rounded-lg p-8">
                 <p class = "font-bold text-lg py-1">Document Details</p>
-                <p class = "font-light">Recipient Name: <span class = "font-bold" x-text="receiver"></span></p>
+                <p class = "font-light">Recipient Name: <span class = "font-bold" x-text="recipient_name"></span></p>
                 <p class = "font-light">Division: <span class = "font-bold" x-text="division"></span></p>
                 <p class = "font-light">Document Type: <span class = "font-bold" x-text="document_type"></span></p>
                 <p class = "font-light">Others: <span class = "font-bold" x-text="others"></span></p>
@@ -212,7 +217,7 @@
                 <p class = "font-bold text-lg py-1">Request Details</p>
                 <p class = "font-light">Request Type: <span class = "font-bold" x-text="request_type"></span></p>
                 <p class = "font-light">Requested Document: <span class = "font-bold"
-                        x-text="document_requested"></span></p>
+                        x-text="requested_document"></span></p>
                 <p class = "font-light">Details: <span class = "font-bold" x-text="request_details"></span></p>
                 <p class = "font-light">Purpose: <span class = "font-bold" x-text="purpose"></span></p>
 
@@ -265,22 +270,68 @@
                 <input type="checkbox" id="confirmation" name="confirmation" class = "rounded-md" />
                 <label for="confirmation">By clicking, you indicate that the Document Details you entered are correct.</label>
             </div>
-
-            <x-primary-button x-cloak x-show="formStep === 3">
-                <x-slot name="name">Send the Document</x-slot>
-                <x-slot name="icon">
-                    <div class = "relative">
-                        <svg width="24" height="24" viewBox="0 0 20 20" fill="none"
-                            xmlns="http://www.w3.org/2000/svg">
-                            <g id="icon / send">
-                                <path id="icon" fill-rule="evenodd" clip-rule="evenodd"
-                                    d="M16.9747 11.8999C18.6126 11.1628 18.6126 8.83724 16.9747 8.1002L5.19204 2.798C3.60512 2.08388 1.89392 3.51487 2.31598 5.20311L3.13604 8.48334C3.32524 9.24014 3.91689 9.81693 4.65478 10C3.91689 10.1831 3.32524 10.7599 3.13604 11.5167L2.31598 14.797C1.89392 16.4852 3.60511 17.9162 5.19204 17.2021L16.9747 11.8999ZM4.5081 4.31786L14.9777 9.02917L5.13034 8.39386C4.94948 8.38219 4.7969 8.25495 4.75294 8.07912L3.93289 4.79889C3.84848 4.46124 4.19071 4.17504 4.5081 4.31786ZM5.13034 11.6062L14.9777 10.9709L4.5081 15.6822C4.19071 15.825 3.84847 15.5388 3.93289 15.2012L4.75294 11.921C4.7969 11.7451 4.94948 11.6179 5.13034 11.6062Z"
-                                    fill="white" />
-                            </g>
-                        </svg>
-                    </div>
-                </x-slot>
-            </x-primary-button>
+                <x-primary-button x-cloak x-show="formStep === 3" :disabled="false">
+                    <x-slot name="name">Send the Document</x-slot>
+                    <x-slot name="icon">
+                        <div class = "relative">
+                            <svg width="24" height="24" viewBox="0 0 20 20" fill="none"
+                                xmlns="http://www.w3.org/2000/svg">
+                                <g id="icon / send">
+                                    <path id="icon" fill-rule="evenodd" clip-rule="evenodd"
+                                        d="M16.9747 11.8999C18.6126 11.1628 18.6126 8.83724 16.9747 8.1002L5.19204 2.798C3.60512 2.08388 1.89392 3.51487 2.31598 5.20311L3.13604 8.48334C3.32524 9.24014 3.91689 9.81693 4.65478 10C3.91689 10.1831 3.32524 10.7599 3.13604 11.5167L2.31598 14.797C1.89392 16.4852 3.60511 17.9162 5.19204 17.2021L16.9747 11.8999ZM4.5081 4.31786L14.9777 9.02917L5.13034 8.39386C4.94948 8.38219 4.7969 8.25495 4.75294 8.07912L3.93289 4.79889C3.84848 4.46124 4.19071 4.17504 4.5081 4.31786ZM5.13034 11.6062L14.9777 10.9709L4.5081 15.6822C4.19071 15.825 3.84847 15.5388 3.93289 15.2012L4.75294 11.921C4.7969 11.7451 4.94948 11.6179 5.13034 11.6062Z"
+                                        fill="white" />
+                                </g>
+                            </svg>
+                        </div>
+                    </x-slot>
+                </x-primary-button>
         </div>
     </form>
 </x-modal>
+
+<script>
+    function updateFileName(input){
+        const fileText = document.getElementById('fileName');
+        const iconContainer = document.getElementById('iconContainer');
+        const cloud = document.getElementById('cloud');
+        const check = document.getElementById('check');
+        if(input.files && input.files[0]){
+            fileName.textContent = input.files[0].name;
+
+            cloud.classList.add('hidden');
+            check.classList.remove('hidden');
+
+            iconContainer.classList.remove('bg-gray-200');
+            iconContainer.classList.add('bg-green-200');
+        }
+    }
+
+    function documentTracker() {
+    return {
+        recipient_name: '',
+        division: '',
+        others: '',
+
+        async fetchDivision() {
+            if (this.recipient_name === 'others') {
+                this.division = ''; // Clear division when "Others" is selected
+                return;
+            }
+
+            if (this.recipient_name) {
+                try {
+                    const response = await fetch(`/api/employees/${this.recipient_name}/division`);
+                    const data = await response.json();
+                    this.division = data.division_name ?? 'N/A';
+                } catch (error) {
+                    console.error('Error fetching division:', error);
+                    this.division = 'Error fetching division';
+                }
+            } else {
+                this.division = ''; // Clear division when no recipient is selected
+            }
+        }
+        };
+    }
+
+</script>

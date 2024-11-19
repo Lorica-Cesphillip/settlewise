@@ -64,7 +64,7 @@ class EmployeeManagementController extends Controller
             $imagePath = $defaultImage_path;
         }
         $initial_password = 'last_name'.'aphso'.'birthdate';
-        Employees::create(array_merge($request->all(), ['employee_image' => $imagePath], ['emp_status' => 1]));
+        Employees::create(dd(array_merge($request->all(), ['employee_image' => $imagePath], ['emp_status' => 1])));
 
         return redirect(route('documents.employees', absolute: false))->with('success');
     }

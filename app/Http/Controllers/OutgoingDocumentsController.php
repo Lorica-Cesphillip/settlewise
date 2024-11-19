@@ -32,9 +32,17 @@ class OutgoingDocumentsController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
+    public function getDivision(Request $request)
     {
-        //
+        $fullName = $request->query('full_name');
+
+        $employee = Employees::where(DB::raw("CONCAT(fname, ' ', mname, ' ', lname)"), $fullName)->with('divisions')->first();
+
+        if ($employee) {
+            return response()->json(['division_name' => $employee->divisions->division_name]);
+        }
+
+        return response()->json(['division_name' => null], 404);
     }
 
     /**
@@ -43,31 +51,52 @@ class OutgoingDocumentsController extends Controller
     /**
      * @param \Illuminate\Http\Request $document
      * @return
-    */
-    public function store(Request $document): RedirectResponse{
-        $document->validate([
-            'receipient_name' => 'required|string|max:255',
-            'document_type' => 'required|string|max:50',
+     */
+    public function store(Request $document): RedirectResponse
+    {
+        $validatedData = $document->validate([
+            'recipient_name' => 'required|not_in:--Please Select Recipient--',
+            'document_type' => 'required|not_in:--Please Select Document Type--',
+            'urgent' => 'required|boolean',
+            'confidential' => 'required|boolean',
             'others' => 'string|max:140',
             'subject' => 'required|string|max:140',
+            'file_path' => 'required|string'
         ]);
-        DocumentTracker::create($document->only(
-            'recipient_name', 'document_type', 'others', 'subject'
-        ));
+        //Before executing this line, the recipient_name must first be changed into a to_emp_id.
+        $name = explode(' ', $validatedData['recipient_name']);
 
-        if($document->boolean('requested'))
-        {
+        $lname = array_pop($name);
+        $mname = count($name) > 1 ? array_pop($name) : null;
+        $fname = implode(' ', $name);
+
+        $employee_id = Employees::where('first_name','=', $fname)
+                        ->where('last_name', '=', $lname)
+                        ->where(function ($query) use ($mname) {
+                            if ($mname) {
+                                $query->where('middle_name', '=', $mname);
+                            } else {
+                                $query->whereNull('middle_name');
+                            }
+                        })
+                        ->first();
+        $validatedData['to_employee_id'] = $employee_id->employee_number;
+        unset($validatedData['recipient_name']);
+
+        $tracker = DocumentTracker::create($validatedData);
+
+        //If the employee deicdes that he goes to send a request form, the foreign key must be generated first.
+        if ($document->boolean('requested')) {
             $document->validate([
-            'request_type' => 'required|string|max:140',
-            'others' => 'string|max:140',
-            'document_requested.details' => 'required|string|max:140',
-            'request_purpose' => 'string|max:140'
+                'request_type' => 'required|string|max:140',
+                'others' => 'string|max:140',
+                'requested_document' => 'string|max:140',
+                'request_purpose' => 'string|max:140',
+                'request_details' => 'string|max:140',
             ]);
-            DocumentRequest::create($document->only(
-                'request_type', 'others', 'document_requested.details', 'request_purpose'
-                ));
+            DocumentRequest::create($document->only('request_type', 'others', 'document_requested', 'request_purpose', 'request_details'));
         }
-        return redirect(route('documents.outgoing'))->with('success');
+        return redirect(route('outgoing.index'))->with('status', 'success');
     }
 
     /**
