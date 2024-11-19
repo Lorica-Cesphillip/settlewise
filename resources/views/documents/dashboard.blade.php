@@ -147,5 +147,5 @@
                 </div>
             </div>
         </div>
-        <!-- Comment -->
+        <!-- Comments -->
 </x-app-layout>
