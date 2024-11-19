@@ -22,11 +22,11 @@ class OutgoingDocumentsController extends Controller
      */
     public function index(Employees $employee_id)
     {
-        $documents = DocumentTracker::latest()->where('from_employee_id', '=', $employee_id)->paginate(10);
+        $outgoing_documents = DocumentTracker::latest()->where('from_employee_id', '=', $employee_id)->paginate(10);
         $employees = Employees::select(DB::raw("CONCAT(fname, ' ', mname, ' ', lname) AS full_name"))->get();
         $document_type = DocumentType::all();
 
-        return view('documents.outgoing', compact('documents', 'employees', 'document_type'));
+        return view('documents.outgoing', compact('outgoing_documents', 'employees', 'document_type'));
     }
 
     /**

@@ -15,7 +15,8 @@ return new class extends Migration
             $table->increments('request_id');
             $table->string('request_type', 50);
             $table->string('requested_document', 150)->nullable();
-            $table->string('details_purpose', 150);
+            $table->string('request_purpose', 150)->nullable();
+            $table->string('request_details', 150)->nullable();
             $table->boolean('granted')->nullable();
             $table->string('comments_if_granted', 150)->nullable();
         });

@@ -32,7 +32,11 @@
                 </div>
             </div>
             <div class="basis-1/4">
-                <div class="items-center justify-items-center w-[200px] h-[200px] bg-gray-200"></div>
+                <img
+                :src="employee_image"
+                alt="Your Employee Image"
+                class="mx-auto w-[200px] h-[200px] object-cover bg-gray-200"
+            />
                 <p class="text-center underline pt-3">Your Employee's Picture</p>
             </div>
         </div>
@@ -361,9 +365,9 @@
                     this.marital_status = data.martial_status;
                     this.email = data.email;
                     this.contact_nos = data.contact_nos;
-                    this.division = data.division.division_name;
+                    this.division = data.divisions.division_name;
                     this.position = data.position;
-                    this.employee_image = data.employee_image
+                    this.employee_image = data.image_path;
                 } catch (error) {
                     console.error('Error fetching employee data:', error);
                 }

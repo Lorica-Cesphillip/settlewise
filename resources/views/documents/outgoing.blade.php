@@ -15,7 +15,7 @@
         <div class = "w-full flex h-20 justify-between">
             <div class = "left-0 h-14 inline-flex gap-3 w-full">
                 <!--Send a Document-->
-                <button x-data = ""  x-on:click.prevent="$dispatch('open-modal', 'create-document-tracker-request')" type = "button" class = "p-4 bg-[#0d5dba] rounded-lg flex-col justify-center items-center gap-2.5 flex text-white tracking-widest hover:bg-blue-700 focus:bg-blue-700 active:bg-blue-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 transition ease-in-out duration-150">
+                <button x-data = ""  x-on:click.prevent="$dispatch('open-modal', 'create-document-tracker-request')" type = "button" class = "p-4 bg-blue-500 rounded-lg flex-col justify-center items-center gap-2.5 flex text-white tracking-widest hover:bg-blue-900 focus:bg-blue-900 active:bg-blue-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 transition ease-in-out duration-150">
                     <div class = "justify-center items-center gap-2 inline-flex">
                         <div class = "relative">
                             <svg width="24" height="24" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -96,6 +96,9 @@
         </div>
 
     <!--Outgoing Document Tables-->
+    @if($outgoing_documents->isEmpty())
+    <p class="text-gray-700 text-center text-sm">You havent sent a document to any of the employees within the Albay Provincial Human Settlement Office. Please click "Send a Document" to start transmitting a document.</p>
+    @else
     <table class = "table-fixed border-gray-800">
         <thead>
             <tr class = "bg-slate-200 h-[30px]">
@@ -157,6 +160,7 @@
             </tr>
         </tbody>
     </table>
+    @endif
 
     @include('modals.view-document')
     @include('modals.view-conversation')

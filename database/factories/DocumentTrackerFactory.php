@@ -27,8 +27,8 @@ class DocumentTrackerFactory extends Factory
         'document_name' => Str::random(140),
         'urgent' => fake()->boolean(),
         'confidential' => fake()->boolean(),
-        'subject' => fake()->title(),
-        'remarks' => Str::random(140),
+        'subject' => 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
+        'remarks' => 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
         'timestamp' => now(),
         'is_archived' => fake()->boolean(),
         'file_path' => fake()->filePath()

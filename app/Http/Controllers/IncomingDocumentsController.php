@@ -13,12 +13,21 @@ class IncomingDocumentsController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index(Employees $employee_id)
+    public function index()
     {
-        $documents = DocumentTracker::latest()->where('from_employee_id', '=', $employee_id)->paginate(10);
+        $incoming_documents = DocumentTracker::latest()
+            ->with('to_employee_id')
+            ->with('request')
+            ->with('referral')
+            ->with('document_type')
+            ->with('from_employee_id')
+            ->paginate(10);
+        /**
+         * For Referral Modal.
+         */
         $employees = Employees::select(DB::raw("CONCAT(fname, ' ', mname, ' ', lname) AS full_name"))->get();
 
-        return view('documents.incoming', compact('documents', 'employees'));
+        return view('documents.incoming', compact('incoming_documents', 'employees'));
     }
 
     /**
@@ -30,7 +39,7 @@ class IncomingDocumentsController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
+     * Forward Referral to another employee.
      */
     public function store(Request $request)
     {
