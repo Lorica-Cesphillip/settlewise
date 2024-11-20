@@ -177,7 +177,7 @@
                 </div>
             </div>
         </div>
-        <!-- Comment -->
+        <!-- Comments -->
  <?php echo $__env->renderComponent(); ?>
 <?php endif; ?>
 <?php if (isset($__attributesOriginal9ac128a9029c0e4701924bd2d73d7f54)): ?>

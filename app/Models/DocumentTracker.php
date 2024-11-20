@@ -43,6 +43,7 @@ class DocumentTracker extends Model
      */
     protected $fillable = [
         'document_type_id',
+        'others',
         'from_employee_id',
         'to_employee_id',
         'request_id',

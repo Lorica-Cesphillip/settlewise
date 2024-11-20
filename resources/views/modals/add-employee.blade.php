@@ -1,7 +1,7 @@
 <x-modal name="add-new-employee" :maxWidth="'4xl'" :show="false" focusable>
     <h3 class = "text-center font-bold text-2xl">Add New Employee</h3>
 
-    <form x-data="{ formStep: 1, last_name: '', first_name: '', middle_name: '', address: '', birthdate: '', marital_status: '', email: '', contact_nos: '', division: '', position: '' }" class="space-y-2" action = "{{ route('employees.store') }}" method = "POST">
+    <form x-data="{ formStep: 3, last_name: '', first_name: '', middle_name: '', address: '', birthdate: '', marital_status: '', email: '', contact_nos: '', division: '', position: '' }" class="space-y-2" action = "{{ route('employees.store') }}" method = "POST">
         @csrf
 
         <!-- Progress Bar Component -->
@@ -9,9 +9,9 @@
             <!-- Step 1 -->
             <div :class="formStep >= 1 ? 'bg-[#7fbaff]' : 'bg-gray-400'"
                 class="rounded-full flex items-center justify-center text-center py-4 h-[60px] w-[60px]">
-                <span :class="formStep >= 1 ? 'text-white' : 'text-gray-400'">
-                    <template x-if="formStep > 1">✓</template>
-                    <template x-if="formStep <= 1">1</template>
+                <span class="text-black font-bold">
+                    <template x-if="formStep > 1"><div class="text-white">✓</div></template>
+                    <template x-if="formStep <= 1"><div>1</div></template>
                 </span>
             </div>
 
@@ -23,9 +23,9 @@
             <!-- Step 2 -->
             <div :class="formStep >= 2 ? 'bg-[#7fbaff]' : 'bg-gray-400'"
                 class="rounded-full flex items-center justify-center text-center py-4 h-[60px] w-[60px]">
-                <span :class="formStep >= 2 ? 'text-white' : 'text-gray-400'">
-                    <template x-if="formStep > 2">✓</template>
-                    <template x-if="formStep <= 2">2</template>
+                <span  class="text-black font-bold">
+                    <template x-if="formStep > 2"><div class="text-white">✓</div></template>
+                    <template x-if="formStep <= 2"><div>2</div></template>
                 </span>
             </div>
 
@@ -37,9 +37,8 @@
             <!-- Step 3 -->
             <div :class="formStep === 3 ? 'bg-[#7fbaff]' : 'bg-gray-400'"
                 class="rounded-full flex items-center justify-center text-center py-4 h-[60px] w-[60px]">
-                <span :class="formStep === 3 ? 'text-white' : 'text-gray-400'">
-                    <template x-if="formStep === 3">✓</template>
-                    <template x-if="formStep < 3">3</template>
+                <span  class="text-black font-bold">
+                    <template x-if="formStep === 3 || formStep <= 3"><div>3</div></template>
                 </span>
             </div>
         </div>
@@ -54,19 +53,19 @@
                 <div class = "gap-2 w-full inline-flex">
                     <div>
                         <x-text-input x-model="last_name" id="name" class="block mt-1 w-[266px]" type="text"
-                            name="last_name" :value="old('last_name')" autofocus autocomplete="off" placeholder="Last Name" />
+                            name="last_name" autofocus autocomplete="off" placeholder="Last Name" />
                         <x-input-error :messages="$errors->get('last_name')" class="mt-2" />
                     </div>
 
                     <div>
                         <x-text-input x-model="first_name" id="name" class="block mt-1 w-[266px]" type="text"
-                            name="first_name" :value="old('first_name')" autofocus autocomplete="off" placeholder="First Name" />
+                            name="first_name" autofocus autocomplete="off" placeholder="First Name" />
                         <x-input-error :messages="$errors->get('first_name')" class="mt-2" />
                     </div>
 
                     <div>
                         <x-text-input x-model="middle_name" id="name" class="block mt-1 w-[266px]" type="text"
-                            name="middle_name" :value="old('middle_name')" autofocus autocomplete="off"
+                            name="middle_name" autofocus autocomplete="off"
                             placeholder="Middle Name" />
                         <x-input-error :messages="$errors->get('middle_name')" class="mt-2" />
                     </div>
@@ -76,7 +75,7 @@
                 <div class = "block">
                     <x-input-label for="address" :value="__('Home Address')" />
                     <x-text-input x-model="address" id="address" class="block mt-1 w-full" type="text"
-                        name="address" :value="old('address')" autofocus autocomplete="off"
+                        name="address" autofocus autocomplete="off"
                         placeholder="Lot/Blg. No, Street, Barangay/ Subdivision, Municipality/City, Province, ZIP Code" />
                     <x-input-error :messages="$errors->get('address')" class="mt-2" />
                 </div>
@@ -86,7 +85,7 @@
                 <div>
                     <x-input-label for="birthday" :value="__('Birthdate')" />
                     <x-text-input x-model="birthdate" id="birthdate" class="block mt-1 w-full" type="date"
-                        name="birthdate" :value="old('birthdate')" autofocus autocomplete="off"
+                        name="birthdate" autofocus autocomplete="off"
                         placeholder="Select Employee's Birthdate" />
                     <x-input-error :messages="$errors->get('birthdate')" class="mt-2" />
                 </div>
@@ -95,7 +94,7 @@
                     <x-input-label for="marital_status" :value="__('Marital Status')" />
                     <select x-model="marital_status" id="marital_status"
                         class="block mt-1 w-full border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm"
-                        type="text" name="marital_status" :value="old('marital_status')" autofocus
+                        type="text" name="marital_status" autofocus
                         autocomplete="off">
                         <option value = "">--Select Marital Status--</option>
                         <option value = "Single">Single</option>
@@ -111,14 +110,14 @@
                 <div>
                     <x-input-label for="email" :value="__('Employees Personal Email')" />
                     <x-text-input x-model="email" id="email" class="block mt-1 w-full" type="email" name="email"
-                        :value="old('email')" autofocus autocomplete="off" placeholder="Enter Their Personal Email" />
+                        autofocus autocomplete="off" placeholder="Enter Their Personal Email" />
                     <x-input-error :messages="$errors->get('email')" class="mt-2" />
                 </div>
 
                 <div>
                     <x-input-label for="contact_nos" :value="__('Contact Number')" />
                     <x-text-input x-model="contact_nos" id="contact_nos" class="block mt-1 w-full" type="text"
-                        name="contact_nos" :value="old('contact_nos')" autofocus autocomplete="off"
+                        name="contact_nos" autofocus autocomplete="off"
                         placeholder="Enter Their Personal Contact Number" />
                     <x-input-error :messages="$errors->get('contact_nos')" class="mt-2" />
                 </div>
@@ -132,7 +131,7 @@
                     <x-input-label for="division" :value="__('APHSO Division')" />
                     <select x-model="division" id="division"
                         class="block mt-1 w-full border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm"
-                        type="text" name="division" :value="old('division')" autofocus autocomplete="off">
+                        type="text" name="division" autofocus autocomplete="off">
                         <option value = "">--Select Division--</option>
                         @foreach ($divisions as $division)
                             <option value = "{{ $division->division_name }} Division">
@@ -145,7 +144,7 @@
                 <div>
                     <x-input-label for="position" :value="__('Position')" />
                     <x-text-input x-model="position" id="position" class="block mt-1 w-full" type="text"
-                        name="position" :value="old('position')" autofocus autocomplete="off"
+                        name="position" autofocus autocomplete="off"
                         placeholder="APHSO Position" />
                     <x-input-error :messages="$errors->get('position')" class="mt-2" />
                 </div>
@@ -195,7 +194,7 @@
                         </p>
                     </div>
                     <div>
-                        <div class="w-[200px] h-[200px] justify-items-center items-center relative border-gray-300">
+                        <div class="w-[200px] h-[200px] justify-items-center items-center border-gray-300">
                             <template x-if="imageUrl">
                                 <img :src="imageUrl"
                                     class="w-full h-full bg-gray-500 rounded-lg justify-items-center items-center"

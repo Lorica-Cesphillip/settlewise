@@ -40,7 +40,7 @@ class EmployeeManagementController extends Controller
     public function store(Request $request): RedirectResponse
     {
         //Refer to the column names on the table.
-        $request->validate([
+        $employee_validated = $request->validate([
             'division_name' => 'required|string|max:140',
             'last_name' => 'required|string|max:50',
             'first_name' => 'required|string|max:50',
@@ -55,6 +55,11 @@ class EmployeeManagementController extends Controller
         ]);
 
         $defaultImage_path = 'images/default-profile.png';
+
+        //Retrieve the foreign key and change the value into something like division_id.
+        $division_id = Divisions::where('division_name', '=', $employee_validated['division_name'])->first();
+        $employee_validated['division_id'] = $division_id->division_id;
+        unset($employee_validated['division_name']);
 
         if($request->hasFile('employee_image')){
             $imageName = time().'.'.$request->employee_image->extension();
@@ -81,10 +86,8 @@ class EmployeeManagementController extends Controller
             ->first();
 
         if ($employee) {
-            Log::info("Employee found: ", $employee->toArray());
             return response()->json($employee);
         } else {
-            Log::info("Employee not found");
             return response()->json(['error' => 'Employee not found'], 404);
         }
     }
@@ -108,7 +111,7 @@ class EmployeeManagementController extends Controller
     }
 
     /**
-     * Remove the specified resource from storage.
+     * Archive employee, and automatically delete data within a single year.
      */
     public function archive(EmployeeManagementController $employeeManagementController)
     {

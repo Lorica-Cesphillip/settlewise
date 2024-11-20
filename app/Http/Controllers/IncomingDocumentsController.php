@@ -65,7 +65,7 @@ class IncomingDocumentsController extends Controller
     }
 
     /**
-     * Display the specified resource.
+     * Display the specified resource. Must Return a json Array.
      */
     public function show(string $id)
     {
@@ -73,7 +73,7 @@ class IncomingDocumentsController extends Controller
     }
 
     /**
-     * Show the form for editing the specified resource.
+     * Show the form for editing the specified resource. Use the json Array.
      */
     public function edit(string $id)
     {

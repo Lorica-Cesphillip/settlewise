@@ -10,10 +10,10 @@ use App\Models\Employees;
 use App\Models\DocumentType;
 use Illuminate\Auth\Access\Response;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\View\View;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
 
 class OutgoingDocumentsController extends Controller
 {
@@ -61,7 +61,7 @@ class OutgoingDocumentsController extends Controller
             'confidential' => 'required|boolean',
             'others' => 'string|max:140',
             'subject' => 'required|string|max:140',
-            'file_path' => 'required|string'
+            'document' => 'required|mimes:docx,doc,pdf,xlsx,xls,ppt,pptx|max:10mb'
         ]);
         //Before executing this line, the recipient_name must first be changed into a to_emp_id.
         $name = explode(' ', $validatedData['recipient_name']);
@@ -83,7 +83,7 @@ class OutgoingDocumentsController extends Controller
         $validatedData['to_employee_id'] = $employee_id->employee_number;
         unset($validatedData['recipient_name']);
 
-        $tracker = DocumentTracker::create($validatedData);
+        DocumentTracker::create($validatedData);
 
         //If the employee deicdes that he goes to send a request form, the foreign key must be generated first.
         if ($document->boolean('requested')) {
@@ -100,7 +100,7 @@ class OutgoingDocumentsController extends Controller
     }
 
     /**
-     * Display the specified resource.
+     * Must return a json array
      */
     public function show(string $id)
     {
@@ -115,8 +115,46 @@ class OutgoingDocumentsController extends Controller
         //
     }
 
+    public function acceptRequest(Request $accept){
+        $accept->validate([
+            'granted' => 'required|boolean',
+            'comments_if_granted' => 'required|string|max:140'
+        ]);
+        DocumentRequest::create($accept->only(['granted', 'comments_if_granted']));
+
+        return redirect(route('incoming'))->with('success');
+    }
+
+    public function rejectRequest(Request $reject){
+        $reject->validate([
+            'granted' => 'required|boolean',
+            'rejection_reason' => 'required|string|max:140'
+        ]);
+
+        DocumentRequest::create($reject->only('granted', 'rejection_reason'));
+
+        return redirect(route('incoming'))->with('success');
+    }
+
+    public function storeReferral(Request $request){
+    }
+
+    public function storeReferralResponse(Request $response){
+        $response->validate(['employee_remarks' => 'reqired|string|max:140']);
+        DocumentReferral::create($response->all());
+
+        return redirect(route('incoming'))->with('success');
+    }
+
+    public function storeApproval(Request $response){
+        $response->validate(['approved_by_head' => 'reqired|boolean']);
+        DocumentReferral::create($response->all());
+
+        return redirect(route('incoming'))->with('success');
+    }
+
     /**
-     * Update the specified resource in storage.
+     * This will be used if the head will forward the document depending on the type: standard, request, referral.
      */
     public function update(Request $request, string $id)
     {
@@ -124,7 +162,7 @@ class OutgoingDocumentsController extends Controller
     }
 
     /**
-     * Remove the specified resource from storage.
+     * Archived the document.
      */
     public function destroy(string $id)
     {

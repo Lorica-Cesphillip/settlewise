@@ -3,7 +3,7 @@
     <!-- Modal Header -->
     <h3 class="text-2xl text-center font-bold">Edit APHSO Division</h3>
     <p class="text-center text-sm">Required Fields <span class="text-red-500">*</span></p>
-        <form action="{{ route('division.update') }}" method="POST">
+        <form action="#" method="POST">
             @csrf
             <!-- Name of APHSO Division -->
             <div class="form-group mb-4">

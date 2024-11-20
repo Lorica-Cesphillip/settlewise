@@ -7,9 +7,9 @@
             <!-- Step 1 -->
             <div :class="formStep >= 1 ? 'bg-[#7fbaff]' : 'bg-gray-400'"
                 class="rounded-full flex items-center justify-center text-center py-4 h-[60px] w-[60px]">
-                <span :class="formStep >= 1 ? 'text-white' : 'text-gray-400'">
-                    <template x-if="formStep > 1">✓</template>
-                    <template x-if="formStep == 1">1</template>
+                <span class="text-black font-bold">
+                    <template x-if="formStep > 1"><div class="text-white">✓</div></template>
+                    <template x-if="formStep <= 1"><div>1</div></template>
                 </span>
             </div>
 
@@ -21,9 +21,9 @@
             <!-- Step 2 -->
             <div :class="formStep >= 2 ? 'bg-[#7fbaff]' : 'bg-gray-400'"
                 class="rounded-full flex items-center justify-center text-center py-4 h-[60px] w-[60px]">
-                <span :class="formStep >= 2 ? 'text-white' : 'text-gray-400'">
-                    <template x-if="formStep > 2">✓</template>
-                    <template x-if="formStep == 2">2</template>
+                <span  class="text-black font-bold">
+                    <template x-if="formStep > 2"><div class="text-white">✓</div></template>
+                    <template x-if="formStep <= 2"><div>2</div></template>
                 </span>
             </div>
 
@@ -35,8 +35,8 @@
             <!-- Step 3 -->
             <div :class="formStep === 3 ? 'bg-[#7fbaff]' : 'bg-gray-400'"
                 class="rounded-full flex items-center justify-center text-center py-4 h-[60px] w-[60px]">
-                <span :class="formStep === 3 ? 'text-white' : 'text-gray-400'">
-                    <template x-if="formStep == 3">3</template>
+                <span  class="text-black font-bold">
+                    <template x-if="formStep === 3 || formStep <= 3"><div>3</div></template>
                 </span>
             </div>
         </div>
@@ -137,7 +137,7 @@
                 <div class = "justify-end items-end">
                     <label for="document"
                         class = "flex bg-blue-900 hover:bg-blue-950 text-white text-base px-5 py-2 outline-none rounded w-max cursor-pointer mx-auto">Upload
-                        <input type="file" id="document" class = "hidden" onchange="updateFileName(this)">
+                        <input type="file" id="document" class = "hidden" name = "document" onchange="updateFileName(this)">
                     </label>
                 </div>
             </div>

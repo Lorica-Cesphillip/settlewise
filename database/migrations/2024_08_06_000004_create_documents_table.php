@@ -20,6 +20,7 @@ return new class extends Migration
         Schema::create('document_tracker', function (Blueprint $table) {
             $table->increments('document_tracking_code');
             $table->unsignedInteger('document_type_id');
+            $table->string('others')->nullable();
             $table->unsignedInteger('from_employee_id');
             $table->unsignedInteger('to_employee_id');
             $table->unsignedInteger('request_id')->nullable();
@@ -65,7 +66,6 @@ return new class extends Migration
     public function down(): void
     {
         Schema::dropIfExists('document_type');
-        Schema::dropIfExists('document_details');
         Schema::dropIfExists('document_tracker');
         Schema::dropIfExists('announcement_logs');
     }
