@@ -4,13 +4,11 @@ namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use App\Models\Divisions;
-use App\Models\Employees;
 use App\Models\User;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rules;
 use Illuminate\View\View;
 use Illuminate\Support\Str;
@@ -18,6 +16,7 @@ use Illuminate\Support\Facades\Log;
 
 class EmployeeManagementController extends Controller
 {
+    protected static ?string $password;
     /**
      * Display a listing of the resource.
      * Note from the Developer: Only the Head of the Albay Provincial Human Settlement Office will manage the data for their employee, the rest will only view the employee status.
@@ -25,7 +24,7 @@ class EmployeeManagementController extends Controller
     public function index()
     {
         //
-        $aphso_employees = Employees::with('divisions')->paginate(10);
+        $aphso_employees = User::with('divisions')->paginate(10);
         $divisions = Divisions::all();
 
         return view('documents.employees', compact('aphso_employees', 'divisions'));
@@ -48,7 +47,7 @@ class EmployeeManagementController extends Controller
             'address' => 'required|string|max:140',
             'birthdate' => 'required|date',
             'martial_status' => 'required|string|max:20',
-            'email' => 'required|string|lowercase|email|max:255|unique:'.Employees::class,
+            'email' => 'required|string|lowercase|email|max:255|unique:'.User::class,
             'contact_nos' => 'required|string|max:12',
             'position' => 'required|string|max:255',
             'employee_image' => 'required|image|mimes:jpeg,png,jpg|max:2048'
@@ -56,7 +55,7 @@ class EmployeeManagementController extends Controller
 
         $defaultImage_path = 'images/default-profile.png';
 
-        //Retrieve the foreign key and change the value into something like division_id.
+        //Retrieve the foreign key first, as the department head will assign the employee to a spcific division.
         $division_id = Divisions::where('division_name', '=', $employee_validated['division_name'])->first();
         $employee_validated['division_id'] = $division_id->division_id;
         unset($employee_validated['division_name']);
@@ -68,8 +67,8 @@ class EmployeeManagementController extends Controller
         }else{
             $imagePath = $defaultImage_path;
         }
-        $initial_password = 'last_name'.'aphso'.'birthdate';
-        Employees::create(dd(array_merge($request->all(), ['employee_image' => $imagePath], ['emp_status' => 1])));
+        $initial_password = \Illuminate\Support\Facades\Hash::make($employee_validated['last_name'].$employee_validated['aphso'].$employee_validated['birthdate']);
+        User::create(array_merge($request->all(), ['employee_image' => $imagePath], ['emp_status' => 1]));
 
         return redirect(route('documents.employees', absolute: false))->with('success');
     }
@@ -81,7 +80,7 @@ class EmployeeManagementController extends Controller
     {
         Log::info("Fetching employee with employee number: {$employeeNumber}");
 
-        $employee = Employees::where('employee_number', '=', $employeeNumber)
+        $employee = User::where('employee_number', '=', $employeeNumber)
             ->with('divisions')
             ->first();
 
@@ -97,7 +96,7 @@ class EmployeeManagementController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Employees $employees)
+    public function edit(User $employees)
     {
         //
     }
@@ -105,13 +104,13 @@ class EmployeeManagementController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Employees $employees)
+    public function update(Request $request, User $employees)
     {
         //
     }
 
     /**
-     * Archive employee, and automatically delete data within a single year.
+     * The head requested us if instead of deleting employee information, we will instead archive the data, in which it will be automatically deleted from the system for a certain time * period depending on what the head decides.
      */
     public function archive(EmployeeManagementController $employeeManagementController)
     {

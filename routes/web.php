@@ -4,6 +4,7 @@ use App\Http\Controllers\DivisionsController;
 use App\Http\Controllers\OutgoingDocumentsController;
 use App\Http\Controllers\EmployeeManagementController;
 use App\Http\Controllers\IncomingDocumentsController;
+use App\Http\Controllers\ArchivesController;
 use App\Models\DocumentTracker;
 use Illuminate\Support\Facades\Route;
 
@@ -16,18 +17,29 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
     /*Document Information Module */
     Route::get('/dashboard', function () {
-        $incoming_documents = DocumentTracker::latest()->paginate(4);
-        return view('documents.dashboard', compact('incoming_documents'));
+        return view('documents.dashboard');
     })->name('dashboard');
 
-    Route::resource('/incoming', IncomingDocumentsController::class);
-    Route::resource('/outgoing',OutgoingDocumentsController::class);
+    /*Incoming Documents */
+    Route::get('/incoming', [IncomingDocumentsController::class, 'index'])->name('incoming.index');
+    Route::get('/api/incoming/view', [IncomingDocumentsController::class, 'show']);
+    Route::post('/forward-request', [OutgoingDocumentsController::class, 'acceptRequest']);
+    Route::post('/reject-request', [OutgoingDocumentsController::class, 'rejectRequest']);
+    Route::post('/forward-referral', [OutgoingDocumentsController::class, 'storeReferral'])->name('outgoing.storeReferral');
+
+    /*Outgoing Documents */
+    Route::get('/outgoing', [OutgoingDocumentsController::class, 'index'])->name('outgoing.index');
+    Route::post('/outgoing/send', [OutgoingDocumentsController::class, 'sendDocument'])->name('outgoing.store');
+    Route::get('/api/outgoing/view', [OutgoingDocumentsController::class, 'viewDocument']);
     //Fix the API
     Route::get('/api/employees/receiver', [OutgoingDocumentsController::class, 'getDivision']);
 
-    Route::get('documents/archived', function () {
-        return view('documents.archived');
-    })->name('archived');
+    /*Document Conversation, where each of the incoming and outgoing documents has its own respective conversation. */
+
+    Route::get('/archived', [ArchivesController::class, 'index'])->name('archived.index');
+    Route::get('/api/archives/view', [ArchivesController::class, 'show']);
+    Route::post('/archive-document', [ArchivesController::class, 'archiveDocuments']);
+
 
     /*Employee Information Module*/
     Route::resource('/divisions', DivisionsController::class);

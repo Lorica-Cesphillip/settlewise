@@ -273,7 +273,7 @@
                                     </g>
                                 </svg>
                             </button>
-                            <?php if(session('employee')->division_name == "APHSO Department"): ?>
+                            <?php if(Auth::user()->divisions->division_name == "APHSO Department"): ?>
                             <form action="<?php echo e(route('employees.destroy', $employee->employee_number)); ?>" method="POST" style="display:inline">
                                 <?php echo csrf_field(); ?>
                                 <button type="submit" class="textpx-4">

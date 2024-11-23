@@ -6,7 +6,7 @@ use App\Models\DocumentReferral;
 use App\Models\DocumentRequest;
 use Illuminate\Http\Request;
 use App\Models\DocumentTracker;
-use App\Models\Employees;
+use App\Models\User;
 use App\Models\DocumentType;
 use Illuminate\Auth\Access\Response;
 use Illuminate\Http\RedirectResponse;
@@ -14,29 +14,30 @@ use Illuminate\Support\Facades\Redirect;
 use Illuminate\View\View;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Auth;
 
 class OutgoingDocumentsController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index(Employees $employee_id)
+    public function index()
     {
-        $outgoing_documents = DocumentTracker::latest()->where('from_employee_id', '=', $employee_id)->paginate(10);
-        $employees = Employees::select(DB::raw("CONCAT(fname, ' ', mname, ' ', lname) AS full_name"))->get();
+        $outgoing_documents = DocumentTracker::latest()->where('from_employee_id', '=', Auth::user()->employee_number)->paginate(10);
+        $employees = User::select(DB::raw("CONCAT(fname, ' ', mname, ' ', lname) AS full_name"))->get();
         $document_type = DocumentType::all();
 
         return view('documents.outgoing', compact('outgoing_documents', 'employees', 'document_type'));
     }
 
     /**
-     * Show the form for creating a new resource.
+     * This is intended for the automatic show of employee division when the user selects an employee.
      */
     public function getDivision(Request $request)
     {
         $fullName = $request->query('full_name');
 
-        $employee = Employees::where(DB::raw("CONCAT(fname, ' ', mname, ' ', lname)"), $fullName)->with('divisions')->first();
+        $employee = User::where(DB::raw("CONCAT(fname, ' ', mname, ' ', lname)"), $fullName)->with('divisions')->first();
 
         if ($employee) {
             return response()->json(['division_name' => $employee->divisions->division_name]);
@@ -46,13 +47,13 @@ class OutgoingDocumentsController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
+     * Send the Document to its intended recipient. Note that the from_employee_id will came from the user that is registed in the application.
      */
     /**
      * @param \Illuminate\Http\Request $document
      * @return
      */
-    public function store(Request $document): RedirectResponse
+    public function sendDocument(Request $document, $from_employee_id): RedirectResponse
     {
         $validatedData = $document->validate([
             'recipient_name' => 'required|not_in:--Please Select Recipient--',
@@ -61,7 +62,7 @@ class OutgoingDocumentsController extends Controller
             'confidential' => 'required|boolean',
             'others' => 'string|max:140',
             'subject' => 'required|string|max:140',
-            'document' => 'required|mimes:docx,doc,pdf,xlsx,xls,ppt,pptx|max:10mb'
+            'document' => 'required|mimes:docx,doc,pdf,xlsx,xls,ppt,pptx|max:10'
         ]);
         //Before executing this line, the recipient_name must first be changed into a to_emp_id.
         $name = explode(' ', $validatedData['recipient_name']);
@@ -70,7 +71,7 @@ class OutgoingDocumentsController extends Controller
         $mname = count($name) > 1 ? array_pop($name) : null;
         $fname = implode(' ', $name);
 
-        $employee_id = Employees::where('first_name','=', $fname)
+        $to_employee_id = User::where('first_name','=', $fname)
                         ->where('last_name', '=', $lname)
                         ->where(function ($query) use ($mname) {
                             if ($mname) {
@@ -80,7 +81,8 @@ class OutgoingDocumentsController extends Controller
                             }
                         })
                         ->first();
-        $validatedData['to_employee_id'] = $employee_id->employee_number;
+        $validatedData['to_employee_id'] = $to_employee_id->employee_number;
+        $validatedData['from_employee_id'] = $from_employee_id;
         unset($validatedData['recipient_name']);
 
         DocumentTracker::create($validatedData);
@@ -100,11 +102,18 @@ class OutgoingDocumentsController extends Controller
     }
 
     /**
-     * Must return a json array
+     * Must return a json array. This will show the outgoing document that is either: sent, forwarded, or referred.
      */
-    public function show(string $id)
+    public function viewDocument(string $document_tracking_code)
     {
-        //
+        $outgoing_document = DocumentTracker::with('to_employee')
+            ->with('document_type')
+            ->withExists('request')
+            ->withExists('referral')
+            ->findOrFail($document_tracking_code)
+            ->first();
+        if($outgoing_document){return response()->json(['document_information' => $outgoing_document]);}
+        return response()->json(['document_information' => null]);
     }
 
     /**
@@ -137,20 +146,7 @@ class OutgoingDocumentsController extends Controller
     }
 
     public function storeReferral(Request $request){
-    }
 
-    public function storeReferralResponse(Request $response){
-        $response->validate(['employee_remarks' => 'reqired|string|max:140']);
-        DocumentReferral::create($response->all());
-
-        return redirect(route('incoming'))->with('success');
-    }
-
-    public function storeApproval(Request $response){
-        $response->validate(['approved_by_head' => 'reqired|boolean']);
-        DocumentReferral::create($response->all());
-
-        return redirect(route('incoming'))->with('success');
     }
 
     /**

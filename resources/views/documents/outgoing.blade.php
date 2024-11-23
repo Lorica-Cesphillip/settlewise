@@ -142,7 +142,7 @@
                             </g>
                         </svg>
                     </button>
-                    @if(session('employee')->division_name == "APHSO Department")
+                    @if(Auth::user()->divisions->division_name == "APHSO Department")
                     <form action="#" method="POST" style="display:inline">
                         @csrf
                         <button type="submit" class="textpx-4">

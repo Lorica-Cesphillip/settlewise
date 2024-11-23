@@ -15,7 +15,7 @@ return new class extends Migration
             $table->smallIncrements('division_id');
             $table->string('division_name');
             $table->string('abbreviation', 5);
-            $table->boolean('has_head');
+            $table->boolean('name_of_head')->nullable();
             $table->integer('no_of_employees');
             $table->timestamp('updated_at')->nullable();
             $table->timestamp('created_at')->nullable();
@@ -23,7 +23,7 @@ return new class extends Migration
 
         /*Employee Number Format Example: ADMIN-0001 */
         /*Need natin kumuha ng employment form na ginagamit ni APHSO sa pag-kuha ng employees nila. */
-        Schema::create('aphso_employees', function (Blueprint $table) {
+        Schema::create('users', function (Blueprint $table){
             $table->increments('employee_number');
             $table->unsignedSmallInteger('division_id');
             $table->string('lname', 50);
@@ -37,22 +37,13 @@ return new class extends Migration
             $table->string('email')->unique();
             $table->string('image_path');
             $table->timestamp('email_verified_at')->nullable();
-            $table->timestamp('created_at')->nullable();
-            $table->timestamp('updated_at')->nullable();
             $table->boolean('emp_status');
-
-            $table->foreign('division_id')->references('division_id')->on('aphso_division');
-        });
-
-        Schema::create('users', function (Blueprint $table){
-            $table->id();
-            $table->unsignedInteger('employee_number');
             $table->string('password');
             $table->rememberToken();
             $table->timestamp('created_at')->nullable();
             $table->timestamp('updated_at')->nullable();
 
-            $table->foreign('employee_number')->references('employee_number')->on('aphso_employees')->onDelete('cascade');
+            $table->foreign('division_id')->references('division_id')->on('aphso_division');
         });
 
         Schema::create('password_reset_tokens', function (Blueprint $table) {
@@ -78,7 +69,7 @@ return new class extends Migration
     {
         Schema::dropIfExists('aphso_divisions');
         Schema::dropIfExists('aphso_job_titles');
-        Schema::dropIfExists('aphso_employees');
+        Schema::dropIfExists('users');
         Schema::dropIfExists('users');
         Schema::dropIfExists('password_reset_tokens');
         Schema::dropIfExists('sessions');

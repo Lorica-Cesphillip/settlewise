@@ -1,5 +1,5 @@
 <x-modal name="create-document-tracker-request" :maxWidth="'5xl'" :show="false" focusable>
-    <form x-cloak x-data="{ formStep: 1, recipient_name: '', document_type: '', urgent: false, division: '', others: '', confidential: '', subject: '', document: '', requested: 'false', request_type: '', others: '', request_type: '', requested_document: '', request_details: '', purpose: '' }" class = "space-y-2" action="{{ route('outgoing.store') }}" method = "POST">
+    <form x-cloak x-data="{ formStep: 1, recipient_name: '', document_type: '', urgent: false, division: '', others: '', confidential: '', subject: '', document: '', requested: false, request_type: '', others: '', request_type: '', requested_document: '', request_details: '', purpose: '', confirmed: false }" class = "space-y-2" action="{{ route('outgoing.store') }}" method = "POST">
         @csrf
 
         <!-- Progress Bar Component -->
@@ -63,7 +63,8 @@
                 <div>
                     <x-input-label for="document_type" :value="__('Document Type *')" />
                     <select x-model="document_type" id="document_type"
-                        class="block mt-1 w-[420px] border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm"
+                        class="block mt-1 w-[420px] border-gray-300 rounded-md shadow-sm"
+                        :class="requested ? 'focus:border-indigo-500 focus:ring-indigo-500 text-black' : 'text-gray-400 cursor-not-allowed'"
                         type="text" name="document_type" autofocus autocomplete="off">
                         <option value="null">--Please Select a Document Type--</option>
                         @foreach ($document_type as $type)
@@ -150,11 +151,11 @@
 
             <div class = "justify-evenly w-full py-4 items-center inline-flex">
                 <div class = "gap-2">
-                    <input type = "radio" id = "will_request" name = "requested" value="yes" />
+                    <input x-model="requested" type = "radio" id = "will_request" name = "requested"  value="true"/>
                     <label for = "will_request" class = "font-normal">I Need to Request Something</label>
                 </div>
                 <div class = "gap-2">
-                    <input type = "radio" id = "will_not_request" name = "requested" value="no" />
+                    <input x-model="requested" type = "radio" id = "will_not_request" name = "requested" value="false" enable/>
                     <label for = "will_not_request" class = "font-normal">I Don't Need to Request Something</label>
                 </div>
             </div>
@@ -163,7 +164,7 @@
                 <div>
                     <x-input-label for="request_type" :value="__('Request Type *')" />
                     <select x-model="request_type" name="request_type" id="request_type"
-                        class="block mt-1 w-[320px] border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm">
+                        class="block mt-1 w-[320px] border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm" x-bind:disabled="!requested">
                         <option value="null">--Please Select a Request Type--</option>
                         <option value="Document">Document</option>
                         <option value="Assistance">Assistance</option>
@@ -175,7 +176,7 @@
                 <div>
                     <x-input-label for="others" :value="__('Others (please specify)')" />
                     <x-text-input x-model="others" id="others" class="block mt-1 w-[615px] bg-gray-100"
-                        type="text" name="others" :value="old('address')" autofocus autocomplete="off" disabled />
+                        type="text" name="others" autofocus autocomplete="off" disabled />
                     <x-input-error :messages="$errors->get('others')" class="mt-2" />
                 </div>
             </div>
@@ -267,24 +268,24 @@
             </button>
 
             <div x-cloak x-show="formStep === 3" class="py-3.5">
-                <input type="checkbox" id="confirmation" name="confirmation" class = "rounded-md" />
-                <label for="confirmation">By clicking, you indicate that the Document Details you entered are correct.</label>
+                <input type="checkbox" id="confirmation" x-model="confirmed" name="confirmation" class = "rounded-md" />
+                <label for="confirmation" class="cursor-pointer">By clicking, you indicate that the Document Details you entered are correct.</label>
             </div>
-                <x-primary-button x-cloak x-show="formStep === 3" :disabled="false">
-                    <x-slot name="name">Send the Document</x-slot>
-                    <x-slot name="icon">
+            <button type="submit" class="p-4  rounded-lg flex-col justify-center items-center gap-2.5 flex text-white tracking-widest " x-cloak x-show="formStep === 3" :disabled="!confirmed" :class="confirmed ? 'bg-blue-500 hover:bg-blue-900 focus:bg-blue-900 active:bg-blue-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 transition ease-in-out duration-150' : 'bg-gray-400 cursor-not-allowed'">
+                <div class = "justify-center items-center gap-2 inline-flex">
+                    <div class = "font-semibold text-white">Send the Document</div>
                         <div class = "relative">
-                            <svg width="24" height="24" viewBox="0 0 20 20" fill="none"
-                                xmlns="http://www.w3.org/2000/svg">
-                                <g id="icon / send">
-                                    <path id="icon" fill-rule="evenodd" clip-rule="evenodd"
-                                        d="M16.9747 11.8999C18.6126 11.1628 18.6126 8.83724 16.9747 8.1002L5.19204 2.798C3.60512 2.08388 1.89392 3.51487 2.31598 5.20311L3.13604 8.48334C3.32524 9.24014 3.91689 9.81693 4.65478 10C3.91689 10.1831 3.32524 10.7599 3.13604 11.5167L2.31598 14.797C1.89392 16.4852 3.60511 17.9162 5.19204 17.2021L16.9747 11.8999ZM4.5081 4.31786L14.9777 9.02917L5.13034 8.39386C4.94948 8.38219 4.7969 8.25495 4.75294 8.07912L3.93289 4.79889C3.84848 4.46124 4.19071 4.17504 4.5081 4.31786ZM5.13034 11.6062L14.9777 10.9709L4.5081 15.6822C4.19071 15.825 3.84847 15.5388 3.93289 15.2012L4.75294 11.921C4.7969 11.7451 4.94948 11.6179 5.13034 11.6062Z"
-                                        fill="white" />
-                                </g>
-                            </svg>
-                        </div>
-                    </x-slot>
-                </x-primary-button>
+                        <svg width="24" height="24" viewBox="0 0 20 20" fill="none"
+                            xmlns="http://www.w3.org/2000/svg">
+                            <g id="icon / send">
+                                <path id="icon" fill-rule="evenodd" clip-rule="evenodd"
+                                    d="M16.9747 11.8999C18.6126 11.1628 18.6126 8.83724 16.9747 8.1002L5.19204 2.798C3.60512 2.08388 1.89392 3.51487 2.31598 5.20311L3.13604 8.48334C3.32524 9.24014 3.91689 9.81693 4.65478 10C3.91689 10.1831 3.32524 10.7599 3.13604 11.5167L2.31598 14.797C1.89392 16.4852 3.60511 17.9162 5.19204 17.2021L16.9747 11.8999ZM4.5081 4.31786L14.9777 9.02917L5.13034 8.39386C4.94948 8.38219 4.7969 8.25495 4.75294 8.07912L3.93289 4.79889C3.84848 4.46124 4.19071 4.17504 4.5081 4.31786ZM5.13034 11.6062L14.9777 10.9709L4.5081 15.6822C4.19071 15.825 3.84847 15.5388 3.93289 15.2012L4.75294 11.921C4.7969 11.7451 4.94948 11.6179 5.13034 11.6062Z"
+                                    fill="white" />
+                            </g>
+                        </svg>
+                    </div>
+                </div>
+            </button>
         </div>
     </form>
 </x-modal>

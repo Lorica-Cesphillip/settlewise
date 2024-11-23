@@ -81,7 +81,7 @@
             </form>
             <!--Export Document Status Report and Refresh Buttons-->
             <div class = "inline-flex gap-3">
-                <x-secondary-button>
+                <x-secondary-button x-cloak x-on:click="{{route('incoming.index')}}">
                     <x-slot name="icon">
                         {!! '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <g id="button-icon">
@@ -109,7 +109,7 @@
             <tr class = "bg-slate-200 h-[30px]">
                 <th class = "w-[180px] p-2 border-b-2">Document Tracking Code</th>
                 <th class = "w-[200px] p-2 border-b-2">Sender</th>
-                @if(session('employee')->division_name == "APHSO Department")
+                @if(Auth::user()->divisions->division_name == "APHSO Department")
                 <th class = "w-[200px] p-2 border-b-2">Receiver</th>
                 @else
                 <th class = "w-[200px] p-2 border-b-2">Division</th>
@@ -124,7 +124,7 @@
             <tr class = "border-b-2 h-[40px]">
                 <td class = "w-[180px] py-1 border-b-2">01-04-25-001</td>
                 <td class = "w-[200px] py-1 border-b-2">Juan Dela Cruz</td>
-                @if(session('employee')->division_name == "APHSO Department")
+                @if(Auth::user()->divisions->division_name == "APHSO Department")
                 <td class = "w-[200px] p-2 border-b-2">Joselito Santos</td>
                 @else
                 <td class = "w-[200px] p-2 border-b-2">Administrative</td>
@@ -155,7 +155,7 @@
                             </g>
                         </svg>
                     </button>
-                    @if(session('employee')->division_name == "APHSO Department")
+                    @if(Auth::user()->divisions->division_name == "APHSO Department")
                     <form action="#" method="POST">
                         @csrf
                         <button type="submit">

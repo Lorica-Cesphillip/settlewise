@@ -2,7 +2,7 @@
 <x-modal name="refer-someone" :show="false" focusable>
     <h3 class="font-bold text-2xl text-center">DOCUMENT REFERRAL FORM</h3>
 
-    <form action="{{route('incoming.store')}}" method="POST">
+    <form x-data="{ for: '', please: '', confirmation: false}" action="{{ route('outgoing.storeReferral') }}" method="POST">
         @csrf
         <!-- Full-width Select Employee to be Referred -->
         <div class="inline-flex gap-3">
@@ -94,7 +94,7 @@
                 </x-slot>
             </x-tertiary-button>
             <div class="full-width-group mt-3 d-flex align-items-center justify-content-center">
-                <input type="checkbox" id="confirmReferralCheckbox">
+                <input x-model="confirmation" type="checkbox" id="confirmReferralCheckbox">
                 <label for="confirmReferralCheckbox">
                     By clicking, you indicate that the Referral Details you inputted are correct.
                 </label>

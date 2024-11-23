@@ -11,15 +11,15 @@ class DocumentConversation extends Model
     use HasFactory;
 
     public function document_tracker(): BelongsTo{
-        return $this->belongsTo(DocumentTracker::class);
+        return $this->belongsTo(DocumentTracker::class, 'document_tracking_code', 'document_tracking_code');
     }
 
     public function employeeOne(): BelongsTo{
-        return $this->belongsTo(Employees::class);
+        return $this->belongsTo(User::class, 'employee_number', 'employee_id_one');
     }
 
-    public function employyeTwo(): BelongsTo{
-        return $this->belongsTo(Employees::class);
+    public function employeeTwo(): BelongsTo{
+        return $this->belongsTo(User::class, 'employee_number', 'employee_id_two');
     }
 
     protected $table = 'document_conversation';

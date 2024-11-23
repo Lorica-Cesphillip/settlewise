@@ -4,26 +4,27 @@ namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
-use App\Models\Employees;
 use App\Models\User;
 use App\Models\Divisions;
+use App\Models\Document_Status;
 use App\Models\DocumentType;
 use Nette\Utils\Random;
 use Illuminate\Support\Facades\DB;
 
 class DatabaseSeeder extends Seeder
 {
+    protected static ?string $password;
     /**
      * Seed the application's database.
      */
     public function run(): void
     {
-        $divisions = Divisions::factory(2)->create();
+        $divisions = Divisions::factory(4)->create();
 
         $faker = \Faker\Factory::create('en_PH');
 
         //Department Head Only
-        DB::table('aphso_employees')->insert([
+        DB::table('users')->insert([
             'division_id' => 1,
             'lname' => "Sipin",
             'fname' => "Engr. Gina Paz",
@@ -36,19 +37,15 @@ class DatabaseSeeder extends Seeder
             'email' => "test@example.com",
             'image_path' => "/images/default-profile.jpg", //Default Image
             'email_verified_at' => now(),
-            'emp_status' => 1
+            'emp_status' => 1,
+            'password' => static::$password ??= \Illuminate\Support\Facades\Hash::make('password')
         ]);
 
 
         $divisions->filter(function ($division){
             return $division->division_id !== 1;
         })->each(function($division){
-            Employees::factory()->count(1)->for($division)->create();
-        });
-
-
-        Employees::all()->each(function ($employee) {
-            User::factory()->for($employee)->create();
+            User::factory()->count(1)->for($division)->create();
         });
 
         $documentTypes = [
@@ -61,6 +58,17 @@ class DatabaseSeeder extends Seeder
             ['document_type' => 'Others']
         ];
 
+        $documentStatus = [
+            ['document_status' => 'Pending'],
+            ['document_status' => 'Request Approved'],
+            ['document_status' => 'Request Rejected'],
+            ['document_status' => 'Document Forwarded'],
+            ['document_status' => 'To be Referred'],
+            ['document_status' => 'Archived'],
+            ['document_status' => 'Announced'],
+        ];
+
+        Document_Status::insert($documentStatus);
         DocumentType::insert($documentTypes);
     }
 }

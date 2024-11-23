@@ -13,7 +13,7 @@ class DocumentReferral extends Model
     protected $table = 'referral_logs';
 
     public function referred_employee(): HasOne{
-        return $this->hasOne(User::class);
+        return $this->hasOne(User::class, 'employee_number', 'employee_number');
     }
     /**
      * The attributes that are mass assignable.

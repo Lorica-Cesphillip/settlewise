@@ -15,16 +15,20 @@ class DocumentTracker extends Model
 
     protected $table = 'document_tracker';
 
+    public function document_status(): HasOne{
+        return $this->hasOne(Document_Status::class, 'document_status_id', 'document_status_id');
+    }
+
     public function document_type(): BelongsTo{
-        return $this->belongsTo(DocumentType::class);
+        return $this->belongsTo(DocumentType::class, 'id', 'document_type_id');
     }
 
     public function from_employee(): BelongsTo{
-        return $this->belongsTo(Employees::class);
+        return $this->belongsTo(User::class, 'employee_number', 'employee_number');
     }
 
     public function to_employee(): BelongsTo{
-        return $this->belongsTo(Employees::class);
+        return $this->belongsTo(User::class, 'employee_number', 'employee_number');
     }
 
     public function request(): HasMany{

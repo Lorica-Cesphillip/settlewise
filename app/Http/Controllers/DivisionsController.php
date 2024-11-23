@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Divisions;
 use Illuminate\Http\Request;
-use App\Models\Employees;
+use App\Models\User;
 use Illuminate\Support\Facades\DB;
 
 class DivisionsController extends Controller
@@ -16,7 +16,7 @@ class DivisionsController extends Controller
     public function index()
     {
         $divisions = Divisions::all();
-        $employees = Employees::select(DB::raw("CONCAT(fname, ' ', mname, ' ', lname) AS full_name"))->get();
+        $employees = User::select(DB::raw("CONCAT(fname, ' ', mname, ' ', lname) AS full_name"))->get();
 
         return view('documents.aphso-divisions', compact('divisions', 'employees'));
     }

@@ -12,8 +12,8 @@ class User extends Authenticatable
 {
     use HasFactory, Notifiable;
 
-    public function employees(): BelongsTo{
-        return $this->belongsTo(Employees::class, 'employee_number', 'employee_number');
+    public function divisions(): BelongsTo{
+        return $this->belongsTo(Divisions::class, 'division_id', 'division_id');
     }
 
     /**
@@ -22,8 +22,21 @@ class User extends Authenticatable
      * @var array<int, string>
      */
     protected $fillable = [
-        'employee_number'
+        'division_id',
+        'lname',
+        'fname',
+        'mname',
+        'position',
+        'address',
+        'birthdate',
+        'martial_status',
+        'contact_nos',
+        'email',
+        'image_path',
+        'emp_status',
     ];
+
+    protected $primaryKey = 'employee_number';
 
     /**
      * The attributes that should be hidden for serialization.

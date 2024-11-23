@@ -112,6 +112,9 @@
         <div class = "h-full w-full col-span-2 p-2 gap-4">
             <div class = "w-fit h-fit p-4 right-0 top-0 block rounded-xl shadow border border-black">
                 <h3 class = "px-20 py-2 text-2xl font-bold text-center block">INCOMING DOCUMENTS</h3>
+                <?php
+                    $incoming_documents = session('incoming_documents', collect()); // Default to an empty collection
+                ?>
                 <?php if($incoming_documents->isEmpty()): ?>
                 <p class="text-sm text-center text-gray-700 w-[985px] h-[385px]">You haven't received any documents for a while.</p>
                 <?php else: ?>

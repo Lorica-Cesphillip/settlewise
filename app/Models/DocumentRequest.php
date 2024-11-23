@@ -10,7 +10,7 @@ class DocumentRequest extends Model
     use HasFactory;
 
     public function document_tracker(){
-        return $this->belongsTo(DocumentTracker::class, 'document_tracking_code');
+        return $this->hasMany(DocumentTracker::class, 'document_tracking_code', 'request_id');
     }
 
     protected $table = 'request_logs';

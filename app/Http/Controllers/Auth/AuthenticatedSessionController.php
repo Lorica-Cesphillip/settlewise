@@ -25,11 +25,17 @@ class AuthenticatedSessionController extends Controller
         return view('auth.otp');
     }
 
-    public function verifyOtp(OTPVerification $verify): RedirectResponse{
+    public function verifyOtp(OTPVerification $request): RedirectResponse{
 
-        $verify->verify();
+        $request->verify();
+        $request->session()->regenerate();
+        $incoming_documents = \App\Models\DocumentTracker::with(['document_type', 'from_employee'])
+        ->where('to_employee_id', Auth::user()->employee_number)
+        ->latest()
+        ->take(4)
+        ->get();
 
-        return redirect(route('dashboard'));
+        return redirect()->route('dashboard')->with('incoming_documents', $incoming_documents);
     }
 
     /**
@@ -39,16 +45,15 @@ class AuthenticatedSessionController extends Controller
     {
         $request->authenticate();
 
+        //Will be relocated to the otp verification, if the application has thoroughly tested.
         $request->session()->regenerate();
-        $employee = DB::table('aphso_employees')
-            ->select(DB::raw("employee_number, CONCAT(fname, ' ', IFNULL(mname, ''), ' ', lname) AS full_name"), 'aphso_division.division_name')
-            ->join('aphso_division', 'aphso_employees.division_id', '=', 'aphso_division.division_id')
-            ->where('aphso_employees.employee_number', '=', Auth::user()->employee_number)
-            ->first();
+        $incoming_documents = \App\Models\DocumentTracker::with(['document_type', 'from_employee'])
+            ->where('to_employee_id', Auth::user()->employee_number)
+            ->latest()
+            ->take(4)
+            ->get();
 
-        session(['employee' => $employee]);
-
-        return redirect(route('dashboard'));
+        return redirect()->route('dashboard')->with('incoming_documents', $incoming_documents);
     }
 
     /**

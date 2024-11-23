@@ -19,8 +19,8 @@ return new class extends Migration
             $table->timestamps();
 
             $table->foreign('document_tracking_code')->references('document_tracking_code')->on('document_tracker');
-            $table->foreign('employee_id_one')->references('employee_number')->on('aphso_employees');
-            $table->foreign('employee_id_two')->references('employee_number')->on('aphso_employees');
+            $table->foreign('employee_id_one')->references('employee_number')->on('users');
+            $table->foreign('employee_id_two')->references('employee_number')->on('users');
         });
 
         Schema::create('conversation_message', function (Blueprint $table){
@@ -29,7 +29,7 @@ return new class extends Migration
             $table->unsignedBigInteger('conversation_id');
             $table->text('reply');
 
-            $table->foreign('employee_id')->references('employee_number')->on('aphso_employees');
+            $table->foreign('employee_id')->references('employee_number')->on('users');
             $table->foreign('conversation_id')->references('conversation_id')->on('document_conversation');
         });
     }

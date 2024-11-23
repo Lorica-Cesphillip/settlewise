@@ -120,17 +120,17 @@
 <?php $component = $__componentOriginalc295f12dca9d42f28a259237a5724830; ?>
 <?php unset($__componentOriginalc295f12dca9d42f28a259237a5724830); ?>
 <?php endif; ?>
-            <?php if(session('employee')->division_name == "APHSO Department"): ?>
+            <?php if(Auth::user()->divisions->division_name == "APHSO Department"): ?>
             <?php if (isset($component)) { $__componentOriginalc295f12dca9d42f28a259237a5724830 = $component; } ?>
 <?php if (isset($attributes)) { $__attributesOriginalc295f12dca9d42f28a259237a5724830 = $attributes; } ?>
-<?php $component = Illuminate\View\AnonymousComponent::resolve(['view' => 'components.nav-link','data' => ['href' => route('archived'),'active' => request()->routeIs('archived')]] + (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag ? $attributes->all() : [])); ?>
+<?php $component = Illuminate\View\AnonymousComponent::resolve(['view' => 'components.nav-link','data' => ['href' => route('archived.index'),'active' => request()->routeIs('archived.index')]] + (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag ? $attributes->all() : [])); ?>
 <?php $component->withName('nav-link'); ?>
 <?php if ($component->shouldRender()): ?>
 <?php $__env->startComponent($component->resolveView(), $component->data()); ?>
 <?php if (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag): ?>
 <?php $attributes = $attributes->except(\Illuminate\View\AnonymousComponent::ignoredParameterNames()); ?>
 <?php endif; ?>
-<?php $component->withAttributes(['href' => \Illuminate\View\Compilers\BladeCompiler::sanitizeComponentAttribute(route('archived')),'active' => \Illuminate\View\Compilers\BladeCompiler::sanitizeComponentAttribute(request()->routeIs('archived'))]); ?>
+<?php $component->withAttributes(['href' => \Illuminate\View\Compilers\BladeCompiler::sanitizeComponentAttribute(route('archived.index')),'active' => \Illuminate\View\Compilers\BladeCompiler::sanitizeComponentAttribute(request()->routeIs('archived.index'))]); ?>
                  <?php $__env->slot('icons', null, []); ?> <?php echo '<svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <g id="icon / box-1">
                 <path id="icon" fill-rule="evenodd" clip-rule="evenodd" d="M4.16675 2.08331C2.78604 2.08331 1.66675 3.2026 1.66675 4.58331V6.24998C1.66675 6.86688 2.00191 7.4055 2.50008 7.69368V14.5833C2.50008 16.4243 3.99247 17.9166 5.83341 17.9166H14.1667C16.0077 17.9166 17.5001 16.4243 17.5001 14.5833V7.69368C17.9982 7.4055 18.3334 6.86688 18.3334 6.24998V4.58331C18.3334 3.2026 17.2141 2.08331 15.8334 2.08331H4.16675ZM5.83341 16.25C4.91294 16.25 4.16675 15.5038 4.16675 14.5833V7.91665H15.8334V14.5833C15.8334 15.5038 15.0872 16.25 14.1667 16.25H5.83341ZM15.8334 3.74998C16.2937 3.74998 16.6667 4.12308 16.6667 4.58331V6.24998H3.33341V4.58331C3.33341 4.12308 3.70651 3.74998 4.16675 3.74998H15.8334Z" fill="#200E3A"/>
@@ -186,7 +186,7 @@
             <?php endif; ?>
         </div>
 
-        <?php if(session('employee')->division_name == "APHSO Department"): ?>
+        <?php if(Auth::user()->divisions->division_name == "APHSO Department"): ?>
         <div class="w-full px-2 py-4 flex-col justify-start items-start gap-1 relative">
             <div class="self-stretch p-3 justify-start items-center gap-2.5 inline-flex">
                 <div class="grow shrink basis-0 text-[#211c6a] text-base font-bold leading-normal">User Management</div>
@@ -288,8 +288,8 @@
                                             <img class="w-10 h-10 rounded-[200px] border border-white" src="https://via.placeholder.com/40x40" />
                                         </div>
                                         <div class="grow shrink basis-0 flex-col justify-start items-start inline-flex">
-                                            <div class="self-stretch text-[#efefef] text-sm font-medium leading-tight"><?php echo e(session('employee')->full_name); ?></div>
-                                            <div class="self-stretch text-[#efefef] text-sm font-normal leading-tight"><?php echo e(session('employee')->division_name); ?></div>
+                                            <div class="self-stretch text-[#efefef] text-sm font-medium leading-tight"><?php echo e(Auth::user()->fname); ?> <?php echo e(Auth::user()->mname); ?> <?php echo e(Auth::user()->lname); ?> </div>
+                                            <div class="self-stretch text-[#efefef] text-sm font-normal leading-tight"><?php echo e(Auth::user()->divisions->division_name); ?></div>
                                         </div>
                                     </div>
                                 </div>

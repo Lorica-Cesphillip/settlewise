@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\DocumentTracker;
-use App\Models\Employees;
+use App\Models\User;
 use Illuminate\Support\Facades\DB;
 use App\Models\DocumentReferral;
 
@@ -25,7 +25,7 @@ class IncomingDocumentsController extends Controller
         /**
          * For Referral Modal.
          */
-        $employees = Employees::select(DB::raw("CONCAT(fname, ' ', mname, ' ', lname) AS full_name"))->get();
+        $employees = User::select(DB::raw("CONCAT(fname, ' ', mname, ' ', lname) AS full_name"))->get();
 
         return view('documents.incoming', compact('incoming_documents', 'employees'));
     }

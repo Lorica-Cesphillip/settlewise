@@ -15,7 +15,7 @@ class ConversationMessage extends Model
     }
 
     public function employee(): BelongsTo{
-        return $this->belongsTo(Employees::class);
+        return $this->belongsTo(User::class);
     }
 
     protected $table = 'conversation_message';

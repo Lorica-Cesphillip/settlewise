@@ -31,17 +31,16 @@ return new class extends Migration
             $table->string('subject');
             $table->string('remarks')->nullable();
             $table->timestamps();
-            $table->string('document_status'); //Pending, Request Rejected, Request Approved, To be Referred to Employee in a Department, Referral Granted, Referral Rejected, Document Forwarded.
-            $table->boolean('forwarded');
-            $table->boolean('is_archived');
+            $table->unsignedSmallInteger('status_id'); //Pending, Request Rejected, Request Approved, To be Referred to Employee in a Department, Referral Granted, Referral Rejected, Document Forwarded.
             $table->string('file_path'); //important since the user will always view the document attached.
 
             //Foreign Keys
             $table->foreign('document_type_id')->references('id')->on('document_type');
-            $table->foreign('from_employee_id')->references('employee_number')->on('aphso_employees');
-            $table->foreign('to_employee_id')->references('employee_number')->on('aphso_employees');
+            $table->foreign('from_employee_id')->references('employee_number')->on('users');
+            $table->foreign('to_employee_id')->references('employee_number')->on('users');
             $table->foreign('request_id')->references('request_id')->on('request_logs');
             $table->foreign('referral_id')->references('referral_id')->on('referral_logs');
+            $table->foreign('status_id')->references('status_id')->on('document_status');
         });
 
         Schema::create('announcement_logs', function (Blueprint $table){

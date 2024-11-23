@@ -32,6 +32,11 @@ return new class extends Migration
             $table->mediumText('employee_response');
             $table->boolean('approved_by_head');
         });
+
+        Schema::create('document_status', function(Blueprint $table){
+            $table->smallIncrements('status_id');
+            $table->string('document_status');
+        });
     }
 
     /**
