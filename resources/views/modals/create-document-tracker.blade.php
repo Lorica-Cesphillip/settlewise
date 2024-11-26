@@ -63,8 +63,7 @@
                 <div>
                     <x-input-label for="document_type" :value="__('Document Type *')" />
                     <select x-model="document_type" id="document_type"
-                        class="block mt-1 w-[420px] border-gray-300 rounded-md shadow-sm"
-                        :class="requested ? 'focus:border-indigo-500 focus:ring-indigo-500 text-black' : 'text-gray-400 cursor-not-allowed'"
+                        class="block mt-1 w-[420px] border-gray-300 rounded-md shadow-sm text-black"
                         type="text" name="document_type" autofocus autocomplete="off">
                         <option value="null">--Please Select a Document Type--</option>
                         @foreach ($document_type as $type)
@@ -313,25 +312,23 @@
         division: '',
         others: '',
 
-        async fetchDivision() {
-            if (this.recipient_name === 'others') {
-                this.division = ''; // Clear division when "Others" is selected
-                return;
-            }
-
-            if (this.recipient_name) {
-                try {
-                    const response = await fetch(`/api/employees/${this.recipient_name}/division`);
-                    const data = await response.json();
-                    this.division = data.division_name ?? 'N/A';
-                } catch (error) {
-                    console.error('Error fetching division:', error);
-                    this.division = 'Error fetching division';
+            async fetchDivision() {
+                if (this.recipient_name == '--Please Select Recipient--') {
+                    this.division = ''; // Clear division when no recipient is selected
+                } else {
+                    try {
+                        const response = await fetch(`/api/employees/${encodeURIComponent(this.recipient_name)}/receiver`);
+                        if (!response.ok) {
+                            throw new Error('Network response was not ok');
+                        }
+                        const data = await response.json();
+                        this.division = data.division_name ?? 'N/A';
+                    } catch (error) {
+                        console.error('Error fetching division:', error);
+                        this.division = ' ';
+                    }
                 }
-            } else {
-                this.division = ''; // Clear division when no recipient is selected
             }
-        }
         };
     }
 

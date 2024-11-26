@@ -8,10 +8,10 @@ class OTPVerification extends FormRequest
 {
     protected $otpService;
 
-    /*
-    public function __construct(OTPService $otp){
-        $this->otpService = $otp;
-    }
+
+    //public function __construct(OTPService $otp){
+    //    $this->otpService = $otp;
+    //}
     /**
      * Determine if the user is authorized to make this request.
      */
@@ -28,7 +28,7 @@ class OTPVerification extends FormRequest
     public function rules(): array
     {
         return [
-            "otp_no" => ['required', 'max:6']
+            "otp_no" => ['required', 'max:6', 'integer']
         ];
     }
     /**

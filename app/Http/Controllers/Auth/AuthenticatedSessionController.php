@@ -48,7 +48,7 @@ class AuthenticatedSessionController extends Controller
         //Will be relocated to the otp verification, if the application has thoroughly tested.
         $request->session()->regenerate();
         $incoming_documents = \App\Models\DocumentTracker::with(['document_type', 'from_employee'])
-            ->where('to_employee_id', Auth::user()->employee_number)
+            ->where('to_employee_id', '=', Auth::user()->employee_number)
             ->latest()
             ->take(4)
             ->get();

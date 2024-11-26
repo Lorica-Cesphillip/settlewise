@@ -2,7 +2,11 @@
 
 namespace App\Providers;
 
+use App\Models\ConversationMessage;
+use App\Models\DocumentConversation;
 use Illuminate\Support\ServiceProvider;
+use Illuminate\Support\Facades\Gate;
+use App\Models\User;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -19,6 +23,24 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        //
+        Gate::define('view-conversation', function(User $user, ConversationMessage $conversation){
+            return $user->employee_number === $conversation->employee_id;
+        });
+
+        Gate::define('create-employee', function(User $user){
+            return $user->divisions->abbreviation === 'HEAD';
+        });
+
+        Gate::define('edit-employee', function(User $user){
+            return $user->divisions->abbreviation === 'HEAD';
+        });
+
+        Gate::define('update-employee', function(User $user){
+            return $user->divisions->abbreviation === 'HEAD';
+        });
+
+        Gate::define('archive-employee', function(User $user){
+            return $user->divisions->abbreviation === 'HEAD';
+        });
     }
 }

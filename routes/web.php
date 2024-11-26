@@ -22,9 +22,9 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
     /*Incoming Documents */
     Route::get('/incoming', [IncomingDocumentsController::class, 'index'])->name('incoming.index');
-    Route::get('/api/incoming/view', [IncomingDocumentsController::class, 'show']);
-    Route::post('/forward-request', [OutgoingDocumentsController::class, 'acceptRequest']);
-    Route::post('/reject-request', [OutgoingDocumentsController::class, 'rejectRequest']);
+    Route::get('/api/incoming/view/{tracking_code}', [IncomingDocumentsController::class, 'show']);
+    Route::post('/forward-request', [OutgoingDocumentsController::class, 'acceptRequest'])->name('outgoing.accept');
+    Route::post('/reject-request', [OutgoingDocumentsController::class, 'rejectRequest'])->name('outgoing.reject');
     Route::post('/forward-referral', [OutgoingDocumentsController::class, 'storeReferral'])->name('outgoing.storeReferral');
 
     /*Outgoing Documents */
@@ -32,7 +32,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::post('/outgoing/send', [OutgoingDocumentsController::class, 'sendDocument'])->name('outgoing.store');
     Route::get('/api/outgoing/view', [OutgoingDocumentsController::class, 'viewDocument']);
     //Fix the API
-    Route::get('/api/employees/receiver', [OutgoingDocumentsController::class, 'getDivision']);
+    Route::get('/api/employees/{full_name}/receiver', [OutgoingDocumentsController::class, 'getDivision']);
 
     /*Document Conversation, where each of the incoming and outgoing documents has its own respective conversation. */
 

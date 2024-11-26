@@ -10,8 +10,8 @@ class ConversationMessage extends Model
 {
     use HasFactory;
 
-    public function document_conversation(): BelongsTo{
-        return $this->belongsTo(DocumentConversation::class);
+    public function document_tracker(): BelongsTo{
+        return $this->belongsTo(DocumentTracker::class, 'document_tracking_code', 'document_tracking_code');
     }
 
     public function employee(): BelongsTo{
@@ -22,7 +22,7 @@ class ConversationMessage extends Model
 
     protected $fillable = [
         'employee_id',
-        'conversation_id',
+        'document_tracking_code',
         'reply'
     ];
 

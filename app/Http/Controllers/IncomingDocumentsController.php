@@ -7,6 +7,7 @@ use App\Models\DocumentTracker;
 use App\Models\User;
 use Illuminate\Support\Facades\DB;
 use App\Models\DocumentReferral;
+use Illuminate\Support\Facades\Auth;
 
 class IncomingDocumentsController extends Controller
 {
@@ -21,6 +22,7 @@ class IncomingDocumentsController extends Controller
             ->with('referral')
             ->with('document_type')
             ->with('from_employee_id')
+            ->where('to_employee_id', '=', Auth::user()->employee_number)
             ->paginate(10);
         /**
          * For Referral Modal.

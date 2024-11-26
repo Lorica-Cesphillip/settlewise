@@ -3,9 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Illuminate\View\View;
-use App\Models\DocumentConversation;
 use App\Models\ConversationMessage;
+use App\Models\DocumentTracker;
+use Illuminate\Support\Facades\Auth;
 
 class DocumentConversationController extends Controller
 {
@@ -15,14 +15,14 @@ class DocumentConversationController extends Controller
      * @param \Illuminate\Http\Request $request
      */
     public function store(Request $request){
-        $request->validate([
+        $message = $request->validate([
             'conversation_message' => 'required|max:140|min:1'
         ]);
 
-        ConversationMessage::create($request->all());
+        ConversationMessage::create([$request->only('reply'), 'employee_id' => Auth::user()->employee_number], );
     }
 
-    public function show(DocumentConversation $id){
-        return view('modals.view-conversation', compact('id'));
+    public function show(ConversationMessage $conversation, DocumentTracker $document){
+        return response()->json([$conversation, $document]);
     }
 }

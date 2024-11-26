@@ -33,17 +33,21 @@ class OutgoingDocumentsController extends Controller
     /**
      * This is intended for the automatic show of employee division when the user selects an employee.
      */
-    public function getDivision(Request $request)
+    public function getDivision($full_name)
     {
-        $fullName = $request->query('full_name');
+        if($full_name == '--Please Select Recipient--'){
+            return response()->json(['division_name' => ' ']);
+        }else{
+            $employee = User::where(DB::raw("CONCAT(fname, ' ', mname, ' ', lname)"), $full_name)
+            ->with('divisions')
+            ->first();
 
-        $employee = User::where(DB::raw("CONCAT(fname, ' ', mname, ' ', lname)"), $fullName)->with('divisions')->first();
+            if ($employee) {
+            return response()->json(['division_name' => $employee->divisions->division_name.' Division']);
+            }
 
-        if ($employee) {
-            return response()->json(['division_name' => $employee->divisions->division_name]);
+            return response()->json(['division_name' => null], 404);
         }
-
-        return response()->json(['division_name' => null], 404);
     }
 
     /**
@@ -53,7 +57,7 @@ class OutgoingDocumentsController extends Controller
      * @param \Illuminate\Http\Request $document
      * @return
      */
-    public function sendDocument(Request $document, $from_employee_id): RedirectResponse
+    public function sendDocument(Request $document): RedirectResponse
     {
         $validatedData = $document->validate([
             'recipient_name' => 'required|not_in:--Please Select Recipient--',
@@ -64,6 +68,8 @@ class OutgoingDocumentsController extends Controller
             'subject' => 'required|string|max:140',
             'document' => 'required|mimes:docx,doc,pdf,xlsx,xls,ppt,pptx|max:10'
         ]);
+
+        dd($validatedData);
         //Before executing this line, the recipient_name must first be changed into a to_emp_id.
         $name = explode(' ', $validatedData['recipient_name']);
 
@@ -82,10 +88,10 @@ class OutgoingDocumentsController extends Controller
                         })
                         ->first();
         $validatedData['to_employee_id'] = $to_employee_id->employee_number;
-        $validatedData['from_employee_id'] = $from_employee_id;
+        $validatedData['from_employee_id'] = Auth::user()->employee_number;
         unset($validatedData['recipient_name']);
 
-        DocumentTracker::create($validatedData);
+        $createdRecord = DocumentTracker::create($validatedData);
 
         //If the employee deicdes that he goes to send a request form, the foreign key must be generated first.
         if ($document->boolean('requested')) {
@@ -96,7 +102,8 @@ class OutgoingDocumentsController extends Controller
                 'request_purpose' => 'string|max:140',
                 'request_details' => 'string|max:140',
             ]);
-            DocumentRequest::create($document->only('request_type', 'others', 'document_requested', 'request_purpose', 'request_details'));
+            $doc_request = DocumentRequest::create($document->only('request_type', 'others', 'document_requested', 'request_purpose', 'request_details'));
+            $createdRecord->update(['request_id' => $doc_request->request_id]);
         }
         return redirect(route('outgoing.index'))->with('status', 'success');
     }
@@ -146,7 +153,9 @@ class OutgoingDocumentsController extends Controller
     }
 
     public function storeReferral(Request $request){
+        $referral = $request->validate([
 
+        ]);
     }
 
     /**
