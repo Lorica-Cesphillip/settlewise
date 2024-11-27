@@ -1,5 +1,5 @@
 <x-modal name="create-document-tracker-request" :maxWidth="'5xl'" :show="false" focusable>
-    <form x-cloak x-data="{ formStep: 1, recipient_name: '', document_type: '', urgent: false, division: '', others: '', confidential: '', subject: '', document: '', requested: false, request_type: '', others: '', request_type: '', requested_document: '', request_details: '', purpose: '', confirmed: false }" class = "space-y-2" action="{{ route('outgoing.store') }}" method = "POST">
+    <form x-cloak x-data="{ formStep: 1, recipient_name: '', document_type: '', others_select: false, urgent: false, division: '', others: '', confidential: '', subject: '', document: '', requested: false, request_type: '', request_others: '', requested_document: '', request_details: '', purpose: '', confirmed: false }" class = "space-y-2" action="{{ route('outgoing.store') }}" method = "POST">
         @csrf
 
         <!-- Progress Bar Component -->
@@ -62,7 +62,7 @@
                 </div>
                 <div>
                     <x-input-label for="document_type" :value="__('Document Type *')" />
-                    <select x-model="document_type" id="document_type"
+                    <select x-model="document_type" @change="others_select = (document_type === 'Others')" id="document_type"
                         class="block mt-1 w-[420px] border-gray-300 rounded-md shadow-sm text-black"
                         type="text" name="document_type" autofocus autocomplete="off">
                         <option value="null">--Please Select a Document Type--</option>
@@ -89,8 +89,7 @@
                 </div>
                 <div>
                     <x-input-label for="others" :value="__('Others: (please specify)')" />
-                    <x-text-input x-model="others" id="others" class="block mt-1 w-[420px] bg-gray-100"
-                        type="text" name="others" autofocus autocomplete="off" disabled />
+                    <x-text-input x-model="others" id="others" class="block mt-1 w-[420px]" x-bind:class="others_select ? 'bg-white' : 'bg-gray-100'" type="text" name="others" autofocus autocomplete="off" x-bind:disabled="!others_select" />
                     <x-input-error :messages="$errors->get('others')" class="mt-2" />
                 </div>
                 <div class = "items-center justify-items-center">
@@ -148,22 +147,16 @@
             <div class = "text-center text-sm px-2"><span class = "text-red-800">*</span> Required Information</div>
             <div class = "text-center text-3xl font-bold">Request Form</div>
 
-            <div class = "justify-evenly w-full py-4 items-center inline-flex">
-                <div class = "gap-2">
-                    <input x-model="requested" type = "radio" id = "will_request" name = "requested"  value="true"/>
-                    <label for = "will_request" class = "font-normal">I Need to Request Something</label>
-                </div>
-                <div class = "gap-2">
-                    <input x-model="requested" type = "radio" id = "will_not_request" name = "requested" value="false" enable/>
-                    <label for = "will_not_request" class = "font-normal">I Don't Need to Request Something</label>
-                </div>
-            </div>
-
             <div class = "inline-flex gap-3 w-full justify-between">
                 <div>
                     <x-input-label for="request_type" :value="__('Request Type *')" />
-                    <select x-model="request_type" name="request_type" id="request_type"
-                        class="block mt-1 w-[320px] border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm" x-bind:disabled="!requested">
+                    <select
+                        x-model="request_type"
+                        name="request_type"
+                        id="request_type"
+                        class="block mt-1 w-[320px] border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm"
+                        x-bind:disabled="document_type == 'Request'"
+                        >
                         <option value="null">--Please Select a Request Type--</option>
                         <option value="Document">Document</option>
                         <option value="Assistance">Assistance</option>
@@ -174,8 +167,8 @@
 
                 <div>
                     <x-input-label for="others" :value="__('Others (please specify)')" />
-                    <x-text-input x-model="others" id="others" class="block mt-1 w-[615px] bg-gray-100"
-                        type="text" name="others" autofocus autocomplete="off" disabled />
+                    <x-text-input x-model="others" id="others" class="block mt-1 w-[615px]" x-bind:class="request_type === 'Others' ? 'bg-white' : 'bg-gray-100'"
+                        type="text" name="others" autofocus autocomplete="off" x-bind:disabled="request_type !== 'Others'" />
                     <x-input-error :messages="$errors->get('others')" class="mt-2" />
                 </div>
             </div>
@@ -185,14 +178,14 @@
                     <x-input-label for="requested_document" :value="__('Requested Document (if you select Document) *')" />
                     <x-text-input x-model="requested_document" id="requested_document"
                         class="block mt-1 w-[320px] bg-gray-100" type="text" name="requested_document"
-                        :value="old('requested_document')" autofocus autocomplete="off" disabled />
+                        :value="old('requested_document')" autofocus autocomplete="off" x-bind:class="request_type === 'Document' ? 'bg-white' : 'bg-gray-100'" x-bind:disabled="request_type !== 'Document'"  />
                     <x-input-error :messages="$errors->get('requested_document')" class="mt-2" />
                 </div>
 
                 <div>
                     <x-input-label for="purpose" :value="__('Request Purpose *')" />
                     <x-text-input x-model="purpose" id="purpose" class="block mt-1 w-[615px] bg-gray-100"
-                        type="text" name="purpose" :value="old('purpose')" autofocus autocomplete="off" disabled />
+                        type="text" name="purpose" :value="old('purpose')" autofocus autocomplete="off" x-bind:class="request_type === 'Document' ? 'bg-white' : 'bg-gray-100'" x-bind:disabled="request_type !== 'Document'"  />
                     <x-input-error :messages="$errors->get('purpose')" class="mt-2" />
                 </div>
             </div>
@@ -200,7 +193,7 @@
             <div>
                 <x-input-label for="request_details" :value="__('Request Details *')" />
                 <x-text-input x-model="request_details" id="request_details" class="block mt-1 w-full bg-gray-100"
-                    type="text" name="request_details" :value="old('request_details')" autofocus autocomplete="off" disabled />
+                    type="text" name="request_details" :value="old('request_details')" autofocus autocomplete="off" x-bind:class="!['Assistance', 'Others'].includes(request_type) ? 'bg-gray-100' : 'bg-white'" x-bind:disabled="!['Assistance', 'Others'].includes(request_type)" />
                 <x-input-error :messages="$errors->get('request_details')" class="mt-2" />
             </div>
         </div>
@@ -331,5 +324,4 @@
             }
         };
     }
-
 </script>

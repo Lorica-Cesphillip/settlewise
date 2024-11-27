@@ -1,14 +1,14 @@
 <!-- Refer Someone Modal -->
-<x-modal name="refer-someone" :show="false" focusable>
+<x-modal name="refer-someone" :show="true" focusable>
     <h3 class="font-bold text-2xl text-center">DOCUMENT REFERRAL FORM</h3>
 
-    <form x-data="{ for: '', please: '', confirmation: false}" action="{{ route('outgoing.storeReferral') }}" method="POST">
+    <form x-cloak x-data="{ recipient_name: ''. division: '', for: '', please: '', confirmation: false }" action="{{ route('outgoing.storeReferral') }}" method="POST">
         @csrf
         <!-- Full-width Select Employee to be Referred -->
-        <div class="inline-flex gap-3">
+        <div x-data="referralDivision()" class="inline-flex gap-3">
             <div>
                 <x-input-label for="employee-select" :value="__('Select Employee to be Referred:')"/>
-                <select id="employee-select" class="mt-1 w-[530px] block rounded-md border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 shadow-sm" name="employee_number" :value="old('employee_number')" autofocus autocomplete="off">
+                <select x-model="recipient_name" id="employee-select" @change="fetchDivision()" class="mt-1 w-[530px] block rounded-md border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 shadow-sm" name="to_be_referred" :value="old('employee_number')" autofocus autocomplete="off">
                     <!-- PLACEHOLDER OPTIONS -->
                     <option value="">-- APHSO Employee --</option>
                     @foreach ($employees as $employee)
@@ -19,7 +19,7 @@
             </div>
             <div>
                 <x-input-label for="division" :value="__('APHSO Division')"/>
-                <x-text-input id="division" class="block mt-1 w-[530px] bg-gray-100" type="text" name="division" :value="old('division')" autofocus autocomplete="off" :disabled="true"/>
+                <x-text-input x-model="division" id="division" class="block mt-1 w-[530px] bg-gray-100" type="text" name="division" :value="old('division')" autofocus autocomplete="off" :disabled="true"/>
                 <x-input-error :messages="$errors->get('division')" class="mt-2" />
             </div>
         </div>
@@ -93,15 +93,15 @@
                     </svg>
                 </x-slot>
             </x-tertiary-button>
-            <div class="full-width-group mt-3 d-flex align-items-center justify-content-center">
-                <input x-model="confirmation" type="checkbox" id="confirmReferralCheckbox">
+            <div class="mt-3 d-flex align-items-center justify-content-center">
+                <input x-model="confirmation" type="checkbox" id="confirmReferralCheckbox" class = "rounded-md">
                 <label for="confirmReferralCheckbox">
                     By clicking, you indicate that the Referral Details you inputted are correct.
                 </label>
             </div>
-            <x-primary-button>
-                <x-slot name="name">Forward Document</x-slot>
-                <x-slot name="icon">
+            <button type="submit" class="p-4 rounded-lg flex-col justify-center items-center gap-2.5 flex text-white tracking-widest" :disabled="!confirmation" :class="confirmation ? 'bg-blue-500 hover:bg-blue-900 focus:bg-blue-900 active:bg-blue-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 transition ease-in-out duration-150' : 'bg-gray-400 cursor-not-allowed'">
+                <p>Forward Document</p>
+                <div>
                     <div class = "relative">
                         <svg width="24" height="24" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <g id="icon / send">
@@ -109,8 +109,36 @@
                             </g>
                         </svg>
                     </div>
-                </x-slot>
-            </x-primary-button>
+                </div>
+            </button>
         </div>
     </form>
 </x-modal>
+
+<script>
+    function referralDivision() {
+    return {
+        recipient_name: '',
+        division: '',
+        others: '',
+
+            async fetchDivision() {
+                if (this.recipient_name == '--Please Select Recipient--') {
+                    this.division = ''; // Clear division when no recipient is selected
+                } else {
+                    try {
+                        const response = await fetch(`/api/employees/${encodeURIComponent(this.recipient_name)}/receiver`);
+                        if (!response.ok) {
+                            throw new Error('An Error Occured while retrieving data');
+                        }
+                        const data = await response.json();
+                        this.division = data.division_name ?? 'N/A';
+                    } catch (error) {
+                        console.error('Error fetching division:', error);
+                        this.division = ' ';
+                    }
+                }
+            }
+        };
+    }
+</script>

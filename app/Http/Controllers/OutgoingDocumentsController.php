@@ -136,7 +136,7 @@ class OutgoingDocumentsController extends Controller
             'granted' => 'required|boolean',
             'comments_if_granted' => 'required|string|max:140'
         ]);
-        DocumentRequest::create($accept->only(['granted', 'comments_if_granted']));
+        DocumentRequest::insert($accept->only(['granted', 'comments_if_granted']));
 
         return redirect(route('incoming'))->with('success');
     }
@@ -153,9 +153,49 @@ class OutgoingDocumentsController extends Controller
     }
 
     public function storeReferral(Request $request){
-        $referral = $request->validate([
-
+        $validated = $request->validate([
+            'to_be_referred' => 'required|integer',
+            'for' => 'required|string|max:140',
+            'for_urgent' => 'boolean',
+            'please' => 'required|string|max:140',
+            'plase_urgent' => 'boolean',
+            'remarks' => 'string|max:140',
         ]);
+
+        //Before executing this line, the recipient_name must first be changed into a to_emp_id.
+        $name = explode(' ', $validated['to_be_referred']);
+
+        $lname = array_pop($name);
+        $mname = count($name) > 1 ? array_pop($name) : null;
+        $fname = implode(' ', $name);
+
+        $to_employee_id = User::where('first_name','=', $fname)
+                        ->where('last_name', '=', $lname)
+                        ->where(function ($query) use ($mname) {
+                            if ($mname) {
+                                $query->where('middle_name', '=', $mname);
+                            } else {
+                                $query->whereNull('middle_name');
+                            }
+                        })
+                        ->first();
+        $validatedData['employee_number'] = $to_employee_id->employee_number;
+        unset($validatedData['to_be_referred']);
+
+        $referral = DocumentReferral::create($request->only([
+            'employee_number',
+            'for',
+            'for_urgent',
+            'please',
+            'plase_urgent',
+            'remarks'
+        ]));
+
+        $tracker = new DocumentTracker();
+        $tracker->referral_id = $referral->referral_id;
+        $tracker->save();
+
+        return redirect(route('outgoing'))->with('success');
     }
 
     /**
@@ -163,7 +203,7 @@ class OutgoingDocumentsController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+
     }
 
     /**

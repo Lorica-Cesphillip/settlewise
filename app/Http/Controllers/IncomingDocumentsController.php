@@ -45,25 +45,7 @@ class IncomingDocumentsController extends Controller
      */
     public function store(Request $request)
     {
-        $request->validate([
-            'employee_number' => 'required|integer',
-            'for' => 'required|string|max:140',
-            'for_urgent' => 'boolean',
-            'please' => 'required|string|max:140',
-            'plase_urgent' => 'boolean',
-            'remarks' => 'string|max:140',
-        ]);
 
-        DocumentReferral::create($request->only([
-            'employee_number',
-            'for',
-            'for_urgent',
-            'please',
-            'plase_urgent',
-            'remarks'
-        ]));
-
-        return redirect(route('outgoing'))->with('success');
     }
 
     /**
