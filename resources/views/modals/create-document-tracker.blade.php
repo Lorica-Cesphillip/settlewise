@@ -1,5 +1,45 @@
 <x-modal name="create-document-tracker-request" :maxWidth="'5xl'" :show="false" focusable>
-    <form x-cloak x-data="{ formStep: 1, recipient_name: '', document_type: '', others_select: false, urgent: false, division: '', others: '', confidential: '', subject: '', document: '', requested: false, request_type: '', request_others: '', requested_document: '', request_details: '', purpose: '', confirmed: false }" class = "space-y-2" action="{{ route('outgoing.store') }}" method = "POST">
+    <form
+        x-cloak
+        x-data="{
+            formStep: 1,
+            recipient_name: '',
+            document_type: '',
+            others_select: false,
+            urgent: false,
+            division: '',
+            others: '',
+            confidential: false,
+            subject: '',
+            requested: false,
+            document: '',
+            request_type: '',
+            request_others: '',
+            requested_document: '',
+            request_details: '',
+            purpose: '',
+            confirmed: false,
+            async fetchDivision() {
+                    if (this.recipient_name == '--Please Select Recipient--') {
+                        this.division = ''; // Clear division when no recipient is selected
+                    } else {
+                        try {
+                            const response = await fetch(`/api/employees/${encodeURIComponent(this.recipient_name)}/receiver`);
+                            if (!response.ok) {
+                                throw new Error('Network response was not ok');
+                            }
+                            const data = await response.json();
+                            this.division = data.division_name ?? 'N/A';
+                        } catch (error) {
+                            console.error('Error fetching division:', error);
+                            this.division = ' ';
+                        }
+                    }
+                }
+            }"
+        class = "space-y-2"
+        action="{{ route('outgoing.store') }}"
+        method = "POST">
         @csrf
 
         <!-- Progress Bar Component -->
@@ -42,30 +82,35 @@
         </div>
 
 
-        <div x-data="documentTracker()" x-cloak x-show="formStep === 1">
+        <div x-cloak x-show="formStep === 1">
             <div class = "text-center text-sm px-2"><span class = "text-red-800">*</span> Required Information</div>
             <div class = "text-center text-3xl font-bold">Document Tracker Form</div>
 
             <div class = "w-full inline-flex gap-4">
                 <div>
                     <x-input-label for="recipient_name" :value="__('Send the Document to: *')" />
-                    <select x-model="recipient_name" @change="fetchDivision()" id="recipient_name"
-                        class="block mt-1 w-[420px] border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm" name="recipient_name"
-                        type="text" name="recipient_name" autofocus autocomplete="off">
-                        <option value="null">--Please Select Recipient--</option>
+                    <select
+                        x-model="recipient_name"
+                        @change="fetchDivision()"
+                        id="recipient_name"
+                        class="block mt-1 w-[420px] border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm"
+                        name="recipient_name"
+                        autofocus
+                        autocomplete="off"
+                    >
+                        <option value="--Please Select Recipient--">--Please Select Recipient--</option>
                         @foreach ($employees as $recipient)
                             <option value="{{ $recipient->full_name }}">{{ $recipient->full_name }}</option>
                         @endforeach
                     </select>
-
                     <x-input-error :messages="$errors->get('recipient_name')" class="mt-2" />
                 </div>
                 <div>
                     <x-input-label for="document_type" :value="__('Document Type *')" />
-                    <select x-model="document_type" @change="others_select = (document_type === 'Others')" id="document_type"
+                    <select x-model="document_type" @change="others_select = (document_type === 'Others'); requested = (document_type === 'Request')" id="document_type"
                         class="block mt-1 w-[420px] border-gray-300 rounded-md shadow-sm text-black"
                         type="text" name="document_type" autofocus autocomplete="off">
-                        <option value="null">--Please Select a Document Type--</option>
+                        <option value="--Please Select a Document Type--">--Please Select a Document Type--</option>
                         @foreach ($document_type as $type)
                             <option value="{{ $type->document_type }}">{{ $type->document_type }}</option>
                         @endforeach
@@ -95,7 +140,7 @@
                 <div class = "items-center justify-items-center">
                     <x-input-label for="confidential" :value="__('Confidential')" />
                     <input class = "rounded-md w-6 h-6 items-center justify-items-center" id="confidential"
-                        name="confidential" type="checkbox" />
+                        name="confidential" type="checkbox"/>
                 </div>
             </div>
 
@@ -155,7 +200,7 @@
                         name="request_type"
                         id="request_type"
                         class="block mt-1 w-[320px] border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm"
-                        x-bind:disabled="document_type == 'Request'"
+                        x-bind:disabled="!requested"
                         >
                         <option value="null">--Please Select a Request Type--</option>
                         <option value="Document">Document</option>
@@ -166,8 +211,8 @@
                 </div>
 
                 <div>
-                    <x-input-label for="others" :value="__('Others (please specify)')" />
-                    <x-text-input x-model="others" id="others" class="block mt-1 w-[615px]" x-bind:class="request_type === 'Others' ? 'bg-white' : 'bg-gray-100'"
+                    <x-input-label for="request_others" :value="__('Others (please specify)')" />
+                    <x-text-input x-model="request_others" id="request_others" class="block mt-1 w-[615px]" x-bind:class="request_type === 'Others' ? 'bg-white' : 'bg-gray-100'"
                         type="text" name="others" autofocus autocomplete="off" x-bind:disabled="request_type !== 'Others'" />
                     <x-input-error :messages="$errors->get('others')" class="mt-2" />
                 </div>
@@ -299,29 +344,11 @@
         }
     }
 
-    function documentTracker() {
-    return {
-        recipient_name: '',
-        division: '',
-        others: '',
-
-            async fetchDivision() {
-                if (this.recipient_name == '--Please Select Recipient--') {
-                    this.division = ''; // Clear division when no recipient is selected
-                } else {
-                    try {
-                        const response = await fetch(`/api/employees/${encodeURIComponent(this.recipient_name)}/receiver`);
-                        if (!response.ok) {
-                            throw new Error('Network response was not ok');
-                        }
-                        const data = await response.json();
-                        this.division = data.division_name ?? 'N/A';
-                    } catch (error) {
-                        console.error('Error fetching division:', error);
-                        this.division = ' ';
-                    }
-                }
-            }
-        };
-    }
+    document.addEventListener('alpine:init', () => {
+        Alpine.data('modalHandler', () => ({
+            show: false,
+            closeModal() { this.show = false; },
+            openModal() { this.show = true; }
+        }));
+    });
 </script>

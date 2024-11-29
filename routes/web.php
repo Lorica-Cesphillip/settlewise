@@ -23,6 +23,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
     /*Incoming Documents */
     Route::get('/incoming', [IncomingDocumentsController::class, 'index'])->name('incoming.index');
     Route::get('/api/incoming/view/{tracking_code}', [IncomingDocumentsController::class, 'show']);
+    Route::get('/api/referral/{full_name}', [OutgoingDocumentsController::class, 'getDivision']);
     Route::post('/forward-request', [OutgoingDocumentsController::class, 'acceptRequest'])->name('outgoing.accept');
     Route::post('/reject-request', [OutgoingDocumentsController::class, 'rejectRequest'])->name('outgoing.reject');
     Route::post('/forward-referral', [OutgoingDocumentsController::class, 'storeReferral'])->name('outgoing.storeReferral');

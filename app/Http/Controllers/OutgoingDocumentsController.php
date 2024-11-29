@@ -10,7 +10,7 @@ use App\Models\User;
 use App\Models\DocumentType;
 use Illuminate\Auth\Access\Response;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\Support\Facades\Redirect;
+use Illuminate\Support\Facades\Log;
 use Illuminate\View\View;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
@@ -35,13 +35,14 @@ class OutgoingDocumentsController extends Controller
      */
     public function getDivision($full_name)
     {
-        if($full_name == '--Please Select Recipient--'){
+        if($full_name == '--Please Select Recipient--' || $full_name == '--APHSO Employee--'){
+            Log::info('This is an empty response');
             return response()->json(['division_name' => ' ']);
         }else{
             $employee = User::where(DB::raw("CONCAT(fname, ' ', mname, ' ', lname)"), $full_name)
             ->with('divisions')
             ->first();
-
+            Log::info($employee);
             if ($employee) {
             return response()->json(['division_name' => $employee->divisions->division_name.' Division']);
             }
@@ -57,61 +58,72 @@ class OutgoingDocumentsController extends Controller
      * @param \Illuminate\Http\Request $document
      * @return
      */
-    public function sendDocument(Request $document): RedirectResponse
+    public function sendDocument(Request $document)
     {
         $validatedData = $document->validate([
             'recipient_name' => 'required|not_in:--Please Select Recipient--',
-            'document_type' => 'required|not_in:--Please Select Document Type--',
-            'urgent' => 'required|boolean',
-            'confidential' => 'required|boolean',
+            'document_type' => 'required|not_in:--Please Select a Document Type--',
+            'urgent' => 'boolean',
+            'confidential' => 'boolean',
             'others' => 'string|max:140',
             'subject' => 'required|string|max:140',
             'document' => 'required|mimes:docx,doc,pdf,xlsx,xls,ppt,pptx|max:10'
         ]);
 
-        dd($validatedData);
-        //Before executing this line, the recipient_name must first be changed into a to_emp_id.
-        $name = explode(' ', $validatedData['recipient_name']);
+        logger('Validated Data: ', $validatedData);
+        try{
+            //Before executing this line, the recipient_name must first be changed into a to_emp_id.
+            $name = explode(' ', $validatedData['recipient_name']);
 
-        $lname = array_pop($name);
-        $mname = count($name) > 1 ? array_pop($name) : null;
-        $fname = implode(' ', $name);
+            $lname = array_pop($name);
+            $mname = count($name) > 1 ? array_pop($name) : null;
+            $fname = implode(' ', $name);
 
-        $to_employee_id = User::where('first_name','=', $fname)
-                        ->where('last_name', '=', $lname)
-                        ->where(function ($query) use ($mname) {
-                            if ($mname) {
-                                $query->where('middle_name', '=', $mname);
-                            } else {
-                                $query->whereNull('middle_name');
-                            }
-                        })
-                        ->first();
-        $validatedData['to_employee_id'] = $to_employee_id->employee_number;
-        $validatedData['from_employee_id'] = Auth::user()->employee_number;
-        unset($validatedData['recipient_name']);
+            $to_employee_id = User::where('first_name','=', $fname)
+                            ->where('last_name', '=', $lname)
+                            ->where(function ($query) use ($mname) {
+                                if ($mname) {
+                                    $query->where('middle_name', '=', $mname);
+                                } else {
+                                    $query->whereNull('middle_name');
+                                }
+                            })
+                            ->first();
+            $validatedData['to_employee_id'] = $to_employee_id->employee_number;
+            $validatedData['from_employee_id'] = Auth::user()->employee_number;
+            unset($validatedData['recipient_name']);
 
-        $createdRecord = DocumentTracker::create($validatedData);
+            if($validatedData['document_type'] == 'Others'){
+                $validatedData['document_type'] = $validatedData['others'];
+            }
 
-        //If the employee deicdes that he goes to send a request form, the foreign key must be generated first.
-        if ($document->boolean('requested')) {
-            $document->validate([
-                'request_type' => 'required|string|max:140',
-                'others' => 'string|max:140',
-                'requested_document' => 'string|max:140',
-                'request_purpose' => 'string|max:140',
-                'request_details' => 'string|max:140',
-            ]);
-            $doc_request = DocumentRequest::create($document->only('request_type', 'others', 'document_requested', 'request_purpose', 'request_details'));
-            $createdRecord->update(['request_id' => $doc_request->request_id]);
+            $createdRecord = DocumentTracker::create($validatedData);
+
+            //If the employee deicdes that he goes to send a request form, the foreign key must be generated first.
+            if ($document->boolean('requested')) {
+                $document->validate([
+                    'request_type' => 'required|string|max:140',
+                    'others' => 'string|max:140',
+                    'requested_document' => 'string|max:140',
+                    'request_purpose' => 'string|max:140',
+                    'request_details' => 'string|max:140',
+                ]);
+                $doc_request = DocumentRequest::create($document->only('request_type', 'others', 'document_requested', 'request_purpose', 'request_details'));
+                $createdRecord->update(['request_id' => $doc_request->request_id]);
+            }
+            return response()->json(['status' => 'success'], 200);
         }
-        return redirect(route('outgoing.index'))->with('status', 'success');
+        catch (\Exception $error){
+            logger('Error: ', ['message' => $error->getMessage()]);
+            return response()->json(['error' => $error->getMessage()]);
+        }
+
     }
 
     /**
      * Must return a json array. This will show the outgoing document that is either: sent, forwarded, or referred.
      */
-    public function viewDocument(string $document_tracking_code)
+    public function viewDocument($document_tracking_code)
     {
         $outgoing_document = DocumentTracker::with('to_employee')
             ->with('document_type')
