@@ -36,7 +36,7 @@
                 </div>
 
                 <div class="w-full h-fit p-2 flex justify-center items-center py-6">
-                    <a href = "#"
+                    <a x-on:click.prevent="$dispatch('open-modal', 'view-incoming-document')"
                         class="w-7/12 px-1 py-2 bg-[#211c6a] rounded-lg flex-col justify-center items-center gap-2.5 inline-flex">
                         <div class="justify-center items-center gap-2 inline-flex">
                             <div class="text-center text-white text-sm font-semibold leading-tight">VIEW ANNOUNCEMENT
@@ -153,4 +153,7 @@
             </div>
         </div>
         <!-- Comments -->
+
+        @include('modals.view-document')
+
 </x-app-layout>
