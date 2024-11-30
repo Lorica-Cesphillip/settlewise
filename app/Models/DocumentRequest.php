@@ -19,9 +19,10 @@ class DocumentRequest extends Model
         'request_type',
         'details',
         'requested_document',
-        'details_purpose',
-        'granted',
-        'comments_if_granted'
+        'purpose',
+        'request_details',
+        'comments_if_granted',
+        'rejection_reason'
     ];
 
     protected $primaryKey = 'request_id';

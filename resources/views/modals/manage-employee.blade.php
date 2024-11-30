@@ -350,7 +350,7 @@
             employee_image: '',
             async fetchEmployeeData(employeeNumber) {
                 try {
-                    const response = await fetch(`/employees/${employeeNumber}`);
+                    const response = await fetch('/employees/${employeeNumber}');
 
                     if (!response.ok) throw new Error(`HTTP error! Status: ${response.status}`);
 

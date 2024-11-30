@@ -1,5 +1,9 @@
 <x-modal name="view-incoming-document" :show="false" focused>
     <div class="px-5 py-8">
+        <div x-data="documentData" @open-modal.window="if($event.detail.name === 'view-incoming-document'){
+            fetchDocument($event.detail.trackingCode);
+            show=true;
+        }"></div>
         <div class="font-bold text-2xl">
             <h3 class="modal-title text-center pb-4">VIEW DOCUMENT</h3>
         </div>
@@ -148,3 +152,46 @@
         <a href="" class = "w-[300px] p-4 bg-[#0d5dba] rounded-lg flex-col justify-center items-center gap-2.5 flex text-white tracking-widest hover:bg-blue-900 focus:bg-blue-900 active:bg-blue-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 transition ease-in-out duration-150" download>Download Document</a>
     </div>
 </x-modal>
+
+<script>
+    function documentData(){
+        return{
+            tracking_code: '',
+            document_type: '',
+            subject: '',
+            remarks: 'N/A',
+            sender: '',
+            date_transmitted: '',
+            division: '',
+            document_status: '',
+            requested: false,
+            request_type: 'N/A',
+            requested_document: 'N/A',
+            purpose: 'N/A',
+            request_details: 'N/A',
+            async fetchDocument(documentId){
+                try{
+                    const response = await fetch('/document/${documentId}');
+
+                    if(!response.ok) throw new Error(`HTTP error! Status: ${response.status}`);
+                    const data = await response.json();
+
+                    this.tracking_code = data.document_tracking_code;
+                    this.document_type = data.document_type.document_type;
+                    this.subject = data.subject;
+                    this.remarks = data.remarks;
+                    this.sender = data.from_employee.fname + data.from_employee.mname + data.from_employee.lname;
+                    this.date_transmitted = data.timestamps;
+                    this.division = data.from_employee.division.division_name;
+                    this.document_status = data.document_status.document_status;
+                    this.request_type = data.request.request_type;
+                    this.requested_document = data.request.requested_document;
+                    this.purpose = data.request.purpose;
+                    this.request_details = data.request_details;
+                }catch(error){
+                    console.error('There is something wrong while retrieving document information. Error: ', error);
+                }
+            }
+        }
+    }
+</script>

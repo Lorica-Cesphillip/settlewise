@@ -63,14 +63,12 @@ class OutgoingDocumentsController extends Controller
         $validatedData = $document->validate([
             'recipient_name' => 'required|not_in:--Please Select Recipient--',
             'document_type' => 'required|not_in:--Please Select a Document Type--',
-            'urgent' => 'boolean',
-            'confidential' => 'boolean',
+            'urgent' => 'required|boolean',
+            'confidential' => 'required|boolean',
             'others' => 'string|max:140',
             'subject' => 'required|string|max:140',
-            'document' => 'required|mimes:docx,doc,pdf,xlsx,xls,ppt,pptx|max:10'
+            'document' => 'required|mimes:docx,doc,pdf,xlsx,xls,ppt,pptx|max:10000'
         ]);
-
-        logger('Validated Data: ', $validatedData);
         try{
             //Before executing this line, the recipient_name must first be changed into a to_emp_id.
             $name = explode(' ', $validatedData['recipient_name']);
@@ -79,13 +77,13 @@ class OutgoingDocumentsController extends Controller
             $mname = count($name) > 1 ? array_pop($name) : null;
             $fname = implode(' ', $name);
 
-            $to_employee_id = User::where('first_name','=', $fname)
-                            ->where('last_name', '=', $lname)
+            $to_employee_id = User::where('fname','=', $fname)
+                            ->where('lname', '=', $lname)
                             ->where(function ($query) use ($mname) {
                                 if ($mname) {
-                                    $query->where('middle_name', '=', $mname);
+                                    $query->where('mname', '=', $mname);
                                 } else {
-                                    $query->whereNull('middle_name');
+                                    $query->whereNull('mname');
                                 }
                             })
                             ->first();
@@ -97,10 +95,15 @@ class OutgoingDocumentsController extends Controller
                 $validatedData['document_type'] = $validatedData['others'];
             }
 
-            $createdRecord = DocumentTracker::create($validatedData);
+            $document_path = Storage::putFileAs(
+                'documents', $document->file('document'));
+            $validatedData['document_path'] = $document_path;
+            unset($validatedData['documents']);
+            Log::info('Request Data:', $document->all());
+            $createdRecord = DocumentTracker::create(array_merge($validatedData, ['document_status' => 1]));
 
             //If the employee deicdes that he goes to send a request form, the foreign key must be generated first.
-            if ($document->boolean('requested')) {
+            if ($document->only('document_type') === 'Request') {
                 $document->validate([
                     'request_type' => 'required|string|max:140',
                     'others' => 'string|max:140',
@@ -114,8 +117,8 @@ class OutgoingDocumentsController extends Controller
             return response()->json(['status' => 'success'], 200);
         }
         catch (\Exception $error){
-            logger('Error: ', ['message' => $error->getMessage()]);
-            return response()->json(['error' => $error->getMessage()]);
+            Log::info('Error: ', [$error->getMessage()]);
+            return response()->json(['error' => $error->getMessage()], 500);
         }
 
     }
@@ -129,6 +132,7 @@ class OutgoingDocumentsController extends Controller
             ->with('document_type')
             ->withExists('request')
             ->withExists('referral')
+            ->with('document_status')
             ->findOrFail($document_tracking_code)
             ->first();
         if($outgoing_document){return response()->json(['document_information' => $outgoing_document]);}
@@ -143,28 +147,30 @@ class OutgoingDocumentsController extends Controller
         //
     }
 
-    public function acceptRequest(Request $accept){
+    public function acceptRequest(Request $accept, DocumentTracker $document_tracking_code){
         $accept->validate([
-            'granted' => 'required|boolean',
             'comments_if_granted' => 'required|string|max:140'
         ]);
-        DocumentRequest::insert($accept->only(['granted', 'comments_if_granted']));
+        DocumentRequest::insert($accept->all());
+        $document_tracking_code->update(['document_status_id' => 2]);
+        $document_tracking_code->save();
 
         return redirect(route('incoming'))->with('success');
     }
 
-    public function rejectRequest(Request $reject){
+    public function rejectRequest(Request $reject, DocumentTracker $document_tracking_code){
         $reject->validate([
-            'granted' => 'required|boolean',
             'rejection_reason' => 'required|string|max:140'
         ]);
 
-        DocumentRequest::create($reject->only('granted', 'rejection_reason'));
+        DocumentRequest::insert($reject->all());
+        $document_tracking_code->update(['document_status_id' => 3]);
+        $document_tracking_code->save();
 
         return redirect(route('incoming'))->with('success');
     }
 
-    public function storeReferral(Request $request){
+    public function storeReferral(Request $request, DocumentTracker $documentTracker){
         $validated = $request->validate([
             'to_be_referred' => 'required|integer',
             'for' => 'required|string|max:140',
@@ -203,9 +209,8 @@ class OutgoingDocumentsController extends Controller
             'remarks'
         ]));
 
-        $tracker = new DocumentTracker();
-        $tracker->referral_id = $referral->referral_id;
-        $tracker->save();
+        $documentTracker->referral_id = $referral->refferal_id;
+        $documentTracker->save();
 
         return redirect(route('outgoing'))->with('success');
     }
@@ -216,6 +221,7 @@ class OutgoingDocumentsController extends Controller
     public function update(Request $request, string $id)
     {
 
+        return view('documents.incoming')->with('success');
     }
 
     /**
@@ -223,6 +229,8 @@ class OutgoingDocumentsController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        DocumentTracker::where('document_tracking_code', '=', $id)->update(['archived' => 1]);
+
+        return view('documents.outgoing')->with('success');
     }
 }

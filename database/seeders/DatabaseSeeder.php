@@ -35,7 +35,7 @@ class DatabaseSeeder extends Seeder
             'martial_status' => "Married",
             'contact_nos' => $faker->mobileNumber(),
             'email' => "test@example.com",
-            'image_path' => "/images/default-profile.jpg", //Default Image
+            'image_path' => "profile_images/default-profile.jpg", //Default Image
             'email_verified_at' => now(),
             'emp_status' => 1,
             'password' => static::$password ??= \Illuminate\Support\Facades\Hash::make('password')

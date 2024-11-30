@@ -41,10 +41,10 @@ class UserFactory extends Factory
             'martial_status' => "Married",
             'contact_nos' => $faker->mobileNumber(),
             'email' => fake()->unique()->safeEmail(),
-            'image_path' => "/public/default-profile.jpg",
+            'image_path' => "/public/profile_images/default-profile.jpg",
             'email_verified_at' => now(),
             'emp_status' => fake()->randomElement([0, 1]),
-            'password' => static::$password ??= Hash::make('1234567890'),
+            'password' => static::$password ??= Hash::make('password'),
             'remember_token' => Str::random(10),
         ];
     }

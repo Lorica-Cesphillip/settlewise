@@ -8,6 +8,7 @@ use App\Models\User;
 use Illuminate\Support\Facades\DB;
 use App\Models\DocumentReferral;
 use Illuminate\Support\Facades\Auth;
+use League\CommonMark\Node\Block\Document;
 
 class IncomingDocumentsController extends Controller
 {
@@ -53,7 +54,8 @@ class IncomingDocumentsController extends Controller
      */
     public function show(string $id)
     {
-        //
+        $documents = DocumentTracker::where('document_tracking_code', '=', $id);
+        return redirect()->json(['document_details' => $documents]);
     }
 
     /**

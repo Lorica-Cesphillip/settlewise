@@ -123,19 +123,19 @@
 
         <!--Profile Dropdown-->
         <div class = "container bottom-0 left-0 absolute">
-            <x-dropdown align="left" width="100%">
+            <x-dropdown>
                 <x-slot name="trigger">
-                    <button class="w-full h-[73px] justify-start">
+                    <button class="w-full h-[73px] justify-start text-left">
                         <div class="w-full h-[73px] left-0 top-0 bg-[#200e3a] flex-col justify-start items-start inline-flex">
                             <div class="self-stretch h-[72px] px-6 py-4 bg-[#005791]/70 justify-start items-start gap-3 inline-flex">
                                 <div class="grow shrink basis-0 h-10 justify-start items-start gap-3 flex">
                                     <div class="grow shrink basis-0 h-10 justify-start items-start gap-3 flex">
                                         <div class="w-10 h-10 justify-start items-start flex">
-                                            <img class="w-10 h-10 rounded-[200px] border border-white" src="https://via.placeholder.com/40x40" />
+                                            <img class="w-10 h-10 rounded-[200px] border border-white" src="{{URL::asset(Auth::user()->image_path)}}" />
                                         </div>
                                         <div class="grow shrink basis-0 flex-col justify-start items-start inline-flex">
                                             <div class="self-stretch text-[#efefef] text-sm font-medium leading-tight">{{Auth::user()->fname}} {{Auth::user()->mname}} {{Auth::user()->lname}} </div>
-                                            <div class="self-stretch text-[#efefef] text-sm font-normal leading-tight">{{Auth::user()->divisions->division_name}}</div>
+                                            <div class="self-stretch text-[#efefef] text-sm font-normal leading-tight">{{Auth::user()->divisions->division_name}} Division</div>
                                         </div>
                                     </div>
                                 </div>

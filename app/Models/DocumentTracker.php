@@ -57,7 +57,8 @@ class DocumentTracker extends Model
         'confidential',
         'subject',
         'remarks',
-        'document_status',
+        'timestamps',
+        'document_status_id',
         'is_archived',
         'file_path'
     ];

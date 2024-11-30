@@ -47,9 +47,10 @@ class DivisionsController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show($id)
     {
-        //
+        $division = Divisions::where('division_id', '=', $id);
+        if($division){return response()->json(['division' => $division], 200);}
     }
 
     /**

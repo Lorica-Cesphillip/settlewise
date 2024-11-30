@@ -1,45 +1,71 @@
 <x-modal name="create-document-tracker-request" :maxWidth="'5xl'" :show="false" focusable>
     <form
-        x-cloak
-        x-data="{
-            formStep: 1,
-            recipient_name: '',
-            document_type: '',
-            others_select: false,
-            urgent: false,
-            division: '',
-            others: '',
-            confidential: false,
-            subject: '',
-            requested: false,
-            document: '',
-            request_type: '',
-            request_others: '',
-            requested_document: '',
-            request_details: '',
-            purpose: '',
-            confirmed: false,
-            async fetchDivision() {
-                    if (this.recipient_name == '--Please Select Recipient--') {
-                        this.division = ''; // Clear division when no recipient is selected
-                    } else {
-                        try {
-                            const response = await fetch(`/api/employees/${encodeURIComponent(this.recipient_name)}/receiver`);
-                            if (!response.ok) {
-                                throw new Error('Network response was not ok');
-                            }
-                            const data = await response.json();
-                            this.division = data.division_name ?? 'N/A';
-                        } catch (error) {
-                            console.error('Error fetching division:', error);
-                            this.division = ' ';
-                        }
+    x-cloak
+    x-data="{
+        formStep: 1,
+        recipient_name: '',
+        document_type: '',
+        others_select: false,
+        urgent: false,
+        division: '',
+        others: '',
+        confidential: false,
+        subject: '',
+        requested: false,
+        document: '',
+        request_type: '',
+        request_others: '',
+        requested_document: '',
+        request_details: '',
+        purpose: '',
+        confirmed: false,
+        showSuccessModal: false,
+        showFailureModal: false,
+        async fetchDivision() {
+            if (this.recipient_name == '--Please Select Recipient--') {
+                this.division = ''; // Clear division when no recipient is selected
+            } else {
+                try {
+                    const response = await fetch(`/api/employees/${encodeURIComponent(this.recipient_name)}/receiver`);
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok');
                     }
+                    const data = await response.json();
+                    this.division = data.division_name ?? 'N/A';
+                } catch (error) {
+                    console.error('Error fetching division:', error);
+                    this.division = ' ';
                 }
-            }"
-        class = "space-y-2"
-        action="{{ route('outgoing.store') }}"
-        method = "POST">
+            }
+        },
+        async submitForm(event) {
+            event.preventDefault();
+            try {
+                const response = await fetch(event.target.action, {
+                    method: event.target.method,
+                    body: new FormData(event.target),
+                    headers: { 'Accept': 'application/json' },
+                });
+                if (response.ok) {
+                    this.showSuccessModal = true;
+                    this.$dispatch('open-modal', 'sent-successfully');
+                } else {
+                    const errorData = await response.json();
+                    console.error('Validation Errors:', errorData);
+                    this.showFailureModal = true;
+                    this.$dispatch('open-modal', 'sent-failed');
+                }
+            } catch (error) {
+                console.error('Submission Error:', error);
+                this.showFailureModal = true;
+                this.$dispatch('open-modal', 'sent-failed');
+            }
+        }
+    }"
+    @submit.prevent="submitForm"
+    action="{{ route('outgoing.store') }}"
+    method="POST"
+>
         @csrf
 
         <!-- Progress Bar Component -->
@@ -118,10 +144,9 @@
                     <x-input-error :messages="$errors->get('document_type')" class="mt-2" />
                 </div>
                 <div class = "items-center justify-items-center pl-4">
-                    <label for="urgent"
-                        class = "text-center flex font-medium text-sm text-gray-700 py-2">Urgent</label>
-                    <input class = "rounded-md w-6 h-6" id="urgent" name="urgent"
-                        type="checkbox" />
+                    <label for="urgent" class = "text-center flex font-medium text-sm text-gray-700 py-2">Urgent</label>
+                    <input type="hidden" name = "urgent" value="0">
+                    <input class = "rounded-md w-6 h-6" id="urgent" name="urgent" type="checkbox" value="1" />
                 </div>
             </div>
 
@@ -139,8 +164,8 @@
                 </div>
                 <div class = "items-center justify-items-center">
                     <x-input-label for="confidential" :value="__('Confidential')" />
-                    <input class = "rounded-md w-6 h-6 items-center justify-items-center" id="confidential"
-                        name="confidential" type="checkbox"/>
+                    <input type="hidden" name = "confidential" value="0">
+                    <input class = "rounded-md w-6 h-6 items-center justify-items-center" id="confidential" name="confidential" type="checkbox" value="1" />
                 </div>
             </div>
 

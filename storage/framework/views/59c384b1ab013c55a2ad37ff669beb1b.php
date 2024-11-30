@@ -47,7 +47,7 @@
 
         <!--Necessary Buttons-->
         <div class = "w-full flex row-span-3 h-20 justify-between">
-            <div class = "left-0 h-14 inline-flex gap-3 w-1/2">
+            <div class = "left-0 h-14 inline-flex gap-3">
                 <?php if (isset($component)) { $__componentOriginal18c21970322f9e5c938bc954620c12bb = $component; } ?>
 <?php if (isset($attributes)) { $__attributesOriginal18c21970322f9e5c938bc954620c12bb = $attributes; } ?>
 <?php $component = Illuminate\View\AnonymousComponent::resolve(['view' => 'components.text-input','data' => ['id' => 'employee_id','class' => 'mt-1 w-3/5','type' => 'text','name' => 'employee_id','value' => old('employee_id'),'autofocus' => true,'placeholder' => 'Search Employee']] + (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag ? $attributes->all() : [])); ?>
@@ -98,7 +98,8 @@
 <?php endif; ?>
             </div>
 
-            <div class = "w-10/12 inline-flex h-14 gap-3">
+            <div class = "right-0 inline-flex h-14 gap-3">
+                <?php if(Auth::user()->divisions->division_name == "APHSO Department"): ?>
                 <!--Reports Generation-->
                 <form class = "inline-flex gap-3" action = "#" method = "GET">
                     <?php if (isset($component)) { $__componentOriginale3da9d84bb64e4bc2eeebaafabfb2581 = $component; } ?>
@@ -173,13 +174,13 @@
 <?php unset($__componentOriginald411d1792bd6cc877d687758b753742c); ?>
 <?php endif; ?>
                 </form>
+                <?php endif; ?>
                 <!--Add New Employee and Refresh Buttons-->
                 <div class = "inline-flex gap-3">
+                    <?php if(Auth::user()->divisions->division_name == "APHSO Department"): ?>
                     <button x-data = "" type="button" class="p-4 bg-blue-500 rounded-lg flex-col justify-center items-center gap-2.5 flex text-white font-semibold tracking-widest hover:bg-blue-900 focus:bg-blue-900 active:bg-blue-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 transition ease-in-out duration-150"
-                    x-on:click.prevent="$dispatch('open-modal', 'add-new-employee')"
-                >
-                    Add New Employee
-                </button>
+                    x-on:click.prevent="$dispatch('open-modal', 'add-new-employee')">Add New Employee</button>
+                    <?php endif; ?>
                     <?php if (isset($component)) { $__componentOriginal3b0e04e43cf890250cc4d85cff4d94af = $component; } ?>
 <?php if (isset($attributes)) { $__attributesOriginal3b0e04e43cf890250cc4d85cff4d94af = $attributes; } ?>
 <?php $component = Illuminate\View\AnonymousComponent::resolve(['view' => 'components.secondary-button','data' => []] + (isset($attributes) && $attributes instanceof Illuminate\View\ComponentAttributeBag ? $attributes->all() : [])); ?>

@@ -12,20 +12,7 @@
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     @vite(['resources/sass/app.scss', 'resources/js/app.js'])
 </head>
-<body x-data="{
-        init(){
-            const status='{{session('status')}}';
-            if(status === 'success'){
-                this.$dispatch('open-modal', 'sent-successfully');
-            }else if(status === 'failure'){
-                this.$dispatch('open-modal', 'sent-failed');
-            }
-        }
-    }"
-
-    x-init="init()"
-
-    class="font-sans antialiased h-screen w-screen">
+<body class="font-sans antialiased h-screen w-screen">
     <div class="flex flex-row w-full">
         <!-- Sidebar -->
         @include('layouts.sidebar')
