@@ -1,8 +1,48 @@
 <x-modal name="add-new-employee" :maxWidth="'4xl'" :show="false" focusable>
     <h3 class = "text-center font-bold text-2xl">Add New Employee</h3>
 
-    <form x-data="{ formStep: 1, last_name: '', first_name: '', middle_name: '', address: '', birthdate: '', marital_status: '', email: '', contact_nos: '', division: '', position: '' }" class="space-y-2" action = "{{ route('employees.store') }}" method = "POST">
-        @csrf
+    <form
+    x-data="{
+        formStep: 1,
+        last_name: '',
+        first_name: '',
+        middle_name: '',
+        address: '',
+        birthdate: '',
+        marital_status: '',
+        email: '',
+        contact_nos: '',
+        division: '',
+        position: '',
+        async submitForm(event) {
+            event.preventDefault();
+            try {
+                const response = await fetch(event.target.action, {
+                    method: event.target.method,
+                    body: new FormData(event.target),
+                    headers: { 'Accept': 'application/json' },
+                });
+                if (response.ok) {
+                    this.showSuccessModal = true;
+                    this.$dispatch('open-modal', 'employee-added-successfully');
+                } else {
+                    const errorData = await response.json();
+                    console.error('Validation Errors:', errorData);
+                    this.showFailureModal = true;
+                    this.$dispatch('open-modal', 'employee-added-failed');
+                }
+            } catch (error) {
+                console.error('Submission Error:', error);
+                this.showFailureModal = true;
+                this.$dispatch('open-modal', 'sent-failed');
+            }
+        }
+    }"
+    class="space-y-2"
+    @submit.prevent="submitForm"
+    action = "{{ route('employees.store') }}"
+    method = "POST">
+    @csrf
 
         <!-- Progress Bar Component -->
         <div class="flex items-center justify-center py-4">
@@ -131,7 +171,7 @@
                     <x-input-label for="division" :value="__('APHSO Division')" />
                     <select x-model="division" id="division"
                         class="block mt-1 w-full border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm"
-                        type="text" name="division" autofocus autocomplete="off">
+                        type="text" name="division_name" autofocus autocomplete="off">
                         <option value = "">--Select Division--</option>
                         @foreach ($divisions as $division)
                             <option value = "{{ $division->division_name }} Division">

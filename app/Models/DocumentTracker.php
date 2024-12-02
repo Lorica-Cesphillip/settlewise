@@ -15,20 +15,16 @@ class DocumentTracker extends Model
 
     protected $table = 'document_tracker';
 
-    public function document_status(): HasOne{
-        return $this->hasOne(Document_Status::class, 'document_status_id', 'document_status_id');
-    }
-
     public function document_type(): BelongsTo{
-        return $this->belongsTo(DocumentType::class, 'id', 'document_type_id');
+        return $this->belongsTo(DocumentType::class, 'document_type_id', 'id');
     }
 
     public function from_employee(): BelongsTo{
-        return $this->belongsTo(User::class, 'employee_number', 'employee_number');
+        return $this->belongsTo(User::class, 'from_employee_id', 'employee_number');
     }
 
     public function to_employee(): BelongsTo{
-        return $this->belongsTo(User::class, 'employee_number', 'employee_number');
+        return $this->belongsTo(User::class, 'from_employee_id', 'employee_number');
     }
 
     public function request(): HasMany{
@@ -37,6 +33,10 @@ class DocumentTracker extends Model
 
     public function referral(): HasMany{
         return $this->hasMany(DocumentReferral::class, 'referral_id', 'referral_id');
+    }
+
+    public function status(): BelongsTo{
+        return $this->belongsTo(Document_Status::class, 'status_id', 'status_id');
     }
 
 
@@ -57,8 +57,9 @@ class DocumentTracker extends Model
         'confidential',
         'subject',
         'remarks',
-        'timestamps',
-        'document_status_id',
+        'created_at',
+        'updated_at',
+        'status_id',
         'is_archived',
         'file_path'
     ];

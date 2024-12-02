@@ -19,7 +19,7 @@ class DocumentRequest extends Model
         'request_type',
         'details',
         'requested_document',
-        'purpose',
+        'request_purpose',
         'request_details',
         'comments_if_granted',
         'rejection_reason'

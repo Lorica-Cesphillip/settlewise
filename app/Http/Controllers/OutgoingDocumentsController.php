@@ -11,7 +11,6 @@ use App\Models\DocumentType;
 use Illuminate\Auth\Access\Response;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Log;
-use Illuminate\View\View;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Auth;
@@ -23,7 +22,7 @@ class OutgoingDocumentsController extends Controller
      */
     public function index()
     {
-        $outgoing_documents = DocumentTracker::latest()->where('from_employee_id', '=', Auth::user()->employee_number)->paginate(10);
+        $outgoing_documents = DocumentTracker::with(['to_employee', 'request', 'referral', 'document_type', 'status'])->where('from_employee_id', '=', Auth::user()->employee_number)->paginate(10);
         $employees = User::select(DB::raw("CONCAT(fname, ' ', mname, ' ', lname) AS full_name"))->get();
         $document_type = DocumentType::all();
 
@@ -55,12 +54,12 @@ class OutgoingDocumentsController extends Controller
      * Send the Document to its intended recipient. Note that the from_employee_id will came from the user that is registed in the application.
      */
     /**
-     * @param \Illuminate\Http\Request $document
+     * @param \Illuminate\Http\Request $request
      * @return
      */
-    public function sendDocument(Request $document)
+    public function sendDocument(Request $request)
     {
-        $validatedData = $document->validate([
+        $request->validate([
             'recipient_name' => 'required|not_in:--Please Select Recipient--',
             'document_type' => 'required|not_in:--Please Select a Document Type--',
             'urgent' => 'required|boolean',
@@ -69,58 +68,77 @@ class OutgoingDocumentsController extends Controller
             'subject' => 'required|string|max:140',
             'document' => 'required|mimes:docx,doc,pdf,xlsx,xls,ppt,pptx|max:10000'
         ]);
-        try{
-            //Before executing this line, the recipient_name must first be changed into a to_emp_id.
-            $name = explode(' ', $validatedData['recipient_name']);
 
+        Log::info('Data: ', $request->all());
+
+        try {
+            $name = explode(' ', $request->recipient_name);
             $lname = array_pop($name);
             $mname = count($name) > 1 ? array_pop($name) : null;
             $fname = implode(' ', $name);
 
-            $to_employee_id = User::where('fname','=', $fname)
-                            ->where('lname', '=', $lname)
-                            ->where(function ($query) use ($mname) {
-                                if ($mname) {
-                                    $query->where('mname', '=', $mname);
-                                } else {
-                                    $query->whereNull('mname');
-                                }
-                            })
-                            ->first();
-            $validatedData['to_employee_id'] = $to_employee_id->employee_number;
-            $validatedData['from_employee_id'] = Auth::user()->employee_number;
-            unset($validatedData['recipient_name']);
+            $to_employee = User::select('employee_number')->where('fname', '=', $fname)
+                ->where('lname', '=', $lname)
+                ->where(function ($query) use ($mname) {
+                    if ($mname) {
+                        $query->where('mname', '=', $mname);
+                    } else {
+                        $query->whereNull('mname');
+                    }
+                })
+                ->first();
 
-            if($validatedData['document_type'] == 'Others'){
-                $validatedData['document_type'] = $validatedData['others'];
+            if (!$to_employee) {
+                return redirect()->back()->withErrors(['recipient_name' => 'Recipient not found in the system.']);
             }
+            $to_employee_id = $to_employee->employee_number;
+            $document_type_id = DocumentType::select('id')->where('document_type', $request->only('document_type'))->first();
 
-            $document_path = Storage::putFileAs(
-                'documents', $document->file('document'));
-            $validatedData['document_path'] = $document_path;
-            unset($validatedData['documents']);
-            Log::info('Request Data:', $document->all());
-            $createdRecord = DocumentTracker::create(array_merge($validatedData, ['document_status' => 1]));
+            $file = $request->file('document');
+            $document_type = $request->document_type;
+            $date = now()->format('m-d-Y');
+            $tracking_code = $request->id;
+
+            $new_file = "{$document_type}-{$date}.{$file->getClientOriginalExtension()}";
+            $path = $file->storeAs('document', $new_file);
+
+
+
+            $createdRecord = DocumentTracker::create([
+                'document_type_id' => $document_type_id->id,
+                'others' => $request->others,
+                'from_employee_id' => Auth::user()->employee_number,
+                'to_employee_id' => $to_employee_id,
+                'document_name' => $new_file,
+                'urgent' => $request->urgent,
+                'confidential' => $request->confidential,
+                'subject' => $request->subject,
+                'remarks' => $request->remarks,
+                'status_id' => 1,
+                'is_archived' => 0,
+                'file_path' => $path,
+                ]);
+
+
 
             //If the employee deicdes that he goes to send a request form, the foreign key must be generated first.
-            if ($document->only('document_type') === 'Request') {
-                $document->validate([
+            if ($request->input('document_type') === 'Request') {
+                $request->validate([
                     'request_type' => 'required|string|max:140',
                     'others' => 'string|max:140',
                     'requested_document' => 'string|max:140',
                     'request_purpose' => 'string|max:140',
                     'request_details' => 'string|max:140',
                 ]);
-                $doc_request = DocumentRequest::create($document->only('request_type', 'others', 'document_requested', 'request_purpose', 'request_details'));
-                $createdRecord->update(['request_id' => $doc_request->request_id]);
+                $doc_request = DocumentRequest::insert($request->only('request_type', 'others', 'document_requested', 'request_purpose', 'request_details'));
+                $createdRecord->update(['request_id' => $doc_request]);
             }
-            return response()->json(['status' => 'success'], 200);
+            return redirect()->back()->with('success', 'Document sent successfully!');
         }
         catch (\Exception $error){
             Log::info('Error: ', [$error->getMessage()]);
-            return response()->json(['error' => $error->getMessage()], 500);
+            return back()->withErrors($error);
         }
-
     }
 
     /**

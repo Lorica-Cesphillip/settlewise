@@ -39,7 +39,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
     Route::get('/archived', [ArchivesController::class, 'index'])->name('archived.index');
     Route::get('/api/archives/view', [ArchivesController::class, 'show']);
-    Route::post('/archive-document', [ArchivesController::class, 'archiveDocuments']);
+    Route::put('/archive-document/{$id}', [ArchivesController::class, 'archiveDocuments'])->name('archived.update');
 
 
     /*Employee Information Module*/

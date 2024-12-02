@@ -42,7 +42,7 @@ class EmployeeManagementController extends Controller
             'division_name' => 'required|string|max:140',
             'last_name' => 'required|string|max:50',
             'first_name' => 'required|string|max:50',
-            'middle_name' => 'required|string|max:50',
+            'middle_name' => 'string|max:50',
             'address' => 'required|string|max:140',
             'birthdate' => 'required|date',
             'martial_status' => 'required|string|max:20',

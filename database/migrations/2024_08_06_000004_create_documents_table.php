@@ -33,6 +33,7 @@ return new class extends Migration
             $table->timestamps();
             $table->unsignedSmallInteger('status_id'); //Pending, Request Rejected, Request Approved, To be Referred to Employee in a Department, Referral Granted, Referral Rejected, Document Forwarded.
             $table->string('file_path'); //important since the user will always view the document attached.
+            $table->boolean('is_archived');
 
             //Foreign Keys
             $table->foreign('document_type_id')->references('id')->on('document_type');

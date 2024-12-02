@@ -253,10 +253,10 @@
                 </div>
 
                 <div>
-                    <x-input-label for="purpose" :value="__('Request Purpose *')" />
+                    <x-input-label for="request_purpose" :value="__('Request Purpose *')" />
                     <x-text-input x-model="purpose" id="purpose" class="block mt-1 w-[615px] bg-gray-100"
                         type="text" name="purpose" :value="old('purpose')" autofocus autocomplete="off" x-bind:class="request_type === 'Document' ? 'bg-white' : 'bg-gray-100'" x-bind:disabled="request_type !== 'Document'"  />
-                    <x-input-error :messages="$errors->get('purpose')" class="mt-2" />
+                    <x-input-error :messages="$errors->get('request_purpose')" class="mt-2" />
                 </div>
             </div>
 

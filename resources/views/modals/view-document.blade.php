@@ -145,11 +145,11 @@
 </x-modal>
 
 <!-- Document Preview -->
-<x-modal name="document-preview" :maxWidth="'2xl'">
+<x-modal name="document-preview" :maxWidth="'2xl'" :show="false">
     <div class = "items-center justify-items-center">
         <p class = "text-2xl font-bold text-center">PREVIEW DOCUMENT</p>
         <iframe src="#" class = "w-[400px] h-[500px] border items-center justify-items-center py-4 border-black"></iframe>
-        <a href="" class = "w-[300px] p-4 bg-[#0d5dba] rounded-lg flex-col justify-center items-center gap-2.5 flex text-white tracking-widest hover:bg-blue-900 focus:bg-blue-900 active:bg-blue-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 transition ease-in-out duration-150" download>Download Document</a>
+        <button class = "w-[300px] p-4 bg-[#0d5dba] rounded-lg flex-col justify-center items-center gap-2.5 flex text-white tracking-widest hover:bg-blue-900 focus:bg-blue-900 active:bg-blue-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 transition ease-in-out duration-150" download>Download Document</button>
     </div>
 </x-modal>
 

@@ -16,6 +16,7 @@
             <div
                 class="w-[480px] h-fit p-2 block justify-center items-center rounded-xl shadow border text-wrap border-black">
                 <h3 class="text-2xl w-full font-bold text-center px-24 pt-4">ANNOUNCEMENTS</h3>
+
                 <!-- Content divided into left and right columns -->
                 <div class="w-full h-fit px-6 flex columns-2">
                     <div class = "pr-5 font-light">
@@ -36,13 +37,9 @@
                 </div>
 
                 <div class="w-full h-fit p-2 flex justify-center items-center py-6">
-                    <a x-on:click.prevent="$dispatch('open-modal', 'view-incoming-document')"
-                        class="w-7/12 px-1 py-2 bg-[#211c6a] rounded-lg flex-col justify-center items-center gap-2.5 inline-flex">
-                        <div class="justify-center items-center gap-2 inline-flex">
-                            <div class="text-center text-white text-sm font-semibold leading-tight">VIEW ANNOUNCEMENT
-                            </div>
-                        </div>
-                    </a>
+                    <button x-on:click.prevent="$dispatch('open-modal', 'document-preview')"
+                        class="w-7/12 px-1 py-2 bg-blue-500 hover:bg-blue-900 active:bg-blue-900 rounded-lg flex-col justify-center items-center gap-2.5 inline-flex text-center text-white text-sm font-semibold leading-tight">VIEW ANNOUNCEMENT
+                    </button>
                 </div>
             </div>
 

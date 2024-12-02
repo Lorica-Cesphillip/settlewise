@@ -70,7 +70,6 @@ return new class extends Migration
         Schema::dropIfExists('aphso_divisions');
         Schema::dropIfExists('aphso_job_titles');
         Schema::dropIfExists('users');
-        Schema::dropIfExists('users');
         Schema::dropIfExists('password_reset_tokens');
         Schema::dropIfExists('sessions');
     }
