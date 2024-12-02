@@ -7,6 +7,7 @@ use App\Models\Divisions;
 use Illuminate\Http\Request;
 use App\Models\User;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 
 class DivisionsController extends Controller
 {
@@ -15,10 +16,19 @@ class DivisionsController extends Controller
      */
     public function index()
     {
-        $divisions = Divisions::all();
-        $employees = User::select(DB::raw("CONCAT(fname, ' ', mname, ' ', lname) AS full_name"))->get();
+        try {
+            $divisions = Divisions::all();
+            $employees = User::select(DB::raw("CONCAT(fname, ' ', mname, ' ', lname) AS full_name"))->get();
 
-        return view('documents.aphso-divisions', compact('divisions', 'employees'));
+            return view('documents.aphso-divisions', compact('divisions', 'employees'));
+        } catch (\Exception $e) {
+            // Log the error
+            Log::error('Error rendering the documents.aphso-divisions view.', [
+                'error' => $e->getMessage(),
+                'trace' => $e->getTraceAsString(),
+            ]);
+            abort(500, 'An error occurred while loading the page.');
+        }
     }
 
     /**
@@ -26,22 +36,31 @@ class DivisionsController extends Controller
      */
     public function store(Request $request)
     {
-        // Validate the incoming data
-        $validatedData = $request->validate([
-            'division_name' => 'required|string|max:255',
-            'division_abbreviation' => 'required|string|max:255',
-            'division_head' => 'nullable|string|max:255', // Adjust validation based on your needs
-        ]);
-
-        // Create a new division record in the database
-        Divisions::create([
-            'name' => $validatedData['division_name'],
-            'abbreviation' => $validatedData['division_abbreviation'],
-            'head' => $validatedData['division_head'],
-        ]);
-
-        // Redirect back with a success message!!
-        return redirect()->route('divisions.index')->with('success', 'Division created successfully.');
+        try {
+            // Validate the incoming data
+            $validatedData = $request->validate([
+                'division_name' => 'required|string|max:255',
+                'division_abbreviation' => 'required|string|max:255',
+                'division_head' => 'nullable|string|max:255', // Adjust validation based on your needs
+            ]);
+    
+            // Create a new division record in the database
+            Divisions::create([
+                'name' => $validatedData['division_name'],
+                'abbreviation' => $validatedData['division_abbreviation'],
+                'head' => $validatedData['division_head'],
+            ]);
+    
+            // Redirect back with a success message
+            return redirect()->route('divisions.index')->with('success', 'Division created successfully.');
+        } catch (\Exception $e) {
+            // Log the error
+            Log::error('Error storing a new division.', [
+                'error' => $e->getMessage(),
+                'trace' => $e->getTraceAsString(),
+            ]);
+            abort(500, 'An error occurred while storing the division.');
+        }
     }
 
     /**
@@ -49,8 +68,19 @@ class DivisionsController extends Controller
      */
     public function show($id)
     {
-        $division = Divisions::where('division_id', '=', $id);
-        if($division){return response()->json(['division' => $division], 200);}
+        try {
+            $division = Divisions::where('division_id', '=', $id);
+            if ($division) {
+                return response()->json(['division' => $division], 200);
+            }
+        } catch (\Exception $e) {
+            // Log the error to the default log channel
+            Log::error('Error fetching division with ID: ' . $id, [
+                'error' => $e->getMessage(),
+                'trace' => $e->getTraceAsString(),
+            ]);
+            abort(500, 'An error occurred while fetching the division.');
+        }
     }
 
     /**
