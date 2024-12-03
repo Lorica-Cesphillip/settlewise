@@ -55,10 +55,15 @@ class IncomingDocumentsController extends Controller
     /**
      * Display the specified resource. Must Return a json Array.
      */
-    public function show(string $id)
+    public function show($trackingCode)
     {
-        $documents = DocumentTracker::where('document_tracking_code', '=', $id);
-        return redirect()->json(['document_details' => $documents]);
+        $document = DocumentTracker::with(['from_employee', 'to_employee', 'request', 'referral', 'document_type', 'status'])
+        ->where('document_tracking_code', '=', $trackingCode)
+        ->first();
+        Log::info( $document);
+
+        if($document){return response()->json($document);}
+        else{ return response()->json(['error' => 'This document does not exist in database.'], 404);}
     }
 
     /**
@@ -78,7 +83,7 @@ class IncomingDocumentsController extends Controller
     }
 
     /**
-     * Remove the specified resource from storage.
+     * Archived the document, to safeguard its contents.
      */
     public function destroy(string $id)
     {

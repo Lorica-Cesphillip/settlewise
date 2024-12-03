@@ -100,7 +100,7 @@
                     <tbody>
                         @foreach($incoming_documents as $documents)
                             <tr class = "border-b-2">
-                                <td class = "p-2 w-2/12 h-[30px]">{{$documents->timestamps}}-{{$documents->document_tracking_code}}</td>
+                                <td class = "p-2 w-2/12 h-[30px]">{{str_pad($incoming->document_tracking_code, 3, '0', STR_PAD_LEFT)}}-{{\Carbon\Carbon::parse($incoming->created_at)->format('m-d-Y')}}</td>
                                 <td class = "p-2 w-5/12 h-[30px]">{{$documents->subject}}</td>
                                 <td class = "p-2 w-2/12 h-[30px]">{{$documents->document_type->document_type}}</td>
                                 <td class = "p-2 w-2/12 h-[30px]">{{$documents->from_employee->full_name}}</td>

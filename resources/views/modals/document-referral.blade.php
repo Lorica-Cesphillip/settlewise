@@ -1,4 +1,5 @@
 <!-- Refer Someone Modal -->
+@if(Auth::user()->divisions->abbreviation == "HEAD")
 <x-modal name="refer-someone" :maxWidth="'5xl'" :show="false" focusable>
     <h3 class="font-bold text-2xl text-center">DOCUMENT REFERRAL FORM</h3>
             <!--Main Body-->
@@ -155,6 +156,7 @@
         </div>
     </form>
 </x-modal>
+@endif
 
 <script>
     function referralDivision() {

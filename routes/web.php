@@ -45,6 +45,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
     /*Employee Information Module*/
     Route::resource('/divisions', DivisionsController::class);
     Route::resource('/employees', EmployeeManagementController::class);
+    Route::get('/api/employee/{employeeNumber}', [EmployeeManagementController::class, 'show']);
     Route::get('profile', function(){
         return view('documents.employee-information');
     })->name('profile');

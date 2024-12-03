@@ -111,10 +111,6 @@ class EmployeeManagementController extends Controller
     {
         $request->user()->fill($request->validated());
 
-        if ($request->user()->isDirty('email')) {
-            $request->user()->email_verified_at = null;
-        }
-
         $request->user()->save();
         return redirect(route('documents.employees', absolute: false))->with('success');
     }
@@ -122,8 +118,12 @@ class EmployeeManagementController extends Controller
     /**
      * The head requested us if instead of deleting employee information, we will instead archive the data, in which it will be automatically deleted from the system for a certain time * period depending on what the head decides.
      */
-    public function archive(EmployeeManagementController $employeeManagementController)
+    public function archive($id)
     {
-        //
+        $archived = \Illuminate\Support\Facades\DB::table('aphso_employees')->where('employee_number', $id)->update(['emp_status' => 0]);
+
+        if($archived){return response()->json('success', 200);}
+
+        return response()->json('Error', 500);
     }
 }

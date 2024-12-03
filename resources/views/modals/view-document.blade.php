@@ -1,4 +1,4 @@
-<x-modal name="view-incoming-document" :show="false" focused>
+<x-modal name="view-incoming-document" focused>
     <div class="px-5 py-8">
         <div x-data="documentData" @open-modal.window="if($event.detail.name === 'view-incoming-document'){
             fetchDocument($event.detail.trackingCode);
@@ -10,8 +10,7 @@
 
         <!--Main Body-->
         <div class="grid grid-cols-4 grid-rows-6 py-4">
-            <div class = "font-light">Tracking Code: </div>
-            <div class="font-bold underline col-span-3 col-start-2 row-start-1">01-07-2025-001</div>
+            <div class = "font-light">Tracking Code: <span class="font-bold underline col-span-3 col-start-2 row-start-1" x-text="tracking_code"></span></div>
             <div class="font-light col-start-1 row-start-2">Document Type: </div>
             <div class="font-bold underline col-span-3 row-start-2">Office Order</div>
             <div class="font-light row-start-3">Subject: </div>
@@ -169,12 +168,13 @@
             requested_document: 'N/A',
             purpose: 'N/A',
             request_details: 'N/A',
-            async fetchDocument(documentId){
+            async fetchDocument(trackingCode){
                 try{
-                    const response = await fetch('/document/${documentId}');
+                    const response = await fetch('/api/incoming/view/${trackingCode}');
 
                     if(!response.ok) throw new Error(`HTTP error! Status: ${response.status}`);
                     const data = await response.json();
+                    console.log(data);
 
                     this.tracking_code = data.document_tracking_code;
                     this.document_type = data.document_type.document_type;
@@ -183,7 +183,7 @@
                     this.sender = data.from_employee.fname + data.from_employee.mname + data.from_employee.lname;
                     this.date_transmitted = data.timestamps;
                     this.division = data.from_employee.division.division_name;
-                    this.document_status = data.document_status.document_status;
+                    this.document_status = data.status.document_status;
                     this.request_type = data.request.request_type;
                     this.requested_document = data.request.requested_document;
                     this.purpose = data.request.purpose;

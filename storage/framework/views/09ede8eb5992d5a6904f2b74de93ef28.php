@@ -128,7 +128,7 @@
                     <tbody>
                         <?php $__currentLoopData = $incoming_documents; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $documents): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
                             <tr class = "border-b-2">
-                                <td class = "p-2 w-2/12 h-[30px]"><?php echo e($documents->timestamps); ?>-<?php echo e($documents->document_tracking_code); ?></td>
+                                <td class = "p-2 w-2/12 h-[30px]"><?php echo e(str_pad($incoming->document_tracking_code, 3, '0', STR_PAD_LEFT)); ?>-<?php echo e(\Carbon\Carbon::parse($incoming->created_at)->format('m-d-Y')); ?></td>
                                 <td class = "p-2 w-5/12 h-[30px]"><?php echo e($documents->subject); ?></td>
                                 <td class = "p-2 w-2/12 h-[30px]"><?php echo e($documents->document_type->document_type); ?></td>
                                 <td class = "p-2 w-2/12 h-[30px]"><?php echo e($documents->from_employee->full_name); ?></td>

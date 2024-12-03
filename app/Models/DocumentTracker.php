@@ -24,7 +24,7 @@ class DocumentTracker extends Model
     }
 
     public function to_employee(): BelongsTo{
-        return $this->belongsTo(User::class, 'from_employee_id', 'employee_number');
+        return $this->belongsTo(User::class, 'to_employee_id', 'employee_number');
     }
 
     public function request(): HasMany{

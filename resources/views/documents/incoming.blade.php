@@ -123,7 +123,7 @@
         <tbody>
             @foreach($incoming_documents as $incoming)
             <tr class = "border-b-2 h-[40px]">
-                <td class = "w-[180px] py-1 border-b-2">{{str_pad($incoming->document_tracking_code, 3, '0', STR_PAD_LEFT)}}-{{\Carbon\Carbon::parse($incoming->created_at)->format('m-d-Y')}}</td>
+                <td class = "w-[180px] py-1 border-b-2">{{\Carbon\Carbon::parse($incoming->created_at)->format('m-d-Y')}}-{{str_pad($incoming->document_tracking_code, 3, '0', STR_PAD_LEFT)}}</td>
                 <td class = "w-[200px] py-1 border-b-2">{{$incoming->from_employee->fname}} {{$incoming->from_employee->mname}} {{$incoming->from_employee->lname}} </td>
                 @if(Auth::user()->divisions->division_name == "APHSO Department")
                 <td class = "w-[200px] p-2 border-b-2">{{$incoming->to_employee->fname}} {{$incoming->to_employee->mname}} {{$incoming->to_employee->lname}}</td>
