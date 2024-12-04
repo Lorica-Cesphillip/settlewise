@@ -3,36 +3,21 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Log;
 use App\Models\DocumentTracker;
 use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\Log;
 
-class ArchivesController extends Controller
+class DocumentController extends Controller
 {
-    //
-    public function index(){
-        try {
-            return view('documents.archived');
-        } catch (\Exception $e) {
-            Log::error('Error rendering the documents.archived view.', [
-                'error' => $e->getMessage(),
-                'trace' => $e->getTraceAsString(),
-            ]);
-            abort(500, 'An error occurred while loading the page.');
-        }
-    }
-
-    public function update($id){
-        DocumentTracker::where('document_tracking_code', '=', $id)->update(['archived' => 1]);
-
-        return view('documents.archived')->with('success');
-    }
-
-    public function show($trackingCode){
+    /**
+     * Display the specified resource. Must Return a json Array.
+     */
+    public function show($trackingCode)
+    {
         $document = DocumentTracker::with(['from_employee.divisions', 'to_employee.divisions', 'request', 'referral', 'document_type', 'status'])
         ->where('document_tracking_code', '=', $trackingCode)
         ->first();
-        Log::info( $document);
+        Log::info($document);
 
         if($document){
             $transformedDocument = $document->toArray();
@@ -41,5 +26,9 @@ class ArchivesController extends Controller
             return response()->json($transformedDocument);
         }
         else{ return response()->json(['error' => 'This document does not exist in database.'], 404);}
+    }
+
+    public function document_preview($trackingCode){
+
     }
 }

@@ -5,11 +5,13 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\DocumentTracker;
 use App\Models\User;
+use App\Models\DocumentRequest;
 use Illuminate\Support\Facades\DB;
 use App\Models\DocumentReferral;
 use Illuminate\Support\Facades\Auth;
 use League\CommonMark\Node\Block\Document;
 use Illuminate\Support\Facades\Log;
+
 
 class IncomingDocumentsController extends Controller
 {
@@ -37,56 +39,27 @@ class IncomingDocumentsController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
+     * This is intended for the acceptance/rejection of request
      */
-    public function create()
+    public function update(Request $request, DocumentTracker $document_tracking_code, $id)
     {
-        //
-    }
+        $request->validate([
+            'granted' => 'required|boolean',
+            'request_comments' => 'string|max:140|min:1',
+            'rejection_reason' => 'string|not_in:--Select reason of rejection--'
+        ]);
+        if($request->granted){
+            DocumentRequest::insert(['request_comments' => $request->request_comments]);
+            $document_tracking_code->update(['document_status_id' => 2]);
+            $document_tracking_code->save();
 
-    /**
-     * Forward Referral to another employee.
-     */
-    public function store(Request $request)
-    {
+            return redirect()->route('incoming.index')->with('success');
+        }else{
+            DocumentRequest::insert(['rejection_reason' => $request->rejection_reason]);
+            $document_tracking_code->update(['document_status_id' => 3]);
+            $document_tracking_code->save();
 
-    }
-
-    /**
-     * Display the specified resource. Must Return a json Array.
-     */
-    public function show($trackingCode)
-    {
-        $document = DocumentTracker::with(['from_employee', 'to_employee', 'request', 'referral', 'document_type', 'status'])
-        ->where('document_tracking_code', '=', $trackingCode)
-        ->first();
-        Log::info( $document);
-
-        if($document){return response()->json($document);}
-        else{ return response()->json(['error' => 'This document does not exist in database.'], 404);}
-    }
-
-    /**
-     * Show the form for editing the specified resource. Use the json Array.
-     */
-    public function edit(string $id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
-    {
-        //
-    }
-
-    /**
-     * Archived the document, to safeguard its contents.
-     */
-    public function destroy(string $id)
-    {
-        //
+            return redirect()->route('incoming.index')->with('success');
+        }
     }
 }

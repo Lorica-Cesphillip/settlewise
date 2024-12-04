@@ -1,154 +1,146 @@
 <x-modal name="view-incoming-document" focused>
     <div class="px-5 py-8">
-        <div x-data="documentData" @open-modal.window="if($event.detail.name === 'view-incoming-document'){
-            fetchDocument($event.detail.trackingCode);
-            show=true;
-        }"></div>
         <div class="font-bold text-2xl">
             <h3 class="modal-title text-center pb-4">VIEW DOCUMENT</h3>
         </div>
+        <div x-data="documentData" @open-modal.window="if($event.detail.name === 'view-incoming-document'){
+            fetchDocument($event.detail.trackingCode);
+            show=true;
+        }">
+            <!--Main Body-->
+            <div>
+                <div class = "font-light">Tracking Code: <span class="font-bold underline" x-text="`${date_transmitted}-${tracking_code}`"></span></div>
+                <div class="font-light">Document Type: <span class = "font-bold underline" x-text="document_type"></span></div>
+                <div class="font-light">Subject: <span class="font-bold underline" x-text="subject"></span></div>
+                <div class="font-light">Remarks: <span class="font-bold underline" x-text="remarks"></span></div>
+                <div class="font-light">Transmitted by: <span class="font-bold underline" x-text="sender"></span></div>
+                <div class="font-light">Date Transmitted: <span class="font-bold underline" x-text="date_transmitted"></span></div>
+                <div class="font-light">Division: <span class="font-bold underline" x-text="division"></span></div>
+                <div class="font-light">Status:
+                    <div class="px-3 py-0.5 rounded-xl flex-col justify-center items-center gap-2 inline-flex" x-bind:class="statusBgColor">
+                        <div class="justify-center items-center gap-0.5 inline-flex">
+                            <span class="text-center text-white text-sm font-medium leading-tight" x-text="document_status"></span>
+                        </div>
+                    </div>
+                    <span class="font-bold underline" :class="classBgColor" ></span></div>
+            </div>
 
-        <!--Main Body-->
-        <div class="grid grid-cols-4 grid-rows-6 py-4">
-            <div class = "font-light">Tracking Code: <span class="font-bold underline col-span-3 col-start-2 row-start-1" x-text="tracking_code"></span></div>
-            <div class="font-light col-start-1 row-start-2">Document Type: </div>
-            <div class="font-bold underline col-span-3 row-start-2">Office Order</div>
-            <div class="font-light row-start-3">Subject: </div>
-            <div class="font-bold underline col-span-3 col-start-2 row-start-3">Lorem ipsum dolor sit amet, consectetur
-                adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</div>
-            <div class="font-light col-start-1 row-start-4">Remarks: </div>
-            <div class="font-bold underline col-span-3 row-start-4">Lorem ipsum dolor sit amet, consectetur adipiscing
-                elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</div>
-            <div class="font-light row-start-5">Transmitted by: </div>
-            <div class="font-bold underline col-start-2 row-start-5">Juan Dela Cruz</div>
-            <div class="font-light col-start-1 row-start-6">Date Transmitted: </div>
-            <div class="font-bold underline col-start-2 row-start-6">01-07-2025</div>
-            <div class="font-light col-start-3 row-start-5">Division: </div>
-            <div class="font-bold underline col-start-4 row-start-5">Administrative Division</div>
-            <div class="font-light col-start-3 row-start-6">Status: </div>
-            <div class="font-bold underline row-start-6">Pending</div>
-        </div>
+            <p class = "text-center text-2xl font-bold py-4">THE SENDER WOULD LIKE TO REQUEST SOMETHING</p>
 
-        <p class = "text-center text-2xl font-bold py-4">THE SENDER WOULD LIKE TO REQUEST SOMETHING</p>
+            <div class="grid grid-cols-4 grid-rows-4">
+                <div class="col-start-1 row-start-1">Request Type, if Applicable: <span class="font-bold underline" x-text="request_type"></span></div>
+                <div class="col-start-1 row-start-2">Document Requested: <span class="font-bold underline" x-text="requested_document"></span></div>
+                <div class="col-start-1 row-start-3">Request Purpose: <span class="font-bold underline" x-text="purpose"></span></div>
+                <div class="col-start-1 row-start-4">Request Details: <span class="font-bold underline" x-text="request_details"></span></div>
+            </div>
 
-        <div class="grid grid-cols-4 grid-rows-4">
-            <div class="col-start-1 row-start-1">Request Type, if Applicable: </div>
-            <div class="col-start-1 row-start-2">Document Requested: </div>
-            <div class="col-start-1 row-start-3">Request Purpose: </div>
-            <div class="col-start-1 row-start-4">Request Details: </div>
-            <div class="font-bold underline col-span-3 col-start-2 row-start-1">N/A</div>
-            <div class="font-bold underline col-span-3 col-start-2 row-start-2">N/A</div>
-            <div class="font-bold underline col-span-3 col-start-2 row-start-3">N/A</div>
-            <div class="font-bold underline col-span-3 col-start-2 row-start-4">N/A</div>
-        </div>
+            <!--Buttons-->
+            <div class = "justify-between w-full inline-flex">
+                <div class = "pt-10 gap-3 inline-flex">
+                    <button x-on:click.prevent="$dispatch('open-modal', 'document-preview')"
+                        class = "p-4 bg-[#0d5dba] rounded-lg flex-col justify-center items-center gap-2.5 flex text-white tracking-widest hover:bg-blue-900 focus:bg-blue-900 active:bg-blue-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 transition ease-in-out duration-150">View
+                        Document</button>
 
-        <!--Buttons-->
-        <div class = "justify-between w-full inline-flex">
-            <div class = "pt-10 gap-3 inline-flex">
-                <button x-on:click.prevent="$dispatch('open-modal', 'document-preview')"
-                    class = "p-4 bg-[#0d5dba] rounded-lg flex-col justify-center items-center gap-2.5 flex text-white tracking-widest hover:bg-blue-900 focus:bg-blue-900 active:bg-blue-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 transition ease-in-out duration-150">View
-                    Document</button>
+                    @if(Auth::user()->divisions->division_name == "APHSO Department")
+                    <button x-on:click.prevent="$dispatch('open-modal', 'refer-someone')"
+                        class = "p-4 bg-[#0d5dba] rounded-lg flex-col justify-center items-center gap-2.5 flex text-white tracking-widest hover:bg-blue-900 focus:bg-blue-900 active:bg-blue-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 transition ease-in-out duration-150">Refer
+                        Someone</button>
 
+                    <button x-on:click.prevent="$dispatch('open-modal', 'document-conversation')"
+                        class = "p-4 bg-[#0d5dba] rounded-lg flex-col justify-center items-center gap-2.5 flex text-white tracking-widest hover:bg-blue-900 focus:bg-blue-900 active:bg-blue-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 transition ease-in-out duration-150">Open
+                        Chat</button>
+
+                    <button x-on:click.prevent="$dispatch('open-modal', 'announcement')"
+                        class = "p-4 bg-[#0d5dba] rounded-lg flex-col justify-center items-center gap-2.5 flex text-white tracking-widest hover:bg-blue-900 focus:bg-blue-900 active:bg-blue-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 transition ease-in-out duration-150">Post
+                        Announcement</button>
+                    @endif
+                </div>
                 @if(Auth::user()->divisions->division_name == "APHSO Department")
-                <button x-on:click.prevent="$dispatch('open-modal', 'refer-someone')"
-                    class = "p-4 bg-[#0d5dba] rounded-lg flex-col justify-center items-center gap-2.5 flex text-white tracking-widest hover:bg-blue-900 focus:bg-blue-900 active:bg-blue-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 transition ease-in-out duration-150">Refer
-                    Someone</button>
+                <div>
+                    <p class = "pb-4">Accept Request?</p>
+                    <div class = "gap-3 inline-flex">
+                        <button x-on:click.prevent="$dispatch('open-modal', 'reject-request')"
+                            class = "inline-flex items-center p-4 bg-red-600 border border-transparent rounded-md text-white  tracking-widest hover:bg-red-800 active:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 transition ease-in-out duration-150">Reject</button>
+                        <button x-on:click.prevent="$dispatch('open-modal', 'accept-request')"
+                            class = "p-4 bg-green-600 rounded-lg flex-col justify-center items-center gap-2.5 flex text-white tracking-widest hover:bg-green-900 focus:bg-green-700 active:bg-green-900 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2 transition ease-in-out duration-150">Accept</button>
+                    </div>
+                </div>
 
-                <button x-on:click.prevent="$dispatch('open-modal', 'document-conversation')"
+                @else
+                <div>
+                    <button x-on:click.prevent="$dispatch('open-modal', 'document-conversation')"
                     class = "p-4 bg-[#0d5dba] rounded-lg flex-col justify-center items-center gap-2.5 flex text-white tracking-widest hover:bg-blue-900 focus:bg-blue-900 active:bg-blue-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 transition ease-in-out duration-150">Open
                     Chat</button>
-
-                <button x-on:click.prevent="$dispatch('open-modal', 'announcement')"
-                    class = "p-4 bg-[#0d5dba] rounded-lg flex-col justify-center items-center gap-2.5 flex text-white tracking-widest hover:bg-blue-900 focus:bg-blue-900 active:bg-blue-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 transition ease-in-out duration-150">Post
-                    Announcement</button>
+                </div>
                 @endif
             </div>
-            @if(Auth::user()->divisions->division_name == "APHSO Department")
-            <div>
-                <p class = "pb-4">Accept Request?</p>
-                <div class = "gap-3 inline-flex">
-                    <button x-on:click.prevent="$dispatch('open-modal', 'reject-request')"
-                        class = "inline-flex items-center p-4 bg-red-600 border border-transparent rounded-md text-white  tracking-widest hover:bg-red-800 active:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 transition ease-in-out duration-150">Reject</button>
-                    <button x-on:click.prevent="$dispatch('open-modal', 'accept-request')"
-                        class = "p-4 bg-green-600 rounded-lg flex-col justify-center items-center gap-2.5 flex text-white tracking-widest hover:bg-green-900 focus:bg-green-700 active:bg-green-900 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2 transition ease-in-out duration-150">Accept</button>
-                </div>
-            </div>
-
-            @else
-            <div>
-                <button x-on:click.prevent="$dispatch('open-modal', 'document-conversation')"
-                class = "p-4 bg-[#0d5dba] rounded-lg flex-col justify-center items-center gap-2.5 flex text-white tracking-widest hover:bg-blue-900 focus:bg-blue-900 active:bg-blue-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 transition ease-in-out duration-150">Open
-                Chat</button>
-            </div>
-            @endif
         </div>
     </div>
 </x-modal>
 
-<x-modal name="view-outgoing-document" :show="false" focused>
+<x-modal name="view-outgoing-document" focused>
     <div class="px-5 py-8">
         <div class="modal-content">
             <div class="modal-header">
                 <div class="font-bold text-2xl">
                     <h3 class="modal-title text-center pb-4">VIEW DOCUMENT</h3>
                 </div>
-
-                <!--Main Body-->
-                <div class="grid grid-cols-4 grid-rows-6 py-4">
-                    <div class = "font-light">Tracking Code: </div>
-                    <div class="font-bold underline col-span-3 col-start-2 row-start-1">01-07-2025-001</div>
-                    <div class="font-light col-start-1 row-start-2">Document Type: </div>
-                    <div class="font-bold underline col-span-3 row-start-2">Office Order</div>
-                    <div class="font-light row-start-3">Subject: </div>
-                    <div class="font-bold underline col-span-3 col-start-2 row-start-3">Lorem ipsum dolor sit amet,
-                        consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+                <div x-data="documentData" @open-modal.window="if($event.detail.name === 'view-outgoing-document'){
+                    fetchDocument($event.detail.trackingCode);
+                    show=true;
+                }">
+                    <!--Main Body-->
+                    <div>
+                        <div class = "font-light">Tracking Code: <span class="font-bold underline" x-text="`${date_transmitted}-${tracking_code}`"></div>
+                            <div class="font-light">Document Type: <span class = "font-bold underline" x-text="document_type"></span></div>
+                            <div class="font-light">Subject: <span class="font-bold underline" x-text="subject"></span></div>
+                            <div class="font-light">Remarks: <span class="font-bold underline" x-text="remarks"></span></div>
+                            <div class="font-light">Transmitted to: <span class="font-bold underline" x-text="receiver"></span></div>
+                            <div class="font-light">Date Transmitted: <span class="font-bold underline" x-text="date_transmitted"></span></div>
+                            <div class="font-light">Division: <span class="font-bold underline" x-text="division"></span></div>
+                            <div class="font-light">Status: <span class="font-bold underline" x-text="document_status"></span></div>
                     </div>
-                    <div class="font-light col-start-1 row-start-4">Remarks: </div>
-                    <div class="font-bold underline col-span-3 row-start-4">Lorem ipsum dolor sit amet, consectetur
-                        adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</div>
-                    <div class="font-light row-start-5">Transmitted by: </div>
-                    <div class="font-bold underline col-start-2 row-start-5">Juan Dela Cruz</div>
-                    <div class="font-light col-start-1 row-start-6">Date Transmitted: </div>
-                    <div class="font-bold underline col-start-2 row-start-6">01-07-2025</div>
-                    <div class="font-light col-start-3 row-start-5">Division: </div>
-                    <div class="font-bold underline col-start-4 row-start-5">Administrative Division</div>
-                    <div class="font-light col-start-3 row-start-6">Status: </div>
-                    <div class="font-bold underline row-start-6">Pending</div>
-                </div>
 
-                <p class = "text-center text-2xl font-bold py-4">THE SENDER WOULD LIKE TO REQUEST SOMETHING</p>
+                    <p class = "text-center text-2xl font-bold py-4">THE SENDER WOULD LIKE TO REQUEST SOMETHING</p>
 
-                <div class="grid grid-cols-4 grid-rows-4">
-                    <div class="col-start-1 row-start-1">Request Type, if Applicable: </div>
-                    <div class="col-start-1 row-start-2">Document Requested: </div>
-                    <div class="col-start-1 row-start-3">Request Purpose: </div>
-                    <div class="col-start-1 row-start-4">Request Details: </div>
-                    <div class="font-bold underline col-span-3 col-start-2 row-start-1">N/A</div>
-                    <div class="font-bold underline col-span-3 col-start-2 row-start-2">N/A</div>
-                    <div class="font-bold underline col-span-3 col-start-2 row-start-3">N/A</div>
-                    <div class="font-bold underline col-span-3 col-start-2 row-start-4">N/A</div>
-                </div>
+                    <div class="grid grid-cols-4 grid-rows-4">
+                        <div class="col-start-1 row-start-1">Request Type, if Applicable: </div>
+                        <div class="col-start-1 row-start-2">Document Requested: </div>
+                        <div class="col-start-1 row-start-3">Request Purpose: </div>
+                        <div class="col-start-1 row-start-4">Request Details: </div>
+                    </div>
 
-                <!--Buttons-->
-                <div class = "pt-5 justify-between w-full inline-flex">
-                    <button x-on:click.prevent="$dispatch('open-modal', 'document-preview')"
-                        class = "p-4 bg-[#0d5dba] rounded-lg flex-col justify-center items-center gap-2.5 flex text-white tracking-widest hover:bg-blue-900 focus:bg-blue-900 active:bg-blue-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 transition ease-in-out duration-150">View
-                        Document</button>
-                    <button x-on:click.prevent="$dispatch('open-modal', 'document-conversation')"
-                        class = "p-4 bg-[#0d5dba] rounded-lg flex-col justify-center items-center gap-2.5 flex text-white tracking-widest hover:bg-blue-900 focus:bg-blue-900 active:bg-blue-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 transition ease-in-out duration-150">Open
-                        Chat</button>
+                    <!--Buttons-->
+                    <div class = "pt-5 justify-between w-full inline-flex">
+                        <div class="pt-5 justify-between w-full inline-flex">
+                            <button x-on:click.prevent="openPreviewModal()"
+                                class="p-4 bg-[#0d5dba] rounded-lg flex-col justify-center items-center gap-2.5 flex text-white tracking-widest hover:bg-blue-900">
+                                View Document
+                            </button>
+                        </div>
+                        <button x-on:click.prevent="$dispatch('open-modal', 'document-conversation')"
+                            class = "p-4 bg-[#0d5dba] rounded-lg flex-col justify-center items-center gap-2.5 flex text-white tracking-widest hover:bg-blue-900 focus:bg-blue-900 active:bg-blue-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 transition ease-in-out duration-150">Open
+                            Chat</button>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
 </x-modal>
 
-<!-- Document Preview -->
 <x-modal name="document-preview" :maxWidth="'2xl'" :show="false">
-    <div class = "items-center justify-items-center">
-        <p class = "text-2xl font-bold text-center">PREVIEW DOCUMENT</p>
-        <iframe src="#" class = "w-[400px] h-[500px] border items-center justify-items-center py-4 border-black"></iframe>
-        <button class = "w-[300px] p-4 bg-[#0d5dba] rounded-lg flex-col justify-center items-center gap-2.5 flex text-white tracking-widest hover:bg-blue-900 focus:bg-blue-900 active:bg-blue-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 transition ease-in-out duration-150" download>Download Document</button>
+    <div x-data="previewData" @open-modal.window="if($event.detail.name === 'document-preview'){
+        trackingCode = $event.detail.trackingCode;
+        filePath = $event.detail.filePath;
+        loadPreview();
+    }">
+        <p class="text-2xl font-bold text-center">PREVIEW DOCUMENT</p>
+        <div class="items-center justify-items-center gap-3 ">
+            <iframe x-bind:src="filePath" class="w-[400px] h-[500px] border py-4 border-black items"></iframe>
+            <a x-bind:href="filePath" download class="w-[300px] p-4 bg-[#0d5dba] items rounded-lg text-center text-white tracking-widest hover:bg-blue-900">
+                Download Document
+            </a>
+        </div>
     </div>
 </x-modal>
 
@@ -158,40 +150,100 @@
             tracking_code: '',
             document_type: '',
             subject: '',
-            remarks: 'N/A',
+            remarks: '',
             sender: '',
+            receiver: '',
             date_transmitted: '',
             division: '',
             document_status: '',
             requested: false,
-            request_type: 'N/A',
-            requested_document: 'N/A',
-            purpose: 'N/A',
-            request_details: 'N/A',
+            request_type: '',
+            requested_document: '',
+            purpose: '',
+            request_details: '',
+            statusBgColor: '',
+            file_path: '',
             async fetchDocument(trackingCode){
                 try{
-                    const response = await fetch('/api/incoming/view/${trackingCode}');
+                    const response = await fetch(`/api/document/view/${trackingCode}`);
 
                     if(!response.ok) throw new Error(`HTTP error! Status: ${response.status}`);
                     const data = await response.json();
-                    console.log(data);
 
-                    this.tracking_code = data.document_tracking_code;
+                    this.tracking_code = data.document_tracking_code.toString().padStart(3, '0');
                     this.document_type = data.document_type.document_type;
                     this.subject = data.subject;
-                    this.remarks = data.remarks;
-                    this.sender = data.from_employee.fname + data.from_employee.mname + data.from_employee.lname;
-                    this.date_transmitted = data.timestamps;
-                    this.division = data.from_employee.division.division_name;
+                    this.remarks = data.remarks ? data.remarks : 'N/A';
+                    this.sender = data.from_employee.fname + ' ' + data.from_employee.mname + ' ' + data.from_employee.lname;
+                    this.receiver = data.to_employee.fname + ' ' + data.to_employee.mname + ' ' + data.to_employee.lname;
+                    this.date_transmitted = data.created_at;
+                    this.division = data.from_employee.divisions.division_name;
                     this.document_status = data.status.document_status;
-                    this.request_type = data.request.request_type;
-                    this.requested_document = data.request.requested_document;
-                    this.purpose = data.request.purpose;
-                    this.request_details = data.request_details;
+                    this.statusBgColor = this.getBgColor(data.status.status_id);
+                    this.request_type = data.request.request_type ? data.request.request_type : 'N/A';
+                    this.requested_document = data.request.requested_document ? data.request.requested_document : 'N/A';
+                    this.purpose = data.request.request_purpose ? data.request.request_purpose : 'N/A';
+                    this.request_details = data.request_details ? data.request_details : 'N/A';
+                    this.file_path = data.file_path;
                 }catch(error){
                     console.error('There is something wrong while retrieving document information. Error: ', error);
                 }
+            },
+
+            getBgColor(statusId) {
+                return {
+                    1: 'bg-yellow-500', // Pending
+                    2: 'bg-green-500',  // Request Accepted
+                    3: 'bg-red-500',    // Request Rejected
+                    4: 'bg-blue-500',   // Document Forwarded
+                    5: 'bg-purple-500', // To be Referred
+                    6: 'bg-gray-500',   // Archived
+                    7: 'bg-teal-500',   // Announced
+                }[statusId] || 'bg-gray-300'; // Default
+            },
+            openPreviewModal() {
+                $dispatch('open-modal', {
+                    name: 'document-preview',
+                    trackingCode: tracking_code,
+                    filePath: this.file_path
+                });
             }
         }
+    }
+
+    function previewData() {
+        return {
+            trackingCode: '',
+            filePath: '',
+            loadPreview() {
+                if (!this.filePath) {
+                    console.error("No file path provided for preview.");
+                    alert("Document file is missing or invalid.");
+                    return;
+                }
+
+                // Log the file path for debugging
+                console.log("Attempting to load file:", this.filePath);
+
+                // Check if the file is accessible
+                fetch(this.filePath)
+                    .then(response => {
+                        if (!response.ok) {
+                            throw new Error(`Failed to fetch document. Status: ${response.status}`);
+                        }
+
+                        // Update iframe src
+                        const iframe = document.querySelector('iframe');
+                        if (iframe) {
+                            console.log("Setting iframe source to:", this.filePath);
+                            iframe.src = this.filePath;
+                        }
+                    })
+                    .catch(error => {
+                        console.error("Error loading document:", error);
+                        alert("Failed to load the document. Please try again.");
+                    });
+            }
+        };
     }
 </script>

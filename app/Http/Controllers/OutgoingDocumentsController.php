@@ -142,54 +142,11 @@ class OutgoingDocumentsController extends Controller
     }
 
     /**
-     * Must return a json array. This will show the outgoing document that is either: sent, forwarded, or referred.
+     * This will be used if the head will forward the document depending on the type: standard and referral.
      */
-    public function viewDocument($document_tracking_code)
+    public function update(Request $request, DocumentTracker $documentTracker)
     {
-        $outgoing_document = DocumentTracker::with('to_employee')
-            ->with('document_type')
-            ->withExists('request')
-            ->withExists('referral')
-            ->with('document_status')
-            ->findOrFail($document_tracking_code)
-            ->first();
-        if($outgoing_document){return response()->json(['document_information' => $outgoing_document]);}
-        return response()->json(['document_information' => null]);
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
-    {
-        //
-    }
-
-    public function acceptRequest(Request $accept, DocumentTracker $document_tracking_code){
-        $accept->validate([
-            'comments_if_granted' => 'required|string|max:140'
-        ]);
-        DocumentRequest::insert($accept->all());
-        $document_tracking_code->update(['document_status_id' => 2]);
-        $document_tracking_code->save();
-
-        return redirect(route('incoming'))->with('success');
-    }
-
-    public function rejectRequest(Request $reject, DocumentTracker $document_tracking_code){
-        $reject->validate([
-            'rejection_reason' => 'required|string|max:140'
-        ]);
-
-        DocumentRequest::insert($reject->all());
-        $document_tracking_code->update(['document_status_id' => 3]);
-        $document_tracking_code->save();
-
-        return redirect(route('incoming'))->with('success');
-    }
-
-    public function storeReferral(Request $request, DocumentTracker $documentTracker){
-        $validated = $request->validate([
+        $request->validate([
             'to_be_referred' => 'required|integer',
             'for' => 'required|string|max:140',
             'for_urgent' => 'boolean',
@@ -199,7 +156,7 @@ class OutgoingDocumentsController extends Controller
         ]);
 
         //Before executing this line, the recipient_name must first be changed into a to_emp_id.
-        $name = explode(' ', $validated['to_be_referred']);
+        $name = explode(' ', $request->to_be_referred);
 
         $lname = array_pop($name);
         $mname = count($name) > 1 ? array_pop($name) : null;
@@ -215,29 +172,18 @@ class OutgoingDocumentsController extends Controller
                             }
                         })
                         ->first();
-        $validatedData['employee_number'] = $to_employee_id->employee_number;
-        unset($validatedData['to_be_referred']);
 
-        $referral = DocumentReferral::create($request->only([
-            'employee_number',
-            'for',
-            'for_urgent',
-            'please',
-            'plase_urgent',
-            'remarks'
-        ]));
+        $referral = DocumentReferral::create([
+            'employee_number' => $to_employee_id,
+            'for' => $request->for,
+            'for_urgent' => $request->for_urgent,
+            'please' => $request->please,
+            'plase_urgent' => $request->plase_urgent,
+            'remarks' => $request->remarks
+        ]);
 
-        $documentTracker->referral_id = $referral->refferal_id;
+        $documentTracker->insert(['referral_id' => $referral->referral_id]);
         $documentTracker->save();
-
-        return redirect(route('outgoing'))->with('success');
-    }
-
-    /**
-     * This will be used if the head will forward the document depending on the type: standard, request, referral.
-     */
-    public function update(Request $request, string $id)
-    {
 
         return view('documents.incoming')->with('success');
     }

@@ -2,10 +2,10 @@
     <x-modal name="reject-request" :maxWidth="'2xl'" :show="false" focusable>
         <form action="#" method="POST">
             <h3 class = "text-2xl font-bold text-center">Are you sure you are rejecting the request?</h3>
-            <input type="hidden" name="granted" value="false">
+            <input type="hidden" name="granted" value="0">
             <div>
-                <x-input-label for="rejection-reason" :value="__('Why do you reject the request?')"/>
-                <select id="rejection-reason" name="rejection-reason" class="border-gray-300 w-full rounded-md">
+                <x-input-label for="rejection_reason" :value="__('Why do you reject the request?')"/>
+                <select id="rejection_reason" name="rejection-reason" class="border-gray-300 w-full rounded-md">
                     <option value="">--Select reason of rejection--</option>
                     <!-- PLACEHOLDER OPTIONS -->
                     <option value="Request is Vague">Request is Vague</option>
@@ -33,7 +33,7 @@
     <div class="w-[600px] h-[500px]">
         <h5 class="text-2xl font-bold text-center pb-4">Request Comments</h5>
             <form action="#" method="POST" class="gap-4">
-                <input type="hidden" name="granted" value="true"/>
+                <input type="hidden" name="granted" value="1"/>
                 <textarea name="request_comments" class="w-full h-[400px] rounded-lg border-gray-300" id="acceptRequestTextarea" placeholder="Add any additional notes or comments here..."></textarea>
                 <div class="items-center justify-items-center">
                     <x-primary-button>

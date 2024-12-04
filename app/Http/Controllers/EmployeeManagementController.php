@@ -13,6 +13,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\Rules;
 use Illuminate\View\View;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Log;
 class EmployeeManagementController extends Controller
 {
     protected static ?string $password;
@@ -75,9 +76,8 @@ class EmployeeManagementController extends Controller
      */
     public function show($employeeNumber)
     {
-        $employee = User::where('employee_number', '=', $employeeNumber)
-            ->with('divisions')
-            ->first();
+        Log::info("Fetching employee with employee number: " . $employeeNumber);
+        $employee = User::where('employee_number', '=', $employeeNumber)->with('divisions')->first();
 
         if ($employee) {
             return response()->json($employee);
@@ -118,7 +118,7 @@ class EmployeeManagementController extends Controller
     /**
      * The head requested us if instead of deleting employee information, we will instead archive the data, in which it will be automatically deleted from the system for a certain time * period depending on what the head decides.
      */
-    public function archive($id)
+    public function destroy($id)
     {
         $archived = \Illuminate\Support\Facades\DB::table('aphso_employees')->where('employee_number', $id)->update(['emp_status' => 0]);
 

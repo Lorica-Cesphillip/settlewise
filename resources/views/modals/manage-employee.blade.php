@@ -51,7 +51,7 @@
                 </x-slot>
                 <!-- SVG icon omitted for brevity -->
             </x-tertiary-button>
-            @can('edit', $employee)
+            @can('edit-employee', $employee)
                 <button x-on:click.prevent="$dispatch('open-modal', 'edit-employee')"
                     class="p-4 bg-[#0d5dba] rounded-lg inline-flex justify-center items-center gap-2.5 text-white tracking-widest hover:bg-blue-900">
                     <p>Edit Employee</p>
@@ -66,7 +66,7 @@
         </div>
     </div>
 </x-modal>
-
+@can('edit-employee', $employee)
 <x-modal name="edit-employee" :maxWidth="'4xl'" :show="false" focusable>
     <h3 class = "text-center font-bold text-2xl">Edit Employee</h3>
 
@@ -333,6 +333,7 @@
         </div>
     </form>
 </x-modal>
+@endcan
 
 <script>
     function employeeData() {
@@ -350,13 +351,12 @@
             employee_image: '',
             async fetchEmployeeData(employeeNumber) {
                 try {
-                    const response = await fetch('/employees/${employeeNumber}');
+                    const response = await fetch(`/api/employee/${employeeNumber}`);
 
                     if (!response.ok) throw new Error(`HTTP error! Status: ${response.status}`);
 
                     // Read JSON data only once and assign it to a variable
                     const data = await response.json();
-                    console.log("Employee data:", data);  // Log JSON to verify its structure
 
                     // Update Alpine.js properties with the response data
                     this.lname = data.lname;

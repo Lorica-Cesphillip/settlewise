@@ -121,7 +121,7 @@
                 <td class = "w-[500px] py-1 border-b-2">{{$outgoing->subject}}</td>
                 <td class = "w-[100px] py-1 border-b-2 items-center justify-items-center">
                     <div class="grow shrink basis-0 h-6 justify-start items-center gap-3 flex">
-                        <div class="px-3 py-0.5 bg-green-500 rounded-xl flex-col justify-center items-center gap-2 inline-flex">
+                        <div class="px-3 py-0.5 {{ $outgoing->status->bgColor() }} rounded-xl flex-col justify-center items-center gap-2 inline-flex">
                             <div class="justify-center items-center gap-0.5 inline-flex">
                                 <div class="text-center text-white text-sm font-medium leading-tight">{{$outgoing->status->document_status}}</div>
                             </div>
@@ -129,7 +129,7 @@
                     </div>
                 </td>
                 <td class = "w-[180px] px-11 py-3 inline-flex justify-between">
-                    <button x-data="" x-on:click.prevent="$dispatch('open-modal', {name: 'view-incoming-document', trackingCode: '{{$outgoing->document_tracking_code}}'})">
+                    <button x-data="" x-on:click.prevent="$dispatch('open-modal', {name: 'view-outgoing-document', trackingCode: '{{$outgoing->document_tracking_code}}'})">
                         <svg class="h-[30px] w-[30px] gap-2" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <g id="icon / eye">
                                 <g id="icon">
@@ -144,7 +144,8 @@
                         </svg>
                     </button>
                     @if(Auth::user()->divisions->division_name == "APHSO Department")
-                    <form action="#" method="POST" style="display:inline">
+                    <form action="{{route('archived.update', $outgoing->document_tracking_code)}}" method="POST" style="display:inline">
+                        @method('update')
                         @csrf
                         <button type="submit" class="textpx-4">
                             <svg class="h-[30px] w-[30px]" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
