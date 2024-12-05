@@ -30,13 +30,8 @@ class AuthenticatedSessionController extends Controller
 
         $request->verify();
         $request->session()->regenerate();
-        $incoming_documents = \App\Models\DocumentTracker::with(['document_type', 'from_employee'])
-        ->where('to_employee_id', Auth::user()->employee_number)
-        ->latest()
-        ->take(4)
-        ->get();
 
-        return redirect()->route('dashboard')->with('incoming_documents', $incoming_documents);
+        return redirect()->route('dashboard');
     }
 
     /**
@@ -46,11 +41,8 @@ class AuthenticatedSessionController extends Controller
     {
         $request->authenticate();
 
-        //Will be relocated to the otp verification, if the application has thoroughly tested.
-        $request->session()->regenerate();
-        $incoming_documents = \App\Models\DocumentTracker::with(['document_type', 'from_employee'])->where('to_employee_id', '=', Auth::user()->employee_number)->latest()->take(4)->get();
-        Log::info('Data: ', $incoming_documents->toArray());
-        return redirect()->route('dashboard')->with('incoming_documents', $incoming_documents);
+        //Will be relocated to the otp verification, if the application has tested thoroughly.
+        return redirect()->route('dashboard');
     }
 
     /**

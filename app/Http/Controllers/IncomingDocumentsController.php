@@ -49,13 +49,13 @@ class IncomingDocumentsController extends Controller
             'rejection_reason' => 'string|not_in:--Select reason of rejection--'
         ]);
         if($request->granted){
-            DocumentRequest::insert(['request_comments' => $request->request_comments]);
+            DocumentRequest::where('request_id', $id)->insert(['comments_if_granted' => $request->request_comments]);
             $document_tracking_code->update(['document_status_id' => 2]);
             $document_tracking_code->save();
 
             return redirect()->route('incoming.index')->with('success');
         }else{
-            DocumentRequest::insert(['rejection_reason' => $request->rejection_reason]);
+            DocumentRequest::where('request_id', $id)->insert(['rejection_reason' => $request->rejection_reason]);
             $document_tracking_code->update(['document_status_id' => 3]);
             $document_tracking_code->save();
 

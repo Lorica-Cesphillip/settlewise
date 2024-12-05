@@ -23,7 +23,7 @@ class OutgoingDocumentsController extends Controller
     public function index()
     {
         $outgoing_documents = DocumentTracker::with(['to_employee', 'request', 'referral', 'document_type', 'status'])->where('from_employee_id', '=', Auth::user()->employee_number)->paginate(10);
-        $employees = User::select(DB::raw("CONCAT(fname, ' ', mname, ' ', lname) AS full_name"))->get();
+        $employees = User::select(DB::raw("CONCAT(fname, ' ', mname, ' ', lname) AS full_name"))->where('employee_number', '!=', Auth::user()->employee_number)->get();
         $document_type = DocumentType::all();
 
         return view('documents.outgoing', compact('outgoing_documents', 'employees', 'document_type'));
@@ -66,6 +66,7 @@ class OutgoingDocumentsController extends Controller
             'confidential' => 'required|boolean',
             'others' => 'string|max:140',
             'subject' => 'required|string|max:140',
+            'remarks' => 'nullable|string|max:140',
             'document' => 'required|mimes:docx,doc,pdf,xlsx,xls,ppt,pptx|max:10000'
         ]);
 
@@ -97,7 +98,6 @@ class OutgoingDocumentsController extends Controller
             $file = $request->file('document');
             $document_type = $request->document_type;
             $date = now()->format('m-d-Y');
-            $tracking_code = $request->id;
 
             $new_file = "{$document_type}-{$date}.{$file->getClientOriginalExtension()}";
             $path = $file->storeAs('document', $new_file);
@@ -130,7 +130,7 @@ class OutgoingDocumentsController extends Controller
                     'request_purpose' => 'string|max:140',
                     'request_details' => 'string|max:140',
                 ]);
-                $doc_request = DocumentRequest::insert($request->only('request_type', 'others', 'document_requested', 'request_purpose', 'request_details'));
+                $doc_request = DocumentRequest::insert($request->only('request_type', 'others', 'requested_document', 'request_purpose', 'request_details'));
                 $createdRecord->update(['request_id' => $doc_request]);
             }
             return redirect()->back()->with('success', 'Document sent successfully!');
@@ -144,37 +144,20 @@ class OutgoingDocumentsController extends Controller
     /**
      * This will be used if the head will forward the document depending on the type: standard and referral.
      */
-    public function update(Request $request, DocumentTracker $documentTracker)
+    public function update(Request $request)
     {
+        $tracking_code = $request->input('tracking_code');
         $request->validate([
             'to_be_referred' => 'required|integer',
-            'for' => 'required|string|max:140',
+            'for' => 'required|not_in:--Select Only One--',
             'for_urgent' => 'boolean',
-            'please' => 'required|string|max:140',
+            'please' => 'required|not_in:--Select Only One--',
             'plase_urgent' => 'boolean',
             'remarks' => 'string|max:140',
         ]);
 
-        //Before executing this line, the recipient_name must first be changed into a to_emp_id.
-        $name = explode(' ', $request->to_be_referred);
-
-        $lname = array_pop($name);
-        $mname = count($name) > 1 ? array_pop($name) : null;
-        $fname = implode(' ', $name);
-
-        $to_employee_id = User::where('first_name','=', $fname)
-                        ->where('last_name', '=', $lname)
-                        ->where(function ($query) use ($mname) {
-                            if ($mname) {
-                                $query->where('middle_name', '=', $mname);
-                            } else {
-                                $query->whereNull('middle_name');
-                            }
-                        })
-                        ->first();
-
         $referral = DocumentReferral::create([
-            'employee_number' => $to_employee_id,
+            'employee_number' => $request->to_be_referred,
             'for' => $request->for,
             'for_urgent' => $request->for_urgent,
             'please' => $request->please,
@@ -182,8 +165,7 @@ class OutgoingDocumentsController extends Controller
             'remarks' => $request->remarks
         ]);
 
-        $documentTracker->insert(['referral_id' => $referral->referral_id]);
-        $documentTracker->save();
+        DocumentTracker::where('document_tracking_code', '=', $tracking_code)->insert(['referral_id' => $referral->referral_id]);
 
         return view('documents.incoming')->with('success');
     }

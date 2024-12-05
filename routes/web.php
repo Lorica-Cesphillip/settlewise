@@ -24,9 +24,8 @@ Route::middleware(['auth', 'verified'])->group(function () {
     /*Incoming Documents */
     Route::get('/incoming', [IncomingDocumentsController::class, 'index'])->name('incoming.index');
     Route::get('/api/referral/{full_name}', [OutgoingDocumentsController::class, 'getDivision']);
-    Route::post('/forward-request', [OutgoingDocumentsController::class, 'acceptRequest'])->name('outgoing.accept');
-    Route::post('/reject-request', [OutgoingDocumentsController::class, 'rejectRequest'])->name('outgoing.reject');
-    Route::post('/forward-referral', [OutgoingDocumentsController::class, 'storeReferral'])->name('outgoing.storeReferral');
+    Route::patch('/incoming/request/{document_tracking_code}', [IncomingDocumentsController::class, 'update'])->name('granted');
+    Route::patch('/forward-referral', [OutgoingDocumentsController::class, 'update'])->name('outgoing.update');
 
     /*Outgoing Documents */
     Route::get('/outgoing', [OutgoingDocumentsController::class, 'index'])->name('outgoing.index');
@@ -40,7 +39,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
     /*Document Conversation, where each of the incoming and outgoing documents has its own respective conversation. */
 
-    /*Archived Documents */
+    /*Archived Documents. Only the department head can archive the documents. */
     Route::get('/archived', [ArchivesController::class, 'index'])->name('archived.index');
     Route::get('/api/archived/view', [ArchivesController::class, 'show']);
     Route::put('/archived/{$id}', [ArchivesController::class, 'update'])->name('archived.update');
@@ -48,7 +47,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
     /*Employee Information Module*/
     Route::resource('/divisions', DivisionsController::class);
-    Route::resource('/employees', EmployeeManagementController::class)->only('index' ,'store', 'update', 'destroy');
+    Route::resource('/employees', EmployeeManagementController::class);
     Route::get('/api/employee/{employeeNumber}', [EmployeeManagementController::class, 'show']);
     Route::get('profile', function(){
         return view('documents.employee-information');

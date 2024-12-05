@@ -12,7 +12,7 @@
                     type="text"
                     name="employee_id"
                     :value="old('employee_id')"
-                    autofocus autocomplete="off" />
+                    autofocus autocomplete="on" />
                 <x-input-error :messages="$errors->get('employee_id')" class="mt-1" />
             </div>
 

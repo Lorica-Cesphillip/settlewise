@@ -12,7 +12,9 @@ class ArchivesController extends Controller
     //
     public function index(){
         try {
-            return view('documents.archived');
+            $archived_documents = DocumentTracker::latest()->with(['from_employee.divisions', 'to_employee.divisions', 'request', 'referral', 'document_type', 'status'])->where('is_archived', '=', 1)->paginate(10);
+
+            return view('documents.archived', compact('archived_documents'));
         } catch (\Exception $e) {
             Log::error('Error rendering the documents.archived view.', [
                 'error' => $e->getMessage(),
@@ -22,7 +24,7 @@ class ArchivesController extends Controller
         }
     }
 
-    public function update($id){
+    public function update(int $id){
         DocumentTracker::where('document_tracking_code', '=', $id)->update(['archived' => 1]);
 
         return view('documents.archived')->with('success');
@@ -30,7 +32,7 @@ class ArchivesController extends Controller
 
     public function show($trackingCode){
         $document = DocumentTracker::with(['from_employee.divisions', 'to_employee.divisions', 'request', 'referral', 'document_type', 'status'])
-        ->where('document_tracking_code', '=', $trackingCode)
+        ->where('document_tracking_code', '=', $trackingCode)->where('is_archived', '=', 1)
         ->first();
         Log::info( $document);
 

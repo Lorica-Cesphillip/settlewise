@@ -27,19 +27,11 @@ class AppServiceProvider extends ServiceProvider
             return $user->employee_number === $conversation->employee_id;
         });
 
-        Gate::define('create-employee', function(User $user){
+        Gate::define('manage-employee', function(User $user){
             return $user->divisions->abbreviation === 'HEAD';
         });
 
-        Gate::define('edit-employee', function(User $user){
-            return $user->divisions->abbreviation === 'HEAD';
-        });
-
-        Gate::define('update-employee', function(User $user){
-            return $user->divisions->abbreviation === 'HEAD';
-        });
-
-        Gate::define('archive-employee', function(User $user){
+        Gate::define('request-response', function(User $user){
             return $user->divisions->abbreviation === 'HEAD';
         });
     }

@@ -152,19 +152,54 @@
                 </x-slot>
 
                 <x-slot name="content">
-                    <x-dropdown-link :href="route('profile')">
-                        {{ __('Your Profile') }}
-                    </x-dropdown-link>
-
-                    <form action="{{route('logout')}}" method = "POST">
-                        @csrf
-
-                        <x-dropdown-link :href="route('logout')"
-                        onclick="event.preventDefault();
-                                    this.closest('form').submit();">
-                            {{ __('Log Out') }}
+                    <div class="absolute bottom-full right-0 mb-2 w-48 bg-white rounded-md shadow-lg">
+                        <!-- Dropdown Items -->
+                        <x-dropdown-link :href="route('profile')">
+                            <div class="flex items-center">
+                                <svg
+                                    class="w-5 h-5 mr-2 text-gray-500"
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    fill="none"
+                                    viewBox="0 0 24 24"
+                                    stroke="currentColor"
+                                >
+                                    <path
+                                        stroke-linecap="round"
+                                        stroke-linejoin="round"
+                                        stroke-width="2"
+                                        d="M5.121 18.364A4 4 0 0112 20a4 4 0 016.879-1.636M15 12a4 4 0 11-8 0 4 4 0 018 0z"
+                                    />
+                                </svg>
+                                {{ __('View Profile') }}
+                            </div>
                         </x-dropdown-link>
-                    </form>
+
+                        <form action="{{ route('logout') }}" method="POST">
+                            @csrf
+                            <x-dropdown-link
+                                :href="route('logout')"
+                                onclick="event.preventDefault(); this.closest('form').submit();"
+                            >
+                                <div class="flex items-center">
+                                    <svg
+                                        class="w-5 h-5 mr-2 text-gray-500"
+                                        xmlns="http://www.w3.org/2000/svg"
+                                        fill="none"
+                                        viewBox="0 0 24 24"
+                                        stroke="currentColor"
+                                    >
+                                        <path
+                                            stroke-linecap="round"
+                                            stroke-linejoin="round"
+                                            stroke-width="2"
+                                            d="M17 16l4-4m0 0l-4-4m4 4H7"
+                                        />
+                                    </svg>
+                                    {{ __('Log Out') }}
+                                </div>
+                            </x-dropdown-link>
+                        </form>
+                    </div>
                 </x-slot>
             </x-dropdown>
         </div>

@@ -180,7 +180,6 @@
 
     @include('modals.view-document')
     @include('modals.accept-reject-request-referral')
-    @include('modals.preview')
     @include('modals.document-referral')
     @include('modals.view-conversation')
     @include('modals.announcement-form')

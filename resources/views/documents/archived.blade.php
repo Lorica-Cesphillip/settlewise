@@ -99,37 +99,44 @@
     </div>
 
     <!--Archived Document Tables-->
-    <table class = "table-fixed border-gray-800">
-        <thead>
-            <tr class = "bg-slate-200 h-[30px]">
-                <th class = "w-[180px] p-2 border-b-2">Document Tracking Code</th>
-                <th class = "w-[200px] p-2 border-b-2">Receiver</th>
-                <th class = "w-[200px] p-2 border-b-2">Division</th>
-                <th class = "w-[180px] p-2 border-b-2">Document Type</th>
-                <th class = "w-[450px] p-2 border-b-2">Subject</th>
-                <th class = "w-[180px] p-2 border-b-2">Status</th>
-                <th class = "w-[180px] p-2 border-b-2">Action</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr class = "border-b-2 h-[40px]">
-                <td class = "w-[180px] py-1 border-b-2">01-04-25-001</td>
-                <td class = "w-[200px] py-1 border-b-2">Juan Dela Cruz</td>
-                <td class = "w-[200px] py-1 border-b-2">Administrative Division</td>
-                <td class = "w-[180px] py-1 border-b-2">Office Memorandum</td>
-                <td class = "w-[500px] py-1 border-b-2">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</td>
-                <th class = "w-[100px] py-1 border-b-2 justify-items-center items-center">
-                    <div class="grow shrink basis-0 h-6 justify-start items-center gap-3 flex">
-                        <div class="px-3 py-0.5 bg-yellow-500 rounded-xl flex-col  gap-2 inline-flex">
-                            <div class="justify-center items-center gap-0.5 inline-flex">
-                                <div class="text-center text-yellow-900 text-sm font-medium leading-tight">Status</div>
+    @if ($archived_documents->isEmpty())
+        <p class="text-sm text-gray-600 text-center">You haven't archived a document for a while.</p>
+    @else
+        <table class = "table-fixed border-gray-800">
+            <thead>
+                <tr class = "bg-slate-200 h-[30px]">
+                    <th class = "w-[180px] p-2 border-b-2">Document Tracking Code</th>
+                    <th class = "w-[200px] p-2 border-b-2">Sender</th>
+                    <th class = "w-[200px] p-2 border-b-2">Receiver</th>
+                    <th class = "w-[180px] p-2 border-b-2">Document Type</th>
+                    <th class = "w-[450px] p-2 border-b-2">Subject</th>
+                    <th class = "w-[180px] p-2 border-b-2">Status</th>
+                    <th class = "w-[180px] p-2 border-b-2">Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach($archived_documents as $archived)
+                <tr class = "border-b-2 h-[40px]">
+                    <td class = "w-[180px] py-1 border-b-2">{{\Carbon\Carbon::parse($archived->created_at)->format('m-d-Y')}}-{{str_pad($archived->document_tracking_code, 3, '0', STR_PAD_LEFT)}}</td>
+                    <td class = "w-[200px] py-1 border-b-2">{{$archived->from_employee->fname}} {{$archived->from_employee->mname}} {{$archived->from_employee->lname}} </td>
+                    @if(Auth::user()->divisions->division_name == "APHSO Department")
+                    <td class = "w-[200px] p-2 border-b-2">{{$archived->to_employee->fname}} {{$archived->to_employee->mname}} {{$archived->to_employee->lname}}</td>
+                    @else
+                    <td class = "w-[200px] p-2 border-b-2">{{$archived->from_employee->divisions->division_name}} Division</td>
+                    @endif
+                    <td class = "w-[180px] py-1 border-b-2">{{$archived->document_type->document_type}}</td>
+                    <td class = "w-[500px] py-1 border-b-2">{{$archived->subject}}</td>
+                    <td class = "w-[100px] py-1 border-b-2 items-center justify-items-center">
+                        <button class="grow shrink basis-0 h-6 justify-start items-center gap-3 flex">
+                            <div class="px-3 py-0.5 {{ $archived->status->bgColor() }} rounded-xl flex-col justify-center items-center gap-2 inline-flex">
+                                <div class="justify-center items-center gap-0.5 inline-flex">
+                                    <div class="text-center text-white text-sm font-medium leading-tight">{{$archived->status->document_status}}</div>
+                                </div>
                             </div>
-                        </div>
-                    </div>
-                </th>
-                <td class = "w-[180px] px-11 py-4 inline-flex justify-between">
-                    <a href="#">
-                        <button x-data = "" type="button" x-on:click.prevent="$dispatch('open-modal', 'view-document')">
+                        </button>
+                    </td>
+                    <td class = "w-[180px] px-11 py-3 inline-flex justify-between">
+                        <button x-data = "" type="button" x-on:click.prevent="$dispatch('open-modal', {name: 'view-incoming-document', trackingCode: '{{$archived->document_tracking_code}}'})">
                             <svg class="h-[30px] w-[30px] gap-2" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
                                 <g id="icon / eye">
                                     <g id="icon">
@@ -143,25 +150,11 @@
                                 </g>
                             </svg>
                         </button>
-                    </a>
-                    <form action="#" method="POST" style="display:inline">
-                        @csrf
-                        @method('DELETE')
-                        <button type="submit" class="textpx-4">
-                            <svg class="h-[30px] w-[30px]" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                <g id="icon / box-1">
-                                    <path id="icon" fill-rule="evenodd" clip-rule="evenodd"
-                                        d="M4.16675 2.08331C2.78604 2.08331 1.66675 3.2026 1.66675 4.58331V6.24998C1.66675 6.86688 2.00191 7.4055 2.50008 7.69368V14.5833C2.50008 16.4243 3.99247 17.9166 5.83341 17.9166H14.1667C16.0077 17.9166 17.5001 16.4243 17.5001 14.5833V7.69368C17.9982 7.4055 18.3334 6.86688 18.3334 6.24998V4.58331C18.3334 3.2026 17.2141 2.08331 15.8334 2.08331H4.16675ZM5.83341 16.25C4.91294 16.25 4.16675 15.5038 4.16675 14.5833V7.91665H15.8334V14.5833C15.8334 15.5038 15.0872 16.25 14.1667 16.25H5.83341ZM15.8334 3.74998C16.2937 3.74998 16.6667 4.12308 16.6667 4.58331V6.24998H3.33341V4.58331C3.33341 4.12308 3.70651 3.74998 4.16675 3.74998H15.8334Z"
-                                        fill="#200E3A" />
-                                </g>
-                            </svg>
-                        </button>
-                    </form>
-                </td>
-            </tr>
-        </tbody>
-    </table>
-
+                    </td>
+                </tr>
+                @endforeach
+            </tbody>
+        </table>
+    @endif
     @include('modals.view-document')
-
 </x-app-layout>

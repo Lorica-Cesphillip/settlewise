@@ -114,7 +114,7 @@
         <tbody>
             @foreach($outgoing_documents as $outgoing)
             <tr class = "border-b-2 h-[40px]">
-                <td class = "w-[180px] py-1 border-b-2">{{str_pad($outgoing->document_tracking_code, 3, '0', STR_PAD_LEFT)}}-{{\Carbon\Carbon::parse($outgoing->created_at)->format('m-d-Y')}}</td>
+                <td class = "w-[180px] py-1 border-b-2">{{\Carbon\Carbon::parse($outgoing->created_at)->format('m-d-Y')}}-{{str_pad($outgoing->document_tracking_code, 3, '0', STR_PAD_LEFT)}}</td>
                 <td class = "w-[200px] py-1 border-b-2">{{$outgoing->to_employee->fname}} {{$outgoing->to_employee->mname}} {{$outgoing->to_employee->lname}}</td>
                 <td class = "w-[200px] py-1 border-b-2">{{$outgoing->to_employee->divisions->division_name}} Division</td>
                 <td class = "w-[180px] py-1 border-b-2">{{$outgoing->document_type->document_type}}</td>

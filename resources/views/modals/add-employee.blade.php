@@ -1,4 +1,4 @@
-<x-modal name="add-new-employee" :maxWidth="'4xl'" :show="false" focusable>
+<x-modal name="add-new-employee" :maxWidth="'5xl'" :show="false" focusable>
     <h3 class = "text-center font-bold text-2xl">Add New Employee</h3>
 
     <form
@@ -14,6 +14,21 @@
         contact_nos: '',
         division: '',
         position: '',
+        imageUrl: '',
+        previewImage(event) {
+            const file = event.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = (e) => {
+                    this.imageUrl = e.target.result;
+                    this.showPreview();
+                };
+                reader.readAsDataURL(file);
+            }
+        },
+        confirmed: false,
+        success: false,
+        failure: false,
         async submitForm(event) {
             event.preventDefault();
             try {
@@ -23,12 +38,12 @@
                     headers: { 'Accept': 'application/json' },
                 });
                 if (response.ok) {
-                    this.showSuccessModal = true;
+                    this.success = true;
                     this.$dispatch('open-modal', 'employee-added-successfully');
                 } else {
                     const errorData = await response.json();
                     console.error('Validation Errors:', errorData);
-                    this.showFailureModal = true;
+                    this.failure = true;
                     this.$dispatch('open-modal', 'employee-added-failed');
                 }
             } catch (error) {
@@ -92,19 +107,19 @@
                 <x-input-label for="name" :value="__('Employee Name')" />
                 <div class = "gap-2 w-full inline-flex">
                     <div>
-                        <x-text-input x-model="last_name" id="name" class="block mt-1 w-[266px]" type="text"
+                        <x-text-input x-model="last_name" id="name" class="block mt-1 w-[310px]" type="text"
                             name="last_name" autofocus autocomplete="off" placeholder="Last Name" />
                         <x-input-error :messages="$errors->get('last_name')" class="mt-2" />
                     </div>
 
                     <div>
-                        <x-text-input x-model="first_name" id="name" class="block mt-1 w-[266px]" type="text"
+                        <x-text-input x-model="first_name" id="name" class="block mt-1 w-[310px]" type="text"
                             name="first_name" autofocus autocomplete="off" placeholder="First Name" />
                         <x-input-error :messages="$errors->get('first_name')" class="mt-2" />
                     </div>
 
                     <div>
-                        <x-text-input x-model="middle_name" id="name" class="block mt-1 w-[266px]" type="text"
+                        <x-text-input x-model="middle_name" id="name" class="block mt-1 w-[310px]" type="text"
                             name="middle_name" autofocus autocomplete="off"
                             placeholder="Middle Name" />
                         <x-input-error :messages="$errors->get('middle_name')" class="mt-2" />
@@ -192,24 +207,31 @@
 
             <h5 class = "font-bold text-xl py-2">Part III: Profile Photo</h5>
 
-            <div x-model="imageUrl" class="flex items-center justify-center w-full">
-                <label for="imageUrl"
-                    class="flex flex-col items-center justify-center w-full h-64 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 dark:hover:bg-gray-800 dark:bg-gray-700 hover:bg-gray-100 dark:border-gray-600 dark:hover:border-gray-500">
-                    <div class="flex flex-col items-center justify-center pt-5 pb-6">
+            <div x-data="imageUploadComponent" class="flex flex-col items-center justify-center w-full">
+                <label for="imageUpload"
+                    class="flex flex-col items-center justify-center w-full h-64 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 hover:bg-gray-100 dark:bg-gray-700 dark:hover:bg-gray-800">
+
+                    <!-- Placeholder -->
+                    <div x-show="!imageUrl" class="flex flex-col items-center justify-center pt-5 pb-6">
                         <svg class="w-8 h-8 mb-4 text-gray-500 dark:text-gray-400" aria-hidden="true"
                             xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 16">
-                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
-                                stroke-width="2"
+                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                                 d="M13 13h3a3 3 0 0 0 0-6h-.025A5.56 5.56 0 0 0 16 6.5 5.5 5.5 0 0 0 5.207 5.021C5.137 5.017 5.071 5 5 5a4 4 0 0 0 0 8h2.167M10 15V6m0 0L8 8m2-2 2 2" />
                         </svg>
-                        <p class="mb-2 text-sm text-gray-500 dark:text-gray-400"><span class="font-semibold">Click
-                                to upload</span> or drag and drop</p>
-                        <p class="text-xs text-gray-500 dark:text-gray-400">PNG, JPG or JPEG(MAX. 400x400px)</p>
+                        <p class="mb-2 text-sm text-gray-500 dark:text-gray-400">
+                            <span class="font-semibold">Click to upload</span> or drag and drop
+                        </p>
+                        <p class="text-xs text-gray-500 dark:text-gray-400">PNG, JPG or JPEG (MAX. 400x400px)</p>
                     </div>
-                    <input id="imageUrl" type="file" class="hidden" />
+
+                    <!-- Image Preview -->
+                    <img x-show="imageUrl" :src="imageUrl" alt="Uploaded Image"
+                        class="w-full h-full object-cover rounded-lg hidden">
+
+                    <!-- File Input -->
+                    <input id="imageUpload" type="file" class="hidden" name="employee_image" @change="previewImage" accept="image/*" />
                 </label>
             </div>
-
         </div>
         <div x-cloak x-show="formStep === 3">
             <h5 class="font-bold text-xl py-5">Part IV: Confirm Employee Information</h5>
@@ -218,7 +240,7 @@
                 <div class="p-4 columns-2">
                     <div>
                         <p class="font-light">Full Name: <span class="font-bold underline"
-                                x-text="`${last_name} ${first_name} ${middle_name}`"></span></p>
+                                x-text="`${last_name}, ${first_name} ${middle_name}`"></span></p>
                         <p class="font-light">Home Address: <span class="font-bold underline"
                                 x-text="address"></span></p>
                         <p class="font-light">Birthdate: <span class="font-bold underline" x-text="birthdate"></span>
@@ -252,7 +274,7 @@
             </div>
         </div>
 
-        <div class = "inline-flex justify-between w-full pt-5">
+        <div class = "inline-flex justify-between w-full pt-5 gap-2">
             <x-tertiary-button x-cloak x-show="formStep === 1"
                 x-on:click.prevent="$dispatch('close-modal', 'add-new-employee')">
                 <x-slot name="name">Close</x-slot>
@@ -278,8 +300,7 @@
                 </x-slot>
                 <x-slot name="name">Back</x-slot>
             </x-tertiary-button>
-            <button x-cloak x-show="formStep < 3" @click="formStep += 1" type="button"
-                class="p-4 bg-[#0d5dba] rounded-lg flex-col justify-center items-center gap-2.5 flex text-white tracking-widest hover:bg-blue-700 focus:bg-blue-700 active:bg-blue-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 transition ease-in-out duration-150">
+            <button x-cloak x-show="formStep < 3" @click="formStep += 1" type="button" class="p-4 bg-blue-500 rounded-lg flex-col justify-center items-center gap-2.5 flex text-white tracking-widest hover:bg-blue-700 focus:bg-blue-700 active:bg-blue-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 transition ease-in-out duration-150" >
                 <div class = "justify-center items-center gap-2 inline-flex">
                     <div class = "font-semibold text-white">Next</div>
                     <div class = "relative">
@@ -292,9 +313,13 @@
                     </div>
                 </div>
             </button>
-            <x-primary-button x-bind:disabled="confirm" x-cloak x-show="formStep === 3">
-                <x-slot name="name">Create New Employee</x-slot>
-            </x-primary-button>
+            <div x-cloak x-show="formStep === 3" class="py-3.5">
+                <input type="checkbox" id="confirmation" x-model="confirmed" name="confirmation" class = "rounded-md" />
+                <label for="confirmation" class="cursor-pointer">By clicking, you indicate that the employee information based on form is correct.</label>
+            </div>
+            <button :disabled="!confirmed" class="p-4 rounded-lg flex-col justify-center items-center gap-2.5 flex text-white tracking-widest" :class="confirmed ? ' bg-blue-500 hover:bg-blue-900 focus:bg-blue-900 active:bg-blue-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 transition ease-in-out duration-150' : 'bg-gray-400 cursor-not-allowed'" x-cloak x-show="formStep === 3">
+                Create New Employee
+            </button>
         </div>
     </form>
 </x-modal>

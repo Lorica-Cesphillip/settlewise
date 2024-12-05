@@ -61,12 +61,16 @@ class LoginRequest extends FormRequest
 
         if($divisions->abbreviation !== $division){
             throw ValidationException::withMessages([
-                'employee_id' => trans('auth.failed'),
+                'employee_id' => 'This APHSO Division does not exist in our system.',
             ]);
         }
-
-        Auth::login($user, $this->boolean('remember'));
-
+        if($user->emp_status == 0){
+            throw ValidationException::withMessages([
+                'employee_id' => 'Your employee Id is deactivated by the Department Head.',
+            ]);
+        }else{
+            Auth::login($user, $this->boolean('remember'));
+        }
         RateLimiter::clear($this->throttleKey());
     }
 

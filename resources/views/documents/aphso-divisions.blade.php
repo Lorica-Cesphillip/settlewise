@@ -44,10 +44,10 @@
         </div>
     </div>
 
-    <div class = "w-full self-stretch h-full p-2">
+    <div class = "w-full self-stretch h-full items-center justify-items-center p-2">
         <table class = "table-fixed border-b-2">
             <thead>
-                <tr class = "border-b-2">
+                <tr class = "border-b-2 bg-gray-200">
                     <th class = "w-[150px] h-[30px] p-3 justify-start">Division Id</th>
                     <th class = "w-[400px] h-[30px] p-3 justify-start">Division Name</th>
                     <th class = "w-[150px] h-[30px] p-3 justify-start">Abbreviation</th>

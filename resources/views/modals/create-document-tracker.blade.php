@@ -11,6 +11,7 @@
         others: '',
         confidential: false,
         subject: '',
+        remarks: '',
         requested: false,
         document: '',
         request_type: '',
@@ -173,6 +174,10 @@
                 <x-input-label for="subject" :value="__('Subject *')" />
                 <x-text-input x-model="subject" id="subject" class="block mt-1 w-full" type="text" name="subject" autofocus autocomplete="off" />
                 <x-input-error :messages="$errors->get('subject')" class="mt-2" />
+
+                <x-input-label for="remarks" :value="__('Remarks')" />
+                <x-text-input x-model="remarks" id="remarks" class="block mt-1 w-full" type="text" name="remarks" autofocus autocomplete="off" />
+                <x-input-error :messages="$errors->get('remarks')" class="mt-2" />
             </div>
 
             <div class = "py-4 w-full justify-between inline-flex">
@@ -277,6 +282,7 @@
                 <p class = "font-light">Document Type: <span class = "font-bold" x-text="document_type"></span></p>
                 <p class = "font-light">Others: <span class = "font-bold" x-text="others"></span></p>
                 <p class = "font-light">Subject: <span class = "font-bold" x-text="subject"></span></p>
+                <p class = "font-light">Remarks: <span class = "font-bold" x-text="remarks"></span></p>
                 <p class = "font-bold text-lg py-1">Request Details</p>
                 <p class = "font-light">Request Type: <span class = "font-bold" x-text="request_type"></span></p>
                 <p class = "font-light">Requested Document: <span class = "font-bold"

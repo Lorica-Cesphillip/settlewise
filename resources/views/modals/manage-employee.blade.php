@@ -51,8 +51,8 @@
                 </x-slot>
                 <!-- SVG icon omitted for brevity -->
             </x-tertiary-button>
-            @can('edit-employee', $employee)
-                <button x-on:click.prevent="$dispatch('open-modal', 'edit-employee')"
+            @can('manage-employee', $employee)
+                <button x-on:click.prevent="$dispatch('open-modal', {name: 'edit-employee', employeeNumber: employee_number})"
                     class="p-4 bg-[#0d5dba] rounded-lg inline-flex justify-center items-center gap-2.5 text-white tracking-widest hover:bg-blue-900">
                     <p>Edit Employee</p>
                     <div>
@@ -66,12 +66,21 @@
         </div>
     </div>
 </x-modal>
-@can('edit-employee', $employee)
-<x-modal name="edit-employee" :maxWidth="'4xl'" :show="false" focusable>
+@can('x-text-employee', $employee)
+<x-modal name="edit-employee" :maxWidth="'4xl'" focusable>
     <h3 class = "text-center font-bold text-2xl">Edit Employee</h3>
 
-    <form x-data="{ formStep: 1, last_name: '', first_name: '', middle_name: '', address: '', birthdate: '', marital_status: '', email: '', contact_nos: '', division: '', position: '' }" class="space-y-2" action = "{{ route('employees.store') }}" method = "POST">
+    <form
+    x-data="employeeData" @open-modal.window="if($event.detail.name === 'edit-employee') {
+        fetchEmployeeData($event.detail.employeeNumber);
+        show=true;
+    }"
+    class="space-y-2"
+    action = "{{ route('employees.update') }}"
+    method = "POST"
+    >
         @csrf
+        @method('update')
 
         <!-- Progress Bar Component -->
         <div class="flex items-center justify-center py-4">
@@ -123,19 +132,19 @@
                 <div class = "gap-2 w-full inline-flex">
                     <div>
                         <x-text-input x-model="last_name" id="name" class="block mt-1 w-[266px]" type="text"
-                            name="last_name" :value="old('last_name')" autofocus autocomplete="off" placeholder="Last Name" />
+                            name="last_name" x-text="last_name" autofocus autocomplete="off" placeholder="Last Name" />
                         <x-input-error :messages="$errors->get('last_name')" class="mt-2" />
                     </div>
 
                     <div>
                         <x-text-input x-model="first_name" id="name" class="block mt-1 w-[266px]" type="text"
-                            name="first_name" :value="old('first_name')" autofocus autocomplete="off" placeholder="First Name" />
+                            name="first_name" x-text="first_name" autofocus autocomplete="off" placeholder="First Name" />
                         <x-input-error :messages="$errors->get('first_name')" class="mt-2" />
                     </div>
 
                     <div>
                         <x-text-input x-model="middle_name" id="name" class="block mt-1 w-[266px]" type="text"
-                            name="middle_name" :value="old('middle_name')" autofocus autocomplete="off"
+                            name="middle_name" x-text="middle_name" autofocus autocomplete="off"
                             placeholder="Middle Name" />
                         <x-input-error :messages="$errors->get('middle_name')" class="mt-2" />
                     </div>
@@ -155,7 +164,7 @@
                 <div>
                     <x-input-label for="birthday" :value="__('Birthdate')" />
                     <x-text-input x-model="birthdate" id="birthdate" class="block mt-1 w-full" type="date"
-                        name="birthdate" :value="old('birthdate')" autofocus autocomplete="off"
+                        name="birthdate" x-text="birthdate" autofocus autocomplete="off"
                         placeholder="Select Employee's Birthdate" />
                     <x-input-error :messages="$errors->get('birthdate')" class="mt-2" />
                 </div>
@@ -338,6 +347,8 @@
 <script>
     function employeeData() {
         return {
+            formStep: 1,
+            employee_number: 0,
             lname: '',
             fname: '',
             mname: '',
@@ -359,6 +370,7 @@
                     const data = await response.json();
 
                     // Update Alpine.js properties with the response data
+                    this.employee_number = data.employee_number;
                     this.lname = data.lname;
                     this.fname = data.fname;
                     this.mname = data.mname;

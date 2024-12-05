@@ -137,6 +137,7 @@
                             </button>
                             @if(Auth::user()->divisions->division_name == "APHSO Department")
                             <form action="{{ route('employees.destroy', $employee->employee_number) }}" method="POST" style="display:inline">
+                                @method('DELETE')
                                 @csrf
                                 <button type="submit" class="textpx-4">
                                     <svg class="h-[20px] w-[20px]" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">

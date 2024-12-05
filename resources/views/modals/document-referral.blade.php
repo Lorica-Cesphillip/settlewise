@@ -1,31 +1,31 @@
 <!-- Refer Someone Modal -->
 @if(Auth::user()->divisions->abbreviation == "HEAD")
 <x-modal name="refer-someone" :maxWidth="'5xl'" :show="false" focusable>
-    <h3 class="font-bold text-2xl text-center">DOCUMENT REFERRAL FORM</h3>
-            <!--Main Body-->
-        <div class="grid grid-cols-4 grid-rows-6 py-4">
-            <div class = "font-light">Tracking Code: </div>
-            <div class="font-bold underline col-span-3 col-start-2 row-start-1">01-07-2025-001</div>
-            <div class="font-light col-start-1 row-start-2">Document Type: </div>
-            <div class="font-bold underline col-span-3 row-start-2">Office Order</div>
-            <div class="font-light row-start-3">Subject: </div>
-            <div class="font-bold underline col-span-3 col-start-2 row-start-3">Lorem ipsum dolor sit amet, consectetur
-                adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</div>
-            <div class="font-light col-start-1 row-start-4">Remarks: </div>
-            <div class="font-bold underline col-span-3 row-start-4">Lorem ipsum dolor sit amet, consectetur adipiscing
-                elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</div>
-            <div class="font-light row-start-5">Transmitted by: </div>
-            <div class="font-bold underline col-start-2 row-start-5">Juan Dela Cruz</div>
-            <div class="font-light col-start-1 row-start-6">Date Transmitted: </div>
-            <div class="font-bold underline col-start-2 row-start-6">01-07-2025</div>
-            <div class="font-light col-start-3 row-start-5">Division: </div>
-            <div class="font-bold underline col-start-4 row-start-5">Administrative Division</div>
-            <div class="font-light col-start-3 row-start-6">Status: </div>
-            <div class="font-bold underline row-start-6">Pending</div>
+    <div x-data="documentData" @open-modal.window="if($event.detail.name === 'refer-someone'){
+        tracking_code = $event.detail.trackingCode;
+        fetchDocument(tracking_code);
+        show=true;
+    }">
+    <h3 class="font-bold text-2xl text-center pb-4">DOCUMENT REFERRAL FORM</h3>
+    <hr class="bg-gray-400">
+        <!--Main Body-->
+        <div class="py-3">
+            <div class = "font-light">Tracking Code: <span class="font-bold underline" x-text="`${date_transmitted}-${tracking_code}`"></div>
+            <div class="font-light">Document Type: <span class = "font-bold underline" x-text="document_type"></span></div>
+            <div class="font-light">Subject: <span class="font-bold underline" x-text="subject"></span></div>
+            <div class="font-light">Remarks: <span class="font-bold underline" x-text="remarks"></span></div>
+            <div class="font-light">Transmitted to: <span class="font-bold underline" x-text="receiver"></span></div>
+            <div class="font-light">Date Transmitted: <span class="font-bold underline" x-text="date_transmitted"></span></div>
+            <div class="font-light">Division: <span class="font-bold underline" x-text="division"></span></div>
+            <div class="font-light">Status: <span class="font-bold underline" x-text="document_status"></span></div>
         </div>
-    <form x-cloak x-data="{ referred_employee: '', division: '', for: '', for_select: false, please: '', please_others: false, confirmation: false }" action="{{ route('outgoing.storeReferral') }}" method="POST">
+    </div>
+    <hr class="bg-gray-400">
+    <form x-cloak x-data="{ referred_employee: '', division: '', for: '', for_select: false, please: '', please_others: false, confirmation: false }" action="{{ route('outgoing.update') }}" method="POST">
+        @method('PATCH')
         @csrf
         <!-- Full-width Select Employee to be Referred -->
+        <input type="hidden" x-text="tracking_code" name="document_tracking_code" value="tracking_code" />
         <div x-data="referralDivision()" class="inline-flex gap-3">
             <div>
                 <x-input-label for="employee-select" :value="__('Select Employee to be Referred:')"/>
@@ -184,4 +184,5 @@
             }
         };
     }
+
 </script>

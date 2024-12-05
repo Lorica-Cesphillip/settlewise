@@ -1,8 +1,23 @@
-    <!-- Reject Request Modal -->
-    <x-modal name="reject-request" :maxWidth="'2xl'" :show="false" focusable>
-        <form action="#" method="POST">
+<!-- Reject Request Modal -->
+@can('request-response', $incoming_documents)
+<x-modal name="reject-request" :maxWidth="'2xl'" :show="false" focusable>
+    <div
+        x-data="{
+            request_id: 0,
+            documentTracker: 0
+        }"
+        @open-modal.window="if($event.detail.name === 'reject-request'){
+        request_id = $event.detail.requestId;
+        documentTracker = $event.detail.trackingCode;
+        show=true;"
+        >
+        <form action="{{route('granted', $incoming->document_tracking_code)}}" method="POST">
+            @method('patch')
+            @csrf
             <h3 class = "text-2xl font-bold text-center">Are you sure you are rejecting the request?</h3>
             <input type="hidden" name="granted" value="0">
+            <input type="hidden" name="tracking_code" value="documentTracker">
+            <input type="hidden" name="request_id" value="request_id">
             <div>
                 <x-input-label for="rejection_reason" :value="__('Why do you reject the request?')"/>
                 <select id="rejection_reason" name="rejection-reason" class="border-gray-300 w-full rounded-md">
@@ -26,13 +41,17 @@
                 </button>
             </div>
         </form>
+    </div>
 </x-modal>
 
         <!-- Accept Request Modal -->
 <x-modal name="accept-request" :maxWidth="'2xl'" :show="false" focusable>
+    <div x-data></div>
     <div class="w-[600px] h-[500px]">
         <h5 class="text-2xl font-bold text-center pb-4">Request Comments</h5>
-            <form action="#" method="POST" class="gap-4">
+            <form action="{{route('granted', $incoming->document_tracking_code)}}" method="POST" class="gap-4">
+                @method('patch')
+                @csrf
                 <input type="hidden" name="granted" value="1"/>
                 <textarea name="request_comments" class="w-full h-[400px] rounded-lg border-gray-300" id="acceptRequestTextarea" placeholder="Add any additional notes or comments here..."></textarea>
                 <div class="items-center justify-items-center">
@@ -56,3 +75,4 @@
         </div>
     </div>
 </x-modal>
+@endcan
