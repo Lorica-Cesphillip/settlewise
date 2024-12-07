@@ -3,7 +3,7 @@
     <!-- Modal Title -->
     <h3 class="font-bold text-2xl text-center pb-5">POST AN ANNOUNCEMENT</h3>
 
-    <form action="#" method="POST">
+    <form action="{{route('post_announcement')}}" method="POST">
         <div>
             <x-input-label for="what" :value="__('What is the Announcement All About?')" />
             <x-text-input id="what" type="text" name="what" class="block w-full mt-1" :value="old('what')" autofocus
@@ -14,7 +14,7 @@
             <x-input-label for="where" :value="__('Where will be the event happen?')" />
             <x-text-input id="where" type="text" name="where" class="block w-full mt-1" :value="old('where')"
                 autofocus autocomplete="off" placeholder="Event Location" />
-            <x-input-error :messages="$errors->get('what')" class = "mt-2" />
+            <x-input-error :messages="$errors->get('where')" class = "mt-2" />
         </div>
         <div>
             <x-input-label for="who" :value="__('Who will attend such event?')" />

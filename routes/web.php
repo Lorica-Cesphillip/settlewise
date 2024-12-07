@@ -22,7 +22,7 @@ Route::get('/', function () {
 Route::middleware(['auth', 'verified'])->group(function () {
 
     /*Document Information Module */
-    Route::get('/dashboard', function () {
+    Route::get('/', function () {
         if (Auth::check() && Auth::user()->divisions->abbreviation == 'HEAD') {
             $incoming_documents = DocumentTracker::with(['from_employee', 'to_employee', 'request', 'referral', 'document_type', 'status'])->where('is_forwarded', '=', 0)->latest()->take(4)->get();
 
@@ -36,9 +36,11 @@ Route::middleware(['auth', 'verified'])->group(function () {
     })->name('dashboard');
 
     /*Incoming Documents */
-    Route::resource('/incoming', IncomingDocumentsController::class);
+    Route::get('/incoming', [IncomingDocumentsController::class, 'index'])->name('incoming.index');
+    Route::patch('/incoming/request/{request_id}/{tracking_code}', [IncomingDocumentsController::class, 'update'])->name('incoming.update');
     Route::get('/api/referral/{full_name}', [OutgoingDocumentsController::class, 'getDivision']);
     Route::patch('/forward-referral', [OutgoingDocumentsController::class, 'update'])->name('outgoing.update');
+    Route::store('/incoming/announcement/{tracking_code}', [IncomingDocumentsController::class, 'store'])->name('post_announcement');
 
     /*Outgoing Documents */
     Route::get('/outgoing', [OutgoingDocumentsController::class, 'index'])->name('outgoing.index');

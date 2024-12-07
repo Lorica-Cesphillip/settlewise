@@ -41,25 +41,35 @@ class IncomingDocumentsController extends Controller
     /**
      * This is intended for the acceptance/rejection of request
      */
-    public function update(Request $request, DocumentTracker $document)
+    public function update(Request $request, $request_id, $tracking_code)
     {
         $request->validate([
-            'request_id' => 'required|uuid',
-            'tracking_code' => 'required|uuid',
             'granted' => 'required|boolean',
-            'request_comments' => 'string|baetween: 1,140',
-            'rejection_reason' => 'string|not_in:--Select reason of rejection--'
+            'request_comments' => 'required|string|baetween: 1,140',
+            'rejection_reason' => 'required|string|not_in:--Select reason of rejection--'
         ]);
         if($request->granted){
-            DocumentRequest::where('request_id', $request->request_id)->insert(['comments_if_granted' => $request->request_comments]);
-            DocumentTracker::where('document_tracking_code', '=', $request->tracking_code)->update(['document_status_id' => 2]);
+            DocumentRequest::where('request_id', $request_id)->insert(['comments_if_granted' => $request->request_comments]);
+            DocumentTracker::where('document_tracking_code', '=', $tracking_code)->update(['document_status_id' => 2]);
 
             return redirect()->route('incoming.index')->with('success');
         }else{
-            DocumentRequest::where('request_id', $request->request_id)->insert(['rejection_reason' => $request->rejection_reason]);
-            DocumentTracker::where('document_tracking_code', '=', $request->tracking_code)->update(['document_status_id' => 3]);
+            DocumentRequest::where('request_id', $request_id)->insert(['rejection_reason' => $request->rejection_reason]);
+            DocumentTracker::where('document_tracking_code', '=', $tracking_code)->update(['document_status_id' => 3]);
 
             return redirect()->route('incoming.index')->with('success');
         }
+    }
+
+    public function store(Request $request, $tracking_code)
+    {
+        $request->validate([
+            'what' => 'required|string|max:140',
+            'where' => 'required|string|max:140',
+            'who' => 'required|string|max:140',
+            'when' => 'required|date'
+        ]);
+
+
     }
 }

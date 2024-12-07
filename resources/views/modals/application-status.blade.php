@@ -66,25 +66,12 @@
             </div>
         </x-modal>
 
-    <!-- Request Accepted/Rejected Modals-->
-    <!-- Request Rejected Modal -->
-    <x-modal name="request-rejected" :maxWidth="'xl'" :show="false" focusable>
-        <div class="items-center justify-items-center">
-            <img src="../images/Approval.png" alt="Rejected Image" style="width: 200px; height: 200px;" />
-            <h3 class="mt-4 text-2xl"><strong>Request Rejected</strong></h3>
-            <p class="pb-4">The receiver will be informed.</p>
-            <button x-data = "" type="button"
-                class="p-4 bg-[#0d5dba] rounded-lg flex-col justify-center items-center gap-2.5 flex text-white font-semibold tracking-widest hover:bg-blue-700 focus:bg-blue-700 active:bg-blue-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 transition ease-in-out duration-150"
-                x-on:click.prevent="$dispatch('close-modal', 'request-rejected')">Okay</button>
-        </div>
-    </x-modal>
-
     <!-- Request Accepted Modal -->
-    <x-modal name="request-granted" :maxWidth="'xl'" :show="false" focusable>
+    <x-modal name="request-updated" :maxWidth="'xl'" :show="false" focusable>
         <div class="items-center justify-items-center">
             <img src="../images/Approval.png" alt="Accepted Image" class="h-[200px] w-[200px]" />
 
-            <h3 class="mt-4"><strong>Request Accepted</strong></h3>
+            <h3 class="mt-4"><strong>Request Updated</strong></h3>
             <p class="pb-4">The receiver will be informed.</p>
             <button x-data = "" type="button"
                 class="p-4 bg-blue-500 rounded-lg flex-col justify-center items-center gap-2.5 flex text-white font-semibold tracking-widest hover:bg-blue-900 focus:bg-blue-900 active:bg-blue-900 focus:outline-none focus:ring-2 focus:ring-indigo-900 focus:ring-offset-2 transition ease-in-out duration-150"
@@ -103,20 +90,6 @@
             <button x-data = "" type="button"
                 class="p-4 bg-blue-500 rounded-lg flex-col justify-center items-center gap-2.5 flex text-white font-semibold tracking-widest hover:bg-blue-900 focus:bg-blue-900 active:bg-blue-900 focus:outline-none focus:ring-2 focus:ring-indigo-900 focus:ring-offset-2 transition ease-in-out duration-150"
                 x-on:click.prevent="$dispatch('close-modal', 'error-forwarding-request')">Okay</button>
-        </div>
-    </x-modal>
-
-    <x-modal name="error-rejecting-request" :maxWidth="'xl'" :show="false" focusable>
-        <div class="items-center justify-items-center">
-            <!-- Image in Center -->
-            <img src="../images/Cancel.png" alt="Accepted Image" style="width: 200px; height: 200px;" />
-
-            <h3 class="mt-4 text-2xl"><strong>Error While Rejecting the Request</strong></h3>
-            <p class="mb-4">Please try again.  If the problem persists, contact IT Support.</p>
-            <!-- Okay Button -->
-            <button x-data = "" type="button"
-                class="p-4 bg-blue-500 rounded-lg flex-col justify-center items-center gap-2.5 flex text-white font-semibold tracking-widest hover:bg-blue-900 focus:bg-blue-900 active:bg-blue-900 focus:outline-none focus:ring-2 focus:ring-indigo-900 focus:ring-offset-2 transition ease-in-out duration-150"
-                x-on:click.prevent="$dispatch('close-modal', 'error-rejecting-request')">Okay</button>
         </div>
     </x-modal>
 

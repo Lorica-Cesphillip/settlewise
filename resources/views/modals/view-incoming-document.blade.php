@@ -61,7 +61,7 @@
                 <div>
                     <p class = "pb-4">Accept Request?</p>
                     <div class = "gap-3 inline-flex">
-                        <button x-on:click.prevent="$dispatch('open-modal', {name: 'reject-request', trackingCode: tracking_code, requestId: request_id})" x-bind:disabled="!requested" :class="requested ? 'bg-red-600 hover:bg-red-800 active:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 transition ease-in-out duration-150' : 'bg-gray-300 cursor-not-allowed'"
+                        <button x-on:click.prevent="$dispatch('open-modal', {name: 'reject-request', trackingCode: tracking_code})" x-bind:disabled="!requested" :class="requested ? 'bg-red-600 hover:bg-red-800 active:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 transition ease-in-out duration-150' : 'bg-gray-300 cursor-not-allowed'"
                             class = "inline-flex items-center p-4 border border-transparent rounded-md text-white  tracking-widest">Reject</button>
                         <button x-on:click.prevent="$dispatch('open-modal', {name: 'accept-request', trackingCode: tracking_code, requestId: request_id})" x-bind:disabled="!requested" :class="requested ? 'bg-green-600 hover:bg-green-900 focus:bg-green-700 active:bg-green-900 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2 transition ease-in-out duration-150' : 'bg-gray-300 cursor-not-allowed'"
                             class = "p-4  rounded-lg flex-col justify-center items-center gap-2.5 flex text-white tracking-widest">Accept</button>
@@ -83,10 +83,15 @@
     }">
         <p class="text-2xl font-bold text-center">PREVIEW DOCUMENT</p>
         <div class="items-center justify-items-center gap-3 ">
-            <iframe :src="{{Storage::url('filePath')}}" class="w-[400px] h-[500px] border py-4 border-black items"></iframe>
-            <a x-bind:href="{{Storage::url('filePath')}}" download class="w-[300px] p-4 bg-[#0d5dba] items rounded-lg text-center text-white tracking-widest hover:bg-blue-900">
+            <!-- Use `:src` for dynamic binding -->
+            <iframe :src="fileUrl" class="w-[400px] h-[500px] border py-4 border-black items"></iframe>
+
+            <!-- Use `x-bind:href` for dynamic link binding -->
+            <a x-bind:href="fileUrl" download class="w-[300px] p-4 bg-[#0d5dba] items rounded-lg text-center text-white tracking-widest hover:bg-blue-900">
                 Download Document
             </a>
+
+
         </div>
     </div>
 </x-modal>
