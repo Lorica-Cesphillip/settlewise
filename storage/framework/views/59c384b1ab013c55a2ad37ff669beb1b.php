@@ -177,7 +177,7 @@
                 <?php endif; ?>
                 <!--Add New Employee and Refresh Buttons-->
                 <div class = "inline-flex gap-3">
-                    <?php if(Auth::user()->divisions->division_name == "APHSO Department"): ?>
+                    <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('manage-employee', $aphso_employees)): ?>
                     <button x-data = "" type="button" class="p-4 bg-blue-500 rounded-lg flex-col justify-center items-center gap-2.5 flex text-white font-semibold tracking-widest hover:bg-blue-900 focus:bg-blue-900 active:bg-blue-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 transition ease-in-out duration-150"
                     x-on:click.prevent="$dispatch('open-modal', 'add-new-employee')">Add New Employee</button>
                     <?php endif; ?>
@@ -274,8 +274,35 @@
                                     </g>
                                 </svg>
                             </button>
-                            <?php if(Auth::user()->divisions->division_name == "APHSO Department"): ?>
-                            <form action="<?php echo e(route('employees.destroy', $employee->employee_number)); ?>" method="POST" style="display:inline">
+                            <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('manage-employee', $employee)): ?>
+                            <form
+                            x-data="{
+                                async submitForm(event) {
+                                    event.preventDefault();
+                                    try {
+                                        const response = await fetch(event.target.action, {
+                                            method: event.target.method,
+                                            body: new FormData(event.target),
+                                            headers: { 'Accept': 'application/json' },
+                                        });
+
+                                        if (response.ok) {
+                                            this.showSuccessModal = true;
+                                            this.$dispatch('open-modal', 'archived-successfully');
+                                        } else {
+                                            const errorData = await response.json();
+                                            console.error('Error:', errorData);
+                                        }
+                                    } catch (error) {
+                                        console.error(error);
+                                        this.validationErrors = { general: 'An unexpected error occurred.' };
+                                    }
+                                }
+                            }"
+                            @submit.prevent="submitForm"
+                            action="<?php echo e(route('employees.destroy', $employee->employee_number)); ?>"
+                            method="POST"
+                            style="display:inline">
                                 <?php echo method_field('DELETE'); ?>
                                 <?php echo csrf_field(); ?>
                                 <button type="submit" class="textpx-4">

@@ -14,25 +14,28 @@
         <div class="pt-2">
             <!--Announcements-->
             <div
-                class="w-[480px] h-fit p-2 block justify-center items-center rounded-xl shadow border text-wrap border-black">
+                class="w-[480px] h-[311px] p-2 block justify-center items-center rounded-xl shadow border text-wrap border-black">
                 <h3 class="text-2xl w-full font-bold text-center px-24 pt-4">ANNOUNCEMENTS</h3>
 
+                @if($announcements)
+                    <p class="font-light text-center text-gray-600">No announcement today from the Department Head. Enjoy your day.</p>
+                @else
                 <!-- Content divided into left and right columns -->
                 <div class="w-full h-fit px-6 flex columns-2">
                     <div class = "pr-5 font-light">
-                        <div>WHAT: </div>
-                        <div>WHEN: </div>
-                        <div>WHERE: </div>
-                        <div>WHO: </div>
-                        <div>NOTES: </div>
+                        <p>WHAT: </p>
+                        <p>WHEN: </p>
+                        <p>WHERE: </p>
+                        <p>WHO: </p>
+                        <p>NOTES: </p>
                     </div>
-                    <div class = "font-medium">
-                        <div>PGA Annual Meeting </div>
-                        <div>January 6, 2024</div>
-                        <div>Office of the Sangguniang Bayan</div>
-                        <div>All APHSO Employees</div>
-                        <div>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt
-                            ut labore et dolore magna aliqua.</div>
+                    <div class = "font-bold underline">
+                        <p>PGA Annual Meeting </p>
+                        <p>January 6, 2024</p>
+                        <p>Office of the Sangguniang Bayan</p>
+                        <p>All APHSO Employees</p>
+                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt
+                            ut labore et dolore magna aliqua.</p>
                     </div>
                 </div>
 
@@ -41,6 +44,7 @@
                         class="w-7/12 px-1 py-2 bg-blue-500 hover:bg-blue-900 active:bg-blue-900 rounded-lg flex-col justify-center items-center gap-2.5 inline-flex text-center text-white text-sm font-semibold leading-tight">VIEW ANNOUNCEMENT
                     </button>
                 </div>
+                @endif
             </div>
 
             <!--Other Links-->
@@ -79,7 +83,7 @@
         </div>
         <!--Incoming Documents-->
         <div class = "h-full w-full col-span-2 p-2 gap-4">
-            <div class = "w-fit h-fit p-4 right-0 top-0 block rounded-xl shadow border border-black">
+            <div class = "w-fit h-[560px] p-4 right-0 top-0 block rounded-xl shadow border border-black">
                 <h3 class = "px-20 py-2 text-2xl font-bold text-center block">INCOMING DOCUMENTS</h3>
                 @if($incoming_documents->isEmpty())
                 <p class="text-sm text-center text-gray-700 w-[985px] h-[385px]">You haven't received any documents for a while.</p>
@@ -89,34 +93,48 @@
                         <tr class = "bg-slate-300">
                             <th class = "p-2 w-2/12 h-[30px]">Tracking code</th>
                             <th class = "p-2 w-5/12 h-[30px]">Subject</th>
-                            <th class = "p-2 w-2/12 h-[30px]">Document Type</th>
-                            <th class = "p-2 w-2/12 h-[30px]">Sender</th>
+                            <th class = "p-2 w-1/12 h-[30px]">Document Type</th>
+                            <th class = "p-2 w-3/12 h-[30px]">Sender</th>
                             <th class = "p-2 w-2/12 h-[30px]">Status</th>
                         </tr>
                     </thead>
                     <tbody>
                         @foreach($incoming_documents as $documents)
-                            <tr class = "border-b-2 text-sm">
-                                <td class = "p-2 w-2/12 h-[30px]">{{str_pad($documents->document_tracking_code, 3, '0', STR_PAD_LEFT)}}-{{\Carbon\Carbon::parse($documents->created_at)->format('m-d-Y')}}</td>
-                                <td class = "p-2 w-5/12 h-[30px]">{{$documents->subject}}</td>
-                                <td class = "p-2 w-2/12 h-[30px]">{{$documents->document_type->document_type}}</td>
-                                <td class = "p-2 w-2/12 h-[30px]">{{$documents->from_employee->fname}} {{$documents->from_employee->mname}} {{$documents->from_employee->lname}}</td>
-                                <td class = "p-2 w-2/12 h-[30px]">
-                                    <div class="grow shrink basis-0 h-6 justify-start items-center gap-3 flex">
-                                        <div class="px-3 py-0.5 bg-[#ffece5] rounded-xl flex-col justify-center items-center gap-2 inline-flex">
-                                            <div class="justify-center items-center gap-0.5 inline-flex">
-                                                <div class="text-center text-[#ad3306] text-sm font-medium leading-tight">{{$documents->status->document_status}}</div>
-                                            </div>
+                        <!-- Print the current document row -->
+                        <tr class="border-b-2 text-sm">
+                            <td class="p-2 w-2/12 h-[30px]">{{ str_pad($documents->document_tracking_code, 3, '0', STR_PAD_LEFT) }}-{{ \Carbon\Carbon::parse($documents->created_at)->format('m-d-Y') }}</td>
+                            <td class="p-2 w-5/12 h-[30px]">{{ $documents->subject }}</td>
+                            <td class="p-2 w-1/12 h-[30px]">{{ $documents->document_type->document_type }}</td>
+                            <td class="p-2 w-3/12 h-[30px]">{{ $documents->from_employee->fname }} {{ $documents->from_employee->mname }} {{ $documents->from_employee->lname }}</td>
+                            <td class="p-2 w-2/12 h-[30px]">
+                                <div class="grow shrink basis-0 h-6 justify-start items-center gap-3 flex">
+                                    <div class="px-3 py-0.5 {{$documents->status->bgColor()}} rounded-xl flex-col justify-center items-center gap-2 inline-flex">
+                                        <div class="justify-center items-center gap-0.5 inline-flex">
+                                            <div class="text-center text-white text-sm font-medium leading-tight">{{ $documents->status->document_status }}</div>
                                         </div>
-                                    </div></td>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+
+                        <!-- Check if there is no next document and add an empty row if it's the last one -->
+                        @if (!$loop->last)
+                            <!-- Empty row with same height and width as the existing record -->
+                            <tr class="border-b-2 text-sm">
+                                <td class="p-2 w-2/12 h-[30px]">&nbsp;</td>
+                                <td class="p-2 w-5/12 h-[30px]">&nbsp;</td>
+                                <td class="p-2 w-2/12 h-[30px]">&nbsp;</td>
+                                <td class="p-2 w-2/12 h-[30px]">&nbsp;</td>
+                                <td class="p-2 w-2/12 h-[30px]">&nbsp;</td>
                             </tr>
+                        @endif
                         @endforeach
                     </tbody>
                 </table>
                 @endif
-                <div class="w-full h-fit p-2 flex justify-center items-center pt-8">
+                <div class="w-full h-full p-2 flex justify-center items-center pt-8">
                     <a href = "{{route('incoming.index')}}"
-                        class="w-7/12 px-1 py-2 bg-blue-950 rounded-lg flex-col justify-center items-center gap-2.5 inline-flex hover:bg-blue-800">
+                        class="w-7/12 px-1 py-2 bg-blue-500 rounded-lg flex-col justify-center items-center gap-2.5 inline-flex bottom hover:bg-blue-950    ">
                         <div class="justify-center items-center gap-2 inline-flex">
                             <div class="text-center text-white text-sm font-semibold leading-tight">VIEW INCOMING
                                 DOCUMENTS</div>
@@ -129,19 +147,19 @@
                 <div class = "w-fit h-fit p-2 rounded-xl shadow border justify-evenly gap-4 inline-flex border-black">
                     <div class = "px-14">
                         <p class = "text-center">Active Users</p>
-                        <h2 class = "text-5xl font-bold py-3 text-center">21</h2>
+                        <h2 class = "text-5xl font-bold py-3 text-center">{{$active}}</h2>
                     </div>
                     <div class = "px-14">
-                        <p class = "text-center">Pending Documents</p>
-                        <h2 class = "text-5xl font-bold py-3 text-center">21</h2>
+                        <p class = "text-center">Documents Received</p>
+                        <h2 class = "text-5xl font-bold py-3 text-center">{{$incoming_count}}</h2>
                     </div>
                     <div class = "px-14">
-                        <p class = "text-center">Approved Documents</p>
-                        <h2 class = "text-5xl font-bold py-3 text-center">21</h2>
+                        <p class = "text-center">Approved Requests</p>
+                        <h2 class = "text-5xl font-bold py-3 text-center text-green-700">{{$approved_count}}</h2>
                     </div>
                     <div class = "px-14">
-                        <p class = "text-center">Rejected Documents</p>
-                        <h2 class = "text-5xl font-bold py-3 text-center">21</h2>
+                        <p class = "text-center">Rejected Requests</p>
+                        <h2 class = "text-5xl font-bold py-3 text-center text-red-700">{{$rejected_count}}</h2>
                     </div>
                 </div>
             </div>
@@ -149,5 +167,6 @@
         <!-- Comments -->
 
         @include('modals.view-incoming-document')
+
 
 </x-app-layout>

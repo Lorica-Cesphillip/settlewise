@@ -52,7 +52,7 @@ return new class extends Migration
             $table->dateTime('when');
             $table->string('where', 141);
             $table->string('who', 50);
-            $table->string('notes', 141);
+            $table->string('notes', 150)->nullable();
             $table->date('date_posted');
             $table->date('date_expired');
             $table->boolean('is_posted');

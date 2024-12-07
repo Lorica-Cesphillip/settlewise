@@ -27,12 +27,12 @@ class DocumentTracker extends Model
         return $this->belongsTo(User::class, 'to_employee_id', 'employee_number');
     }
 
-    public function request(): HasMany{
-        return $this->hasMany(DocumentRequest::class, 'request_id', 'request_id');
+    public function request(): BelongsTo{
+        return $this->belongsTo(DocumentRequest::class, 'request_id', 'request_id');
     }
 
-    public function referral(): HasMany{
-        return $this->hasMany(DocumentReferral::class, 'referral_id', 'referral_id');
+    public function referral():BelongsTo{
+        return $this->belongsTo(DocumentReferral::class, 'referral_id', 'referral_id');
     }
 
     public function status(): BelongsTo{

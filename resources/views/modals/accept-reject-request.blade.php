@@ -36,7 +36,7 @@
                 show = true;
             }
         "
-            :action="`{{ url('/incoming/request') }}/${request_id}/${documentTracker}`" method="POST">
+            :action="`{{ url('/incoming/request') }}/{request_id}/{documentTracker}`" method="POST">
 
             @method('patch')
             @csrf
@@ -108,7 +108,7 @@
                 documentTracker = $event.detail.trackingCode;
                 show=true;
             }"
-                :action="`{{ url('/incoming/request') }}/${request_id}/${documentTracker}`" method="POST">
+                :action="`{{ url('/incoming/request') }}/{request_id}/{documentTracker}`" method="POST">
 
                 @method('patch')
                 @csrf

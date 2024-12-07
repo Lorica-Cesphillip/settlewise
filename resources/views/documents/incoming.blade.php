@@ -133,13 +133,13 @@
                 <td class = "w-[180px] py-1 border-b-2">{{$incoming->document_type->document_type}}</td>
                 <td class = "w-[500px] py-1 border-b-2">{{$incoming->subject}}</td>
                 <td class = "w-[100px] py-1 border-b-2 items-center justify-items-center">
-                    <button class="grow shrink basis-0 h-6 justify-start items-center gap-3 flex">
+                    <div class="grow shrink basis-0 h-6 justify-start items-center gap-3 flex">
                         <div class="px-3 py-0.5 {{ $incoming->status->bgColor() }} rounded-xl flex-col justify-center items-center gap-2 inline-flex">
                             <div class="justify-center items-center gap-0.5 inline-flex">
                                 <div class="text-center text-white text-sm font-medium leading-tight">{{$incoming->status->document_status}}</div>
                             </div>
                         </div>
-                    </button>
+                    </div>
                 </td>
                 <td class = "w-[180px] px-11 py-3 inline-flex justify-between">
                     <button x-data = "" type="button" x-on:click.prevent="$dispatch('open-modal', {name: 'view-incoming-document', trackingCode: '{{$incoming->document_tracking_code}}'})">
@@ -156,7 +156,7 @@
                             </g>
                         </svg>
                     </button>
-                    @if(Auth::user()->divisions->division_name == "APHSO Department")
+                    @can('archive-document', $incoming)
                     <form action="{{route('archived.update', $incoming->document_tracking_code)}}" method="POST">
                         @csrf
                         @method('UPDATE')
@@ -170,7 +170,7 @@
                             </svg>
                         </button>
                     </form>
-                    @endif
+                    @endcan
                 </td>
             </tr>
             @endforeach

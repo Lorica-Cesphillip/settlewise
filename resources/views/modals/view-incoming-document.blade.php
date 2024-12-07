@@ -52,7 +52,7 @@
                         class = "p-4 bg-[#0d5dba] rounded-lg flex-col justify-center items-center gap-2.5 flex text-white tracking-widest hover:bg-blue-900 focus:bg-blue-900 active:bg-blue-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 transition ease-in-out duration-150">Open
                         Chat</button>
                     @can('post-announcement', $incoming_documents)
-                    <button x-on:click.prevent="$dispatch('open-modal', 'announcement')"
+                    <button x-on:click.prevent="$dispatch('open-modal', {name: 'announcement', tracking_code: tracking_code})"
                         class = "p-4 bg-[#0d5dba] rounded-lg flex-col justify-center items-center gap-2.5 flex text-white tracking-widest hover:bg-blue-900 focus:bg-blue-900 active:bg-blue-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 transition ease-in-out duration-150">Post
                         Announcement</button>
                     @endcan
@@ -141,7 +141,7 @@
                     this.request_type = data.request.request_type ? data.request.request_type : 'N/A';
                     this.requested_document = data.request.requested_document ? data.request.requested_document : 'N/A';
                     this.purpose = data.request.request_purpose ? data.request.request_purpose : 'N/A';
-                    this.request_details = data.request_details ? data.request_details : 'N/A';
+                    this.request_details = data.request.request_details ? data.request.request_details : 'N/A';
                     this.file_path = data.file_path;
                 }catch(error){
                     console.error('There is something wrong while retrieving document information. Error: ', error);

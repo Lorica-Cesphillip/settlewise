@@ -1,32 +1,48 @@
 <!-- Post Announcement Modal -->
-<x-modal name="announcement" :show="false" :maxWidth="'2xl'" focusable>
+<x-modal name="announcement" :maxWidth="'2xl'" focusable>
     <!-- Modal Title -->
     <h3 class="font-bold text-2xl text-center pb-5">POST AN ANNOUNCEMENT</h3>
 
-    <form action="{{route('post_announcement')}}" method="POST">
+    <form
+        x-data="{
+            tracking_code: 0
+        }"
+        @open-modal.window="if($event.detail.name === 'announcement'){
+        tracking_code = $event.detail.trackingCode;
+        show=true;
+        }"
+        action="{{url('/incoming/announcement')}}/{tracking_code}"
+        method="POST"
+    >
+    @csrf
         <div>
             <x-input-label for="what" :value="__('What is the Announcement All About?')" />
-            <x-text-input id="what" type="text" name="what" class="block w-full mt-1" :value="old('what')" autofocus
+            <x-text-input id="what" type="text" name="what" class="block w-full mt-1" autofocus
                 autocomplete="off" placeholder="Event Title" />
             <x-input-error :messages="$errors->get('what')" class = "mt-2" />
         </div>
         <div>
             <x-input-label for="where" :value="__('Where will be the event happen?')" />
-            <x-text-input id="where" type="text" name="where" class="block w-full mt-1" :value="old('where')"
+            <x-text-input id="where" type="text" name="where" class="block w-full mt-1"
                 autofocus autocomplete="off" placeholder="Event Location" />
             <x-input-error :messages="$errors->get('where')" class = "mt-2" />
         </div>
         <div>
             <x-input-label for="who" :value="__('Who will attend such event?')" />
-            <x-text-input id="who" type="text" name="who" class="block w-full mt-1" :value="old('who')"
+            <x-text-input id="who" type="text" name="who" class="block w-full mt-1"
                 autofocus autocomplete="off" placeholder="Attendees" />
             <x-input-error :messages="$errors->get('who')" class = "mt-2" />
         </div>
         <div>
             <x-input-label for="when" :value="__('When and what time will it happen?')" />
-            <x-text-input id="when" type="datetime-local" name="when" class="block w-full mt-1"
-                :value="old('when')" autofocus autocomplete="off" placeholder="Event Title" />
+            <x-text-input id="when" type="datetime-local" name="when" class="block w-full mt-1" autofocus autocomplete="off" placeholder="Event Title" />
             <x-input-error :messages="$errors->get('when')" class = "mt-2" />
+        </div>
+
+        <div>
+            <x-input-label for="notes" :value="__('Notes')" />
+            <x-text-input id="notes" type="text" name="notes" class="block w-full mt-1" autofocus autocomplete="off" placeholder="Additional Notes" />
+            <x-input-error :messages="$errors->get('notes')" class = "mt-2" />
         </div>
 
         <div class = "inline-flex w-full justify-between mt-5">

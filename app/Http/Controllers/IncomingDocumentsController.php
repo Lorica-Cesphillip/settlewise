@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Announcements;
 use Illuminate\Http\Request;
 use App\Models\DocumentTracker;
 use App\Models\User;
@@ -45,9 +46,11 @@ class IncomingDocumentsController extends Controller
     {
         $request->validate([
             'granted' => 'required|boolean',
-            'request_comments' => 'required|string|baetween: 1,140',
+            'request_comments' => 'required|string|between: 1,140',
             'rejection_reason' => 'required|string|not_in:--Select reason of rejection--'
         ]);
+
+        Log::info('Verified Data: ', $request->all());
         if($request->granted){
             DocumentRequest::where('request_id', $request_id)->insert(['comments_if_granted' => $request->request_comments]);
             DocumentTracker::where('document_tracking_code', '=', $tracking_code)->update(['document_status_id' => 2]);
@@ -67,9 +70,21 @@ class IncomingDocumentsController extends Controller
             'what' => 'required|string|max:140',
             'where' => 'required|string|max:140',
             'who' => 'required|string|max:140',
-            'when' => 'required|date'
+            'when' => 'required|date',
+            'notes' => 'string|max:140|nullable'
         ]);
 
+        Announcements::insert([
+            'what' => $request->what,
+            'where' => $request->where,
+            'who' => $request->who,
+            'when' => $request->when,
+            'notes' => $request->notes,
+            'date_posted' => now(),
+            'date_expired' => now(),
+            'is_posted' => 1
+        ]);
 
+        return response()->json('success', 200);
     }
 }

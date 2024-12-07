@@ -37,20 +37,19 @@ class DivisionsController extends Controller
     public function store(Request $request)
     {
         try {
-            // Validate the incoming data
-            $validatedData = $request->validate([
+            $request->validate([
                 'division_name' => 'required|string|max:255',
                 'division_abbreviation' => 'required|string|max:255',
-                'division_head' => 'nullable|string|max:255', // Adjust validation based on your needs
+                'division_head' => 'nullable', // Adjust validation based on your needs
             ]);
-    
+
             // Create a new division record in the database
             Divisions::create([
-                'name' => $validatedData['division_name'],
-                'abbreviation' => $validatedData['division_abbreviation'],
-                'head' => $validatedData['division_head'],
+                'name' => $request->division_name,
+                'abbreviation' => $request->division_abbreviation,
+                'head' => $request->division_head
             ]);
-    
+
             // Redirect back with a success message
             return redirect()->route('divisions.index')->with('success', 'Division created successfully.');
         } catch (\Exception $e) {
@@ -86,9 +85,17 @@ class DivisionsController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, $id)
     {
-        //
+        $request->validate([
+            'division_name' => 'required|string|max:255',
+            'division_abbreviation' => 'required|string|max:255',
+            'division_head' => 'nullable', // Adjust validation based on your needs
+        ]);
+
+        Divisions::where('division_id', '=', $id)->update($request->all());
+
+        return response()->json('success');
     }
 
     /**
