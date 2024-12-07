@@ -29,7 +29,7 @@
         <div x-data="referralDivision()" class="inline-flex gap-3">
             <div>
                 <x-input-label for="employee-select" :value="__('Select Employee to be Referred:')"/>
-                <select x-model="referred_employee" id="employee-select" @change="fetchDivision()" class="mt-1 w-[465px] block rounded-md border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 shadow-sm" name="to_be_referred" autofocus autocomplete="off">
+                <select x-model="referred_employee" id="employee-select" @change="fetchDivision()" class="mt-1 w-[465px] block rounded-md border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 shadow-sm" name="employee_number" autofocus autocomplete="off">
                     <!-- PLACEHOLDER OPTIONS -->
                     <option value="">-- APHSO Employee --</option>
                     @foreach ($employees as $employee)

@@ -1,6 +1,10 @@
 <!-- Chat Modal -->
-<x-modal name="document-conversation" :maxWidth="'3xl'" :show="false" focusable>
-    <div class="h-[600px]">
+<x-modal name="incoming-document-conversation" :maxWidth="'3xl'" focusable>
+    <div class="h-[600px]" x-data="conversation" @open-modal.window="if($event.detail.name === 'incoming-document-conversation'){
+        fetch_conversation($event.detail.trackingCode);
+        show=true;
+    }"
+    >
         <!-- Chat Header with User Info -->
         <div class="py-3">
             <div class="inline-flex w-full gap-3">
@@ -55,3 +59,37 @@
         </form>
     </div>
 </x-modal>
+
+<script>
+    function conversation(){
+        return{
+            outgoing_outbox: '',
+            outgoing_inbox: '',
+            outgoing_division: '',
+            incoming_outbox: '',
+            incoming_inbox: '',
+            incoming_division: '',
+            message: '',
+            async fetch_conversation(trackingCode)
+            {
+                const conversation = await fetch(`/api/document/conversation/{document}`);
+
+                if(!conversation.ok) throw new error(`Error: Status: ${conversation.status}`);
+
+                const messages = await conversation.json();
+                console.log(messages);
+
+                //For outgoing documents.
+                this.outgoing_outbox = messages.employee.to_employee.fname + ' ' + messages.employee.to_employee.mname + ' ' + messages.employee.to_employee.lname;
+                this.outgoing_inbox = messages.employee.from_employee.fname + ' ' + messages.employee.from_employee.mname + ' ' + messages.employee.from_employee.lname;
+                this.division = messages.employee.to_employee.divisions.division_name;
+
+                //For incoming documents.
+                this.incoming_outbox = messages.employee.from_employee.fname + ' ' + messages.employee.from_employee.mname + ' ' + messages.employee.from_employee.lname;
+                this.incoming_inbox = messages.employee.to_employee.fname + ' ' + messages.employee.to_employee.mname + ' ' + messages.employee.to_employee.lname;
+                this.message = messages.reply;
+                this.division = messages.employee.from_employee.divisions.division_name;
+            }
+        }
+    }
+</script>

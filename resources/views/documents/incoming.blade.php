@@ -178,8 +178,8 @@
     </table>
     @endif
 
-    @include('modals.view-document')
-    @include('modals.accept-reject-request-referral')
+    @include('modals.view-incoming-document')
+    @include('modals.accept-reject-request')
     @include('modals.document-referral')
     @include('modals.view-conversation')
     @include('modals.announcement-form')

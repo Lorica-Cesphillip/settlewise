@@ -81,9 +81,6 @@
         <div class = "h-full w-full col-span-2 p-2 gap-4">
             <div class = "w-fit h-fit p-4 right-0 top-0 block rounded-xl shadow border border-black">
                 <h3 class = "px-20 py-2 text-2xl font-bold text-center block">INCOMING DOCUMENTS</h3>
-                @php
-                    $incoming_documents = session('incoming_documents', collect()); // Default to an empty collection
-                @endphp
                 @if($incoming_documents->isEmpty())
                 <p class="text-sm text-center text-gray-700 w-[985px] h-[385px]">You haven't received any documents for a while.</p>
                 @else
@@ -99,16 +96,16 @@
                     </thead>
                     <tbody>
                         @foreach($incoming_documents as $documents)
-                            <tr class = "border-b-2">
+                            <tr class = "border-b-2 text-sm">
                                 <td class = "p-2 w-2/12 h-[30px]">{{str_pad($documents->document_tracking_code, 3, '0', STR_PAD_LEFT)}}-{{\Carbon\Carbon::parse($documents->created_at)->format('m-d-Y')}}</td>
                                 <td class = "p-2 w-5/12 h-[30px]">{{$documents->subject}}</td>
                                 <td class = "p-2 w-2/12 h-[30px]">{{$documents->document_type->document_type}}</td>
-                                <td class = "p-2 w-2/12 h-[30px]">{{$documents->from_employee->full_name}}</td>
+                                <td class = "p-2 w-2/12 h-[30px]">{{$documents->from_employee->fname}} {{$documents->from_employee->mname}} {{$documents->from_employee->lname}}</td>
                                 <td class = "p-2 w-2/12 h-[30px]">
                                     <div class="grow shrink basis-0 h-6 justify-start items-center gap-3 flex">
                                         <div class="px-3 py-0.5 bg-[#ffece5] rounded-xl flex-col justify-center items-center gap-2 inline-flex">
                                             <div class="justify-center items-center gap-0.5 inline-flex">
-                                                <div class="text-center text-[#ad3306] text-sm font-medium leading-tight">{{$documents->document_status}}</div>
+                                                <div class="text-center text-[#ad3306] text-sm font-medium leading-tight">{{$documents->status->document_status}}</div>
                                             </div>
                                         </div>
                                     </div></td>
@@ -151,6 +148,6 @@
         </div>
         <!-- Comments -->
 
-        @include('modals.view-document')
+        @include('modals.view-incoming-document')
 
 </x-app-layout>

@@ -22,8 +22,8 @@ class OutgoingDocumentsController extends Controller
      */
     public function index()
     {
-        $outgoing_documents = DocumentTracker::with(['to_employee', 'request', 'referral', 'document_type', 'status'])->where('from_employee_id', '=', Auth::user()->employee_number)->paginate(10);
-        $employees = User::select(DB::raw("CONCAT(fname, ' ', mname, ' ', lname) AS full_name"))->where('employee_number', '!=', Auth::user()->employee_number)->get();
+        $outgoing_documents = DocumentTracker::with(['to_employee', 'request', 'referral', 'document_type', 'status'])->where('from_employee_id', '=', Auth::user()->employee_number)->latest()->paginate(10);
+        $employees = User::select(DB::raw("CONCAT(fname, ' ', mname, ' ', lname) AS full_name"))->where('employee_number', '!=', Auth::user()->employee_number)->where('emp_status', '=', 1)->get();
         $document_type = DocumentType::all();
 
         return view('documents.outgoing', compact('outgoing_documents', 'employees', 'document_type'));
@@ -57,7 +57,7 @@ class OutgoingDocumentsController extends Controller
      * @param \Illuminate\Http\Request $request
      * @return
      */
-    public function sendDocument(Request $request)
+    public function store(Request $request)
     {
         $request->validate([
             'recipient_name' => 'required|not_in:--Please Select Recipient--',
@@ -70,15 +70,13 @@ class OutgoingDocumentsController extends Controller
             'document' => 'required|mimes:docx,doc,pdf,xlsx,xls,ppt,pptx|max:10000'
         ]);
 
-        Log::info('Data: ', $request->all());
-
         try {
             $name = explode(' ', $request->recipient_name);
             $lname = array_pop($name);
             $mname = count($name) > 1 ? array_pop($name) : null;
             $fname = implode(' ', $name);
 
-            $to_employee = User::select('employee_number')->where('fname', '=', $fname)
+            $to_employee = User::select('employee_number', 'emp_status')->where('fname', '=', $fname)
                 ->where('lname', '=', $lname)
                 ->where(function ($query) use ($mname) {
                     if ($mname) {
@@ -89,8 +87,17 @@ class OutgoingDocumentsController extends Controller
                 })
                 ->first();
 
+            Log::info('Recipient Lookup:', [$to_employee]);
             if (!$to_employee) {
-                return redirect()->back()->withErrors(['recipient_name' => 'Recipient not found in the system.']);
+                Log::info('Employee Does Not Exist');
+                return response()->json([
+                    'errors' => ['recipient_name' => 'Recipient not found in the system.'],
+                ], 422);
+            }else if($to_employee->emp_status == 0){
+                Log::info('Employee Offline');
+                return response()->json([
+                    'errors' => ['inactive' => 'Employee is not part of the organization.'],
+                ], 422);
             }
             $to_employee_id = $to_employee->employee_number;
             $document_type_id = DocumentType::select('id')->where('document_type', $request->only('document_type'))->first();
@@ -102,7 +109,7 @@ class OutgoingDocumentsController extends Controller
             $new_file = "{$document_type}-{$date}.{$file->getClientOriginalExtension()}";
             $path = $file->storeAs('document', $new_file);
 
-
+            $forwarded = Auth::check() && Auth::user()->divisions->abbreviation == 'HEAD' ? 1 : 0;
 
             $createdRecord = DocumentTracker::create([
                 'document_type_id' => $document_type_id->id,
@@ -115,11 +122,10 @@ class OutgoingDocumentsController extends Controller
                 'subject' => $request->subject,
                 'remarks' => $request->remarks,
                 'status_id' => 1,
+                'is_forwarded' => $forwarded,
                 'is_archived' => 0,
                 'file_path' => $path,
                 ]);
-
-
 
             //If the employee deicdes that he goes to send a request form, the foreign key must be generated first.
             if ($request->input('document_type') === 'Request') {
@@ -135,9 +141,13 @@ class OutgoingDocumentsController extends Controller
             }
             return redirect()->back()->with('success', 'Document sent successfully!');
         }
-        catch (\Exception $error){
-            Log::info('Error: ', [$error->getMessage()]);
-            return back()->withErrors($error);
+        catch (\Exception $errors){
+            Log::error('Unexpected Error:', ['error' => $errors->getMessage()]);
+
+            return response()->json([
+                'message' => 'An unexpected error occurred.',
+                'error' => $errors->getMessage(),
+            ], 500);
         }
     }
 
@@ -148,22 +158,15 @@ class OutgoingDocumentsController extends Controller
     {
         $tracking_code = $request->input('tracking_code');
         $request->validate([
-            'to_be_referred' => 'required|integer',
+            'employee_number' => 'required|integer',
             'for' => 'required|not_in:--Select Only One--',
-            'for_urgent' => 'boolean',
+            'for_urgent' => 'required|boolean',
             'please' => 'required|not_in:--Select Only One--',
-            'plase_urgent' => 'boolean',
+            'plase_urgent' => 'required|boolean',
             'remarks' => 'string|max:140',
         ]);
 
-        $referral = DocumentReferral::create([
-            'employee_number' => $request->to_be_referred,
-            'for' => $request->for,
-            'for_urgent' => $request->for_urgent,
-            'please' => $request->please,
-            'plase_urgent' => $request->plase_urgent,
-            'remarks' => $request->remarks
-        ]);
+        $referral = DocumentReferral::create($request->all());
 
         DocumentTracker::where('document_tracking_code', '=', $tracking_code)->insert(['referral_id' => $referral->referral_id]);
 

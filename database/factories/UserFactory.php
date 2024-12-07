@@ -43,7 +43,7 @@ class UserFactory extends Factory
             'email' => fake()->unique()->safeEmail(),
             'image_path' => "profile_images/default-profile.jpg",
             'email_verified_at' => now(),
-            'emp_status' => fake()->randomElement([0, 1]),
+            'emp_status' => 1,
             'password' => static::$password ??= Hash::make('password'),
             'remember_token' => Str::random(10),
         ];

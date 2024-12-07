@@ -156,5 +156,5 @@
             </tbody>
         </table>
     @endif
-    @include('modals.view-document')
+    @include('modals.view-outgoing-document')
 </x-app-layout>

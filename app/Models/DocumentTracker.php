@@ -61,6 +61,7 @@ class DocumentTracker extends Model
         'updated_at',
         'status_id',
         'is_archived',
+        'is_forwarded',
         'file_path'
     ];
 

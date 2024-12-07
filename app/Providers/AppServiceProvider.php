@@ -31,7 +31,23 @@ class AppServiceProvider extends ServiceProvider
             return $user->divisions->abbreviation === 'HEAD';
         });
 
+        Gate::define('manage-division', function(User $user){
+            return $user->divisions->abbreviation === 'HEAD';
+        });
+
         Gate::define('request-response', function(User $user){
+            return $user->divisions->abbreviation === 'HEAD';
+        });
+
+        Gate::define('post-announcement', function(User $user){
+            return $user->divisions->abbreviation === 'HEAD';
+        });
+
+        Gate::define('refer-someone', function(User $user){
+            return $user->divisions->abbreviation === 'HEAD';
+        });
+
+        Gate::define('archive-document', function(User $user){
             return $user->divisions->abbreviation === 'HEAD';
         });
     }

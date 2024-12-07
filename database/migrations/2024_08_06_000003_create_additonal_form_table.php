@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('request_logs', function (Blueprint $table) {
             $table->increments('request_id');
             $table->string('request_type', 50);
+            $table->string('others', 140)->nullable();;
             $table->string('requested_document', 150)->nullable();
             $table->string('request_purpose', 150)->nullable();
             $table->string('request_details', 150)->nullable();

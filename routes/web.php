@@ -6,8 +6,13 @@ use App\Http\Controllers\EmployeeManagementController;
 use App\Http\Controllers\IncomingDocumentsController;
 use App\Http\Controllers\DocumentController;
 use App\Http\Controllers\ArchivesController;
+use App\Http\Controllers\DocumentConversationController;
 use App\Models\DocumentTracker;
 use Illuminate\Support\Facades\Route;
+use League\CommonMark\Node\Block\Document;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
+use App\Models\User;
 
 Route::get('/', function () {
     return view('auth.login');
@@ -18,18 +23,26 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
     /*Document Information Module */
     Route::get('/dashboard', function () {
-        return view('documents.dashboard');
+        if (Auth::check() && Auth::user()->divisions->abbreviation == 'HEAD') {
+            $incoming_documents = DocumentTracker::with(['from_employee', 'to_employee', 'request', 'referral', 'document_type', 'status'])->where('is_forwarded', '=', 0)->latest()->take(4)->get();
+
+            return view('documents.dashboard', compact('incoming_documents'));
+        } else {
+            $incoming_documents = DocumentTracker::with(['from_employee', 'to_employee', 'request', 'referral', 'document_type', 'status'])
+                ->latest()->where('to_employee_id', '=', Auth::user()->employee_number)->where('is_forwarded', '=', 1)->take(4)->get();
+
+            return view('documents.dashboard', compact('incoming_documents'));
+        }
     })->name('dashboard');
 
     /*Incoming Documents */
-    Route::get('/incoming', [IncomingDocumentsController::class, 'index'])->name('incoming.index');
+    Route::resource('/incoming', IncomingDocumentsController::class);
     Route::get('/api/referral/{full_name}', [OutgoingDocumentsController::class, 'getDivision']);
-    Route::patch('/incoming/request/{document_tracking_code}', [IncomingDocumentsController::class, 'update'])->name('granted');
     Route::patch('/forward-referral', [OutgoingDocumentsController::class, 'update'])->name('outgoing.update');
 
     /*Outgoing Documents */
     Route::get('/outgoing', [OutgoingDocumentsController::class, 'index'])->name('outgoing.index');
-    Route::post('/outgoing/send', [OutgoingDocumentsController::class, 'sendDocument'])->name('outgoing.store');
+    Route::post('/outgoing/send', [OutgoingDocumentsController::class, 'store'])->name('outgoing.store');
     Route::get('/api/outgoing/view', [OutgoingDocumentsController::class, 'viewDocument']);
     Route::get('/api/employees/{full_name}/receiver', [OutgoingDocumentsController::class, 'getDivision']);
 
@@ -38,6 +51,8 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/api/document/preview/{tracking_code}', [DocumentController::class, 'document_preview']);
 
     /*Document Conversation, where each of the incoming and outgoing documents has its own respective conversation. */
+    Route::get('/api/document/conversation/{document}', [DocumentConversationController::class, 'show']);
+    Route::post('/document/conversation/send', [DocumentConversationController::class, 'store']);
 
     /*Archived Documents. Only the department head can archive the documents. */
     Route::get('/archived', [ArchivesController::class, 'index'])->name('archived.index');

@@ -23,9 +23,10 @@ class DocumentConversationController extends Controller
         ConversationMessage::create([$request->only('reply'), 'employee_id' => Auth::user()->employee_number], );
     }
 
-    public function show(ConversationMessage $conversation, DocumentTracker $document)
+    public function show(DocumentTracker $document)
     {
         try {
+            $conversation = ConversationMessage::where('document_tracking_code', '=', $document->document_tracking_code);
             return response()->json([$conversation, $document]);
         } catch (\Exception $e) {
             // Log the error

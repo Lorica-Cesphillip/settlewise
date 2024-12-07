@@ -28,12 +28,6 @@
                     </div>
                 </button>
 
-                @include('modals.create-document-tracker')
-                @include('modals.view-document')
-                @include('modals.view-conversation')
-
-
-
                 <!--Filter Confidential Documents-->
                 <form action="#" method = "POST" class = "inline-flex gap-3">
                     <div class="block mt-4 gap-3">
@@ -94,7 +88,9 @@
                 </div>
             </div>
         </div>
-
+        @include('modals.view-outgoing-document')
+        @include('modals.view-conversation')
+        @include('modals.create-document-tracker')
     <!--Outgoing Document Tables-->
     @if($outgoing_documents->isEmpty())
     <p class="text-gray-700 text-center text-sm">You havent sent a document to any of the employees within the Albay Provincial Human Settlement Office. Please click "Send a Document" to start transmitting a document.</p>
@@ -164,8 +160,5 @@
         </tbody>
     </table>
     @endif
-
-    @include('modals.view-document')
-    @include('modals.view-conversation')
-
 </x-app-layout>
+

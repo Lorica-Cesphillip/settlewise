@@ -47,19 +47,19 @@
                     body: new FormData(event.target),
                     headers: { 'Accept': 'application/json' },
                 });
+
                 if (response.ok) {
                     this.showSuccessModal = true;
                     this.$dispatch('open-modal', 'sent-successfully');
                 } else {
                     const errorData = await response.json();
                     console.error('Validation Errors:', errorData);
-                    this.showFailureModal = true;
-                    this.$dispatch('open-modal', 'sent-failed');
+                    // Bind validation errors to a variable for display
+                    this.validationErrors = errorData.errors || {};
                 }
             } catch (error) {
-                console.error('Submission Error:', error);
-                this.showFailureModal = true;
-                this.$dispatch('open-modal', 'sent-failed');
+                console.error(error);
+                this.validationErrors = { general: 'An unexpected error occurred.' };
             }
         }
     }"
@@ -214,6 +214,7 @@
                         <input type="file" id="document" class = "hidden" name = "document" onchange="updateFileName(this)">
                     </label>
                 </div>
+                <x-input-error :messages="$errors->get('document')" class="mt-2" />
             </div>
 
         </div>
