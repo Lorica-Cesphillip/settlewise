@@ -99,7 +99,7 @@
             </div>
 
             <div class = "right-0 inline-flex h-14 gap-3">
-                <?php if(Auth::user()->divisions->division_name == "APHSO Department"): ?>
+                <?php if (app(\Illuminate\Contracts\Auth\Access\Gate::class)->check('manage-employee', $aphso_employees)): ?>
                 <!--Reports Generation-->
                 <form class = "inline-flex gap-3" action = "#" method = "GET">
                     <?php if (isset($component)) { $__componentOriginale3da9d84bb64e4bc2eeebaafabfb2581 = $component; } ?>

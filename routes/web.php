@@ -64,7 +64,8 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::resource('/employees', EmployeeManagementController::class);
     Route::get('/api/employee/{employeeNumber}', [EmployeeManagementController::class, 'show']);
     Route::get('profile', function(){
-        return view('documents.employee-information');
+        $employee = User::findOrFail(Auth::user()->employee_number);
+        return view('documents.employee-information', compact('employee'));
     })->name('profile');
 });
 

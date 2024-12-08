@@ -104,7 +104,7 @@
     @if($incoming_documents->isEmpty())
         <p class="text-center text-gray-600 text-sm">You haven't received any document from your employees. It will come.</p>
     @else
-    <table class = "table-fixed border-gray-800">
+    <table class = "table-fixed shadow border-gray-800">
         <thead>
             <tr class = "bg-slate-200 h-[30px]">
                 <th class = "w-[180px] p-2 border-b-2">Document Tracking Code</th>

@@ -34,7 +34,7 @@
             </div>
 
             <div class = "right-0 inline-flex h-14 gap-3">
-                @if(Auth::user()->divisions->division_name == "APHSO Department")
+                @can('manage-employee', $aphso_employees)
                 <!--Reports Generation-->
                 <form class = "inline-flex gap-3" action = "#" method = "GET">
                     <x-input-label>From: </x-input-label>
@@ -55,7 +55,7 @@
                         <x-slot name="name">Export</x-slot>
                     </x-primary-button>
                 </form>
-                @endif
+                @endcan
                 <!--Add New Employee and Refresh Buttons-->
                 <div class = "inline-flex gap-3">
                     @can('manage-employee', $aphso_employees)

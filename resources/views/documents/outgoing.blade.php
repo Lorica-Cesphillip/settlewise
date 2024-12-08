@@ -95,7 +95,7 @@
     @if($outgoing_documents->isEmpty())
     <p class="text-gray-700 text-center text-sm">You havent sent a document to any of the employees within the Albay Provincial Human Settlement Office. Please click "Send a Document" to start transmitting a document.</p>
     @else
-    <table class = "table-fixed border-gray-800">
+    <table class = "table-fixed shadow border-gray-800">
         <thead>
             <tr class = "bg-slate-200 h-[30px]">
                 <th class = "w-[180px] p-2 border-b-2">Document Tracking Code</th>

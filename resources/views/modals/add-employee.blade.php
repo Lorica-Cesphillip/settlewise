@@ -268,18 +268,3 @@
         </div>
     </form>
 </x-modal>
-
-<script>
-    document.addEventListener('alpine:init', () => {
-        Alpine.data('add-employee-modal', () => ({
-            imageUrl: null,
-
-            handleFileUpload(event) {
-                const file = event.target.files[0];
-                if (file) {
-                    this.imageUrl = URL.createObjectURL(file);
-                }
-            },
-        }));
-    });
-</script>
