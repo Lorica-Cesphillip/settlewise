@@ -20,6 +20,7 @@ return new class extends Migration
             $table->string('request_details', 150)->nullable();
             $table->string('comments_if_granted', 150)->nullable();
             $table->string('rejection_reason', 150)->nullable();
+            $table->timestamps();
         });
 
         Schema::create('referral_logs', function(Blueprint $table){
@@ -30,6 +31,7 @@ return new class extends Migration
             $table->string('please');
             $table->boolean('please_urgent');
             $table->string('remarks')->nullable();
+            $table->timestamps();
         });
 
         Schema::create('document_status', function(Blueprint $table){

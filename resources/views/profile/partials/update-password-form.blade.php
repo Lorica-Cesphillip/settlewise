@@ -1,7 +1,7 @@
 <section>
     <header>
         <h2 class="text-lg font-medium text-gray-900">
-            {{ __('Update Password') }}
+            {{ __('If you are using this application the first time, please update your password. If you update your password, it will ensure you of your ') }}
         </h2>
 
         <p class="mt-1 text-sm text-gray-600">

@@ -26,7 +26,6 @@ class DivisionsFactory extends Factory
         return [
             'division_name' => $division[$curIndex],
             'abbreviation' => $abbreviation[$curIndex],
-            'no_of_employees' => 5
         ];
     }
 }

@@ -15,10 +15,10 @@
             <!--Announcements-->
             <div
                 class="w-[480px] h-[311px] p-2 block justify-center items-center rounded-xl shadow border text-wrap border-black">
-                <h3 class="text-2xl w-full font-bold text-center px-24 pt-4">ANNOUNCEMENTS</h3>
+                <h3 class="text-2xl w-full font-bold text-center px-24 py-4">ANNOUNCEMENTS</h3>
 
                 @if($announcements)
-                    <p class="font-light text-center text-gray-600">No announcement today from the Department Head. Enjoy your day.</p>
+                    <p class="font-light text-sm text-center text-gray-700">No announcement today from the Department Head. Enjoy your day.</p>
                 @else
                 <!-- Content divided into left and right columns -->
                 <div class="w-full h-fit px-6 flex columns-2">
@@ -116,23 +116,11 @@
                                 </div>
                             </td>
                         </tr>
-
-                        <!-- Check if there is no next document and add an empty row if it's the last one -->
-                        @if (!$loop->last)
-                            <!-- Empty row with same height and width as the existing record -->
-                            <tr class="border-b-2 text-sm">
-                                <td class="p-2 w-2/12 h-[30px]">&nbsp;</td>
-                                <td class="p-2 w-5/12 h-[30px]">&nbsp;</td>
-                                <td class="p-2 w-2/12 h-[30px]">&nbsp;</td>
-                                <td class="p-2 w-2/12 h-[30px]">&nbsp;</td>
-                                <td class="p-2 w-2/12 h-[30px]">&nbsp;</td>
-                            </tr>
-                        @endif
                         @endforeach
                     </tbody>
                 </table>
-                @endif
-                <div class="w-full h-full p-2 flex justify-center items-center pt-8">
+
+                <div class="w-full h-fit p-2 flex justify-center items-center pt-8">
                     <a href = "{{route('incoming.index')}}"
                         class="w-7/12 px-1 py-2 bg-blue-500 rounded-lg flex-col justify-center items-center gap-2.5 inline-flex bottom hover:bg-blue-950    ">
                         <div class="justify-center items-center gap-2 inline-flex">
@@ -141,6 +129,7 @@
                         </div>
                     </a>
                 </div>
+                @endif
             </div>
 
             <div class = "py-5">

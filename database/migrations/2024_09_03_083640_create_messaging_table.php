@@ -17,6 +17,7 @@ return new class extends Migration
             $table->unsignedInteger('employee_id');
             $table->unsignedInteger('document_tracking_code');
             $table->text('reply');
+            $table->timestamps();
 
             $table->foreign('employee_id')->references('employee_number')->on('users');
             $table->foreign('document_tracking_code')->references('document_tracking_code')->on('document_tracker');

@@ -1,62 +1,7 @@
 <x-modal name="add-new-employee" :maxWidth="'5xl'" :show="false" focusable>
     <h3 class = "text-center font-bold text-2xl">Add New Employee</h3>
 
-    <form
-    x-data="{
-        formStep: 1,
-        last_name: '',
-        first_name: '',
-        middle_name: '',
-        address: '',
-        birthdate: '',
-        marital_status: '',
-        email: '',
-        contact_nos: '',
-        division: '',
-        position: '',
-        imageUrl: '',
-        previewImage(event) {
-            const file = event.target.files[0];
-            if (file) {
-                const reader = new FileReader();
-                reader.onload = (e) => {
-                    this.imageUrl = e.target.result;
-                    this.showPreview();
-                };
-                reader.readAsDataURL(file);
-            }
-        },
-        confirmed: false,
-        success: false,
-        failure: false,
-        async submitForm(event) {
-            event.preventDefault();
-            try {
-                const response = await fetch(event.target.action, {
-                    method: event.target.method,
-                    body: new FormData(event.target),
-                    headers: { 'Accept': 'application/json' },
-                });
-                if (response.ok) {
-                    this.success = true;
-                    this.$dispatch('open-modal', 'employee-added-successfully');
-                } else {
-                    const errorData = await response.json();
-                    console.error('Validation Errors:', errorData);
-                    this.failure = true;
-                    this.$dispatch('open-modal', 'employee-added-failed');
-                }
-            } catch (error) {
-                console.error('Submission Error:', error);
-                this.showFailureModal = true;
-                this.$dispatch('open-modal', 'sent-failed');
-            }
-        }
-    }"
-    class="space-y-2"
-    @submit.prevent="submitForm"
-    action = "{{ route('employees.store') }}"
-    method = "POST">
+    <form x-data="new_employee" class="space-y-2" @submit.prevent="submitForm" action = "{{ route('employees.store') }}" method = "POST">
     @csrf
 
         <!-- Progress Bar Component -->

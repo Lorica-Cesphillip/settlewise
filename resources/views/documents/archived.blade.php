@@ -122,7 +122,7 @@
                     @if(Auth::user()->divisions->division_name == "APHSO Department")
                     <td class = "w-[200px] p-2 border-b-2">{{$archived->to_employee->fname}} {{$archived->to_employee->mname}} {{$archived->to_employee->lname}}</td>
                     @else
-                    <td class = "w-[200px] p-2 border-b-2">{{$archived->from_employee->divisions->division_name}} Division</td>
+                    <td class = "w-[200px] p-2 border-b-2">{{$archived->from_employee->divisions->name}} Division</td>
                     @endif
                     <td class = "w-[180px] py-1 border-b-2">{{$archived->document_type->document_type}}</td>
                     <td class = "w-[500px] py-1 border-b-2">{{$archived->subject}}</td>

@@ -157,32 +157,3 @@
     </form>
 </x-modal>
 @endif
-
-<script>
-    function referralDivision() {
-    return {
-        referred_employee: '',
-        division: '',
-        others: '',
-
-            async fetchDivision() {
-                if (this.referred_employee == '--APHSO Employee--') {
-                    this.division = ''; // Clear division when no recipient is selected
-                } else {
-                    try {
-                        const response = await fetch('/api/referral/${encodeURIComponent(this.referred_employee)}');
-                        if (!response.ok) {
-                            throw new Error('An Error Occured while retrieving data');
-                        }
-                        const data = await response.json();
-                        this.division = data.division_name ?? 'N/A';
-                    } catch (error) {
-                        console.error('Error fetching division:', error);
-                        this.division = ' ';
-                    }
-                }
-            }
-        };
-    }
-
-</script>

@@ -44,23 +44,31 @@ class IncomingDocumentsController extends Controller
      */
     public function update(Request $request, $request_id, $tracking_code)
     {
-        $request->validate([
-            'granted' => 'required|boolean',
-            'request_comments' => 'required|string|between: 1,140',
-            'rejection_reason' => 'required|string|not_in:--Select reason of rejection--'
-        ]);
+        Log::info('Passed Data: ', [$request_id, $tracking_code]);
+        $tracking_code = ltrim($tracking_code, "0");
+        Log::info('New Data: ', [$request_id, $tracking_code]);
+        $request->validate(['granted' => 'required|boolean']);
 
         Log::info('Verified Data: ', $request->all());
-        if($request->granted){
-            DocumentRequest::where('request_id', $request_id)->insert(['comments_if_granted' => $request->request_comments]);
-            DocumentTracker::where('document_tracking_code', '=', $tracking_code)->update(['document_status_id' => 2]);
 
-            return redirect()->route('incoming.index')->with('success');
-        }else{
-            DocumentRequest::where('request_id', $request_id)->insert(['rejection_reason' => $request->rejection_reason]);
-            DocumentTracker::where('document_tracking_code', '=', $tracking_code)->update(['document_status_id' => 3]);
+        try{
+            if($request->granted){
+                $request->validate(['request_comments' => 'required|string|between: 1,140']);
+                DocumentRequest::where('request_id', $request_id)->update(['comments_if_granted' => $request->request_comments]);
+                DocumentRequest::where('request_id', '=', $request_id);
+                DocumentTracker::where('document_tracking_code', '=', $tracking_code)->update(['status_id' => 2]);
 
-            return redirect()->route('incoming.index')->with('success');
+                return redirect()->route('incoming.index')->with('success');
+            }else{
+                $request->validate(['rejection_reason' => 'required|string|not_in:--Select reason of rejection--']);
+                DocumentRequest::where('request_id', $request_id)->update(['rejection_reason' => $request->rejection_reason]);
+                DocumentTracker::where('document_tracking_code', '=', $tracking_code)->update(['status_id' => 3]);
+
+                return redirect()->route('incoming.index')->with('success');
+            }
+        }
+        catch(\Error $e){
+            Log::error($e->getMessage());
         }
     }
 

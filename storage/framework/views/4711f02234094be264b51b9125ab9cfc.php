@@ -10,7 +10,6 @@
     <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
     <!-- Scripts -->
     <?php echo app('Illuminate\Foundation\Vite')(['resources/css/app.css', 'resources/js/app.js']); ?>
-    <?php echo app('Illuminate\Foundation\Vite')(['resources/sass/app.scss', 'resources/js/app.js']); ?>
 </head>
 <body class="font-sans antialiased h-screen w-screen">
     <div class="flex flex-row w-full">
@@ -22,6 +21,7 @@
 
         </main>
         <?php echo $__env->make('modals.application-status', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?>
+
     </div>
 </body>
 </html>

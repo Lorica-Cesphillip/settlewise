@@ -76,6 +76,8 @@ class OutgoingDocumentsController extends Controller
             $mname = count($name) > 1 ? array_pop($name) : null;
             $fname = implode(' ', $name);
 
+            Log::info($lname.' '.$fname.' '.$mname);
+
             $to_employee = User::select('employee_number', 'emp_status')->where('fname', '=', $fname)
                 ->where('lname', '=', $lname)
                 ->where(function ($query) use ($mname) {
@@ -168,7 +170,11 @@ class OutgoingDocumentsController extends Controller
 
         $referral = DocumentReferral::create($request->all());
 
-        DocumentTracker::where('document_tracking_code', '=', $tracking_code)->insert(['referral_id' => $referral->referral_id]);
+        DocumentTracker::where('document_tracking_code', '=', $tracking_code)->update([
+            'referral_id' => $referral->referral_id,
+            'to_employee_id' => $request->employee_number,
+            'from_employee_id' => Auth::user()->employee_number
+        ]);
 
         return view('documents.incoming')->with('success');
     }

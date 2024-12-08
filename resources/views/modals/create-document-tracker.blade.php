@@ -1,68 +1,7 @@
 <x-modal name="create-document-tracker-request" :maxWidth="'5xl'" :show="false" focusable>
     <form
     x-cloak
-    x-data="{
-        formStep: 1,
-        recipient_name: '',
-        document_type: '',
-        others_select: false,
-        urgent: false,
-        division: '',
-        others: '',
-        confidential: false,
-        subject: '',
-        remarks: '',
-        requested: false,
-        document: '',
-        request_type: '',
-        request_others: '',
-        requested_document: '',
-        request_details: '',
-        purpose: '',
-        confirmed: false,
-        showSuccessModal: false,
-        showFailureModal: false,
-        async fetchDivision() {
-            if (this.recipient_name == '--Please Select Recipient--') {
-                this.division = ''; // Clear division when no recipient is selected
-            } else {
-                try {
-                    const response = await fetch(`/api/employees/${encodeURIComponent(this.recipient_name)}/receiver`);
-                    if (!response.ok) {
-                        throw new Error('Network response was not ok');
-                    }
-                    const data = await response.json();
-                    this.division = data.division_name ?? 'N/A';
-                } catch (error) {
-                    console.error('Error fetching division:', error);
-                    this.division = ' ';
-                }
-            }
-        },
-        async submitForm(event) {
-            event.preventDefault();
-            try {
-                const response = await fetch(event.target.action, {
-                    method: event.target.method,
-                    body: new FormData(event.target),
-                    headers: { 'Accept': 'application/json' },
-                });
-
-                if (response.ok) {
-                    this.showSuccessModal = true;
-                    this.$dispatch('open-modal', 'sent-successfully');
-                } else {
-                    const errorData = await response.json();
-                    console.error('Validation Errors:', errorData);
-                    // Bind validation errors to a variable for display
-                    this.validationErrors = errorData.errors || {};
-                }
-            } catch (error) {
-                console.error(error);
-                this.validationErrors = { general: 'An unexpected error occurred.' };
-            }
-        }
-    }"
+    x-data="newDocumentTracker"
     @submit.prevent="submitForm"
     action="{{ route('outgoing.store') }}"
     method="POST"

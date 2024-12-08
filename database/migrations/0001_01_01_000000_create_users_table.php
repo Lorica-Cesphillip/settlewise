@@ -16,7 +16,6 @@ return new class extends Migration
             $table->string('division_name');
             $table->string('abbreviation', 5);
             $table->boolean('name_of_head')->nullable();
-            $table->integer('no_of_employees');
             $table->timestamp('updated_at')->nullable();
             $table->timestamp('created_at')->nullable();
         });

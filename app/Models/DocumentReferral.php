@@ -4,7 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\HasOne;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class DocumentReferral extends Model
 {
@@ -12,8 +12,8 @@ class DocumentReferral extends Model
 
     protected $table = 'referral_logs';
 
-    public function referred_employee(): HasOne{
-        return $this->hasOne(User::class, 'employee_number', 'employee_number');
+    public function referred_employee(): BelongsTo{
+        return $this->belongsTo(User::class, 'employee_number', 'employee_number');
     }
     /**
      * The attributes that are mass assignable.

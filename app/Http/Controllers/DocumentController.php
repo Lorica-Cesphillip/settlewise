@@ -17,7 +17,6 @@ class DocumentController extends Controller
         $document = DocumentTracker::with(['from_employee.divisions', 'to_employee.divisions', 'request', 'referral', 'document_type', 'status'])
         ->where('document_tracking_code', '=', $trackingCode)
         ->first();
-        Log::info($document);
 
         if($document){
             $transformedDocument = $document->toArray();

@@ -1,42 +1,17 @@
 <!-- Reject Request Modal -->
 @can('request-response', $incoming_documents)
     <x-modal name="reject-request" :maxWidth="'2xl'" :show="false" focusable>
-        <form x-data="{
-            request_id: 0,
-            documentTracker: 0,
-            showSuccessModal: false,
-            showFailureModal: false,
-            async submitForm(event) {
-                event.preventDefault();
-                try {
-                    const response = await fetch(event.target.action, {
-                        method: event.target.method,
-                        body: new FormData(event.target),
-                        headers: { 'Accept': 'application/json' },
-                    });
-
-                    if (response.ok) {
-                        this.showSuccessModal = true;
-                        this.$dispatch('open-modal', 'request-updated');
-                    } else {
-                        const errorData = await response.json();
-                        console.error('Validation Errors:', errorData);
-                        this.validationErrors = errorData.errors || {};
-                    }
-                } catch (error) {
-                    console.error(error);
-                    this.validationErrors = { general: 'An unexpected error occurred.' };
-                }
-            }
-        }"
+        <form x-data="requestResponse"
             @open-modal.window="
-            if ($event.detail.name === 'reject-request') {
-                request_id = $event.detail.requestId;
-                documentTracker = $event.detail.trackingCode;
-                show = true;
-            }
-        "
-            :action="`{{ url('/incoming/request') }}/{request_id}/{documentTracker}`" method="POST">
+                if ($event.detail.name === 'reject-request') {
+                    request_id = $event.detail.requestId;
+                    documentTracker = $event.detail.trackingCode;
+                    show = true;
+                }
+            "
+            @submit.prevent="submitForm"
+            :action="{{ url('/incoming/request') }}/{ $request_id }/{ $documentTracker }"
+            method="POST">
 
             @method('patch')
             @csrf
@@ -75,40 +50,14 @@
     <x-modal name="accept-request" :maxWidth="'2xl'" :show="false" focusable>
         <div class="w-[600px] h-[500px]">
             <h5 class="text-2xl font-bold text-center pb-4">Request Comments</h5>
-            <form x-data="{
-                request_id: 0,
-                documentTracker: 0,
-                showSuccessModal: false,
-                showFailureModal: false,
-                async submitForm(event) {
-                    event.preventDefault();
-                    try {
-                        const response = await fetch(event.target.action, {
-                            method: event.target.method,
-                            body: new FormData(event.target),
-                            headers: { 'Accept': 'application/json' },
-                        });
-
-                        if (response.ok) {
-                            this.showSuccessModal = true;
-                            this.$dispatch('open-modal', 'request-updated');
-                        } else {
-                            const errorData = await response.json();
-                            console.error('Validation Errors:', errorData);
-                            this.validationErrors = errorData.errors || {};
-                        }
-                    } catch (error) {
-                        console.error(error);
-                        this.validationErrors = { general: 'An unexpected error occurred.' };
-                    }
-                }
-            }"
+            <form x-data="requestResponse"
                 @open-modal.window="if($event.detail.name === 'accept-request'){
                 request_id = $event.detail.requestId;
                 documentTracker = $event.detail.trackingCode;
                 show=true;
             }"
-                :action="`{{ url('/incoming/request') }}/{request_id}/{documentTracker}`" method="POST">
+                :action="{{ url('/incoming/request') }}/{ $request_id }/{ $documentTracker }"
+                method="POST">
 
                 @method('patch')
                 @csrf

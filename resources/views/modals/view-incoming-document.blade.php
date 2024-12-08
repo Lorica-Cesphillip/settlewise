@@ -38,7 +38,7 @@
 
             <!--Buttons-->
             <div class = "justify-between w-full inline-flex">
-                <div class = "pt-10 gap-3 inline-flex">
+                <div class = "pt-10 gap-3 justify-between inline-flex">
                     <button x-on:click.prevent="$dispatch('open-modal', {name: 'document-preview', trackingCode: tracking_code, filePath: file_path})"
                         class = "p-4 bg-[#0d5dba] rounded-lg flex-col justify-center items-center gap-2.5 flex text-white tracking-widest hover:bg-blue-900 focus:bg-blue-900 active:bg-blue-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 transition ease-in-out duration-150">View
                         Document</button>
@@ -56,12 +56,14 @@
                         class = "p-4 bg-[#0d5dba] rounded-lg flex-col justify-center items-center gap-2.5 flex text-white tracking-widest hover:bg-blue-900 focus:bg-blue-900 active:bg-blue-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 transition ease-in-out duration-150">Post
                         Announcement</button>
                     @endcan
+                    <button x-on:click.prevent="$dispatch('open-modal', {name: 'warn-modal', trackingCode: tracking_code})"
+                    class = "p-4 bg-[#0d5dba] rounded-lg flex-col justify-center items-center gap-2.5 flex text-white tracking-widest hover:bg-blue-900 focus:bg-blue-900 active:bg-blue-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 transition ease-in-out duration-150">Forward</button>
                 </div>
                 @can('request-response', $incoming_documents)
                 <div>
                     <p class = "pb-4">Accept Request?</p>
                     <div class = "gap-3 inline-flex">
-                        <button x-on:click.prevent="$dispatch('open-modal', {name: 'reject-request', trackingCode: tracking_code})" x-bind:disabled="!requested" :class="requested ? 'bg-red-600 hover:bg-red-800 active:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 transition ease-in-out duration-150' : 'bg-gray-300 cursor-not-allowed'"
+                        <button x-on:click.prevent="$dispatch('open-modal', {name: 'reject-request', trackingCode: tracking_code, requestId: request_id})" x-bind:disabled="!requested" :class="requested ? 'bg-red-600 hover:bg-red-800 active:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 transition ease-in-out duration-150' : 'bg-gray-300 cursor-not-allowed'"
                             class = "inline-flex items-center p-4 border border-transparent rounded-md text-white  tracking-widest">Reject</button>
                         <button x-on:click.prevent="$dispatch('open-modal', {name: 'accept-request', trackingCode: tracking_code, requestId: request_id})" x-bind:disabled="!requested" :class="requested ? 'bg-green-600 hover:bg-green-900 focus:bg-green-700 active:bg-green-900 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2 transition ease-in-out duration-150' : 'bg-gray-300 cursor-not-allowed'"
                             class = "p-4  rounded-lg flex-col justify-center items-center gap-2.5 flex text-white tracking-widest">Accept</button>
@@ -78,13 +80,13 @@
 <x-modal name="document-preview" :maxWidth="'2xl'">
     <div x-data="previewData" @open-modal.window="if($event.detail.name === 'document-preview'){
         trackingCode = $event.detail.trackingCode;
-        filePath = $event.detail.filePath;
+        fileUrl = $event.detail.filePath;
         loadPreview();
     }">
         <p class="text-2xl font-bold text-center">PREVIEW DOCUMENT</p>
         <div class="items-center justify-items-center gap-3 ">
             <!-- Use `:src` for dynamic binding -->
-            <iframe :src="fileUrl" class="w-[400px] h-[500px] border py-4 border-black items"></iframe>
+            <iframe x-bind:src="fileUrl" class="w-[400px] h-[500px] border py-4 border-black items"></iframe>
 
             <!-- Use `x-bind:href` for dynamic link binding -->
             <a x-bind:href="fileUrl" download class="w-[300px] p-4 bg-[#0d5dba] items rounded-lg text-center text-white tracking-widest hover:bg-blue-900">
@@ -95,113 +97,3 @@
         </div>
     </div>
 </x-modal>
-
-<script>
-    function documentData(){
-        return{
-            tracking_code: '',
-            document_type: '',
-            subject: '',
-            remarks: '',
-            sender_id: 0,
-            sender: '',
-            receiver_id: 0,
-            receiver: '',
-            date_transmitted: '',
-            division: '',
-            document_status: '',
-            requested: false,
-            request_id: 0,
-            request_type: '',
-            requested_document: '',
-            purpose: '',
-            request_details: '',
-            statusBgColor: '',
-            file_path: '',
-            async fetchDocument(trackingCode){
-                try{
-                    const response = await fetch(`/api/document/view/${trackingCode}`);
-
-                    if(!response.ok) throw new Error(`HTTP error! Status: ${response.status}`);
-                    const data = await response.json();
-                    console.log(data);
-
-                    this.tracking_code = data.document_tracking_code.toString().padStart(3, '0');
-                    this.document_type = data.document_type.document_type;
-                    this.subject = data.subject;
-                    this.remarks = data.remarks ? data.remarks : 'N/A';
-                    this.sender = data.from_employee.fname + ' ' + data.from_employee.mname + ' ' + data.from_employee.lname;
-                    this.receiver = data.to_employee.fname + ' ' + data.to_employee.mname + ' ' + data.to_employee.lname;
-                    this.date_transmitted = data.created_at;
-                    this.division = data.from_employee.divisions.division_name;
-                    this.document_status = data.status.document_status;
-                    this.statusBgColor = this.getBgColor(data.status.status_id);
-                    this.requested = data.request_id ? true : false;
-                    this.request_id = data.request_id;
-                    this.request_type = data.request.request_type ? data.request.request_type : 'N/A';
-                    this.requested_document = data.request.requested_document ? data.request.requested_document : 'N/A';
-                    this.purpose = data.request.request_purpose ? data.request.request_purpose : 'N/A';
-                    this.request_details = data.request.request_details ? data.request.request_details : 'N/A';
-                    this.file_path = data.file_path;
-                }catch(error){
-                    console.error('There is something wrong while retrieving document information. Error: ', error);
-                }
-            },
-
-            getBgColor(statusId) {
-                return {
-                    1: 'bg-yellow-500', // Pending
-                    2: 'bg-green-500',  // Request Accepted
-                    3: 'bg-red-500',    // Request Rejected
-                    4: 'bg-blue-500',   // Document Forwarded
-                    5: 'bg-purple-500', // To be Referred
-                    6: 'bg-gray-500',   // Archived
-                    7: 'bg-teal-500',   // Announced
-                }[statusId] || 'bg-gray-300'; // Default
-            },
-            openPreviewModal() {
-                $dispatch('open-modal', {
-                    name: 'document-preview',
-                    trackingCode: tracking_code,
-                    filePath: this.file_path
-                });
-            }
-        }
-    }
-
-    function previewData() {
-        return {
-            trackingCode: '',
-            filePath: '',
-            loadPreview() {
-                if (!this.filePath) {
-                    console.error("No file path provided for preview.");
-                    alert("Document file is missing or invalid.");
-                    return;
-                }
-
-                // Log the file path for debugging
-                    console.log("Attempting to load file:", this.filePath);
-
-                // Check if the file is accessible
-                fetch(this.filePath)
-                    .then(response => {
-                        if (!response.ok) {
-                            throw new Error(`Failed to fetch document. Status: ${response.status}`);
-                        }
-
-                        // Update iframe src
-                        const iframe = document.querySelector('iframe');
-                        if (iframe) {
-                            console.log("Setting iframe source to:", this.filePath);
-                            iframe.src = this.filePath;
-                        }
-                    })
-                    .catch(error => {
-                        console.error("Error loading document:", error);
-                        alert("Failed to load the document. Please try again.");
-                    });
-            }
-        };
-    }
-</script>
