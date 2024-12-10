@@ -58,17 +58,18 @@ class IncomingDocumentsController extends Controller
                 DocumentRequest::where('request_id', '=', $request_id);
                 DocumentTracker::where('document_tracking_code', '=', $tracking_code)->update(['status_id' => 2]);
 
-                return redirect()->route('incoming.index')->with('success');
+                return response()->json('success', 200);
             }else{
                 $request->validate(['rejection_reason' => 'required|string|not_in:--Select reason of rejection--']);
                 DocumentRequest::where('request_id', $request_id)->update(['rejection_reason' => $request->rejection_reason]);
                 DocumentTracker::where('document_tracking_code', '=', $tracking_code)->update(['status_id' => 3]);
 
-                return redirect()->route('incoming.index')->with('success');
+                return response()->json('success', 200);
             }
         }
         catch(\Error $e){
             Log::error($e->getMessage());
+            return response()->json('error', 500);
         }
     }
 
@@ -82,14 +83,15 @@ class IncomingDocumentsController extends Controller
             'notes' => 'string|max:140|nullable'
         ]);
 
+        $document = DocumentTracker::select('document_tracking_code')->where('document_tracking_code', '=', $tracking_code);
+
         Announcements::insert([
+            'document_tracking_code' => $document->document_tracking_code,
             'what' => $request->what,
             'where' => $request->where,
             'who' => $request->who,
             'when' => $request->when,
             'notes' => $request->notes,
-            'date_posted' => now(),
-            'date_expired' => now(),
             'is_posted' => 1
         ]);
 

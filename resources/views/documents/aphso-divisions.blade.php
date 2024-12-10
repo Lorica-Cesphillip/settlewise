@@ -45,7 +45,7 @@
     </div>
 
     <div class = "w-full self-stretch h-full items-center justify-items-center p-2">
-        <table class = "table-fixed border-b-2">
+        <table class = "table-fixed border-b-2 shadow">
             <thead>
                 <tr class = "border-b-2 bg-gray-200">
                     <th class = "w-[150px] h-[30px] p-3 justify-start">Division Id</th>

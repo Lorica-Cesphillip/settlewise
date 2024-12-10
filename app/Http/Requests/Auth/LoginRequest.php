@@ -55,7 +55,8 @@ class LoginRequest extends FormRequest
             RateLimiter::hit($this->throttleKey());
 
             throw ValidationException::withMessages([
-                'employee_id' => trans('auth.failed'),
+                'employee_id' => 'Incorrect Employee Number or Password.',
+                'password' => 'Incorrect Employee Number or Password.'
             ]);
         }
 

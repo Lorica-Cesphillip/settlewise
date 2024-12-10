@@ -45,7 +45,7 @@
                 class="w-[480px] h-[311px] p-2 block justify-center items-center rounded-xl shadow border text-wrap border-black">
                 <h3 class="text-2xl w-full font-bold text-center px-24 py-4">ANNOUNCEMENTS</h3>
 
-                <?php if($announcements): ?>
+                <?php if($announcements->isEmpty()): ?>
                     <p class="font-light text-sm text-center text-gray-700">No announcement today from the Department Head. Enjoy your day.</p>
                 <?php else: ?>
                 <!-- Content divided into left and right columns -->
@@ -58,17 +58,16 @@
                         <p>NOTES: </p>
                     </div>
                     <div class = "font-bold underline">
-                        <p>PGA Annual Meeting </p>
-                        <p>January 6, 2024</p>
-                        <p>Office of the Sangguniang Bayan</p>
-                        <p>All APHSO Employees</p>
-                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt
-                            ut labore et dolore magna aliqua.</p>
+                        <p><?php echo e($announcements->what); ?></p>
+                        <p><?php echo e($announcements->when); ?></p>
+                        <p><?php echo e($announcements->where); ?></p>
+                        <p><?php echo e($announcements->who); ?></p>
+                        <p><?php echo e($announcements->notes); ?></p>
                     </div>
                 </div>
 
                 <div class="w-full h-fit p-2 flex justify-center items-center py-6">
-                    <button x-on:click.prevent="$dispatch('open-modal', 'document-preview')"
+                    <button x-on:click.prevent="$dispatch('open-modal', {name: 'document-preview', filePath: <?php echo e($announcements->document_tracker->file_path); ?> })"
                         class="w-7/12 px-1 py-2 bg-blue-500 hover:bg-blue-900 active:bg-blue-900 rounded-lg flex-col justify-center items-center gap-2.5 inline-flex text-center text-white text-sm font-semibold leading-tight">VIEW ANNOUNCEMENT
                     </button>
                 </div>
@@ -116,7 +115,7 @@
                 <?php if($incoming_documents->isEmpty()): ?>
                 <p class="text-sm text-center text-gray-700 w-[985px] h-[385px]">You haven't received any documents for a while.</p>
                 <?php else: ?>
-                <table class = "table-fixed">
+                <table class = "shadow table-fixed w-[980px]">
                     <thead>
                         <tr class = "bg-slate-300">
                             <th class = "p-2 w-2/12 h-[30px]">Tracking code</th>

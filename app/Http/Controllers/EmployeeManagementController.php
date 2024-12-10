@@ -147,12 +147,12 @@ class EmployeeManagementController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(EmployeeUpdateRequest $request, User $employees)
+    public function update(EmployeeUpdateRequest $request)
     {
         $request->user()->fill($request->validated());
 
         $request->user()->save();
-        return redirect(route('documents.employees', absolute: false))->with('success');
+        return response()->json('success', 200);
     }
 
     /**

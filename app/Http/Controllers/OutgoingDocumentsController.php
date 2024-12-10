@@ -71,31 +71,30 @@ class OutgoingDocumentsController extends Controller
         ]);
 
         try {
-            $name = explode(' ', $request->recipient_name);
-            $lname = array_pop($name);
-            $mname = count($name) > 1 ? array_pop($name) : null;
-            $fname = implode(' ', $name);
+            // Parse recipient name
+            $fullName = trim($request->recipient_name);
+            $nameParts = preg_split('/\s+/', $fullName);
 
-            Log::info($lname.' '.$fname.' '.$mname);
+            // Handle name parts
+            $lname = array_pop($nameParts); // Last part is the last name
+            $fname = implode(' ', $nameParts); // Everything else is the first name
 
-            $to_employee = User::select('employee_number', 'emp_status')->where('fname', '=', $fname)
+            Log::info("Parsed name: Last Name - $lname, First Name - $fname");
+
+            // Lookup employee
+            $to_employee = User::select('employee_number', 'emp_status')
+                ->where('fname', '=', $fname)
                 ->where('lname', '=', $lname)
-                ->where(function ($query) use ($mname) {
-                    if ($mname) {
-                        $query->where('mname', '=', $mname);
-                    } else {
-                        $query->whereNull('mname');
-                    }
-                })
                 ->first();
 
             Log::info('Recipient Lookup:', [$to_employee]);
+
             if (!$to_employee) {
-                Log::info('Employee Does Not Exist');
                 return response()->json([
-                    'errors' => ['recipient_name' => 'Recipient not found in the system.'],
+                    'errors' => ['recipient' => 'Employee does not exist or name is incorrect.'],
                 ], 422);
-            }else if($to_employee->emp_status == 0){
+            }
+            else if($to_employee->emp_status == 0){
                 Log::info('Employee Offline');
                 return response()->json([
                     'errors' => ['inactive' => 'Employee is not part of the organization.'],
@@ -165,18 +164,29 @@ class OutgoingDocumentsController extends Controller
             'for_urgent' => 'required|boolean',
             'please' => 'required|not_in:--Select Only One--',
             'plase_urgent' => 'required|boolean',
-            'remarks' => 'string|max:140',
+            'remarks' => 'string|max:140|nullable',
         ]);
 
-        $referral = DocumentReferral::create($request->all());
+        Log::info('Data: '.$request->all());
 
-        DocumentTracker::where('document_tracking_code', '=', $tracking_code)->update([
-            'referral_id' => $referral->referral_id,
-            'to_employee_id' => $request->employee_number,
-            'from_employee_id' => Auth::user()->employee_number
-        ]);
+        try{
+            $referral = DocumentReferral::create($request->all());
 
-        return view('documents.incoming')->with('success');
+            DocumentTracker::where('document_tracking_code', '=', $tracking_code)->update([
+                'referral_id' => $referral->referral_id,
+                'to_employee_id' => $request->employee_number,
+                'from_employee_id' => Auth::user()->employee_number
+            ]);
+
+            return response()->json('success', 200);
+        }
+        catch(\Exception $e)
+        {
+            Log::info('Errors: ', [$e->getMessage()]);
+            return back()->withErrors('errors', 'Something went wrong while processing the documents.');
+        }
+
+
     }
 
     /**

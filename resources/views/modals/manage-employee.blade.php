@@ -1,5 +1,5 @@
 <x-modal name="view-employee" :maxWidth="'3xl'">
-    <div x-data="employeeData" @open-modal.window="if($event.detail.name === 'view-employee') {
+    <div x-data="manageEmployee" @open-modal.window="if($event.detail.name === 'view-employee') {
         fetchEmployeeData($event.detail.employeeNumber);
         show=true;
     }">
@@ -10,6 +10,7 @@
             <div class="basis-3/4">
                 <div class="flex flex-row">
                     <div class="basis-1/4">
+                        <p class="font-light">Employee ID: </p>
                         <p class="font-light">Employee Name: </p>
                         <p class="font-light">Home Address: </p>
                         <p class="font-light">Birthdate: </p>
@@ -20,6 +21,7 @@
                         <p class="font-light">Position: </p>
                     </div>
                     <div class="basis-3/4">
+                        <p class="font-bold underline"><span x-text="`${division_code}-${displayId}`"></span></p>
                         <p class="font-bold underline"><span x-text="`${lname}, ${fname} ${mname}`"></span></p>
                         <p class="font-bold underline" x-text="address"></p>
                         <p class="font-bold underline" x-text="birthdate"></p>
@@ -49,7 +51,6 @@
                         <path d="M7.05086 5.63616C6.66033 5.24563 6.02717 5.24563 5.63664 5.63616C5.24612 6.02668 5.24612 6.65984 5.63664 7.05037L10.5864 12.0001L5.63664 16.9499C5.24612 17.3404 5.24612 17.9736 5.63664 18.3641C6.02717 18.7546 6.66033 18.7546 7.05086 18.3641L12.0006 13.4143L16.9504 18.3641C17.3409 18.7546 17.974 18.7546 18.3646 18.3641C18.7551 17.9736 18.7551 17.3404 18.3646 16.9499L13.4148 12.0001L18.3646 7.05037C18.7551 6.65984 18.7551 6.02668 18.3646 5.63616C17.974 5.24563 17.3409 5.24563 16.9504 5.63616L12.0006 10.5859L7.05086 5.63616Z" fill="#04326B"/>
                     </svg>
                 </x-slot>
-                <!-- SVG icon omitted for brevity -->
             </x-tertiary-button>
             @can('manage-employee', $employee)
                 <button x-on:click.prevent="$dispatch('open-modal', {name: 'edit-employee', employeeNumber: employee_number})"
@@ -66,17 +67,22 @@
         </div>
     </div>
 </x-modal>
-@can('x-text-employee', $employee)
-<x-modal name="edit-employee" :maxWidth="'4xl'" focusable>
+@can('manage-employee', $employee)
+<x-modal name="edit-employee" :maxWidth="'5xl'" focusable>
     <h3 class = "text-center font-bold text-2xl">Edit Employee</h3>
+    <div class = "text-center text-sm p-2"><span class = "text-red-800">*</span> Required Information</div>
 
     <form
-    x-data="employeeData" @open-modal.window="if($event.detail.name === 'edit-employee') {
-        fetchEmployeeData($event.detail.employeeNumber);
-        show=true;
-    }"
+    x-data="manageEmployee"
+    @open-modal.window="if ($event.detail.name === 'edit-employee') {
+            fetchEmployeeData($event.detail.employeeNumber);
+            action = '{{ route('employees.update', ['employee' => 'employee_number']) }}';
+            action = action.replace('employee_number', employee_number);
+            show = true;
+        }
+    "
     class="space-y-2"
-    action = "{{ route('employees.update') }}"
+    x-bind:action="action"
     method = "POST"
     >
         @csrf
@@ -87,9 +93,9 @@
             <!-- Step 1 -->
             <div :class="formStep >= 1 ? 'bg-[#7fbaff]' : 'bg-gray-400'"
                 class="rounded-full flex items-center justify-center text-center py-4 h-[60px] w-[60px]">
-                <span :class="formStep >= 1 ? 'text-white' : 'text-gray-400'">
-                    <template x-if="formStep > 1">✓</template>
-                    <template x-if="formStep <= 1">1</template>
+                <span class="text-black font-bold">
+                    <template x-if="formStep > 1"><div class="text-white">✓</div></template>
+                    <template x-if="formStep <= 1"><div>1</div></template>
                 </span>
             </div>
 
@@ -101,9 +107,9 @@
             <!-- Step 2 -->
             <div :class="formStep >= 2 ? 'bg-[#7fbaff]' : 'bg-gray-400'"
                 class="rounded-full flex items-center justify-center text-center py-4 h-[60px] w-[60px]">
-                <span :class="formStep >= 2 ? 'text-white' : 'text-gray-400'">
-                    <template x-if="formStep > 2">✓</template>
-                    <template x-if="formStep <= 2">2</template>
+                <span  class="text-black font-bold">
+                    <template x-if="formStep > 2"><div class="text-white">✓</div></template>
+                    <template x-if="formStep <= 2"><div>2</div></template>
                 </span>
             </div>
 
@@ -115,9 +121,8 @@
             <!-- Step 3 -->
             <div :class="formStep === 3 ? 'bg-[#7fbaff]' : 'bg-gray-400'"
                 class="rounded-full flex items-center justify-center text-center py-4 h-[60px] w-[60px]">
-                <span :class="formStep === 3 ? 'text-white' : 'text-gray-400'">
-                    <template x-if="formStep === 3">✓</template>
-                    <template x-if="formStep < 3">3</template>
+                <span  class="text-black font-bold">
+                    <template x-if="formStep === 3 || formStep <= 3"><div>3</div></template>
                 </span>
             </div>
         </div>
@@ -131,20 +136,20 @@
                 <x-input-label for="name" :value="__('Employee Name')" />
                 <div class = "gap-2 w-full inline-flex">
                     <div>
-                        <x-text-input x-model="last_name" id="name" class="block mt-1 w-[266px]" type="text"
-                            name="last_name" x-text="last_name" autofocus autocomplete="off" placeholder="Last Name" />
+                        <x-text-input x-model="lname" id="name" class="block mt-1 w-[266px]" type="text"
+                            name="last_name" :value="old('last_name')" autofocus autocomplete="off" placeholder="Last Name *" />
                         <x-input-error :messages="$errors->get('last_name')" class="mt-2" />
                     </div>
 
                     <div>
-                        <x-text-input x-model="first_name" id="name" class="block mt-1 w-[266px]" type="text"
-                            name="first_name" x-text="first_name" autofocus autocomplete="off" placeholder="First Name" />
+                        <x-text-input x-model="fname" id="name" class="block mt-1 w-[266px]" type="text"
+                            name="first_name" :value="old('first_name')" autofocus autocomplete="off" placeholder="First Name *" />
                         <x-input-error :messages="$errors->get('first_name')" class="mt-2" />
                     </div>
 
                     <div>
-                        <x-text-input x-model="middle_name" id="name" class="block mt-1 w-[266px]" type="text"
-                            name="middle_name" x-text="middle_name" autofocus autocomplete="off"
+                        <x-text-input x-model="mname" id="name" class="block mt-1 w-[266px]" type="text"
+                            name="middle_name" :value="old('middle_name')" autofocus autocomplete="off"
                             placeholder="Middle Name" />
                         <x-input-error :messages="$errors->get('middle_name')" class="mt-2" />
                     </div>
@@ -152,9 +157,9 @@
 
                 <!--Home Address-->
                 <div class = "block">
-                    <x-input-label for="address" :value="__('Home Address')" />
+                    <x-input-label for="address" :value="__('Home Address *')" />
                     <x-text-input x-model="address" id="address" class="block mt-1 w-full" type="text"
-                        name="address" :value="old('address')" autofocus autocomplete="off"
+                        name="address" x-bind:value="address" autofocus autocomplete="off"
                         placeholder="Lot/Blg. No, Street, Barangay/ Subdivision, Municipality/City, Province, ZIP Code" />
                     <x-input-error :messages="$errors->get('address')" class="mt-2" />
                 </div>
@@ -162,7 +167,7 @@
 
             <div class = "block columns-2">
                 <div>
-                    <x-input-label for="birthday" :value="__('Birthdate')" />
+                    <x-input-label for="birthday" :value="__('Birthdate *')" />
                     <x-text-input x-model="birthdate" id="birthdate" class="block mt-1 w-full" type="date"
                         name="birthdate" x-text="birthdate" autofocus autocomplete="off"
                         placeholder="Select Employee's Birthdate" />
@@ -170,7 +175,7 @@
                 </div>
 
                 <div>
-                    <x-input-label for="marital_status" :value="__('Marital Status')" />
+                    <x-input-label for="marital_status" :value="__('Marital Status *')" />
                     <select x-model="marital_status" id="marital_status"
                         class="block mt-1 w-full border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm"
                         type="text" name="marital_status" :value="old('marital_status')" autofocus
@@ -187,14 +192,14 @@
 
             <div class = "block columns-2">
                 <div>
-                    <x-input-label for="email" :value="__('Employees Personal Email')" />
+                    <x-input-label for="email" :value="__('Employees Personal Email *')" />
                     <x-text-input x-model="email" id="email" class="block mt-1 w-full" type="email" name="email"
                         :value="old('email')" autofocus autocomplete="off" placeholder="Enter Their Personal Email" />
                     <x-input-error :messages="$errors->get('email')" class="mt-2" />
                 </div>
 
                 <div>
-                    <x-input-label for="contact_nos" :value="__('Contact Number')" />
+                    <x-input-label for="contact_nos" :value="__('Contact Number *')" />
                     <x-text-input x-model="contact_nos" id="contact_nos" class="block mt-1 w-full" type="text"
                         name="contact_nos" :value="old('contact_nos')" autofocus autocomplete="off"
                         placeholder="Enter Their Personal Contact Number" />
@@ -207,10 +212,10 @@
             <h5 class = "font-bold text-xl">Part II: Job Position</h5>
             <div class = "columns-2 block">
                 <div>
-                    <x-input-label for="division" :value="__('APHSO Division')" />
+                    <x-input-label for="division" :value="__('APHSO Division *')" />
                     <select x-model="division" id="division"
                         class="block mt-1 w-full border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm"
-                        type="text" name="division" :value="old('division')" autofocus autocomplete="off">
+                        type="text" name="division" :value="old('divisions')" autofocus autocomplete="off">
                         <option value = "">--Select Division--</option>
                         @foreach ($divisions as $division)
                             <option value = "{{ $division->division_name }} Division">
@@ -221,7 +226,7 @@
                 </div>
 
                 <div>
-                    <x-input-label for="position" :value="__('Position')" />
+                    <x-input-label for="position" :value="__('Position *')" />
                     <x-text-input x-model="position" id="position" class="block mt-1 w-full" type="text"
                         name="position" :value="old('position')" autofocus autocomplete="off"
                         placeholder="APHSO Position" />
@@ -257,7 +262,7 @@
                 <div class="p-4 columns-2">
                     <div>
                         <p class="font-light">Full Name: <span class="font-bold underline"
-                                x-text="`${last_name} ${first_name} ${middle_name}`"></span></p>
+                                x-text="`${lname} ${fname} ${mname}`"></span></p>
                         <p class="font-light">Home Address: <span class="font-bold underline"
                                 x-text="address"></span></p>
                         <p class="font-light">Birthdate: <span class="font-bold underline" x-text="birthdate"></span>
@@ -331,62 +336,23 @@
                     </div>
                 </div>
             </button>
-            <x-primary-button x-bind:disabled="confirm" x-cloak x-show="formStep === 3">
-                <x-slot name="name">Update Existing Employee</x-slot>
-                <x-slot name="icon"></x-slot>
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path fill-rule="evenodd" clip-rule="evenodd" d="M20.5961 2.90984C19.2495 1.56326 17.0662 1.56325 15.7196 2.90984L7.19416 11.4353C6.58217 12.0473 6.18518 12.8413 6.06279 13.6981L5.81573 15.4274C5.62717 16.7474 6.75854 17.8787 8.07847 17.6902L9.80784 17.4431C10.6646 17.3207 11.4586 16.9237 12.0706 16.3117L20.5961 7.78627C21.9426 6.43968 21.9426 4.25643 20.5961 2.90984ZM17.3433 4.15037C17.907 3.7661 18.6818 3.824 19.1818 4.32406C19.6819 4.82412 19.7398 5.59891 19.3555 6.16258L17.3433 4.15037ZM15.9112 5.54669L17.9592 7.59469L10.6564 14.8975C10.3504 15.2035 9.95339 15.402 9.525 15.4632L7.79563 15.7103L8.04269 13.9809C8.10388 13.5525 8.30238 13.1555 8.60837 12.8495L15.9112 5.54669Z" fill="white"/>
-                    <path d="M6 1.99986C3.79086 1.99986 2 3.79072 2 5.99986V17.9999C2 20.209 3.79086 21.9999 6 21.9999H18C20.2091 21.9999 22 20.209 22 17.9999V11.9999C22 11.4476 21.5523 10.9999 21 10.9999C20.4477 10.9999 20 11.4476 20 11.9999V17.9999C20 19.1044 19.1046 19.9999 18 19.9999H6C4.89543 19.9999 4 19.1044 4 17.9999V5.99986C4 4.89529 4.89543 3.99986 6 3.99986H8.68421C9.2365 3.99986 9.68421 3.55214 9.68421 2.99986C9.68421 2.44757 9.2365 1.99986 8.68421 1.99986H6Z" fill="white"/>
-                </svg>
-            </x-primary-button>
+            <div x-cloak x-show="formStep === 3" class="py-3.5">
+                <input type="checkbox" id="confirmation" x-model="confirmed" name="confirmation" class = "rounded-md" />
+                <label for="confirmation" class="cursor-pointer">By clicking, you indicate that the employee information is correct.</label>
+            </div>
+
+            <button :disabled="!confirmed" class="p-4 rounded-lg flex-col justify-center items-center gap-2.5 flex text-white tracking-widest" :class="confirmed ? ' bg-blue-500 hover:bg-blue-900 focus:bg-blue-900 active:bg-blue-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 transition ease-in-out duration-150' : 'bg-gray-400 cursor-not-allowed'" x-cloak x-show="formStep === 3">
+                <div class = "justify-center items-center gap-2 inline-flex">
+                    <p class="font-semibold">Update Existing Employee</p>
+                    <div class="relative">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path fill-rule="evenodd" clip-rule="evenodd" d="M20.5961 2.90984C19.2495 1.56326 17.0662 1.56325 15.7196 2.90984L7.19416 11.4353C6.58217 12.0473 6.18518 12.8413 6.06279 13.6981L5.81573 15.4274C5.62717 16.7474 6.75854 17.8787 8.07847 17.6902L9.80784 17.4431C10.6646 17.3207 11.4586 16.9237 12.0706 16.3117L20.5961 7.78627C21.9426 6.43968 21.9426 4.25643 20.5961 2.90984ZM17.3433 4.15037C17.907 3.7661 18.6818 3.824 19.1818 4.32406C19.6819 4.82412 19.7398 5.59891 19.3555 6.16258L17.3433 4.15037ZM15.9112 5.54669L17.9592 7.59469L10.6564 14.8975C10.3504 15.2035 9.95339 15.402 9.525 15.4632L7.79563 15.7103L8.04269 13.9809C8.10388 13.5525 8.30238 13.1555 8.60837 12.8495L15.9112 5.54669Z" fill="white"/>
+                            <path d="M6 1.99986C3.79086 1.99986 2 3.79072 2 5.99986V17.9999C2 20.209 3.79086 21.9999 6 21.9999H18C20.2091 21.9999 22 20.209 22 17.9999V11.9999C22 11.4476 21.5523 10.9999 21 10.9999C20.4477 10.9999 20 11.4476 20 11.9999V17.9999C20 19.1044 19.1046 19.9999 18 19.9999H6C4.89543 19.9999 4 19.1044 4 17.9999V5.99986C4 4.89529 4.89543 3.99986 6 3.99986H8.68421C9.2365 3.99986 9.68421 3.55214 9.68421 2.99986C9.68421 2.44757 9.2365 1.99986 8.68421 1.99986H6Z" fill="white"/>
+                        </svg>
+                    </div>
+                </div>
+            </button>
         </div>
     </form>
 </x-modal>
 @endcan
-
-<script>
-    function employeeData() {
-        return {
-            formStep: 1,
-            employee_number: 0,
-            lname: '',
-            fname: '',
-            mname: '',
-            address: '',
-            birthdate: '',
-            marital_status: '',
-            email: '',
-            contact_nos: '',
-            division: '',
-            position: '',
-            employee_image: '',
-            async fetchEmployeeData(employeeNumber) {
-                try {
-                    const response = await fetch(`/api/employee/${employeeNumber}`);
-
-                    if (!response.ok) throw new Error(`HTTP error! Status: ${response.status}`);
-
-                    // Read JSON data only once and assign it to a variable
-                    const data = await response.json();
-
-                    // Update Alpine.js properties with the response data
-                    this.employee_number = data.employee_number;
-                    this.lname = data.lname;
-                    this.fname = data.fname;
-                    this.mname = data.mname;
-                    this.address = data.address;
-                    this.birthdate = data.birthdate;
-                    this.marital_status = data.martial_status;
-                    this.email = data.email;
-                    this.contact_nos = data.contact_nos;
-                    this.division = data.divisions.division_name;
-                    this.position = data.position;
-                    this.employee_image = data.image_path;
-                } catch (error) {
-                    console.error('Error fetching employee data:', error);
-                }
-            }
-
-        };
-    }
-</script>

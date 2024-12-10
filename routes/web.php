@@ -7,6 +7,7 @@ use App\Http\Controllers\IncomingDocumentsController;
 use App\Http\Controllers\DocumentController;
 use App\Http\Controllers\ArchivesController;
 use App\Http\Controllers\DocumentConversationController;
+use App\Models\Announcements;
 use App\Models\DocumentTracker;
 use Illuminate\Support\Facades\Route;
 use League\CommonMark\Node\Block\Document;
@@ -22,19 +23,36 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
     /*Document Information Module */
     Route::get('/', function () {
-        $incoming_documents = Auth::check() && Auth::user()->divisions->abbreviation == 'HEAD' ? DocumentTracker::with(['from_employee', 'to_employee', 'request', 'referral', 'document_type', 'status'])->where('is_forwarded', '=', 0)->latest()->take(4)->get() : DocumentTracker::with(['from_employee', 'to_employee', 'request', 'referral', 'document_type', 'status'])->latest()->where('to_employee_id', '=', Auth::user()->employee_number)->where('is_forwarded', '=', 1)->take(4)->get();
+        $incoming_documents = Auth::check() && optional(Auth::user()->divisions)->abbreviation == 'HEAD'
+            ? DocumentTracker::with(['from_employee', 'to_employee', 'request', 'referral', 'document_type', 'status'])
+                ->where('is_forwarded', 0)->latest()->take(4)->get()
+            : DocumentTracker::with(['from_employee', 'to_employee', 'request', 'referral', 'document_type', 'status'])
+                ->where('to_employee_id', Auth::user()->employee_number ?? 0)->where('is_forwarded', 1)->latest()->take(4)->get();
 
-        $active = count(User::all()->where('emp_status', '=', 1));
-        $incoming_count = Auth::check() && Auth::user()->divisions->abbreviation == 'HEAD' ? count(DocumentTracker::all()->where('is_forwarded', '=', 0 )) : count(DocumentTracker::all()->where('to_employee_id', '=', Auth::user()->employee_number));
-        $approved_count = count(DocumentTracker::all()->where('from_employee_id', '=', Auth::user()->employee_number)->where('status_id', '=', 2));
-        $rejected_count = count(DocumentTracker::all()->where('from_employee_id', '=', Auth::user()->employee_number)->where('status_id', '=', 3));
-        $announcements = \App\Models\Announcements::latest();
-        return view('documents.dashboard', compact('incoming_documents', 'active', 'incoming_count', 'approved_count', 'rejected_count', 'announcements'));
+        $active = User::where('emp_status', 1)->count();
+
+        $announcements = Announcements::latest()->where('is_posted', 1)->take(1)->get();
+
+        $incoming_count = Auth::check() && optional(Auth::user()->divisions)->abbreviation == 'HEAD'
+            ? DocumentTracker::where('is_forwarded', 0)->count()
+            : DocumentTracker::where('to_employee_id', Auth::user()->employee_number ?? 0)->count();
+
+        $approved_count = DocumentTracker::where('from_employee_id', Auth::user()->employee_number ?? 0)
+            ->where('status_id', 2)->count();
+
+        $rejected_count = DocumentTracker::where('from_employee_id', Auth::user()->employee_number ?? 0)
+            ->where('status_id', 3)->count();
+
+        return view('documents.dashboard', compact(
+            'incoming_documents', 'active', 'announcements',
+            'incoming_count', 'approved_count', 'rejected_count'
+        ));
     })->name('dashboard');
+
 
     /*Incoming Documents */
     Route::get('/incoming', [IncomingDocumentsController::class, 'index'])->name('incoming.index');
-    Route::patch('/incoming/request/{request_id}/{tracking_code}', [IncomingDocumentsController::class, 'update']);
+    Route::patch('/incoming/request/{request_id}/{tracking_code}', [IncomingDocumentsController::class, 'update'])->name('request.update');
     Route::get('/api/referral/{full_name}', [OutgoingDocumentsController::class, 'getDivision']);
     Route::patch('/forward-referral', [OutgoingDocumentsController::class, 'update'])->name('outgoing.update');
     Route::post('/incoming/announcement/{tracking_code}', [IncomingDocumentsController::class, 'store']);

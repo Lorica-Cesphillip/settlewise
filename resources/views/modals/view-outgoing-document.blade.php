@@ -36,17 +36,34 @@
             </div>
 
             <!--Buttons-->
-            <div class = "pt-5 justify-between w-full inline-flex">
-                <div class="pt-5 justify-between w-full inline-flex">
-                    <button x-on:click.prevent="$dispatch('open-modal', {name: 'document-preview', trackingCode: tracking_code, filePath: file_path})"
-                        class="p-4 bg-[#0d5dba] rounded-lg flex-col justify-center items-center gap-2.5 flex text-white tracking-widest hover:bg-blue-900">
-                        View Document
-                    </button>
-                </div>
-                <button x-on:click.prevent="$dispatch('open-modal', {name: 'document-conversation', documentTracker: tracking_code})"
-                    class = "p-4 bg-[#0d5dba] rounded-lg flex-col justify-center items-center gap-2.5 flex text-white tracking-widest hover:bg-blue-900 focus:bg-blue-900 active:bg-blue-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 transition ease-in-out duration-150">Open
-                    Chat</button>
+            <div class = "pt-5 w-full inline-flex justify-between">
+                <button x-on:click.prevent="$dispatch('open-modal', {name: 'document-preview', trackingCode: tracking_code, filePath: file_path})"
+                    class="p-4 bg-[#0d5dba] rounded-lg flex-col justify-center items-center gap-2.5 flex text-white tracking-widest hover:bg-blue-900">
+                    View Document
+                </button>
+                <button x-on:click.prevent="$dispatch('open-modal', {name: 'outgoing-document-conversation', documentTracker: tracking_code})"
+                    class = "p-4 bg-[#0d5dba] rounded-lg flex-col justify-center items-center inline-flex gap-2.5 text-white tracking-widest hover:bg-blue-900 focus:bg-blue-900 active:bg-blue-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 transition ease-in-out duration-150">Open Chat</button>
             </div>
+        </div>
+    </div>
+</x-modal>
+
+<x-modal name="document-preview" :maxWidth="'2xl'">
+    <div x-data="previewData" @open-modal.window="if($event.detail.name === 'document-preview'){
+        trackingCode = $event.detail.trackingCode;
+        loadPreview($event.detail.filePath);
+    }">
+        <p class="text-2xl font-bold text-center">PREVIEW DOCUMENT</p>
+        <div class="items-center justify-items-center gap-3 ">
+            <!-- Use `:src` for dynamic binding -->
+            <iframe x-bind:src="file_path" class="w-[400px] h-[500px] border py-4 border-black items"></iframe>
+
+            <!-- Use `x-bind:href` for dynamic link binding -->
+            <a x-bind:href="file_path" download class="w-[300px] p-4 bg-[#0d5dba] items rounded-lg text-center text-white tracking-widest hover:bg-blue-900">
+                Download Document
+            </a>
+
+
         </div>
     </div>
 </x-modal>

@@ -73,7 +73,10 @@
                 </div>
                 <div>
                     <x-input-label for="document_type" :value="__('Document Type *')" />
-                    <select x-model="document_type" @change="others_select = (document_type === 'Others'); requested = (document_type === 'Request')" id="document_type"
+                    <select
+                        x-model="document_type"
+                        @change="handleDocumentTypeChange()"
+                        id="document_type"
                         class="block mt-1 w-[420px] border-gray-300 rounded-md shadow-sm text-black"
                         type="text" name="document_type" autofocus autocomplete="off">
                         <option value="--Please Select a Document Type--">--Please Select a Document Type--</option>

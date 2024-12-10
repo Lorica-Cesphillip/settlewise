@@ -53,7 +53,7 @@ return new class extends Migration
             $table->string('where', 141);
             $table->string('who', 50);
             $table->string('notes', 150)->nullable();
-            $table->date('date_posted');
+            $table->timestamps();
             $table->date('date_expired');
             $table->boolean('is_posted');
 

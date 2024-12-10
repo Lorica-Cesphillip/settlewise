@@ -88,9 +88,7 @@
                 </div>
             </div>
         </div>
-        @include('modals.view-outgoing-document')
-        @include('modals.view-conversation')
-        @include('modals.create-document-tracker')
+
     <!--Outgoing Document Tables-->
     @if($outgoing_documents->isEmpty())
     <p class="text-gray-700 text-center text-sm">You havent sent a document to any of the employees within the Albay Provincial Human Settlement Office. Please click "Send a Document" to start transmitting a document.</p>
@@ -110,12 +108,12 @@
         <tbody>
             @foreach($outgoing_documents as $outgoing)
             <tr class = "border-b-2 h-[40px]">
-                <td class = "w-[180px] py-1 border-b-2">{{\Carbon\Carbon::parse($outgoing->created_at)->format('m-d-Y')}}-{{str_pad($outgoing->document_tracking_code, 3, '0', STR_PAD_LEFT)}}</td>
-                <td class = "w-[200px] py-1 border-b-2">{{$outgoing->to_employee->fname}} {{$outgoing->to_employee->mname}} {{$outgoing->to_employee->lname}}</td>
-                <td class = "w-[200px] py-1 border-b-2">{{$outgoing->to_employee->divisions->division_name}} Division</td>
-                <td class = "w-[180px] py-1 border-b-2">{{$outgoing->document_type->document_type}}</td>
-                <td class = "w-[500px] py-1 border-b-2">{{$outgoing->subject}}</td>
-                <td class = "w-[100px] py-1 border-b-2 items-center justify-items-center">
+                <td class = "w-[180px] p-2 border-b-2">{{\Carbon\Carbon::parse($outgoing->created_at)->format('m-d-Y')}}-{{str_pad($outgoing->document_tracking_code, 3, '0', STR_PAD_LEFT)}}</td>
+                <td class = "w-[200px] p-2 border-b-2">{{$outgoing->to_employee->fname}} {{$outgoing->to_employee->mname}} {{$outgoing->to_employee->lname}}</td>
+                <td class = "w-[200px] p-2 border-b-2">{{$outgoing->to_employee->divisions->division_name}} Division</td>
+                <td class = "w-[180px] p-2 border-b-2">{{$outgoing->document_type->document_type}}</td>
+                <td class = "w-[500px] p-2 border-b-2">{{$outgoing->subject}}</td>
+                <td class = "w-[100px] p-2 border-b-2 items-center justify-items-center">
                     <div class="grow shrink basis-0 h-6 justify-start items-center gap-3 flex">
                         <div class="px-3 py-0.5 {{ $outgoing->status->bgColor() }} rounded-xl flex-col justify-center items-center gap-2 inline-flex">
                             <div class="justify-center items-center gap-0.5 inline-flex">
@@ -160,5 +158,9 @@
         </tbody>
     </table>
     @endif
+
+    @include('modals.view-outgoing-document')
+    @include('modals.view-conversation')
+    @include('modals.create-document-tracker')
 </x-app-layout>
 

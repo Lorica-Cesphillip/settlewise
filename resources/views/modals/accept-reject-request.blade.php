@@ -2,19 +2,20 @@
 @can('request-response', $incoming_documents)
     <x-modal name="reject-request" :maxWidth="'2xl'" :show="false" focusable>
         <form x-data="requestResponse"
-            @open-modal.window="
-                if ($event.detail.name === 'reject-request') {
-                    request_id = $event.detail.requestId;
-                    documentTracker = $event.detail.trackingCode;
-                    show = true;
-                }
-            "
-            @submit.prevent="submitForm"
-            :action="{{ url('/incoming/request') }}/{ $request_id }/{ $documentTracker }"
-            method="POST">
-
-            @method('patch')
-            @csrf
+        @open-modal.window="
+            if ($event.detail.name === 'reject-request') {
+                request_id = $event.detail.requestId;
+                documentTracker = $event.detail.trackingCode;
+                action = '{{ route('request.update', ['request_id' => 'request_id_placeholder', 'tracking_code' => 'tracking_code_placeholder']) }}';
+                action = action.replace('request_id_placeholder', request_id)
+                               .replace('tracking_code_placeholder', documentTracker);
+                show = true;
+            }
+        "
+        x-bind:action="action"
+        method="POST">
+        @method('patch')
+        @csrf
             <h3 class = "text-2xl font-bold text-center">Why are you rejecting this request?</h3>
             <input type="hidden" name="granted" value="0">
             <div>
@@ -51,16 +52,20 @@
         <div class="w-[600px] h-[500px]">
             <h5 class="text-2xl font-bold text-center pb-4">Request Comments</h5>
             <form x-data="requestResponse"
-                @open-modal.window="if($event.detail.name === 'accept-request'){
-                request_id = $event.detail.requestId;
-                documentTracker = $event.detail.trackingCode;
-                show=true;
-            }"
-                :action="{{ url('/incoming/request') }}/{ $request_id }/{ $documentTracker }"
-                method="POST">
-
-                @method('patch')
-                @csrf
+            @open-modal.window="
+                if ($event.detail.name === 'accept-request') {
+                    request_id = $event.detail.requestId;
+                    documentTracker = $event.detail.trackingCode;
+                    action = '{{ route('request.update', ['request_id' => 'request_id_placeholder', 'tracking_code' => 'tracking_code_placeholder']) }}';
+                    action = action.replace('request_id_placeholder', request_id)
+                                   .replace('tracking_code_placeholder', documentTracker);
+                    show = true;
+                }
+            "
+            x-bind:action="action"
+            method="POST">
+            @method('patch')
+            @csrf
                 <input type="hidden" name="granted" value="1" />
                 <textarea name="request_comments" class="w-full h-[400px] rounded-lg border-gray-300" id="acceptRequestTextarea"
                     placeholder="Add any additional notes or comments here..."></textarea>

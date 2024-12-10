@@ -1,7 +1,8 @@
 <x-modal name="add-new-employee" :maxWidth="'5xl'" :show="false" focusable>
     <h3 class = "text-center font-bold text-2xl">Add New Employee</h3>
+    <div class = "text-center text-sm p-2"><span class = "text-red-800">*</span> Required Information</div>
 
-    <form x-data="new_employee" class="space-y-2" @submit.prevent="submitForm" action = "{{ route('employees.store') }}" method = "POST">
+    <form x-data="manageEmployee" class="space-y-2" @submit.prevent="submitForm" action = "{{ route('employees.store') }}" method = "POST">
     @csrf
 
         <!-- Progress Bar Component -->
@@ -46,25 +47,26 @@
         <div x-cloak x-show="formStep === 1">
 
             <h5 class = "font-bold text-xl">Part I: Personal Information</h5>
+
             <div class = "block">
 
                 <!--Employee Name-->
-                <x-input-label for="name" :value="__('Employee Name')" />
+                <x-input-label for="name" :value="__('Employee Name *')" />
                 <div class = "gap-2 w-full inline-flex">
                     <div>
-                        <x-text-input x-model="last_name" id="name" class="block mt-1 w-[310px]" type="text"
-                            name="last_name" autofocus autocomplete="off" placeholder="Last Name" />
+                        <x-text-input x-model="lname" id="name" class="block mt-1 w-[310px]" type="text"
+                            name="last_name" autofocus autocomplete="off" placeholder="Last Name *" />
                         <x-input-error :messages="$errors->get('last_name')" class="mt-2" />
                     </div>
 
                     <div>
-                        <x-text-input x-model="first_name" id="name" class="block mt-1 w-[310px]" type="text"
-                            name="first_name" autofocus autocomplete="off" placeholder="First Name" />
+                        <x-text-input x-model="fname" id="name" class="block mt-1 w-[310px]" type="text"
+                            name="first_name" autofocus autocomplete="off" placeholder="First Name *" />
                         <x-input-error :messages="$errors->get('first_name')" class="mt-2" />
                     </div>
 
                     <div>
-                        <x-text-input x-model="middle_name" id="name" class="block mt-1 w-[310px]" type="text"
+                        <x-text-input x-model="mname" id="name" class="block mt-1 w-[310px]" type="text"
                             name="middle_name" autofocus autocomplete="off"
                             placeholder="Middle Name" />
                         <x-input-error :messages="$errors->get('middle_name')" class="mt-2" />
@@ -73,7 +75,7 @@
 
                 <!--Home Address-->
                 <div class = "block">
-                    <x-input-label for="address" :value="__('Home Address')" />
+                    <x-input-label for="address" :value="__('Home Address *')" />
                     <x-text-input x-model="address" id="address" class="block mt-1 w-full" type="text"
                         name="address" autofocus autocomplete="off"
                         placeholder="Lot/Blg. No, Street, Barangay/ Subdivision, Municipality/City, Province, ZIP Code" />
@@ -83,7 +85,7 @@
 
             <div class = "block columns-2">
                 <div>
-                    <x-input-label for="birthday" :value="__('Birthdate')" />
+                    <x-input-label for="birthday" :value="__('Birthdate *')" />
                     <x-text-input x-model="birthdate" id="birthdate" class="block mt-1 w-full" type="date"
                         name="birthdate" autofocus autocomplete="off"
                         placeholder="Select Employee's Birthdate" />
@@ -91,7 +93,7 @@
                 </div>
 
                 <div>
-                    <x-input-label for="marital_status" :value="__('Marital Status')" />
+                    <x-input-label for="marital_status" :value="__('Marital Status *')" />
                     <select x-model="marital_status" id="marital_status"
                         class="block mt-1 w-full border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm"
                         type="text" name="marital_status" autofocus
@@ -108,14 +110,14 @@
 
             <div class = "block columns-2">
                 <div>
-                    <x-input-label for="email" :value="__('Employees Personal Email')" />
+                    <x-input-label for="email" :value="__('Employees Personal Email *')" />
                     <x-text-input x-model="email" id="email" class="block mt-1 w-full" type="email" name="email"
                         autofocus autocomplete="off" placeholder="Enter Their Personal Email" />
                     <x-input-error :messages="$errors->get('email')" class="mt-2" />
                 </div>
 
                 <div>
-                    <x-input-label for="contact_nos" :value="__('Contact Number')" />
+                    <x-input-label for="contact_nos" :value="__('Contact Number *')" />
                     <x-text-input x-model="contact_nos" id="contact_nos" class="block mt-1 w-full" type="text"
                         name="contact_nos" autofocus autocomplete="off"
                         placeholder="Enter Their Personal Contact Number" />
@@ -128,7 +130,7 @@
             <h5 class = "font-bold text-xl">Part II: Job Position</h5>
             <div class = "columns-2 block">
                 <div>
-                    <x-input-label for="division" :value="__('APHSO Division')" />
+                    <x-input-label for="division" :value="__('APHSO Division *')" />
                     <select x-model="division" id="division"
                         class="block mt-1 w-full border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm"
                         type="text" name="division_name" autofocus autocomplete="off">
@@ -142,7 +144,7 @@
                 </div>
 
                 <div>
-                    <x-input-label for="position" :value="__('Position')" />
+                    <x-input-label for="position" :value="__('Position *')" />
                     <x-text-input x-model="position" id="position" class="block mt-1 w-full" type="text"
                         name="position" autofocus autocomplete="off"
                         placeholder="APHSO Position" />
@@ -185,7 +187,7 @@
                 <div class="p-4 columns-2">
                     <div>
                         <p class="font-light">Full Name: <span class="font-bold underline"
-                                x-text="`${last_name}, ${first_name} ${middle_name}`"></span></p>
+                                x-text="`${lname}, ${fname} ${mname}`"></span></p>
                         <p class="font-light">Home Address: <span class="font-bold underline"
                                 x-text="address"></span></p>
                         <p class="font-light">Birthdate: <span class="font-bold underline" x-text="birthdate"></span>

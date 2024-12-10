@@ -144,7 +144,7 @@
                         <div class="w-6 h-6 right-4 top-[24px] absolute">
                             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                                 <g id="icon / chevron-up">
-                                <path id="icon" d="M10.6293 7.91689C11.3994 7.19209 12.6006 7.19209 13.3707 7.91689L21.1854 15.2718C21.5875 15.6504 21.6067 16.2832 21.2282 16.6854C20.8497 17.0876 20.2168 17.1068 19.8146 16.7282L12 9.37329L4.18537 16.7282C3.78319 17.1068 3.15032 17.0876 2.7718 16.6854C2.39329 16.2832 2.41246 15.6504 2.81464 15.2718L10.6293 7.91689Z" fill="#FFF6E9"/>
+                                    <path id="icon" d="M10.6293 7.91689C11.3994 7.19209 12.6006 7.19209 13.3707 7.91689L21.1854 15.2718C21.5875 15.6504 21.6067 16.2832 21.2282 16.6854C20.8497 17.0876 20.2168 17.1068 19.8146 16.7282L12 9.37329L4.18537 16.7282C3.78319 17.1068 3.15032 17.0876 2.7718 16.6854C2.39329 16.2832 2.41246 15.6504 2.81464 15.2718L10.6293 7.91689Z" fill="#FFF6E9"/>
                                 </g>
                             </svg>
                         </div>
@@ -152,7 +152,7 @@
                 </x-slot>
 
                 <x-slot name="content">
-                    <div class="absolute bottom-full right-0 mb-2 w-48 bg-white rounded-md shadow-lg">
+                    <div class="absolute -top-[100px] w-[300px] right-0 z-50 bg-white rounded-md shadow-lg">
                         <!-- Dropdown Items -->
                         <x-dropdown-link :href="route('profile')">
                             <div class="flex items-center">

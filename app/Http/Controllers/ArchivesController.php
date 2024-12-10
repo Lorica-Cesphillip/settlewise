@@ -27,7 +27,7 @@ class ArchivesController extends Controller
     public function update($id){
         DocumentTracker::where('document_tracking_code', '=', $id)->update(['archived' => 1]);
 
-        return view('documents.archived')->with('success');
+        return response()->json('success', 200);
     }
 
     public function show($trackingCode){

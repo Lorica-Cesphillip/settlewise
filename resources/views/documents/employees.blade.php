@@ -82,7 +82,7 @@
 
         <!--Table-->
         <div class = "w-full h-full p-2">
-            <table class = "table-fixed border-b-2">
+            <table class = "table-fixed shadow border-b-2">
                 <thead>
                     <tr class = "bg-slate-200 h-[30px]">
                         <th class = "w-[150px] p-3 justify-start">Employee Id</th>
