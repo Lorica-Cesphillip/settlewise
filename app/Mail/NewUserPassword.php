@@ -6,6 +6,7 @@ use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
 use Illuminate\Mail\Mailables\Content;
+use Illuminate\Mail\Mailables\Address;
 use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
 use App\Models\User;
@@ -17,7 +18,7 @@ class NewUserPassword extends Mailable
     /**
      * Create a new message instance.
      */
-    public function __construct(public User $user,)
+    public function __construct(public User $user)
     {}
 
     /**
@@ -26,6 +27,7 @@ class NewUserPassword extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
+            from: new Address('careers@aphso.gov.ph', 'Engr. Gina Paz Sipin'),
             subject: 'Welcome to the Albay Provincial Human Settlement Office.',
         );
     }
@@ -37,6 +39,7 @@ class NewUserPassword extends Mailable
     {
         return new Content(
             view: 'view.name',
+            text: 'This is the start of your journey. The Department Head has provided you with an Employee Id and the Initial Password. If you successfully logged in to the system, please change your password IMMEDIATELY.'
         );
     }
 

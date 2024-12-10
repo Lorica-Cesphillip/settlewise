@@ -175,7 +175,8 @@ class OutgoingDocumentsController extends Controller
             DocumentTracker::where('document_tracking_code', '=', $tracking_code)->update([
                 'referral_id' => $referral->referral_id,
                 'to_employee_id' => $request->employee_number,
-                'from_employee_id' => Auth::user()->employee_number
+                'from_employee_id' => Auth::user()->employee_number,
+                'status_id' => 5
             ]);
 
             return response()->json('success', 200);

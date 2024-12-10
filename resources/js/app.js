@@ -29,11 +29,11 @@ window.documentData = function documentData(){
         comments: '',
         rejection_reason: '',
         is_forwarded: false,
-        async fetchDocument(trackingCode){
-            try{
+        async fetchDocument(trackingCode) {
+            try {
                 const response = await fetch(`/api/document/view/${trackingCode}`);
 
-                if(!response.ok) throw new Error(`HTTP error! Status: ${response.status}`);
+                if (!response.ok) throw new Error(`HTTP error! Status: ${response.status}`);
                 const data = await response.json();
 
                 this.tracking_code = data.document_tracking_code.toString().padStart(3, '0');
@@ -51,27 +51,29 @@ window.documentData = function documentData(){
                 this.file_path = data.file_path;
                 this.is_forwarded = data.is_forwarded ? true : false;
 
-                if(data.request_type === null){
+                // Handle request details safely
+                if (data.request === null || data.request_type === null) {
                     this.request_type = 'N/A';
                     this.requested_document = 'N/A';
                     this.purpose = 'N/A';
                     this.request_details = 'N/A';
                     this.comments = 'N/A';
                     this.rejection_reason = 'N/A';
-                }
+                } else {
                     this.request_type = data.request.request_type;
                     this.requested_document = data.request.requested_document ? data.request.requested_document : 'N/A';
                     this.purpose = data.request.request_purpose ? data.request.request_purpose : 'N/A';
                     this.request_details = data.request.request_details ? data.request.request_details : 'N/A';
                     this.comments = data.request.comments_if_granted ? data.request.comments_if_granted : 'N/A';
                     this.rejection_reason = data.request.rejection_reason ? data.request.rejection_reason : 'N/A';
-
+                }
 
                 console.log('Requested:', this.requested, 'Is Forwarded:', this.is_forwarded);
-            }catch(error){
+            } catch (error) {
                 console.error('There is something wrong while retrieving document information. Error: ', error);
             }
-        },
+        }
+        ,
 
         getBgColor(statusId) {
             return {
@@ -218,7 +220,6 @@ window.referralDivision = function referralDivision() {
             showFailureModal: false,
             validationErrors: {},
             handleDocumentTypeChange() {
-                // Handle `document_type`
                 if (this.document_type === 'Others') {
                     this.others_select = true;
                 } else {
@@ -226,21 +227,35 @@ window.referralDivision = function referralDivision() {
                     this.others = ''; // Reset the "others" field when deselected
                 }
 
-                // Determine if this is a request
-                this.requested = this.document_type === 'Request';
+                if (this.document_type === 'Request') {
+                    this.requested = true;
+                } else {
+                    this.requested = false;
+                }
 
-                // Handle `request_type`
                 if (this.request_type === 'Document') {
-                    this.requested_document = ''; // Reset related fields
-                    this.purpose = ''; // Reset purpose if not applicable
-                }
-
-                if (this.request_type === 'Others') {
-                    this.request_others = ''; // Reset "others" field for request type
-                }
-
-                if (this.request_type !== 'Assistance' && this.request_type !== 'Others') {
-                    this.request_details = ''; // Reset request details if not applicable
+                    // Reset fields related to other request types
+                    this.request_details = '';
+                    this.request_others = '';
+                    this.purpose = '';
+                    this.requested_document = ''; // Field specific to "Document"
+                } else if (this.request_type === 'Assistance') {
+                    // Reset fields related to other request types
+                    this.requested_document = '';
+                    this.request_others = '';
+                    this.purpose = '';
+                    this.request_details = ''; // Field specific to "Assistance"
+                } else if (this.request_type === 'Others') {
+                    // Reset fields related to other request types
+                    this.requested_document = '';
+                    this.purpose = '';
+                    this.request_details = '';
+                } else {
+                    // Reset all fields when no valid `request_type` is selected
+                    this.requested_document = '';
+                    this.purpose = '';
+                    this.request_details = '';
+                    this.request_others = '';
                 }
             },
             async fetchDivision() {

@@ -83,10 +83,8 @@ class IncomingDocumentsController extends Controller
             'notes' => 'string|max:140|nullable'
         ]);
 
-        $document = DocumentTracker::select('document_tracking_code')->where('document_tracking_code', '=', $tracking_code);
-
-        Announcements::insert([
-            'document_tracking_code' => $document->document_tracking_code,
+        Announcements::create([
+            'document_tracking_code' => $tracking_code,
             'what' => $request->what,
             'where' => $request->where,
             'who' => $request->who,
@@ -94,6 +92,12 @@ class IncomingDocumentsController extends Controller
             'notes' => $request->notes,
             'is_posted' => 1
         ]);
+
+        DocumentTracker::where('document_tracking_code', $tracking_code)->update([
+            'status_id' => 7
+        ]);
+
+        //
 
         return response()->json('success', 200);
     }
